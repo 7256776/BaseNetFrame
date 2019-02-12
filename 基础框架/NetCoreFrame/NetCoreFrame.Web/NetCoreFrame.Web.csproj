@@ -327,7 +327,6 @@
     <None Include="wwwroot\Abp\Framework\styles\abp.less" />
     <None Include="wwwroot\Abp\Framework\styles\abp.mixings.css.map" />
     <None Include="wwwroot\Abp\Framework\styles\abp.mixings.less" />
-    <None Include="wwwroot\Content\Lib\signalr-client\signalr.min.js" />
   </ItemGroup>
 
   <ItemGroup>
