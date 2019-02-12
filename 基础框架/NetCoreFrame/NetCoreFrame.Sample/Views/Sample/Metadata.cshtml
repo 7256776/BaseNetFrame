@@ -1,0 +1,238 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row" >
+        <div class="col-lg-3 col-md-4 col-sm-4" style="padding-left:0px;padding-right:5px;" >
+            <div id="treeMetaDiv" style="max-height: calc(100vh - 200px);padding:5px;border:1px solid #DCDFE6;">
+                <!--<el-input v-model="pageOptions.searchText" style="width:100%" clearable placeholder="数据关键字搜索" ></el-input>-->
+                <el-tree ref="treeData"
+                         style="min-height:calc(100vh - 200px);padding:5px;"
+                         v-bind:data="treeData"
+                         v-bind:props="defaultProps"
+                         node-key="tableCode"
+                         highlight-current
+                         v-bind:expand-on-click-node="false"
+                         v-bind:filter-node-method="doFilterNode"
+                         accordion
+                         v-bind:default-expand-all="true"
+                         v-on:node-click="doNodeClick">
+
+                    <span slot-scope="scope">
+                        {{scope.node.tableId}}
+                        {{scope.node.isField}}
+
+                        <span>{{ scope.node.label }}</span>
+                    </span>
+                </el-tree>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8" style="padding-left:0px;padding-right:0px;">
+
+            <div style="padding:5px;margin-bottom:5px; border:1px solid #DCDFE6;">
+                <el-button-group>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doReset()">新增</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-save fa-lg" v-on:click="doSave()">保存</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDel()">删除</el-button>
+                </el-button-group>
+            </div>
+
+            <div style="padding:5px;border:1px solid #DCDFE6;">
+                <div style="width:650px;">
+                    <el-form v-bind:model="formData"
+                             v-bind:rules="formRules"
+                             ref="formInfoData"
+                             label-position="left"
+                             v-bind:inline="true"
+                             v-bind:status-icon="true"
+                             label-suffix=":"
+                             label-width="120px">
+
+                        <el-form-item label="表名称" prop="tableId">
+                            <el-select v-model="formData.tableId"
+                                       default-first-option
+                                       style="width:171px"
+                                       placeholder="请选择表名">
+                                <el-option v-for="sel in tableData"
+                                           :key="sel.id"
+                                           :label="sel.tableName"
+                                           :value="sel.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="字段物理名称" prop="fieldCode">
+                            <el-input v-model="formData.fieldCode" style="width:171px" clearable placeholder="字段物理名称" v-bind:maxlength="100">
+                            </el-input>
+                        </el-form-item>
+
+                        <el-form-item label="字段名称" prop="fieldName">
+                            <el-input v-model="formData.fieldName" style="width:480px" clearable placeholder="字段名称" v-bind:maxlength="100">
+                            </el-input>
+                        </el-form-item>
+
+                        <el-form-item label="字段别名" prop="fieldAlias">
+                            <el-input v-model="formData.fieldAlias" style="width:480px" clearable placeholder="字段别名" v-bind:maxlength="100">
+                            </el-input>
+                        </el-form-item>
+
+                        <el-form-item label="是否必填" prop="isRequired">
+                            <el-select v-model="formData.isRequired"
+                                       default-first-option
+                                       style="width:171px"
+                                       placeholder="请选择">
+                                <el-option label="必填项" v-bind:value="true"></el-option>
+                                <el-option label="可为空" v-bind:value="false"></el-option>
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="字段排序" prop="fieldOrder">
+                            <el-input-number v-model="formData.fieldOrder" v-bind:step="1" style="width:171px"></el-input-number>
+                        </el-form-item>
+
+                        <el-form-item label="数据类型" prop="dataType">
+                            <el-radio-group v-model="formData.dataType" style="width:475px">
+                                <el-radio-button label="String">字符串</el-radio-button>
+                                <el-radio-button label="Date">日期</el-radio-button>
+                                <el-radio-button label="Number">数字</el-radio-button>
+                                <el-radio-button label="Dict">基础字典</el-radio-button>
+                                <el-radio-button label="ObjectDict">实体字典</el-radio-button>
+                            </el-radio-group>
+                            <div style="padding:10px;border:1px solid #DCDFE6;width:475px;" v-show="isShowType!='0'">
+                                <div v-show="isShowType=='1'">
+                                    字符串长度:
+                                    <el-input-number v-model="formData.dataLength" v-bind:step="1" style="width:200px;" controls-position="right" v-bind:min="0"></el-input-number>
+                                </div>
+                                <div v-show="isShowType=='2'">
+                                    小数位数:
+                                    <el-input-number v-model="formData.dataPrecision" v-bind:step="1" style="width:200px;" controls-position="right" v-bind:min="0"></el-input-number>
+                                </div>
+                                <div v-show="isShowType=='3'">
+                                    日期格式:
+                                    <el-select v-model="formData.dateFormat"
+                                               default-first-option
+                                               style="width:200px"
+                                               placeholder="请选择日期格式">
+                                        <el-option label="年/月/日 时/分/秒" value="yyyy/MM/dd mm:hh:ss">
+                                            <span style="float: left">年/月/日 时/分/秒</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px;padding-left:10px;">例:2018/01/10 10:10:00</span>
+                                        </el-option>
+                                        <el-option label="年/月/日" value="yyyy/MM/dd">
+                                            <span style="float: left">年/月/日</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px;padding-left:10px;">例:2018/01/10 </span>
+                                        </el-option>
+                                        <el-option label="年/月" value="yyyy/MM">
+                                            <span style="float: left">年/月</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px;padding-left:10px;">例:2018/01</span>
+                                        </el-option>
+                                        <el-option label="月/日" value="MM/dd">
+                                            <span style="float: left">月/日</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px;padding-left:10px;">例:01/10</span>
+                                        </el-option>
+                                        <el-option label="时/分/秒" value="mm:hh:ss">
+                                            <span style="float: left">时/分/秒</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px;padding-left:10px;">例:10:10:00</span>
+                                        </el-option>
+                                        <el-option label="年" value="yyyy">
+                                            <span style="float: left">年</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px;padding-left:10px;">例:2018</span>
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                <div v-show="isShowType=='4'">
+                                    <el-radio-group v-model="formData.dataSourceType" style="width:300px">
+                                        <el-radio-button label="1">预设数据源</el-radio-button>
+                                        <el-radio-button label="2">实体表</el-radio-button>
+                                        <el-radio-button label="3">自定义数据源</el-radio-button>
+                                    </el-radio-group>
+                                    <div v-show="formData.dataSourceType==1">
+                                        <div>
+                                            <el-input placeholder="字典Text" v-model="pageOptions.dictText" style="width:150px;">
+                                            </el-input>
+                                            <el-input placeholder="字典Value" v-model="pageOptions.dictValue" style="width:150px;">
+                                            </el-input>
+                                            <el-button slot="append" type="primary" v-on:click="doAddEnum">新增</el-button>
+                                        </div>
+                                        <div>
+                                            <div v-for="(item,index) in formData.dataSourceItems">
+                                                <el-tooltip placement="right">
+                                                    <div slot="content">{{item}}</div>
+                                                    <el-tag style="margin:1px;" v-bind:key="index" closable v-on:close="doDelEnum(item)">
+                                                        {{item.text}}
+                                                    </el-tag>
+                                                </el-tooltip>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-show="formData.dataSourceType==2">
+                                        <el-select placeholder="字典表" v-model="formData.dataSourceTable" style="width:400px;" v-show="formData.dataType=='Dict'">
+                                            <el-option label="职务类型" value="TabZw"></el-option>
+                                            <el-option label="状态类型" value="TabState"></el-option>
+                                        </el-select>
+
+                                        <el-select placeholder="实体字典表" v-model="formData.dataSourceTable" style="width:400px;" v-show="formData.dataType=='ObjectDict'">
+                                            <el-option label="国家" value="TabGj"></el-option>
+                                            <el-option label="公司分类" value="TabGs"></el-option>
+                                        </el-select>
+                                    </div>
+                                    <div v-show="formData.dataSourceType==3">
+                                        <el-input style="width:400px" v-model="formData.dataSourceService" clearable placeholder="输入数据源" v-bind:maxlength="100">
+                                        </el-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-form-item>
+
+                        <el-form-item label="组件类型" prop="uiType">
+                            <el-radio-group v-model="formData.uiType" style="width:475px">
+                                <el-radio-button label="TextBox" v-bind:disabled="uiTypeState.textBox">文本框</el-radio-button>
+                                <el-radio-button label="TextArea" v-bind:disabled="uiTypeState.textArea">长文本</el-radio-button>
+                                <el-radio-button label="Number" v-bind:disabled="uiTypeState.number">数字框</el-radio-button>
+                                <el-radio-button label="Date" v-bind:disabled="uiTypeState.date">日期</el-radio-button>
+                                <el-radio-button label="DropdownList" v-bind:disabled="uiTypeState.dropdownList">下拉框单选</el-radio-button>
+                                <el-radio-button label="DropdownMultipleList" v-bind:disabled="uiTypeState.dropdownMultipleList">下拉框多选</el-radio-button>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="组件宽度" prop="uiType">
+                            <el-radio-group v-model="formData.uiCol" style="width:475px">
+                                <el-radio-button label="1" >1列</el-radio-button>
+                                <el-radio-button label="2" >2列</el-radio-button>
+                                <el-radio-button label="3">3列</el-radio-button>
+                            </el-radio-group>
+                        </el-form-item>
+
+                        <el-form-item label="字段描述" prop="description">
+                            <el-input v-model="formData.description"
+                                      type="textarea"
+                                      v-bind:maxlength="150"
+                                      style="width:475px;"
+                                      autosize
+                                      placeholder="字段描述">
+                            </el-input>
+                        </el-form-item>
+
+                        <!--重置表单时一并清空-->
+                        <el-form-item label="" prop="id" v-show="false">
+                        </el-form-item>
+                        <el-form-item label="" prop="dataLength" v-show="false">
+                        </el-form-item>
+                        <el-form-item label="" prop="dataPrecision" v-show="false">
+                        </el-form-item>
+                        <el-form-item label="" prop="dateFormat" v-show="false">
+                        </el-form-item>
+                        <el-form-item label="" prop="dataSourceType" v-show="false">
+                        </el-form-item>
+                        <el-form-item label="" prop="dataSourceTable" v-show="false">
+                        </el-form-item>
+                        <el-form-item label="" prop="dataSourceService" v-show="false">
+                        </el-form-item>
+
+
+                    </el-form>
+                </div>
+            </div>
+
+        </div>
+</div>
+

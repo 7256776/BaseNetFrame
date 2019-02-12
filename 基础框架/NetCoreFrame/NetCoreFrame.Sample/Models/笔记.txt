@@ -1,0 +1,14 @@
+﻿@*根据元数据信息和对象信息生成表单*@
+
+
+:class="{multiValue:item.multiValue}"
+
+
+
+
+
+
+
+
+
+

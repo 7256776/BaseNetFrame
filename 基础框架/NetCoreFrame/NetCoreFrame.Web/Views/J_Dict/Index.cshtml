@@ -1,0 +1,194 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12" style="padding-left:0px;padding-right:5px;">
+        <div class="todo-ui">
+            <div class="todo-sidebar" style="margin-right:5px;border:1px solid #DCDFE6;">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
+                            <span class="caption-subject font-green-sharp bold uppercase ">字典类型 </span>
+                            <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">新增字典类型</span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <a class="btn green btn-circle btn-outline btn-sm todo-projects-config" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    设置 &nbsp;<i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a ref="btnAddType" v-IsAuthorized v-on:click="doAddSubscription"><i class="fa fa fa-file-text-o fa-lg"></i>新增类型</a>
+                                    </li>
+                                    <li>
+                                        <a ref="btnDelType" v-IsAuthorized v-on:click="doDelSubscription"><i class="fa fa-trash-o fa-lg"></i>删除类型</a>
+                                    </li>
+                                    <li class="divider"> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body todo-project-list-content" style="min-height:300px;">
+                        <div class="todo-project-list" >
+                            <ul class="nav nav-stacked">
+                                <li v-for="item in sysDictData" v-bind:class="item.id==formData.id ? 'active' : ''">
+                                    <a v-on:click="doSysDictTypeClick(item.id)">
+                                        <i class="fa fa-hand-o-right fa-lg"></i>
+                                        {{item.dictTypeName}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="todo-content" style="border:0px solid #DCDFE6;">
+                <div class="profile-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title tabbable-line">
+                                    <div class="caption caption-md">
+                                        <i class="icon-globe theme-font hide"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">字典类型管理</span>
+                                    </div>
+                                </div>
+                                
+                                <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+                                    <div class="row " >
+                                        <div class="col-md-9 ">
+                                            <el-button-group>
+                                                <el-button ref="btnSave" v-IsAuthorized type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveDictAll()">&nbsp;&nbsp;保存</el-button>
+                                            </el-button-group>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_subscriptions">
+                                            <el-form v-bind:model="formData"
+                                                     v-bind:rules="formRules"
+                                                     ref="formSysDictData"
+                                                     label-position="top"
+                                                     v-bind:inline="true"
+                                                     v-bind:status-icon="true"
+                                                     label-suffix=":"
+                                                     label-width="100px">
+
+                                                <el-form-item label="字典类型名称" prop="dictTypeName" style="width:31%;">
+                                                    <el-input v-model="formData.dictTypeName" style="width:100%;" suffix-icon="fa fa-commenting-o fa-fw" clearable v-bind:maxlength="30">
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="字典类型值" prop="dictType" style="width:31%;">
+                                                    <el-input v-model="formData.dictType" style="width:100%;" suffix-icon="fa fa-commenting fa-fw" v-bind:disabled="pageOptions.isDictType" v-bind:clearable="!pageOptions.isDictType" clearable v-bind:maxlength="50">
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="启动状态" prop="isActive" style="width:31%;">
+                                                    <el-select v-model="formData.isActive" placeholder="请选择有效状态" style="width:100%;">
+                                                        <el-option label="启动" v-bind:value="true"> </el-option>
+                                                        <el-option label="禁用" v-bind:value="false"> </el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                                <!--重置表单时一并清空-->
+                                                <el-form-item label="" prop="id" v-show="false">
+                                                </el-form-item>
+                                            </el-form>
+                                            <hr />
+                                            <div class="portlet-title tabbable-line">
+                                                <div class="caption caption-md">
+                                                    <i class="icon-globe theme-font hide"></i>
+                                                    <span class="caption-subject font-blue-madison bold uppercase">字典编码管理</span>
+                                                </div>
+                                            </div>
+                                            <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+                                                <div class="row">
+                                                    <div class="col-md-9 ">
+                                                        <el-button-group>
+                                                            <el-tooltip ref="btnAddCode" v-IsAuthorized content="新增字典编码" placement="top">
+                                                                <el-button type="primary" icon="fa fa-plus fa-lg" v-on:click="doSubAdd()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;新增字典编码</el-button>
+                                                            </el-tooltip>
+                                                            <el-tooltip ref="btnDelCode" v-IsAuthorized content="删除字典编码" placement="top">
+                                                                <el-button type="primary" icon="fa fa-minus fa-lg" v-on:click="doSubDel()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;删除字典编码</el-button>
+                                                            </el-tooltip>
+                                                        </el-button-group>
+                                                    </div>
+                                                    <div class="col-md-3 ">
+                                                        <el-input placeholder="字典编码/字典名称 筛选" clearable prefix-icon="el-icon-search" v-model="tableOptions.searchTxt">
+                                                        </el-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <el-table v-bind:data="searchGrid"
+                                                      ref="dataGrid"
+                                                      @*stripe*@
+                                                      border
+                                                      @*highlight-current-row*@
+                                                      tooltip-effect="light"
+                                                      style="width: 100%;"
+                                                      row-key="rowKey"
+                                                      v-bind:row-style="fnStyle"
+                                                      v-bind:expand-row-keys="expands"
+                                                      v-on:row-click="doRowclick"
+                                                      v-on:selection-change="doRowSelectChange"
+                                                      v-on:current-change="doRowCurrentChange">
+                                                <el-table-column type="expand" >
+                                                    <template slot-scope="props">
+                                                        <div align="center" style="position: absolute;padding:0px 5px 5px 5px;left:100px;top:0px;border:1px solid #cdd0d7;border-top-width:0px;background-color:#DCDFE6;">
+                                                            @*<div style="width:100%;text-align:center;">*@
+                                                            <el-button-group>
+                                                                <el-button type="primary" v-on:click="doSaveRow()">&nbsp;保存&nbsp;</el-button>
+                                                            </el-button-group>
+                                                            <el-button-group>
+                                                                <el-button type="info" v-on:click="doCancel()">&nbsp;取消&nbsp;</el-button>
+                                                            </el-button-group>
+                                                            @*</div>*@
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                                                <el-table-column prop="dictCode" label="字典编码">
+                                                    <template slot-scope="scope">
+                                                        <el-input size="small" ref="abc" v-model="scope.row.dictCode" v-show="scope.row.showState" v-on:change="if(scope.row.editState!='add') scope.row.editState='modify'" placeholder="请输入内容"></el-input>
+                                                        <span v-show="!scope.row.showState">{{scope.row.dictCode}}</span>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column prop="dictContent" label="字典名称">
+                                                    <template slot-scope="scope">
+                                                        <el-input size="small" v-model="scope.row.dictContent" v-show="scope.row.showState" v-on:change="if(scope.row.editState!='add') scope.row.editState='modify'" placeholder="请输入内容"></el-input>
+                                                        <span v-show="!scope.row.showState">{{scope.row.dictContent}}</span>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column prop="dictValue" label="字典值">
+                                                    <template slot-scope="scope">
+                                                        <el-input size="small" v-model="scope.row.dictValue" v-show="scope.row.showState" v-on:change="if(scope.row.editState!='add') scope.row.editState='modify'" placeholder="请输入内容"></el-input>
+                                                        <span v-show="!scope.row.showState">{{scope.row.dictValue}}</span>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column prop="isActive" label="状态">
+                                                    <template slot-scope="scope">
+                                                        <el-tooltip :content="scope.row.isActive?'启动':'禁用'" placement="right" v-show="scope.row.showState">
+                                                            <el-switch v-model="scope.row.isActive"
+                                                                       v-on:change="scope.row.isActive ? true : false;if(scope.row.editState!='add') scope.row.editState='modify'"
+                                                                       content="启动"
+                                                                       placement="top"
+                                                                       active-color="#13ce66"
+                                                                       inactive-color="#666">
+                                                            </el-switch>
+                                                        </el-tooltip>
+                                                        <span v-show="!scope.row.showState">{{scope.row.isActive?'启动':'禁用'}}</span>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

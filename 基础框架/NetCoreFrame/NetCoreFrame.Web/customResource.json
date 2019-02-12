@@ -1,0 +1,17 @@
+{
+  //自定义页面资源文件配置
+  "CustomWebResource": {
+    "style": [
+      "/Content/frameCore/css/customStyle.css"
+    ],
+
+    "scriptBottom": [
+      "/Content/frameCore/scripts/customJavascript.js"
+    ],
+
+    "scriptTop": [
+      "/Content/frameCore/scripts/customJavascript.js"
+    ]
+  }
+
+}

@@ -1,0 +1,157 @@
+﻿@{
+    Layout = null;
+}
+
+<div  class="row">
+
+    <div class="col-md-12" style="padding-left:0px;padding-right:5px;">
+        <div class="profile-sidebar" style="margin-right:5px;border:1px solid #DCDFE6;height:440px;">
+            @*移除样式bordered*@
+            <div class="portlet light profile-sidebar-portlet ">
+                <div class="profile-userpic">
+                    <img v-bind:src="GlobalAuthorizedEntity.DefaultImgUrl + userAvatars +'_150.png' " class="img-responsive" alt="">
+                </div>
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name"> {{   userName }} </div>
+                    <!--<div class="profile-usertitle-job"> 标题 </div>-->
+                </div>
+                <div class="profile-userbuttons">
+                    <button type="button" class="btn btn-circle green btn-sm" v-bind:class="isShowImageList ? 'red':'green' " v-on:click="isShowImageList=!isShowImageList">{{isShowImageList?'关闭设置头像':'设置头像'}}</button>
+                    <!--<button type="button" class="btn btn-circle red btn-sm">按钮</button>-->
+                </div>
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li class="active">
+                            <router-link to="/Views/J_Notifications/UserInbox" style="padding-left:50px;">
+                                <i class="fa fa-envelope"></i> 我的收件箱
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="profile-content" style="border:1px solid #DCDFE6;">
+            <div class="row">
+                <div class="col-md-12" style="height:440px;">
+                    @*移除样式bordered*@
+                    <div class="portlet light ">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold ">我的账号 : {{formData.userCode}}</span>
+                            </div>
+                            <ul class="nav nav-tabs" v-show="!isShowImageList">
+                                <li class="active">
+                                    <a href="#tab_user" data-toggle="tab">我的信息</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_userPass" data-toggle="tab">密码修改</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div v-show="isShowImageList">
+                                <el-form inline>
+                                    <el-form-item v-for="(o, index) in 16" v-bind:key="o">
+                                        <el-card shadow="never">
+                                            <el-tooltip effect="light" content="点击设置图像" placement="bottom">
+                                                <a href="javascript:;" v-on:click="doSaveAvatars(o)"><img v-bind:src="'/Content/frameCore/img/avatars/'+o+'_150.png'" style="width:60px;height:60px;"></a>
+                                            </el-tooltip>
+                                        </el-card>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                            <div class="tab-content" v-show="!isShowImageList">
+                                <div class="tab-pane active" id="tab_user">
+                                    <el-form v-bind:model="formData"
+                                             v-bind:rules="formRules"
+                                             ref="formMyUserData"
+                                             label-position="left"
+                                             v-bind:status-icon="true"
+                                             label-suffix=":"
+                                             label-width="100px"
+                                             style="width:70%;">
+
+                                        <el-form-item label="用户名称" prop="userNameCn">
+                                            <el-input v-model="formData.userNameCn" suffix-icon="fa fa-vcard fa-fw" clearable v-bind:maxlength="30">
+                                            </el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="电话号码" prop="phoneNumber">
+                                            <el-input v-model="formData.phoneNumber" style="width:100%" suffix-icon="fa fa-phone-square fa-fw" clearable v-bind:maxlength="50">
+                                            </el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="邮箱地址" prop="emailAddress">
+                                            <el-input v-model="formData.emailAddress" style="width:100%" suffix-icon="fa fa-envelope-o fa-fw" clearable v-bind:maxlength="50">
+                                            </el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="用户性别" prop="sex">
+                                            <el-select v-model="formData.sex"
+                                                       default-first-option
+                                                       clearable
+                                                       style="width:100%"
+                                                       placeholder="请选择"
+                                                       suffix-icon="fa fa-phone-square fa-fw">
+                                                <el-option label="男" value="1"></el-option>
+                                                <el-option label="女" value="0"></el-option>
+                                                <el-option label="其他" value="2"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+
+                                        <el-form-item label="描述" prop="description">
+                                            <el-input type="textarea" v-model="formData.description" clearable v-bind:maxlength="200">
+                                            </el-input>
+                                        </el-form-item>
+
+
+                                    </el-form>
+                                    <div style="text-align:right; border:0px solid #C8CDF3;width:70%;">
+                                        <el-button-group>
+                                            <el-button type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveForm()">保存</el-button>
+                                        </el-button-group>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_userPass">
+                                    <el-form v-bind:model="formPassData"
+                                             v-bind:rules="formRules"
+                                             ref="formPassData"
+                                             label-position="left"
+                                             v-bind:status-icon="true"
+                                             label-suffix=":"
+                                             label-width="100px"
+                                             style="width:70%;">
+
+                                        <el-form-item label="原密码" prop="oldPass">
+                                            <el-input type="password" v-model="formPassData.oldPass" suffix-icon="fa fa-key fa-fw" auto-complete="off" clearable v-bind:maxlength="30"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="新密码" prop="newPass">
+                                            <el-input type="password" v-model="formPassData.newPass" suffix-icon="fa fa-key fa-fw" auto-complete="off" clearable v-bind:maxlength="30"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="确认密码" prop="checkPass">
+                                            <el-input type="password" v-model="formPassData.checkPass" suffix-icon="fa fa-key fa-fw" auto-complete="off" clearable v-bind:maxlength="30"></el-input>
+                                        </el-form-item>
+                                    </el-form>
+                                    <div style="text-align:right; border:0px solid #DCDFE6;width:70%;">
+                                        <el-button-group>
+                                            <el-button type="primary" icon="fa fa-check-square-o fa-lg" v-on:click="doModifyPass()">&nbsp;&nbsp;提交</el-button>
+                                        </el-button-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+

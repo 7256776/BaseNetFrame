@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+    //组织管理
+}
+<div class="row">
+    @*<el-container>
+        <el-aside width="250px">*@
+    <div class="col-lg-3 col-md-4 col-sm-4" style="padding-left:0px;padding-right:5px;">
+        <div style="height:100%;padding:5px;border:1px solid #DCDFE6;">
+
+            <el-tree ref="treeData"
+                     style="min-height:525px;"
+                     v-bind:data="treeData"
+                     v-bind:props="defaultProps"
+                     node-keys="Id"
+                     highlight-current
+                     v-bind:expand-on-click-node="false"
+                     accordion
+                     v-bind:default-expand-all="true"
+                     v-on:node-click="doNodeClick">
+
+                <span slot-scope="scope">
+                    <i v-bind:class="scope.node.level>1?'fa fa-th':'fa fa-th-large'"></i>
+                    <span>{{ scope.node.label }}</span>
+                </span>
+            </el-tree>
+        </div>
+    </div>
+    @*</el-aside>
+        <el-main style="padding:0px 5px 0px 5px;">*@
+    <div class="col-lg-9 col-md-8 col-sm-8" style="padding-left:0px;padding-right:0px;">
+        <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+            <el-button-group>
+                <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doAdd()" ref="btnAdd" v-IsAuthorized>新增</el-button>
+                <el-button size="mini" type="primary" icon="fa fa-save fa-lg" v-on:click="doSave()" ref="btnSave" v-IsAuthorized>保存</el-button>
+                <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelForm()" ref="btnDel" v-IsAuthorized>删除</el-button>
+            </el-button-group>
+        </div>
+
+        <div style="padding:0px 5px 5px 5px;border:1px solid #DCDFE6;">
+            <div style="width:650px;">
+                <el-form v-bind:model="formData"
+                         v-bind:rules="formRules"
+                         ref="formInfoData"
+                         label-position="left"
+                         v-bind:inline="true"
+                         v-bind:status-icon="true"
+                         label-suffix=":"
+                         label-width="100px">
+
+                    <el-form-item label="上级机构" prop="parentOrgID">
+                        <el-cascader v-bind:props="defaultProps"
+                                     v-bind:options="treeData"
+                                     v-model="pageOptions.selectedParent"
+                                     v-on:change="doParentTreeChange"
+                                     change-on-select
+                                     clearable
+                                     suffix-icon="fa fa-list-ol"
+                                     placeholder="选择模块上级组织机构(如需创建根组织机构,该选择为空)"
+                                     style="width:475px;">
+                        </el-cascader>
+                    </el-form-item>
+
+                    <el-form-item label="机构名称" prop="orgName">
+                        <el-input v-model="formData.orgName" style="width:475px" clearable placeholder="组织机构名称" suffix-icon="fa fa-list-ol" v-bind:maxlength="50">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item label="机构编码" prop="orgCode">
+                        <el-input v-model="formData.orgCode" style="width:475px" clearable placeholder="组织机构编码" suffix-icon="fa fa-list-ul" v-bind:maxlength="50">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item label="机构类型" prop="orgType">
+                        <el-select v-model="formData.orgType"
+                                   default-first-option
+                                   style="width:180px"
+                                   placeholder="请选择">
+                            <el-option label="单位" value="1"></el-option>
+                            <el-option label="部门" value="2"></el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="启用状态" prop="isActive">
+                        <el-select v-model="formData.isActive"
+                                   default-first-option
+                                   style="width:180px"
+                                   placeholder="请选择">
+                            <el-option label="启用" v-bind:value="true"></el-option>
+                            <el-option label="禁用" v-bind:value="false"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="备注" prop="description">
+                        <el-input v-model="formData.description"
+                                  type="textarea"
+                                  v-bind:maxlength="150"
+                                  style="width:475px;"
+                                  autosize
+                                  placeholder="请输入备注信息">
+                        </el-input>
+                    </el-form-item>
+
+                    <!--重置表单时一并清空-->
+                    <el-form-item label="" prop="id" v-show="false">
+                    </el-form-item>
+                    <el-form-item label="" prop="orgNode" v-show="false">
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+
+        @*</el-main>
+            </el-container>*@
+    </div>
+</div>

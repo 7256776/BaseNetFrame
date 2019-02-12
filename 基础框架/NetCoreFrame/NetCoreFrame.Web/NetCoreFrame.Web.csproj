@@ -1,0 +1,361 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>d6e945ec-e13f-4cd6-b29f-99229f458a55</UserSecretsId>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\SupplierAccount\**" />
+    <Compile Remove="wwwroot\Abp\Framework_bak\**" />
+    <Compile Remove="wwwroot\Content\assets\layouts\layout2\**" />
+    <Compile Remove="wwwroot\Content\assets\layouts\layout5\**" />
+    <Compile Remove="wwwroot\Content\assets\layouts\layout6\**" />
+    <Compile Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <Content Remove="Views\SupplierAccount\**" />
+    <Content Remove="wwwroot\Abp\Framework_bak\**" />
+    <Content Remove="wwwroot\Content\assets\layouts\layout2\**" />
+    <Content Remove="wwwroot\Content\assets\layouts\layout5\**" />
+    <Content Remove="wwwroot\Content\assets\layouts\layout6\**" />
+    <Content Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <EmbeddedResource Remove="Views\SupplierAccount\**" />
+    <EmbeddedResource Remove="wwwroot\Abp\Framework_bak\**" />
+    <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout2\**" />
+    <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout5\**" />
+    <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout6\**" />
+    <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <None Remove="Views\SupplierAccount\**" />
+    <None Remove="wwwroot\Abp\Framework_bak\**" />
+    <None Remove="wwwroot\Content\assets\layouts\layout2\**" />
+    <None Remove="wwwroot\Content\assets\layouts\layout5\**" />
+    <None Remove="wwwroot\Content\assets\layouts\layout6\**" />
+    <None Remove="wwwroot\Content\assets\layouts\layout7\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\SupplierAccountController.cs" />
+    <Compile Remove="Controllers\SwaggerController.cs" />
+    <Compile Remove="Controllers\TestServiceController.cs" />
+    <Compile Remove="Models\ErrorViewModel.cs" />
+    <Compile Remove="Models\JObjectModelBinder.cs" />
+    <Compile Remove="Startup\Startup - 复制.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Localization\JsonSource\FrameLocalization-en.json" />
+    <Content Remove="Localization\JsonSource\FrameLocalization-zh-CN.json" />
+    <Content Remove="Localization\JsonSource\FrameLocalization-zh-hans.json" />
+    <Content Remove="Views\J_Account\Demo.cshtml" />
+    <Content Remove="Views\J_Account\Index.cshtml" />
+    <Content Remove="Views\J_Account\Login.cshtml" />
+    <Content Remove="Views\J_Account\UserSettings.cshtml" />
+    <Content Remove="Views\J_AuditLogs\Index.cshtml" />
+    <Content Remove="Views\J_Components\HeadToolButton.cshtml" />
+    <Content Remove="Views\J_Components\QuickSidebar.cshtml" />
+    <Content Remove="Views\J_Components\SearchDropdown.cshtml" />
+    <Content Remove="Views\J_Components\SearchForm.cshtml" />
+    <Content Remove="Views\J_Components\SearchPage.cshtml" />
+    <Content Remove="Views\J_Components\TopToolsMenu.cshtml" />
+    <Content Remove="Views\J_Components\UserInfoExtens.cshtml" />
+    <Content Remove="Views\J_Dict\Index.cshtml" />
+    <Content Remove="Views\J_Home\DesktopPage.cshtml" />
+    <Content Remove="Views\J_Home\Index.cshtml" />
+    <Content Remove="Views\J_Menus\Index.cshtml" />
+    <Content Remove="Views\J_Menus\SideMenu.cshtml" />
+    <Content Remove="Views\J_Menus\TopMenu.cshtml" />
+    <Content Remove="Views\J_Notifications\Index.cshtml" />
+    <Content Remove="Views\J_Notifications\UserInbox.cshtml" />
+    <Content Remove="Views\J_Org\Index.cshtml" />
+    <Content Remove="Views\J_Role\Index.cshtml" />
+    <Content Remove="Views\SampleMvc\Index.cshtml" />
+    <Content Remove="Views\Shared\Error.cshtml" />
+    <Content Remove="Views\Shared\_LayoutNone.cshtml" />
+    <Content Remove="Views\Shared\_LayoutSide.cshtml" />
+    <Content Remove="Views\Shared\_LayoutTop.cshtml" />
+    <Content Remove="Views\_ViewImports.cshtml" />
+    <Content Remove="Views\_ViewStart.cshtml" />
+    <Content Remove="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\XmlSource\FrameLocalization-en.xml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+    <None Remove="Views\J_Account\index.js" />
+    <None Remove="Views\J_Account\UserSettings.js" />
+    <None Remove="Views\J_AuditLogs\index.js" />
+    <None Remove="Views\J_Components\HeadToolButton.js" />
+    <None Remove="Views\J_Components\InitPage.js" />
+    <None Remove="Views\J_Components\jsonFormat.js" />
+    <None Remove="Views\J_Components\QuickSidebar.js" />
+    <None Remove="Views\J_Components\SearchDropdown.js" />
+    <None Remove="Views\J_Components\SearchForm.js" />
+    <None Remove="Views\J_Components\SearchPage.js" />
+    <None Remove="Views\J_Components\TopToolsMenu.js" />
+    <None Remove="Views\J_Components\UserInfoExtens.js" />
+    <None Remove="Views\J_Components\WebTitle.js" />
+    <None Remove="Views\J_Dict\index.js" />
+    <None Remove="Views\J_Home\DesktopPage.js" />
+    <None Remove="Views\J_Menus\index.js" />
+    <None Remove="Views\J_Menus\SideMenu.js" />
+    <None Remove="Views\J_Menus\SideMenuSub.js" />
+    <None Remove="Views\J_Menus\TopMenu.js" />
+    <None Remove="Views\J_Menus\TopMenusFullSub.js" />
+    <None Remove="Views\J_Menus\TopMenusSub.js" />
+    <None Remove="Views\J_Notifications\index.js" />
+    <None Remove="Views\J_Notifications\UserInbox.js" />
+    <None Remove="Views\J_Org\index.js" />
+    <None Remove="Views\J_Role\index.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\Content\assets\global\img\social\Thumbs.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\JsonSource\FrameLocalization-en.json" />
+    <EmbeddedResource Include="Localization\JsonSource\FrameLocalization-zh-CN.json" />
+    <EmbeddedResource Include="Localization\JsonSource\FrameLocalization-zh-hans.json" />
+    <EmbeddedResource Include="Localization\XmlSource\FrameLocalization-en.xml" />
+    <EmbeddedResource Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+    <EmbeddedResource Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <EmbeddedResource Include="Views\J_Account\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Account\UserSettings.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_AuditLogs\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\InitPage.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\HeadToolButton.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\jsonFormat.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\QuickSidebar.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchDropdown.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchForm.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchPage.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\TopToolsMenu.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\UserInfoExtens.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\WebTitle.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Dict\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Home\DesktopPage.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Home\DesktopPage.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\SideMenu.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\SideMenuSub.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\TopMenu.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\TopMenusFullSub.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\TopMenusSub.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Notifications\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Notifications\UserInbox.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Org\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Role\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Account\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Login\Login.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Account\UserSettings.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_AuditLogs\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\HeadToolButton.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\QuickSidebar.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchDropdown.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchForm.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchPage.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\TopToolsMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\UserInfoExtens.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Dict\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Home\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\SideMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Menus\TopMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Notifications\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Notifications\UserInbox.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Org\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Role\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SampleMvc\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\Error.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\_LayoutNone.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\_LayoutSide.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\_LayoutTop.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\_ViewImports.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\_ViewStart.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp" Version="4.0.2" />
+    <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.0.2" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="4.0.2" />
+    <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\Content\assets\apps\img\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Abp\Framework\scripts\abp.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.blockUI.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.jtable.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.moment.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr-client.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.spin.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.sweet-alert.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.toastr.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\angularjs\abp.ng.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\requirejs\plugins\service.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\utils\ie10fix.js" />
+    <None Include="wwwroot\Abp\Framework\styles\abp.css.map" />
+    <None Include="wwwroot\Abp\Framework\styles\abp.less" />
+    <None Include="wwwroot\Abp\Framework\styles\abp.mixings.css.map" />
+    <None Include="wwwroot\Abp\Framework\styles\abp.mixings.less" />
+    <None Include="wwwroot\Content\Lib\signalr-client\signalr.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreFrame.Application\NetCoreFrame.Application.csproj" />
+    <ProjectReference Include="..\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
+    <ProjectReference Include="..\NetCoreFrame.Infrastructure\NetCoreFrame.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\abp.d.ts" />
+    <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.d.ts" />
+    <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+</Project>

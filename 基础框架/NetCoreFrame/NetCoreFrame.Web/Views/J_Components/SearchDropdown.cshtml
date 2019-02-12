@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+ 
+<div>
+
+    <a href="javascript:;" style="background-color:#E9ECF3;border-radius:0em" class="btn btn-outline dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <i class="fa fa-binoculars"></i>
+    </a>
+    
+    <ul class="dropdown-menu" >
+        <li v-for="(item,index) in menuList">
+            <a v-on:click="doLink(item)" class="nav-link nav-toggle">
+                <i class="fa fa-file-text-o fa-fw"></i>
+                <span class="title">{{item.text}}</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+ 

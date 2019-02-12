@@ -1,0 +1,166 @@
+﻿@{
+    Layout = null;
+}
+ 
+<div>
+    <a href="javascript:;" class="page-quick-sidebar-toggler" v-on:click="doSidebar">
+        <!--此处原标签为 i 标签 修改为span标签-->
+        <span class="fa fa-caret-square-o-up fa-2x" style="color:#808080;"></span>
+    </a>
+    <div class="page-quick-sidebar-wrapper" data-close-on-body-click="false">
+        <div class="page-quick-sidebar">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="javascript:;" data-target="#quick_sidebar_tab_1" data-toggle="tab">
+                        用户列表
+                        <!-- <span class="badge badge-danger">2</span>-->
+                    </a>
+                </li>
+                <!--<li>
+                    <a href="javascript:;" data-target="#quick_sidebar_tab_2" data-toggle="tab">
+                        Tab2
+                        <span class="badge badge-success">7</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        更多的
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="javascript:;" data-target="#quick_sidebar_tab_1" data-toggle="tab">
+                                <i class="icon-bell"></i> Tab1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" data-target="#quick_sidebar_tab_2" data-toggle="tab">
+                                <i class="icon-info"></i> Tab2
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                <i class="icon-settings"></i> 设置
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active page-quick-sidebar-chat" id="quick_sidebar_tab_1">
+                    <div class="page-quick-sidebar-chat-users" data-rail-color="#ddd" data-wrapper-class="page-quick-sidebar-list">
+                        <h3 class="list-heading">
+                            用户列表
+                            <a href="javascript:;" v-on:click="getAllClients" style="padding-left:20px;"><i class="fa fa-refresh"></i>刷新</a>
+                        </h3>
+                        <ul class="media-list list-items">
+
+                            <li class="media" v-bind:userId="item.userId" v-for="item in allClients" v-on:click="doShowChatlist(item.userId)">
+                                <div class="media-status">
+                                    <span class="badge badge-success" v-if="item.chatCount>0">{{item.chatCount}}</span>
+                                </div>
+                                <img class="media-object" v-bind:src="GlobalAuthorizedEntity.DefaultImgUrl + item.imageUrl + '_40.png'" v-bind:alt="item.imageUrl ">
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{item.userNameCn}}</h4>
+                                    <div class="media-heading-sub"> {{item.userCode}} </div>
+                                    <div class="media-heading-small" v-bind:style="item.isOnline ? 'color:#4cff00':'color:#808080'">  {{item.isOnline?'在线':'不在线'}} </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page-quick-sidebar-item">
+                        <div class="page-quick-sidebar-chat-user">
+                            <div class="page-quick-sidebar-nav">
+                                <i class="fa fa-caret-left"></i>
+                                <a href="javascript:;" class="page-quick-sidebar-back-to-list" v-on:click="doCloseChatlist" style="vertical-align:top;">
+                                    返回列表
+                                </a>
+                            </div>
+                            <div class="page-quick-sidebar-chat-user-messages">
+                                <div class="post " v-bind:class="item.type" v-for="item in chatDataList">
+                                    <img class="avatar" alt="" v-bind:src="doShowUserImg(item.type,currentImageUrl)" />
+                                    <div class="message">
+                                        <span class="arrow"></span>
+                                        <a href="javascript:;" class="name">{{item.type=='out'?currentUser:'我'}}</a>
+                                        <span class="datetime">{{item.chatDate}}</span>
+                                        <span class="body"> {{item.chatDetailed}} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-quick-sidebar-chat-user-form">
+                                <div class="input-group">
+                                    <input type="text" ref="txtSms" class="form-control" v-model="charSend.chatDetailed" placeholder="消息内容..." v-on:keyup.enter="doSendChat">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn green" v-on:click="doSendChat">
+                                            <i class="fa fa-send-o"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="tab-pane page-quick-sidebar-alerts" id="quick_sidebar_tab_2">
+                    <div class="page-quick-sidebar-alerts-list">
+                        <h3 class="list-heading">分组标题</h3>
+                        <ul class="feeds list-items">
+                            <li>
+                                <div class="col1">
+                                    <div class="cont">
+                                        <div class="cont-col1">
+                                            <div class="label label-sm label-info">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                        </div>
+                                        <div class="cont-col2">
+                                            <div class="desc">
+                                                消息内容
+                                                <span class="label label-sm label-warning ">
+                                                    立即执行
+                                                    <i class="fa fa-share"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col2">
+                                    <div class="date"> 2018-01-02 </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>-->
+                <!--<div class="tab-pane page-quick-sidebar-settings" id="quick_sidebar_tab_3">
+                    <div class="page-quick-sidebar-settings-list">
+                        <h3 class="list-heading">常规设置</h3>
+                        <ul class="list-items borderless">
+                            <li>
+                                开关
+                                <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                            </li>
+                            <li>
+                                选择
+                                <select class="form-control input-inline input-sm input-small">
+                                    <option value="1">Normal</option>
+                                    <option value="2" selected>Medium</option>
+                                    <option value="e">High</option>
+                                </select>
+                            </li>
+                            <li>
+                                文本
+                                <input class="form-control input-inline input-sm input-small" value="5" />
+                            </li>
+                        </ul>
+                        <div class="inner-content">
+                            <button class="btn btn-success">
+                                <i class="icon-settings"></i> 保存设置
+                            </button>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+

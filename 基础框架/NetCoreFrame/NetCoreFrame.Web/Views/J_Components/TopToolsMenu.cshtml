@@ -1,0 +1,254 @@
+﻿@{
+    Layout = null;
+}
+ 
+
+<ul class="nav navbar-nav pull-right">
+    <!--分割线-->
+    <li class="separator hide"> </li>
+    <!-- 消息提示框 区域 -->
+    <!-- 设置 "dropdown-dark" 到 "dropdown-extended" 后改变消息框的样式-->
+    <li class="dropdown dropdown-extended  dropdown-notification" id="header_notification_bar1">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+            <i class="fa fa-bell-o fa-fw"></i>
+            <span class="badge badge-success"> {{notifications.total}} </span>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="external">
+                <h3>
+                    您有
+                    <span class="bold">{{notifications.total}} 条消息</span>
+                </h3>
+                <router-link to="/Views/J_Notifications/UserInbox">
+                    查看所有
+                </router-link>
+            </li>
+            <li>
+                <ul class="dropdown-menu-list scroller" style="height: 300px;" data-handle-color="#637283">
+                    <li v-if="notifications.items.length==0">
+                        <a href="javascript:;">
+                            <span class="time"></span>
+                            <span class="details">
+                                <span class="label label-sm label-icon label-primary">
+                                    <i class="fa fa-bell-o"></i>
+                                </span>没有新通知
+                            </span>
+                        </a>
+                    </li>
+                    <li v-for="item in notifications.items">
+                        <a href="javascript:;">
+                            <span class="time">{{ item.formatPastDate}}</span>
+                            <span class="details" v-on:click="doRead(item.formatData.NotificationDetailed,item.id)">
+                                <span class="label label-sm label-icon " v-bind:class="item.formatCss">
+                                    <i class="fa fa-bell-o"></i>
+                                </span>{{ item.formatData.Message}}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <!-- 消息提示框 区域 -->
+
+    <li class="separator hide"> </li>
+    <!-- 收件箱 区域 -->
+    <!--如需使用下部分内容可以删除 span标签-->
+    <!-- 设置 "dropdown-dark" 到 "dropdown-extended" 后改变消息框的样式 -->
+    <!-- <li class="dropdown dropdown-extended dropdown-inbox " id="header_inbox_bar">
+    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+    <i class="fa fa-envelope-o fa-fw"></i>
+    <span class="badge badge-danger"> 4 </span>
+    </a>
+    <ul class="dropdown-menu">
+    <li class="external">
+    <h3>
+    您有
+    <span class="bold">3封新的邮件</span>
+    </h3>
+    <a href="app_inbox.html">查看所有</a>
+    </li>
+    <li>
+    <ul class="dropdown-menu-list scroller" style="height: 300px;" data-handle-color="#637283">
+    <li>
+    <a href="#">
+    <span class="photo">
+    <img src="~/Content/assets/layouts/layout4/img/avatar2.jpg" class="img-circle" alt="">
+    </span>
+    <span class="subject">
+    <span class="from">发件人</span>
+    <span class="time">日期</span>
+    </span>
+    <span class="message">标题或内容</span>
+    </a>
+    </li>
+    <li>
+    <a href="#">
+    <span class="photo">
+    <img src="~/Content/assets/layouts/layout4/img/avatar2.jpg" class="img-circle" alt="">
+    </span>
+    <span class="subject">
+    <span class="from">发件人</span>
+    <span class="time">日期</span>
+    </span>
+    <span class="message">标题或内容标题或内容标题或内容标题或内容标题或内容</span>
+    </a>
+    </li>
+    <li>
+    <a href="#">
+    <span class="photo">
+    <img src="~/Content/assets/layouts/layout4/img/avatar2.jpg" class="img-circle" alt="">
+    </span>
+    <span class="subject">
+    <span class="from">发件人</span>
+    <span class="time">日期</span>
+    </span>
+    <span class="message">标题或内容</span>
+    </a>
+    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>-->
+    <!-- 收件箱 区域 -->
+    <li class="separator hide"> </li>
+    <!-- 任务提示 区域 -->
+    <!--如需使用下部分内容可以删除 span标签-->
+    <!-- 设置 "dropdown-dark" 到 "dropdown-extended" 后改变消息框的样式 -->
+    <!--<li class="dropdown dropdown-extended dropdown-dark dropdown-tasks " id="header_task_bar">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <i class="fa fa-tasks fa-fw"></i>
+        <span class="badge badge-primary"> 3 </span>
+        </a>
+        <ul class="dropdown-menu extended tasks">
+        <li class="external">
+        <h3>
+        您有
+        <span class="bold">6 任务</span>
+        </h3>
+        <a href="javascript:">查看所有</a>
+        </li>
+        <li>
+        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+        <li>
+        <a href="javascript:;">
+        <span class="task">
+        <span class="desc">成功任务</span>
+        <span class="percent">30%</span>
+        </span>
+        <span class="progress">
+        <span style="width: 30%;" class="progress-bar progress-bar-success" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+        <span class="sr-only">30% Complete</span>
+        </span>
+        </span>
+        </a>
+        </li>
+        <li>
+        <a href="javascript:;">
+        <span class="task">
+        <span class="desc">普通任务</span>
+        <span class="percent">40%</span>
+        </span>
+        <span class="progress">
+        <span style="width: 40%;" class="progress-bar progress-bar-info" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+        <span class="sr-only">40% Complete</span>
+        </span>
+        </span>
+        </a>
+        </li>
+        <li>
+        <a href="javascript:;">
+        <span class="task">
+        <span class="desc">危险任务</span>
+        <span class="percent">50%</span>
+        </span>
+        <span class="progress">
+        <span style="width: 50%;" class="progress-bar progress-bar-danger" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+        <span class="sr-only">50% Complete</span>
+        </span>
+        </span>
+        </a>
+        </li>
+        <li>
+        <a href="javascript:;">
+        <span class="task">
+        <span class="desc">警告任务</span>
+        <span class="percent">85%</span>
+        </span>
+        <span class="progress">
+        <span style="width: 85%;" class="progress-bar progress-bar-warning" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+        <span class="sr-only">85% 完成</span>
+        </span>
+        </span>
+        </a>
+        </li>
+        <li>
+        <a href="javascript:;">
+        <span class="task">
+        <span class="desc">常规任务</span>
+        <span class="percent">38%</span>
+        </span>
+        <span class="progress progress-striped">
+        <span style="width: 38%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
+        <span class="sr-only">38% Complete</span>
+        </span>
+        </span>
+        </a>
+        </li>
+        </ul>
+        </li>
+        </ul>
+        </li>-->
+    <!-- 任务提示 区域 -->
+    <!-- 用户菜单框 区域 -->
+    <!-- 设置 "dropdown-dark" 到 "dropdown" 后改变框的样式 -->
+    <li class="dropdown dropdown-extended  dropdown-user ">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+            <img alt="" class="img-circle" v-bind:src="userImg" />
+            <span class="username username-hide-on-mobile"> {{GlobalAuthorizedEntity.user.userNameCn}} </span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-default">
+            <li>
+                <router-link to="/Views/J_Account/UserSettings">
+                    <i class="fa fa-user-circle"></i> 我的设置
+                </router-link>
+            </li>
+            <li class="divider"> </li>
+            <li>
+                
+                <a v-on:click="doLogout">
+                    @*<a href="@Url.Action("Logout", "J_Account")">*@
+                    <i class="fa fa-sign-out"></i> 注销
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- 用户菜单框 区域 -->
+    <!-- 语言区域 -->
+    <li class="dropdown dropdown-language" v-if="languages.isMultilingual">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" >
+            <img alt="" v-bind:src="'/Content/assets/global/img/flags/'+languages.currentLanguage.icon">
+            <span class="langname">{{ languages.currentLanguage.displayName}} </span>
+            <i class="fa fa-angle-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-default">
+            <li v-for="item in languages.languagesData" v-show="languages.currentLanguage.name!=item.name">
+                <a class="social-icon-color " v-bind:title="item.displayName" v-bind:data-original-title="item.displayName" v-bind:href="doLanguageUrl(item.name,'@(ApplicationPath)','/J_Home/Index')">
+                    <img alt="" v-bind:src="'/Content/assets/global/img/flags/'+item.icon">{{item.displayName}}
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- 语言区域 -->
+    <!-- 扩展菜单开关 -->
+    <li class="dropdown dropdown-extended quick-sidebar-toggler" v-show="languages.isChat"  v-on:click="doSidebar()">
+        <span class="sr-only">扩展菜单</span>
+        <!--此处原标签为 i 标签 修改为span标签-->
+        <span class="fa fa-toggle-down fa-2x" style="color:#808080;"></span>
+        <!-- <span class="badge badge-danger">2</span>-->
+    </li>
+    <!-- 扩展菜单开关 -->
+</ul>
+   
+
+

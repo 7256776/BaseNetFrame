@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Abp.AspNetCore;
+using Abp.Castle.Logging.Log4Net;
+using Castle.Facilities.Logging;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NetCoreFrame.Sample.Controllers;
+using Newtonsoft.Json;
+
+namespace NetCoreFrame.Sample
+{
+    public class Startup : NetCoreFrame.Web.Startup
+    {
+
+        public Startup(IHostingEnvironment hostingEnvironment) : base(hostingEnvironment)
+        {
+        }
+
+
+        /// <summary>
+        /// 注入服务配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public override IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+         
+            base.BuildConfigureServices(services);
+
+            //Session 保存到内存
+            //services.AddDistributedMemoryCache();
+            services.AddSession();
+            //添加验证码配置
+            services.Configure<GeetestOptions>(_appConfiguration.GetSection("GeetestOptions"));
+
+            // 配置Log4Net日志
+            return services.AddAbp<NetCoreFrameSampleModule>(
+                      options => options.IocManager.IocContainer.AddFacility<LoggingFacility>(
+                          f => f.UseAbpLog4Net().WithConfig("log4net.config")
+                          ));
+        }
+
+        /// <summary>
+        /// 注册配置信息
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
+        public override void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            // 必须在 UseMvc 之前调用
+            app.UseSession();
+
+            base.Configure(app, env, loggerFactory);
+        }
+
+
+    }
+}

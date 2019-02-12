@@ -1,0 +1,471 @@
+﻿@charset "utf-8";
+/***********************************ElUi样式**************************************/
+
+/* 设置过渡效果 后续可以调整渐变效果*/
+.frame-fade-in-linear-enter, .frame-fade-in-linear-leave, .frame-fade-in-linear-leave-active {
+    opacity: 0;
+}
+
+.frame-fade-in-linear-enter-active, .frame-fade-in-linear-leave-active {
+    -webkit-transition: opacity .2s linear;
+    transition: opacity .2s linear;
+}
+
+/* 设置ElUI所有btn的文字信息偏移*/
+.el-button span {
+    padding-left: 5px;
+}
+
+/* 设置ElUI穿梭Grid的宽度样式*/
+.frame-transfer-panel .el-transfer-panel {
+    width: 38%;
+}
+
+/***********************************基础布局样式**************************************/
+/*扩展内容区域样式*/
+.page-content-ext {
+    background-color: #ffffff;
+    border-left: 1px solid #DCDFE6;
+    border-radius: 0 !important
+}
+
+/*扩展底部区域样式*/
+.page-footer-ext {
+    background-color: #ffffff;
+    border-left: 1px solid #DCDFE6;
+    border-radius: 0 !important;
+    padding: 10px 20px 15px 20px;
+    width: calc(100% - 275px);
+} 
+
+/*替换layout3样式*/
+.page-header .page-header-top .page-logo {
+    width: 350px;
+}
+/*替换layout4样式*/
+.navbar.page-header .page-logo{
+    width:350px;
+}
+/*替换layout4样式*/
+.page-boxed.page-sidebar-fixed .page-header.navbar .page-logo {
+    width: 350px;
+}
+/* 设置桌面顶部logo*/
+.frame-logo-page {
+    float: left;
+    margin-top: 10px;
+    height: 56px;
+    /*border: 1px solid #ff0000;*/
+}
+/* 设置桌面顶部公司名称*/
+.frame-logo-page-title {
+    padding: 14px 50px;
+}
+/* 浅色背景图片logo*/
+.frame-logo-light {
+    background: url(/Content/frameCore/img/logoLight.png) no-repeat left center;
+}
+/* 深色背景图片logo*/
+.frame-logo-drak {
+    background: url(/Content/frameCore/img/logoDark.png) no-repeat left center;
+}
+/*设置标题*/
+.frame-logo-title {
+    height: 100%;
+    font-weight: 600;
+    font-family: 'Microsoft YaHei';
+    font-size: 18px;
+    /* color: #3B3F51;
+    border: 1px solid #ffd800;
+    position: relative;
+    float: right;
+    margin: 5px 0px 0px 20px;*/
+}
+/*设置标题浅色*/
+.frame-logo-title-light {
+    color: #ffffff;
+}
+/*设置标题深色*/
+.frame-logo-title-drak {
+    color: #525252;
+}
+
+/* 设置layout4布局中切换桌面顶部logo以及标题*/
+.frame-logo-page-close {
+    width: 0px;
+    display: none;
+}
+
+/* 设置logo*/
+.frame-login-logo {
+    height: 56px;
+    margin: 20px 20px 20px 40px;
+    /*border: 1px solid #ff0000;*/
+}
+
+/*语言栏*/
+.languagePage {
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 16px;
+    height: 11px;
+}
+
+.languageSize {
+    height: 16px;
+    width: 22px;
+}
+ 
+/*暂未使用*/
+.frameLoading {
+    /*background-color: rgba(0, 0, 0, 0.7);*/
+    background: url(/Content/frameCore/img/lodaing.gif) no-repeat center center;
+    /*background: url(/Content/frameCore/img/avatars/2_150.png) center center;*/
+}
+
+/*设置顶部布局时搜索框的样式*/
+.page-header .page-header-top .search-form {
+    position: relative;
+    display: inline-block;
+    float: left;
+    width: 300px;
+    transition: width 0.4s;
+    margin: 20px 0px 0px 0px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+    .page-header .page-header-top .search-form .input-group {
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+    }
+        .page-header .page-header-top .search-form .input-group .form-control {
+            border: 0;
+            font-size: 13px;
+            padding-right: 20px;
+            font-weight: 300;
+        }
+            .page-header .page-header-top .search-form .input-group .form-control:hover {
+                cursor: pointer;
+            }
+        .page-header .page-header-top .search-form .input-group .input-group-btn .btn.submit {
+            padding: 0;
+            height: 34px;
+            z-index: 3;
+            position: relative;
+            top: 10px;
+            right: 11px;
+        }
+            .page-header .page-header-top .search-form .input-group .input-group-btn .btn.submit > i {
+                font-size: 15px;
+            }
+    .page-header .page-header-top .search-form.open {
+        width: 400px !important;
+        transition: width 0.4s;
+    }
+        .page-header .page-header-top .search-form.open .input-group .form-control {
+            text-indent: 0;
+        }
+            .page-header .page-header-top .search-form.open .input-group .form-control:hover {
+                cursor: text;
+            }
+        .page-header .page-header-top .search-form.open .input-group .input-group-btn .btn.submit {
+            margin-left: 0;
+        }
+
+/*设置顶部布局时搜索框的样式*/
+@media (max-width: 991px) {
+    /* 991px */
+    /* Page header */
+    .page-header .page-header-top .search-form {
+        float: none !important;
+        width: auto;
+        margin: 0 0 0 0;
+    }
+        .page-header .page-header-top .search-form.open {
+            width: auto !important;
+        }
+        .page-header .page-header-top .search-form .input-group .form-control {
+            height: 38px;
+        }
+            .page-header .page-header-top .search-form .input-group .form-control:hover {
+                cursor: text;
+            }
+        .page-header .page-header-top .search-form .input-group .input-group-btn .btn.submit {
+            height: 38px;
+            width: 44px;
+            top: 0;
+            right: 0;
+        }
+            .page-header .page-header-top .search-form .input-group .input-group-btn .btn.submit i {
+                position: relative;
+                top: 13px;
+            }
+}
+
+/*旋转齿轮loading*/
+.loading {
+    /*height: calc(100vh - 260px);*/
+    height: 250px;
+    width: 250px;
+    margin-left: 100px;
+    font-family: "微软雅黑";
+    /*text-align: center;*/
+    float: right;
+    overflow: hidden;
+}
+    .loading h1 {
+        text-transform: uppercase;
+        font-size: 30px;
+        color: #576e81;
+        margin: 30px 0px 0px 0px;
+    }
+    .loading h2 {
+        font-weight: normal;
+        font-size: 18px;
+        color: #F98DB9;
+        margin: 10px 0px 0px 0px;
+    }
+    .loading p {
+        margin: 0 auto;
+    }
+    .loading .loader {
+        height: 250px;
+        position: relative;
+        margin: auto;
+        width: 250px;
+        z-index: 10;
+    }
+    .loading .loader_overlay {
+        width: 150px;
+        height: 150px;
+        background: transparent;
+        /*box-shadow: 0px 0px 0px 1000px rgba(255, 255, 255, 0.67), 0px 0px 19px 0px rgba(0, 0, 0, 0.16) inset;*/
+        border-radius: 100%;
+        z-index: -1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+    .loading .loader_cogs {
+        z-index: -2;
+        width: 100px;
+        height: 100px;
+        top: -120px !important;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+    .loading .loader_cogs__top {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        -webkit-transform-origin: 50px 50px;
+        transform-origin: 50px 50px;
+        -webkit-animation: rotate 10s infinite linear;
+        animation: rotate 10s infinite linear;
+    }
+        .loading .loader_cogs__top div:nth-of-type(1) {
+            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
+        }
+        .loading .loader_cogs__top div:nth-of-type(2) {
+            -webkit-transform: rotate(60deg);
+            transform: rotate(60deg);
+        }
+        .loading .loader_cogs__top div:nth-of-type(3) {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .loading .loader_cogs__top div.top_part {
+            width: 100px;
+            border-radius: 10px;
+            position: absolute;
+            height: 100px;
+            background: #f98db9;
+        }
+        .loading .loader_cogs__top div.top_hole {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            background: white;
+            position: absolute;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    .loading .loader_cogs__left {
+        position: relative;
+        width: 80px;
+        -webkit-transform: rotate(16deg);
+        transform: rotate(16deg);
+        top: 28px;
+        -webkit-transform-origin: 40px 40px;
+        transform-origin: 40px 40px;
+        -webkit-animation: rotate_left 10s .1s infinite reverse linear;
+        animation: rotate_left 7s .1s infinite reverse linear;
+        left: -24px;
+        height: 80px;
+    }
+        .loading .loader_cogs__left div:nth-of-type(1) {
+            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
+        }
+        .loading .loader_cogs__left div:nth-of-type(2) {
+            -webkit-transform: rotate(60deg);
+            transform: rotate(60deg);
+        }
+        .loading .loader_cogs__left div:nth-of-type(3) {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .loading .loader_cogs__left div.left_part {
+            width: 80px;
+            border-radius: 6px;
+            position: absolute;
+            height: 80px;
+            background: #97ddff;
+        }
+        .loading .loader_cogs__left div.left_hole {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            background: white;
+            position: absolute;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    .loading .loader_cogs__bottom {
+        position: relative;
+        width: 60px;
+        top: -65px;
+        -webkit-transform-origin: 30px 30px;
+        transform-origin: 30px 30px;
+        -webkit-animation: rotate_left 10.2s .4s infinite linear;
+        animation: rotate_left 5.2s .4s infinite linear;
+        -webkit-transform: rotate(4deg);
+        transform: rotate(4deg);
+        left: 79px;
+        height: 60px;
+    }
+        .loading .loader_cogs__bottom div:nth-of-type(1) {
+            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
+        }
+        .loading .loader_cogs__bottom div:nth-of-type(2) {
+            -webkit-transform: rotate(60deg);
+            transform: rotate(60deg);
+        }
+        .loading .loader_cogs__bottom div:nth-of-type(3) {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .loading .loader_cogs__bottom div.bottom_part {
+            width: 60px;
+            border-radius: 5px;
+            position: absolute;
+            height: 60px;
+            background: #ffcd66;
+        }
+        .loading .loader_cogs__bottom div.bottom_hole {
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+            background: white;
+            position: absolute;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+/* Animations */
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes rotate_left {
+    from {
+        -webkit-transform: rotate(16deg);
+        transform: rotate(16deg);
+    }
+
+    to {
+        -webkit-transform: rotate(376deg);
+        transform: rotate(376deg);
+    }
+}
+@keyframes rotate_left {
+    from {
+        -webkit-transform: rotate(16deg);
+        transform: rotate(16deg);
+    }
+
+    to {
+        -webkit-transform: rotate(376deg);
+        transform: rotate(376deg);
+    }
+}
+@-webkit-keyframes rotate_right {
+    from {
+        -webkit-transform: rotate(4deg);
+        transform: rotate(4deg);
+    }
+
+    to {
+        -webkit-transform: rotate(364deg);
+        transform: rotate(364deg);
+    }
+}
+@keyframes rotate_right {
+    from {
+        -webkit-transform: rotate(4deg);
+        transform: rotate(4deg);
+    }
+
+    to {
+        -webkit-transform: rotate(364deg);
+        transform: rotate(364deg);
+    }
+}

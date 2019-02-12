@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+    <li class="nav-item start active open">
+        <router-link to="/Views/J_Home/DesktopPage" class="nav-link nav-toggle">
+            <i class="fa fa-home fa-fw"></i>
+            <span class="title">首页（桌面）</span>
+            <span class="selected"></span>
+        </router-link>
+    </li>
+    <!--添加active open默认展开并且是激活状态  v-bind:to="item.url"-->
+    <li class="nav-item start " v-for="item in menusdata">
+        <router-link v-bind:to="toUrl(item.url)" class="nav-link" href="javascript:;">
+            <i v-bind:class="icoClass(item.icon)"></i>
+            <span class="title">{{item.displayName}}</span>
+            <!--<span class="badge badge_danger">6</span>-->
+            <!--<span class="selected"></span>-->
+            <!--添加 open 默认显示展开图标-->
+            @*{{item.items.length}}*@
+            <span class="arrow " v-if="isLeaf(item.items)"></span>
+        </router-link>
+        <!--子菜单-->
+        <sidemenusub v-bind:menusdata="item.items" v-if="isLeaf(item.items)"></sidemenusub>
+    </li>
+</ul>
+
+

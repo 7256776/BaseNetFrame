@@ -1,0 +1,11 @@
+﻿@{
+    //Layout = "~/Views/Shared/_LayoutSide.cshtml";
+    //Layout = "~/Views/Shared/_LayoutTop.cshtml";
+    Layout = GetMainLayout();
+}
+@*<transition name="el-fade-in-linear">*@
+@*name="frame-fade-in-linear"*@
+
+<transition name="frame-fade-in-linear">
+    <router-view></router-view>
+</transition>

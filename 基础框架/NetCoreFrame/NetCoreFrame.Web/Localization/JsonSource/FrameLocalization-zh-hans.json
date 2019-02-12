@@ -1,0 +1,33 @@
+﻿{
+  "Culture": "zh-hans",
+  "Texts": {
+    "系统设置": "系统设置",
+    "菜单管理": "菜单管理",
+    "用户管理": "用户账号",
+    "角色管理": "角色授权",
+    "消息通知": "通知消息",
+    "日志管理": "系统日志",
+    "组织机构": "组织机构",
+    "字典管理": "字典管理",
+    "Login": "登录",
+    "IsPersistent": "记住",
+    "IsRepeat": "您输入的 {0} 重复,请重新输入",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "你没有权限",
+    "ValidationError": "您请求的数据无效!",
+    "InternalServerError": "您的请求发生错误,请刷新页面重试!",
+    "ValidationNarrativeTitle": "在验证过程中检测到以下错误!",
+
+    "DefaultError": "发生一个错误!",
+    "DefaultErrorDetail": "服务端发生错误,请刷新页面重试!",
+    "DefaultError401": "您没有授权!",
+    "DefaultErrorDetail401": "您应该认证(登录)来执行该操作",
+    "DefaultError403": "您未被授权!",
+    "DefaultErrorDetail403": "您未被授权执行该操作.",
+    "DefaultError404": "未找到资源!",
+    "DefaultErrorDetail404": "服务器上找不到请求的资源."
+
+  }
+}
+
+
+  

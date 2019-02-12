@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <el-input type="textarea" v-bind:rows="2" v-model="mesg">
+    </el-input>
+    <el-button type="primary" v-on:click="doSubmit()">随机发送到队列</el-button>
+    <el-button type="primary" v-on:click="doSubmitDirect()">发送到队列B</el-button>
+    <el-button type="primary" v-on:click="doSubmitFanout()">发送到队列AB</el-button>
+    <el-button type="primary" v-on:click="doSubmitTopic1()">发送到匹配队列</el-button>
+    <el-button type="primary" v-on:click="doSubmitTopic2()">发送到匹配队列</el-button>
+    <el-button type="primary" v-on:click="doGetMesg()">刷新</el-button>
+    <el-button type="primary" v-on:click="doClearMessage()">清除</el-button>
+
+    <div class="row">
+        <p v-for="item in mesgList">
+            <b>{{item.msgName}}</b>
+            <span>{{item.msgValue}}</span>
+            <span>{{item.msgDate}}</span>
+        </p>
+    </div>
+</div>
+

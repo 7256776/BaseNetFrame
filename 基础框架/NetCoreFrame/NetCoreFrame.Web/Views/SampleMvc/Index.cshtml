@@ -1,0 +1,234 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Mvc请求示例</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- 浏览器能够响应屏幕宽度 -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- bootstrap基础样式 -->
+    <link href="~/Content/Lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    @* ◢◢◢◢◢基础组件及框架Js ◣◣◣◣◣ *@
+    <!-- babel-polyfill  min 实现对ES6 API的支持 -->
+    <script src="~/Content/Lib/vue/polyfill.js"></script>
+    <!-- jquery主框架 2.2.3.min -->
+    <script src="~/Content/Lib/jQuery/jquery.js"></script>
+    <script src="~/Content/Lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/Lib/cookieJs/js.cookie.min.js"></script>
+
+    @* ◢◢◢◢◢ Vue框架 + Vue路由 ◣◣◣◣◣ *@
+    <script src="~/Content/Lib/vue/vue.js"></script>
+
+    @* ◢◢◢◢◢ ElementUI ◣◣◣◣◣ *@
+    <link href="~/Content/Lib/ElementUI/theme-Chalk/index.css" rel="stylesheet" />
+    <script src="~/Content/Lib/ElementUI/index.js"></script>
+
+    @* ◢◢◢◢◢ AbpJs API ◣◣◣◣◣ *@
+    <script src="~/Abp/Framework/scripts/abp.js"></script>
+    <script src="~/Abp/Framework/scripts/libs/abp.jquery.js"></script>
+
+    <link rel="shortcut icon" href="~/Content/frameCore/img/favicon.ico" />
+
+</head>
+<body >
+    <div class="content" id="SampleMvc">
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamModel">doParamModel</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamIntAndStr">doParamIntAndStr</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamStrAndStr">doParamStrAndModel</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamStr">doParamStr</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamDynamic">doParamDynamic</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamGuid">doParamGuid</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamArr">doParamArr</button>
+        <p></p>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamModelEx">doParamModelEx</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamMultiDynamic">doParamMultiDynamic</button>
+        <button type="button" id="back-btn" class="btn btn-default" v-on:click="doParamDynamicEx">doParamDynamicEx</button>
+
+    </div>
+</body>
+</html>
+
+<script>
+
+    new Vue({
+        el: '#SampleMvc',
+        components: { },
+        data: function () {
+            return {
+                sampleModel: {
+                    id: 123,
+                    name: "名称",
+                    isBool: true
+                },
+                userModel: {
+                    id: 456,
+                    name: "其他名称",
+                    isBool: true
+                },
+                sampleStr: {
+                    name1: "名称11",
+                    name2: "名称22"
+                },
+                guid: "be98dca0-7a85-48b8-800f-1a06021e8fca",
+                intData: 98765,
+                strData: "字符串参数",
+                arr: ["1", "2", "3", "4"]
+            };
+        },
+        created: function () {   },
+        methods: {
+            doParamModel: function () {
+                var _this = this;
+                //$.ajax({
+                //    url: '/SampleMvc/ParamModel',
+                //    type: "POST",
+                //    data: JSON.stringify(_this.sampleModel),
+                //    contentType: 'application/json',
+                //    complete: function (e, state) {
+                //        debugger;
+                //        console.log(e);
+                //    }
+                //});//
+
+                abp.ajax({
+                    url: '/SampleMvc/ParamModel',
+                    data: JSON.stringify(_this.sampleModel),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            },
+            doParamStr: function () {
+                var _this = this;
+                debugger
+                abp.ajax({
+                    url: '/SampleMvc/ParamStr',
+                    data: JSON.stringify(_this.strData),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            },
+            doParamIntAndStr: function () {
+                var _this = this;
+                debugger
+                abp.ajax({
+                    url: '/SampleMvc/ParamIntAndStr/url参数',
+                    data: JSON.stringify(_this.strData),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            },
+            doParamStrAndModel: function () {
+                var _this = this;
+                debugger
+                abp.ajax({
+                    url: '/SampleMvc/ParamStrAndStr/id参数',
+                    data: JSON.stringify(_this.sampleModel),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            },
+            doParamGuid: function () {
+                var _this = this;
+                debugger
+                abp.ajax({
+                    url: '/SampleMvc/ParamGuid',
+                    data: JSON.stringify(_this.guid),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            },
+            doParamArr: function () {
+                var _this = this;
+                debugger
+                abp.ajax({
+                    url: '/SampleMvc/ParamArr',
+                    data: JSON.stringify(_this.arr),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+            },
+            doParamDynamic: function () {
+                var _this = this;
+                abp.ajax({
+                    url: '/SampleMvc/ParamDynamic',
+                    data: JSON.stringify(_this.sampleModel),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+
+            },
+            doParamModelEx: function () {
+                var _this = this;
+                abp.ajax({
+                    url: '/SampleMvc/ParamModelEx',
+                    data: JSON.stringify({ data: _this.sampleModel}),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+
+            },
+            doParamMultiDynamic: function () {
+                var _this = this;
+                abp.ajax({
+                    url: '/SampleMvc/ParamMultiDynamic',
+                    data: JSON.stringify(
+                        {
+                            params: {
+                                data1: _this.sampleModel,
+                                data2: _this.userModel
+                            },
+                            pageIndex: 1,
+                            sorting: "排序字段",
+                            maxResultCount: 12
+                        }
+                    ),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+
+            },
+            doParamDynamicEx: function () {
+                var _this = this;
+                abp.ajax({
+                    url: '/SampleMvc/ParamDynamicEx',
+                    data: JSON.stringify(
+                        {
+                            pageIndex: 1,
+                            sorting: "排序字段",
+                            maxResultCount: 12
+                        }),
+                    //type: 'POST',
+                    //contentType: 'application/json'
+                }).done(function (data) {
+                    console.log(data);
+                });
+
+            }
+
+        }
+    });
+</script>

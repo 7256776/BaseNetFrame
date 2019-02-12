@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<div class="row">
+    <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+        <div class="row" style="margin-right:0px;">
+            <div class="col-md-7 col-sm-7" style="text-align:left;">
+                <el-button-group>
+                    <el-button size="mini" type="primary" icon="fa fa-check-square-o fa-lg" v-on:click="saveSqlForm()">Sql保存</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-check-square-o fa-lg" v-on:click="resetFields()">重置</el-button>
+                </el-button-group>
+            </div>
+            <div class="col-md-5 col-sm-5" style="text-align:right;">
+                <el-select v-model="pageSetting.tableId"
+                           default-first-option
+                           v-on:change="initFieldData"
+                           placeholder="请选择表名">
+                    <el-option v-for="sel in pageSetting.tableData"
+                               v-bind:key="sel.id"
+                               v-bind:label="sel.tableName"
+                               v-bind:value="sel.id">
+                    </el-option>
+                </el-select>
+
+            </div>
+        </div>
+    </div>
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+        <div style="width:900px;">
+
+          
+            <el-form v-bind:model="formData" v-bind:rules="formRules" label-position="left" v-bind:inline="true" v-bind:status-icon="true" label-suffix=":" label-width="100px" ref="metadataForm">
+
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+                <el-form-item v-for="item in metadata" v-bind:key="item.id" v-bind:label="item.fieldAlias" v-bind:prop="item.fieldCode">
+                    <el-input v-if="item.uiType=='TextBox'"
+                              v-model="formData[item.fieldCode]"
+                              placeholder="文本框"
+                              v-bind:style="setCol(item)">
+                    </el-input>
+
+                    <el-input v-else-if="item.uiType=='TextArea'" type="textarea"
+                              v-model="formData[item.fieldCode]"
+                              placeholder="长文本"
+                              v-bind:style="setCol(item)">
+                    </el-input>
+
+                    <el-input-number v-else-if="item.uiType=='Number'"
+                                     v-model="formData[item.fieldCode]"
+                                     v-bind:step="1"
+                                     v-bind:style="setCol(item)">
+                    </el-input-number>
+
+                    <el-select v-else-if="item.uiType=='DropdownMultipleList'"
+                               v-model="formData[item.fieldCode]"
+                               multiple
+                               default-first-option
+                               placeholder="多选下拉框"
+                               v-bind:style="setCol(item)">
+                        <el-option v-for="dict in setDict(item)"
+                                   v-bind:key="dict.value"
+                                   v-bind:label="dict.text"
+                                   v-bind:value="dict.value">
+                        </el-option>
+                    </el-select>
+
+                    <el-select v-else-if="item.uiType=='DropdownList'"
+                               v-model="formData[item.fieldCode]"
+                               default-first-option
+                               placeholder="下拉框"
+                               v-bind:style="setCol(item)">
+                        <el-option v-for="dict in setDict(item)"
+                                   v-bind:key="dict.value"
+                                   v-bind:label="dict.text"
+                                   v-bind:value="dict.value">
+                        </el-option>
+                    </el-select>
+
+                    <el-date-picker v-else-if="item.uiType=='Date'"
+                                    v-model="formData[item.fieldCode]"
+                                    type="date"
+                                    v-bind:style="setCol(item)">
+                    </el-date-picker>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+        <el-table v-bind:data="tableOptions.tableData"
+                  ref="dataGrid"
+                  stripe
+                  border
+                  highlight-current-row
+                  tooltip-effect="light"
+                  style="width: 100%;height:100%;"
+                  v-on:row-click="doRowclick">
+            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+
+            <el-table-column v-for="item in metadata" v-bind:key="item.id"  v-bind:prop="item.fieldCode" v-bind:label="item.fieldAlias" ></el-table-column>
+        
+
+        </el-table>
+        
+    </div>
+
+
+
+</div>
+

@@ -1,0 +1,16 @@
+{
+  //自定义页面资源文件配置
+  "CustomWebResource": {
+    "style": [
+      "/SampleResource/css/customStyle.css"
+    ],
+
+    "scriptBottom": [],
+
+    "scriptTop": [
+      "/SampleResource/js/customJavascript.js",
+      "/SampleResource/js/gt.js"
+    ]
+  }
+
+}
