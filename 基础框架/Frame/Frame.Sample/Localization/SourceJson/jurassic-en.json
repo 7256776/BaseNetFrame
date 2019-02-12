@@ -1,0 +1,15 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "系统设置": "SystemSettings",
+    "菜单管理": "MenuManagement",
+    "用户管理": "UserAccount",
+    "角色管理": "RoleAuth",
+    "消息通知": "Notifications",
+    "日志管理": "SystemLog",
+    "Login": "Login",
+    "IsPersistent": "IsPersistent",
+    "IsRepeat": "You enter the {0} of the repeat, please input again",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "nokey"
+  }
+}

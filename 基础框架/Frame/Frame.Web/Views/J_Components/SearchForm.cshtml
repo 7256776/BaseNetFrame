@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+ 
+<div>
+
+    <!-- 设置 "search-form-expanded" 到 "search-form" 后 将展开搜索框 -->
+    @*<div class="search-form search-form-expanded"  v-if="frameSearchComponent!='never'">*@
+    <!-- class 添加 "hide" 设置隐藏 -->
+    <div class="input-group" v-if="frameSearchComponent!='never'">
+        <input type="text" class="form-control input-sm" style="background-color:#E9ECF3;height:34px;" placeholder="请输入关键字..." name="query" v-model="searchText">
+
+        <div class="input-group-btn" v-if="frameSearchComponent=='full'">
+            <slot v-bind:callbackFn="doSearch"></slot>
+        </div>
+
+        <div class="input-group-btn" style="padding-left:1px;">
+            <a v-on:click="doSearch()" href="javascript:;" class="btn " style="background-color:#E9ECF3;border-radius:0em 25em 25em 0em  ">
+                <i class="fa fa-search"></i>
+            </a>
+        </div>
+
+    </div>
+    @*</div>*@
+</div>
+ 

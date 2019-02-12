@@ -1,0 +1,165 @@
+﻿@{
+    Layout = null;
+}
+<div  >
+    <div class="row"  >
+        <div class="col-lg-9 col-md-8 col-sm-8" style="padding-left:0px;padding-right:5px;">
+
+            <div style="padding:5px;border:1px solid #DCDFE6;margin-bottom:2px; ">
+                <div class="row" style="margin-left:0px;margin-right:0px;">
+                    <div class="col-md-7 col-sm-7" style="text-align:left;padding-left:0px;">
+                        <el-button-group>
+                            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelData()" ref="btnDel">&nbsp;&nbsp;清空所有日志</el-button>
+                        </el-button-group>
+                    </div>
+                    <div class="col-md-5 col-sm-5" style="text-align:right;padding-right:0px;">
+                        <el-pagination background
+                                       v-on:size-change="handleSizeChange"
+                                       v-on:current-change="handleCurrentChange"
+                                       v-bind:current-page="pageOptions.pageIndex"
+                                       v-bind:total="pageOptions.total"
+                                       layout="total, prev, next">
+                        </el-pagination>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-left:0px;margin-right:0px;">
+                <el-table v-bind:data="tableOptions.tableFiltersData"
+                          ref="dataFiltersGrid"
+                          border
+                          highlight-current-row
+                          tooltip-effect="light"
+                          style="width: 100%;">
+                    <el-table-column v-bind:fixed="true" type="index"></el-table-column>
+                    <el-table-column label="操作人(模糊筛选)" prop="userName" width="150">
+                        <template slot-scope="scope">
+                            <el-input v-model="scope.row.userName" placeholder="用户名称/账号" v-on:change="doSearchLog"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="serviceName" label="服务名称(模糊筛选)" show-overflow-tooltip>
+                        <template slot-scope="scope">
+                            <el-input v-model="scope.row.serviceName" placeholder="服务名称" v-on:change="doSearchLog"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="methodName" label="方法名称(模糊筛选)" width="150" show-overflow-tooltip>
+                        <template slot-scope="scope">
+                            <el-input v-model="scope.row.methodName" placeholder="方法名称" v-on:change="doSearchLog"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="executionTime" label="执行时间(区间)" width="180" show-overflow-tooltip>
+                        <template slot-scope="scope">
+                            <el-popover ref="popoverDate" placement="bottom" width="420" trigger="hover">
+                                <el-date-picker v-model="scope.row.executionTime"
+                                                type="datetimerange"
+                                                v-bind:picker-options="pickerOptions"
+                                                range-separator="至"
+                                                start-placeholder="开始日期"
+                                                end-placeholder="结束日期"
+                                                v-on:change="doSetDate"
+                                                align="center">
+                                </el-date-picker>
+                            </el-popover>
+                            <el-button v-popover:popoverDate style="width:100%">{{scope.row.dateRange?scope.row.dateRange:"设置日期区间"}}</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="" label="筛选" width="80" show-overflow-tooltip>
+                        <template slot-scope="scope">
+                            <el-button-group>
+                                @*<el-tooltip content="筛选" placement="top">
+                                    <el-button type="primary" icon="el-icon-search" circle v-on:click="doSearchLog"></el-button>
+                                </el-tooltip>*@
+                                <el-tooltip content="移除筛选条件" placement="top">
+                                    <el-button type="warning" icon="el-icon-delete" circle v-on:click="doClear"></el-button>
+                                </el-tooltip>
+                            </el-button-group>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-table v-bind:data="tableOptions.tableData"
+                          ref="dataGrid"
+                          @*stripe*@
+                          border
+                          v-bind:show-header="true"
+                          highlight-current-row
+                          tooltip-effect="light"
+                          style="width: 100%;"
+                          v-on:selection-change="doRowSelectChange"
+                          v-on:row-click="doRowclick">
+                    <el-table-column v-bind:fixed="true" type="index"></el-table-column>
+                    <el-table-column label="操作人" width="150">
+                        <template slot-scope="scope">
+                            {{scope.row.userNameCn}} [{{scope.row.userCode}}]
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="serviceName" label="服务名称" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="methodName" label="方法名称" width="150" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="executionTime" label="执行时间" width="180" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="exception" label="执行状态" width="80" show-overflow-tooltip>
+                        <template slot-scope="scope">
+                            <el-tag :type="scope.row.exception? 'danger' : 'success'" close-transition>{{scope.row.exception? '异常' : '正常'}}</el-tag>
+                        </template>
+                    </el-table-column>
+
+                </el-table>
+                <div style="text-align:right;padding-top:4px;">
+                    <el-pagination background
+                                   v-bind:pager-count="5"
+                                   v-on:size-change="handleSizeChange"
+                                   v-on:current-change="handleCurrentChange"
+                                   v-bind:current-page="pageOptions.pageIndex"
+                                   v-bind:page-sizes="pageOptions.pageSizes"
+                                   v-bind:page-size="pageOptions.pageSize"
+                                   v-bind:total="pageOptions.total"
+                                   layout="total, sizes, prev, pager, next, jumper">
+                    </el-pagination>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4" style="padding-left:0px;padding-right:0px;">
+            <div class="row" style="margin-left:0px;margin-right:0px;">
+                <el-form v-bind:model="formData"  
+                         ref="formLogData"
+                         label-position="top"
+                         v-bind:inline="false"
+                         v-bind:status-icon="true"
+                         label-suffix=":"
+                         label-width="100px">
+                    <el-form-item label="" prop="clientName">
+                        <el-input v-model="formData.clientName" readonly>
+                            <template slot="prepend">
+                                <div style="width:80px;">客户端名称</div>
+                            </template>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="" prop="clientIpAddress">
+                        <el-input v-model="formData.clientIpAddress"  readonly>
+                            <template slot="prepend">
+                                <div style="width:80px;">客户端IP</div>
+                            </template>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="" prop="browserInfo">
+                        <el-input v-model="formData.browserInfo" readonly>
+                            <template slot="prepend">
+                                <div style="width:80px;">客户端浏览器</div>
+                            </template>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="" prop="exception" >
+                        <el-input type="textarea" v-model="formData.exception" v-bind:autosize="{ minRows: 1,maxRows: 10}" placeholder="没有异常信息" readonly>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="" prop="parameters" >
+                        <div>
+                        </div>
+                    </el-form-item>
+                </el-form>
+                <div style="max-height:calc(100vh);overflow:auto;border:1px solid #C8CDF3;">
+                    <jsonformat v-bind:jsonObj="formData.formatParameters">
+                    </jsonformat>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

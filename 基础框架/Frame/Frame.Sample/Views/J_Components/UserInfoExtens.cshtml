@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+ 
+<div>
+    <el-form v-bind:model="formDataEx"
+             @*v-bind:rules="formRules"*@
+             ref="formUserDataEx"
+             label-position="left"
+             v-bind:inline="true"
+             v-bind:status-icon="true"
+             size="medium"
+             label-suffix=":"
+             label-width="100px">
+
+
+        <el-form-item label="用户别名" prop="userNameEx">
+            <el-input v-model="formDataEx.userNameEx" style="width:165px" clearable suffix-icon="fa fa-id-card-o" v-bind:maxlength="30">
+            </el-input>
+        </el-form-item>
+
+
+
+        <el-form-item label="职务" prop="job">
+            <el-input v-model="formDataEx.job" style="width:165px" clearable suffix-icon="fa fa-id-card-o" v-bind:maxlength="30">
+            </el-input>
+        </el-form-item>
+
+
+    </el-form>
+   
+
+</div>
+ 

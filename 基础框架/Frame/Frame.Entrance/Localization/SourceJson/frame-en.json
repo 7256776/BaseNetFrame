@@ -1,0 +1,25 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "系统设置": "SystemSettings",
+    "菜单管理": "MenuManagement",
+    "用户管理": "UserAccount",
+    "角色管理": "RoleAuth",
+    "消息通知": "Notifications",
+    "日志管理": "SystemLog",
+    "组织机构": "Organization",
+    "Login": "Login",
+    "IsPersistent": "IsPersistent",
+    "IsRepeat": "You enter the {0} of the repeat, please input again",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "nokey",
+
+    "DefaultError": "An error has occurred!",
+    "DefaultErrorDetail": "Error detail not sent by server.",
+    "DefaultError401": "You are not authenticated!",
+    "DefaultErrorDetail401": "You should be authenticated (sign in) in order to perform this operation.",
+    "DefaultError403": "You are not authorized!",
+    "DefaultErrorDetail403": "You are not allowed to perform this operation.",
+    "DefaultError404": "Resource not found!",
+    "DefaultErrorDetail404": "The resource requested could not found on the server."
+  }
+}

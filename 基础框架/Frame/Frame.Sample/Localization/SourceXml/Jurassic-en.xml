@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="en">
+  <texts>
+    <!--text 的name区分大小写-->
+    <text name="UserCode" value="英文啊XML" />
+
+     
+  </texts>
+</localizationDictionary>

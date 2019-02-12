@@ -1,0 +1,140 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div style="padding:5px 5px 3px 5px ;margin-bottom:2px; border:1px solid #DCDFE6;">
+
+        <div class="row">
+            <div class="col-md-7 col-sm-7" style="text-align:left;">
+                <el-button-group>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAdd()">新增</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()">编辑</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDel()">删除</el-button>
+                </el-button-group>
+            </div>
+            <div class="col-md-5 col-sm-5" style="text-align:right;">
+                <el-input placeholder="关键字查询" v-model="pageOptions.searchTxt" size="mini" style="width:300px;" clearable v-on:change="getUserList">
+                    <el-button slot="append" icon="el-icon-search" v-on:click="getUserList"></el-button>
+                </el-input>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+        <el-table v-bind:data="tableOptions.tableData"
+                  ref="dataGrid"
+                  stripe
+                  border
+                  highlight-current-row
+                  tooltip-effect="light"
+                  style="width: 100%;height:100%;"
+                  v-on:selection-change="doRowSelectChange"
+                  v-on:row-click="doRowclick">
+            <el-table-column v-bind:fixed="true" type="index"></el-table-column>
+            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+            <el-table-column prop="dataString" label="字符串" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="dataNum" label="数字类型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="dataBool" label="布尔类型" show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{scope.row.dataBool}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="dataTime" label="日期类型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="dataArray" label="数组类型" show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{scope.row.dataArray}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="dataObject" label="对象类型" show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{scope.row.dataObject}}
+                </template>
+            </el-table-column>
+
+        </el-table>
+        <div style="text-align:right;padding-top:3px;">
+            <el-pagination background
+                           v-on:size-change="handleSizeChange"
+                           v-on:current-change="handleCurrentChange"
+                           v-bind:current-page="pageOptions.pageIndex"
+                           v-bind:page-sizes="[10, 20, 40]"
+                           v-bind:page-size="10"
+                           v-bind:total="pageOptions.total"
+                           layout="total, sizes, prev, pager, next, jumper">
+            </el-pagination>
+        </div>
+    </div>
+
+
+    <el-dialog title="基础信息"
+               v-bind:visible.sync="pageOptions.formDialog"
+               width="600px">
+        <div> 
+            <el-form v-bind:model="formData"
+                     @*v-bind:rules="formRules"*@
+                     ref="formUserData"
+                     label-position="left"
+                     v-bind:inline="false"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+
+                <el-form-item label="字符串" prop="dataString">
+                    <el-input v-model="formData.dataString" clearable style="width:100%;">
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="数字类型" prop="dataNum">
+                    <el-input-number v-model="formData.dataNum" clearable style="width:100%;">
+                    </el-input-number>
+                </el-form-item>
+
+                <el-form-item label="布尔类型" prop="dataBool">
+                    <el-select v-model="formData.dataBool"
+                               default-first-option 
+                               style="width:100%;"
+                               clearable
+                               placeholder="请选择">
+                        <el-option label="true" v-bind:value="true"></el-option>
+                        <el-option label="false" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="日期类型" prop="dataTime">
+                    <el-date-picker v-model="formData.dataTime"
+                                    type="datetime" 
+                                    style="width:100%;"
+                                    placeholder="选择日期"
+                                   >
+                    </el-date-picker>
+                </el-form-item>
+
+                <el-form-item label="数组类型" prop="dataArray">
+                    <el-cascader v-bind:props="defaultProps"
+                                 v-bind:options="treeData" 
+                                 style="width:100%;"
+                                 v-model="formData.dataArray"
+                                 change-on-select
+                                 clearable
+                                 suffix-icon="fa fa-list-ol"
+                                 placeholder="数组类型">
+                    </el-cascader>
+
+                </el-form-item>
+
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+
+            </el-form>
+
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="pageOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+</div>

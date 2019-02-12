@@ -1,0 +1,64 @@
+﻿@model Abp.Web.Mvc.Models.ErrorViewModel
+@{
+    Layout = GetMainLayout();
+}
+
+<div class="row">
+    <div class="col-md-5 ">
+        <div class="loading">
+            <div class='loader'>
+                <div class='loader_overlay'></div>
+                <div class='loader_cogs'>
+                    <div class='loader_cogs__top'>
+                        <div class='top_part'></div>
+                        <div class='top_part'></div>
+                        <div class='top_part'></div>
+                        <div class='top_hole'></div>
+                    </div>
+                    <div class='loader_cogs__left'>
+                        <div class='left_part'></div>
+                        <div class='left_part'></div>
+                        <div class='left_part'></div>
+                        <div class='left_hole'></div>
+                    </div>
+                    <div class='loader_cogs__bottom'>
+                        <div class='bottom_part'></div>
+                        <div class='bottom_part'></div>
+                        <div class='bottom_part'></div>
+                        <div class='bottom_hole'></div>
+                    </div>
+
+                    <p>loading </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7 page-404" style="text-align:left;padding-top:20px;">
+        @*<div class="number font-green">404</div>*@
+        @*<img src="~/Content/frameCore/img/bye.gif" />*@
+        <div class="details">
+            <h3>您的请求发生错误</h3>
+            <p>
+                @(!string.IsNullOrEmpty(Model.ErrorInfo.Details) ? Model.ErrorInfo.Details : Model.ErrorInfo.Message)
+                <br />
+                @(Model.ErrorInfo.Message == Model.Exception.Message ? "" : Model.Exception.Message)
+                <br />
+                <a href="/J_home/Index"> 返回首页 </a>
+            </p>
+            <form action="#" style="display:none;">
+                <div class="input-group input-medium">
+                    <input type="text" class="form-control" placeholder="keyword...">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn green">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+       
+ 
+
+

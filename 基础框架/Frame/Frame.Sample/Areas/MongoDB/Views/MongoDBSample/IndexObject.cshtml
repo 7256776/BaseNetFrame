@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div style="padding:5px 5px 3px 5px ;margin-bottom:2px; border:1px solid #DCDFE6;">
+
+        <div class="row">
+            <div class="col-md-7 col-sm-7" style="text-align:left;">
+                <el-button-group>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doShowForm('add')">新增</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doShowForm('updata')">更新</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doShowForm('replace')">替换</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doShowForm('del')">删除</el-button>
+                </el-button-group>
+            </div>
+            <div class="col-md-5 col-sm-5" style="text-align:right;">
+                <el-input placeholder="关键字查询" v-model="pageOptions.searchTxt" size="mini" style="width:300px;" clearable v-on:change="getUserList">
+                    <el-button slot="append" icon="el-icon-search" v-on:click="getUserList"></el-button>
+                </el-input>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+        <el-table v-bind:data="tableOptions.tableData"
+                  ref="dataGrid"
+                  stripe
+                  border
+                  highlight-current-row
+                  tooltip-effect="light"
+                  style="width: 100%;height:100%;"
+                  v-on:selection-change="doRowSelectChange"
+                  v-on:row-click="doRowclick">
+            <el-table-column v-bind:fixed="true" type="index"></el-table-column>
+            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+            <el-table-column prop="dataObject" label="对象类型" show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{scope.row}}
+                </template>
+            </el-table-column>
+
+        </el-table>
+        <div style="text-align:right;padding-top:3px;">
+            <el-pagination background
+                           v-on:size-change="handleSizeChange"
+                           v-on:current-change="handleCurrentChange"
+                           v-bind:current-page="pageOptions.pageIndex"
+                           v-bind:page-sizes="[10, 20, 40]"
+                           v-bind:page-size="10"
+                           v-bind:total="pageOptions.total"
+                           layout="total, sizes, prev, pager, next, jumper">
+            </el-pagination>
+        </div>
+    </div>
+
+
+    <el-dialog title="基础信息"
+               v-bind:visible.sync="pageOptions.formDialog"
+               width="600px">
+        <div> 
+            <el-form v-bind:model="formData"
+                     @*v-bind:rules="formRules"*@
+                     ref="formUserData"
+                     label-position="left"
+                     v-bind:inline="false"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+
+                <el-form-item label="Filter对象" prop="dataString" v-show="formType != 'add'">
+                    <el-input v-model="formData.filterData" type="textarea" clearable >
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="JSON对象" prop="dataString"  v-show="formType != 'del'" >
+                    <el-input v-model="formData.dataString" type="textarea" clearable v-bind:autosize="txtOption">
+                    </el-input>
+                </el-form-item>
+
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+
+            </el-form>
+
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="pageOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doMongoObjectAdd()" icon="fa fa-check-square-o fa-lg" v-show="formType == 'add'">新 增</el-button>
+            <el-button type="primary" v-on:click="doMongoObjectEdit()" icon="fa fa-check-square-o fa-lg" v-show="formType == 'updata'">更 新</el-button>
+            <el-button type="primary" v-on:click="doMongoObjectReplace()" icon="fa fa-check-square-o fa-lg" v-show="formType == 'replace'">替 换</el-button>
+            <el-button type="primary" v-on:click="doDel()" icon="fa fa-check-square-o fa-lg" v-show="formType == 'del'">删 除</el-button>
+        </div>
+    </el-dialog>
+</div>

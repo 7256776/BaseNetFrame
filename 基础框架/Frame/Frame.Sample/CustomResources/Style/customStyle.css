@@ -1,0 +1,24 @@
+﻿/*搜索框扩展菜单样式*/
+.frame-dropdown-menu-list {
+    padding-right: 0 !important;
+    padding-left: 0;
+    list-style: none
+}
+
+    .frame-dropdown-menu-list > li:first-child a {
+        border-top: none
+    }
+
+    .frame-dropdown-menu-list > li > a {
+        display: block;
+        clear: both;
+        font-weight: 300;
+        line-height: 20px;
+        white-space: normal;
+        font-size: 13px;
+        padding: 16px 15px 18px;
+        text-shadow: none;
+        text-decoration: none;
+        color: #dadce4;
+        border-bottom: 1px solid #dadce4 !important;
+    }

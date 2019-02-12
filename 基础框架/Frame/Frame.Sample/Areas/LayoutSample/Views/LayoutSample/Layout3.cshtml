@@ -1,0 +1,199 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12" style="padding-left:0px;padding-right:5px;">
+        <div class="todo-ui">
+            <div class="todo-sidebar" style="margin-right:5px;border:1px solid #DCDFE6;">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
+                            <span class="caption-subject font-green-sharp bold uppercase ">标题 </span>
+                            <span class="caption-helper visible-sm-inline-block visible-xs-inline-block"></span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <a class="btn green btn-circle btn-outline btn-sm todo-projects-config" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    设置 &nbsp;<i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a ><i class="fa fa fa-file-text-o fa-lg"></i>新增</a>
+                                    </li>
+                                    <li>
+                                        <a ><i class="fa fa-trash-o fa-lg"></i>删除</a>
+                                    </li>
+                                    <li class="divider"> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body todo-project-list-content" style="min-height:300px">
+                        <div class="todo-project-list">
+                            <ul class="nav nav-stacked">
+                                <li v-for="item in 5" v-bind:class="item==1 ? 'active' : ''">
+                                    <a v-on:click="doNotificationsClick(item.id)">
+                                        <i class="fa fa-bell-o fa-lg"></i>
+                                        标题名称{{item}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="todo-content" style="border:1px solid #DCDFE6;">
+                <div class="profile-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title tabbable-line">
+                                    <div class="caption caption-md">
+                                        <i class="icon-globe theme-font hide"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">标题</span>
+                                    </div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_subscriptions" data-toggle="tab">Table1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_radioSends" data-toggle="tab">Table2</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_subscriptions">
+                                            <div style="padding:5px 5px 3px 5px ;margin-bottom:2px; border:1px solid #DCDFE6;">
+                                                <div class="row">
+                                                    <div class="col-md-7 col-sm-7" style="text-align:left;">
+                                                        <el-button-group>
+                                                            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg">新增</el-button>
+                                                            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg">编辑</el-button>
+                                                            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg">删除</el-button>
+                                                        </el-button-group>
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-5" style="text-align:right;">
+                                                        <el-input placeholder="关键字查询" v-model="pageOptions.searchTxt" size="mini" clearable v-on:change="getUserList">
+                                                            <el-button slot="append" icon="el-icon-search" v-on:click="getUserList"></el-button>
+                                                        </el-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="padding:5px;border:1px solid #DCDFE6;">
+                                                <el-table v-bind:data="tableOptions.tableData"
+                                                          ref="dataGrid"
+                                                          stripe
+                                                          border
+                                                          highlight-current-row
+                                                          tooltip-effect="light"
+                                                          style="width: 100%;height:100%;"
+                                                          v-on:selection-change="doRowSelectChange"
+                                                          v-on:row-click="doRowclick">
+                                                    <el-table-column v-bind:fixed="true" type="index"></el-table-column>
+                                                    <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                                                    <el-table-column prop="title1" label="标题名称1"></el-table-column>
+                                                    <el-table-column prop="title2" label="标题名称2"></el-table-column>
+                                                    <el-table-column prop="title3" label="标题名称3"></el-table-column>
+                                                    <el-table-column prop="title4" label="标题名称4"></el-table-column>
+                                                    <el-table-column prop="title5" label="标题名称5"></el-table-column>
+
+                                                </el-table>
+                                                <div style="text-align:right;padding-top:3px;">
+                                                    <el-pagination background
+                                                                   v-on:size-change="handleSizeChange"
+                                                                   v-on:current-change="handleCurrentChange"
+                                                                   v-bind:current-page="pageOptions.pageIndex"
+                                                                   v-bind:page-sizes="[10, 20, 40]"
+                                                                   v-bind:page-size="10"
+                                                                   v-bind:total="pageOptions.total"
+                                                                   layout="total, sizes, prev, pager, next, jumper">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab_radioSends">
+                                            <div style="padding:5px 5px 3px 5px ;margin-bottom:2px; border:1px solid #DCDFE6;">
+                                                <div class="row">
+                                                    <div class="col-md-7 col-sm-7" style="text-align:left;">
+                                                        <el-button-group>
+                                                            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg">新增</el-button>
+                                                            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg">编辑</el-button>
+                                                            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg">删除</el-button>
+                                                            <el-button size="mini" type="primary" icon="fa fa-save fa-lg">保存</el-button>
+                                                        </el-button-group>
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-5" style="text-align:right;">
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="padding:5px 5px 5px 5px;border:1px solid #DCDFE6;">
+                                                <div style="width:650px;">
+
+                                                    <el-form v-bind:model="formData"
+                                                             v-bind:rules="formRules"
+                                                             ref="formInfoData"
+                                                             label-position="left"
+                                                             v-bind:inline="true"
+                                                             v-bind:status-icon="true"
+                                                             label-suffix=":"
+                                                             label-width="100px">
+
+                                                        <el-form-item label="文本框" prop="InputText">
+                                                            <el-input v-model="formData.InputText" style="width:475px" clearable placeholder="文本框" suffix-icon="fa fa-list-ol" v-bind:maxlength="50">
+                                                            </el-input>
+                                                        </el-form-item>
+
+                                                        <el-form-item label="选择框" prop="InputSelect">
+                                                            <el-select v-model="formData.InputSelect"
+                                                                       default-first-option
+                                                                       clearable
+                                                                       style="width:180px"
+                                                                       placeholder="请选择">
+                                                                <el-option label="开放模式" value="1">
+                                                                    <span style="float: left">选项一</span>
+                                                                    <span style="float: right; color: #8492a6; font-size: 13px">(选项描述)</span>
+                                                                </el-option>
+                                                                <el-option label="登陆模式" value="2">
+                                                                    <span style="float: left">选项二</span>
+                                                                    <span style="float: right; color: #8492a6; font-size: 13px">(选项描述)</span>
+                                                                </el-option>
+                                                                <el-option label="授权模式" value="3">
+                                                                    <span style="float: left">选项三</span>
+                                                                    <span style="float: right; color: #8492a6; font-size: 13px">(选项描述)</span>
+                                                                </el-option>
+                                                            </el-select>
+                                                        </el-form-item>
+
+                                                        <el-form-item label="数字" prop="InputNum">
+                                                            <el-input-number v-model="formData.InputNum" :step="1" style="width:180px"></el-input-number>
+                                                        </el-form-item>
+
+                                                        <el-form-item label="长文本" prop="InputTextarea">
+                                                            <el-input v-model="formData.InputTextarea"
+                                                                      type="textarea"
+                                                                      v-bind:maxlength="150"
+                                                                      style="width:475px;"
+                                                                      autosize
+                                                                      placeholder="请输入注释信息">
+                                                            </el-input>
+                                                        </el-form-item>
+
+                                                    </el-form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

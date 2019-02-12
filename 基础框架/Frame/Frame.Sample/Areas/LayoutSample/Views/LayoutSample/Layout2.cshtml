@@ -1,0 +1,122 @@
+﻿@{
+    Layout = null;
+}
+<div class="row">
+    <el-container>
+        <el-aside width="250px">
+            <div style="height:100%;padding:5px;border:1px solid #DCDFE6;">
+                <el-tree ref="treeData"
+                         style="min-height:525px;"
+                         v-bind:data="treeData"
+                         v-bind:props="defaultProps"
+                         node-key="Id"
+                         highlight-current
+                         v-bind:expand-on-click-node="false"
+                         accordion
+                         v-bind:default-expand-all="true"
+                         v-on:node-click="doNodeClick">
+
+                    <span slot-scope="scope">
+                        <i v-bind:class="scope.node.level>1?'fa fa-th':'fa fa-th-large'"></i>
+                        <span>{{ scope.node.label }}</span>
+                    </span>
+                </el-tree>
+            </div>
+        </el-aside>
+        <el-main style="padding:0px 5px 0px 5px;">
+
+            <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+                <el-button-group>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " >新增</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-save fa-lg" >保存</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" >删除</el-button>
+                </el-button-group>
+            </div>
+
+            <div style="padding:0px 5px 5px 5px;border:1px solid #DCDFE6;">
+                <div style="width:650px;">
+
+                    <el-form v-bind:model="formData"
+                             v-bind:rules="formRules"
+                             ref="formInfoData"
+                             label-position="left"
+                             v-bind:inline="true"
+                             v-bind:status-icon="true"
+                             label-suffix=":"
+                             label-width="100px">
+
+                        <el-form-item label="文本框" prop="InputText">
+                            <el-input v-model="formData.InputText" style="width:475px" clearable placeholder="文本框" suffix-icon="fa fa-list-ol" v-bind:maxlength="50">
+                            </el-input>
+                        </el-form-item>
+
+                        <el-form-item label="选择框" prop="InputSelect">
+                            <el-select v-model="formData.InputSelect"
+                                       default-first-option
+                                       clearable
+                                       style="width:180px"
+                                       placeholder="请选择">
+                                <el-option label="开放模式" value="1">
+                                    <span style="float: left">选项一</span>
+                                    <span style="float: right; color: #8492a6; font-size: 13px">(选项描述)</span>
+                                </el-option>
+                                <el-option label="登陆模式" value="2">
+                                    <span style="float: left">选项二</span>
+                                    <span style="float: right; color: #8492a6; font-size: 13px">(选项描述)</span>
+                                </el-option>
+                                <el-option label="授权模式" value="3">
+                                    <span style="float: left">选项三</span>
+                                    <span style="float: right; color: #8492a6; font-size: 13px">(选项描述)</span>
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="数字" prop="InputNum">
+                            <el-input-number v-model="formData.InputNum" :step="1" style="width:180px"></el-input-number>
+                        </el-form-item>
+
+                        <el-form-item label="长文本" prop="InputTextarea">
+                            <el-input v-model="formData.InputTextarea"
+                                      type="textarea"
+                                      v-bind:maxlength="150"
+                                      style="width:475px;"
+                                      autosize
+                                      placeholder="请输入注释信息">
+                            </el-input>
+                        </el-form-item>
+
+                    </el-form>
+                </div>
+
+                <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+                    <el-button-group>
+                        <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg"  plain>新增</el-button>
+                        <el-button size="mini" type="primary" icon="fa fa-edit fa-lg"  plain>编辑</el-button>
+                        <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg"  plain>删除</el-button>
+                    </el-button-group>
+                </div>
+
+                <div style="padding:0px;border:0px solid #DCDFE6;">
+                    <el-table 
+                              v-bind:data="tableData"
+                              ref="dataGrid"
+                              stripe
+                              border
+                              fit
+                              highlight-current-row
+                              tooltip-effect="light"
+                              style="width: 100%;height:100%;">
+                        <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                        <el-table-column prop="" label="标题1" width="100px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="" label="标题2" width="100px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="" label="标题3" width="100px" v-bind:formatter="formatterCol"></el-table-column>
+                        <el-table-column prop="" label="标题4" show-overflow-tooltip></el-table-column>
+                    </el-table>
+                </div>
+            </div>
+
+        </el-main>
+    </el-container>
+
+    
+</div>

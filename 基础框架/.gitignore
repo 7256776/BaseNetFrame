@@ -1,0 +1,11 @@
+packages
+
+Bin
+Debug
+Logs
+Realease
+Obj
+*.suo
+*.vs
+*.user
+*.bak

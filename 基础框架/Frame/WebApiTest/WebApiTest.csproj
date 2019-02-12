@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0B3E832D-1BB2-4596-A8C6-BC54AA082598}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApiTest</RootNamespace>
+    <AssemblyName>WebApiTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Abp\ElementUI\alert.js" />
+    <Content Include="Abp\ElementUI\aside.js" />
+    <Content Include="Abp\ElementUI\autocomplete.js" />
+    <Content Include="Abp\ElementUI\badge.js" />
+    <Content Include="Abp\ElementUI\breadcrumb-item.js" />
+    <Content Include="Abp\ElementUI\breadcrumb.js" />
+    <Content Include="Abp\ElementUI\button-group.js" />
+    <Content Include="Abp\ElementUI\button.js" />
+    <Content Include="Abp\ElementUI\card.js" />
+    <Content Include="Abp\ElementUI\carousel-item.js" />
+    <Content Include="Abp\ElementUI\carousel.js" />
+    <Content Include="Abp\ElementUI\cascader.js" />
+    <Content Include="Abp\ElementUI\checkbox-button.js" />
+    <Content Include="Abp\ElementUI\checkbox-group.js" />
+    <Content Include="Abp\ElementUI\checkbox.js" />
+    <Content Include="Abp\ElementUI\col.js" />
+    <Content Include="Abp\ElementUI\collapse-item.js" />
+    <Content Include="Abp\ElementUI\collapse.js" />
+    <Content Include="Abp\ElementUI\color-picker.js" />
+    <Content Include="Abp\ElementUI\container.js" />
+    <Content Include="Abp\ElementUI\date-picker.js" />
+    <Content Include="Abp\ElementUI\dialog.js" />
+    <Content Include="Abp\ElementUI\directives\repeat-click.js" />
+    <Content Include="Abp\ElementUI\dropdown-item.js" />
+    <Content Include="Abp\ElementUI\dropdown-menu.js" />
+    <Content Include="Abp\ElementUI\dropdown.js" />
+    <Content Include="Abp\ElementUI\element-ui.common.js" />
+    <Content Include="Abp\ElementUI\footer.js" />
+    <Content Include="Abp\ElementUI\form-item.js" />
+    <Content Include="Abp\ElementUI\form.js" />
+    <Content Include="Abp\ElementUI\header.js" />
+    <Content Include="Abp\ElementUI\icon.js" />
+    <Content Include="Abp\ElementUI\index.js" />
+    <Content Include="Abp\ElementUI\input-number.js" />
+    <Content Include="Abp\ElementUI\input.js" />
+    <Content Include="Abp\ElementUI\loading.js" />
+    <Content Include="Abp\ElementUI\locale\format.js" />
+    <Content Include="Abp\ElementUI\locale\index.js" />
+    <Content Include="Abp\ElementUI\locale\lang\af-ZA.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ar.js" />
+    <Content Include="Abp\ElementUI\locale\lang\bg.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ca.js" />
+    <Content Include="Abp\ElementUI\locale\lang\cz.js" />
+    <Content Include="Abp\ElementUI\locale\lang\da.js" />
+    <Content Include="Abp\ElementUI\locale\lang\de.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ee.js" />
+    <Content Include="Abp\ElementUI\locale\lang\el.js" />
+    <Content Include="Abp\ElementUI\locale\lang\en.js" />
+    <Content Include="Abp\ElementUI\locale\lang\es.js" />
+    <Content Include="Abp\ElementUI\locale\lang\fa.js" />
+    <Content Include="Abp\ElementUI\locale\lang\fi.js" />
+    <Content Include="Abp\ElementUI\locale\lang\fr.js" />
+    <Content Include="Abp\ElementUI\locale\lang\he.js" />
+    <Content Include="Abp\ElementUI\locale\lang\hu.js" />
+    <Content Include="Abp\ElementUI\locale\lang\id.js" />
+    <Content Include="Abp\ElementUI\locale\lang\it.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ja.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ko.js" />
+    <Content Include="Abp\ElementUI\locale\lang\kz.js" />
+    <Content Include="Abp\ElementUI\locale\lang\lt.js" />
+    <Content Include="Abp\ElementUI\locale\lang\lv.js" />
+    <Content Include="Abp\ElementUI\locale\lang\mn.js" />
+    <Content Include="Abp\ElementUI\locale\lang\nb-NO.js" />
+    <Content Include="Abp\ElementUI\locale\lang\nl.js" />
+    <Content Include="Abp\ElementUI\locale\lang\pl.js" />
+    <Content Include="Abp\ElementUI\locale\lang\pt-br.js" />
+    <Content Include="Abp\ElementUI\locale\lang\pt.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ru-RU.js" />
+    <Content Include="Abp\ElementUI\locale\lang\sk.js" />
+    <Content Include="Abp\ElementUI\locale\lang\sl.js" />
+    <Content Include="Abp\ElementUI\locale\lang\sv-SE.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ta.js" />
+    <Content Include="Abp\ElementUI\locale\lang\th.js" />
+    <Content Include="Abp\ElementUI\locale\lang\tk.js" />
+    <Content Include="Abp\ElementUI\locale\lang\tr-TR.js" />
+    <Content Include="Abp\ElementUI\locale\lang\ua.js" />
+    <Content Include="Abp\ElementUI\locale\lang\vi.js" />
+    <Content Include="Abp\ElementUI\locale\lang\zh-CN.js" />
+    <Content Include="Abp\ElementUI\locale\lang\zh-TW.js" />
+    <Content Include="Abp\ElementUI\main.js" />
+    <Content Include="Abp\ElementUI\menu-item-group.js" />
+    <Content Include="Abp\ElementUI\menu-item.js" />
+    <Content Include="Abp\ElementUI\menu.js" />
+    <Content Include="Abp\ElementUI\message-box.js" />
+    <Content Include="Abp\ElementUI\message.js" />
+    <Content Include="Abp\ElementUI\mixins\emitter.js" />
+    <Content Include="Abp\ElementUI\mixins\focus.js" />
+    <Content Include="Abp\ElementUI\mixins\locale.js" />
+    <Content Include="Abp\ElementUI\mixins\migrating.js" />
+    <Content Include="Abp\ElementUI\notification.js" />
+    <Content Include="Abp\ElementUI\option-group.js" />
+    <Content Include="Abp\ElementUI\option.js" />
+    <Content Include="Abp\ElementUI\pagination.js" />
+    <Content Include="Abp\ElementUI\popover.js" />
+    <Content Include="Abp\ElementUI\progress.js" />
+    <Content Include="Abp\ElementUI\radio-button.js" />
+    <Content Include="Abp\ElementUI\radio-group.js" />
+    <Content Include="Abp\ElementUI\radio.js" />
+    <Content Include="Abp\ElementUI\rate.js" />
+    <Content Include="Abp\ElementUI\row.js" />
+    <Content Include="Abp\ElementUI\scrollbar.js" />
+    <Content Include="Abp\ElementUI\select.js" />
+    <Content Include="Abp\ElementUI\slider.js" />
+    <Content Include="Abp\ElementUI\spinner.js" />
+    <Content Include="Abp\ElementUI\step.js" />
+    <Content Include="Abp\ElementUI\steps.js" />
+    <Content Include="Abp\ElementUI\submenu.js" />
+    <Content Include="Abp\ElementUI\switch.js" />
+    <Content Include="Abp\ElementUI\tab-pane.js" />
+    <Content Include="Abp\ElementUI\table-column.js" />
+    <Content Include="Abp\ElementUI\table.js" />
+    <Content Include="Abp\ElementUI\tabs.js" />
+    <Content Include="Abp\ElementUI\tag.js" />
+    <Content Include="Abp\ElementUI\theme-chalk\alert.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\aside.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\autocomplete.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\badge.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\base.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\breadcrumb-item.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\breadcrumb.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\button-group.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\button.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\card.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\carousel-item.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\carousel.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\cascader.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\checkbox-button.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\checkbox-group.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\checkbox.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\col.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\collapse-item.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\collapse.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\color-picker.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\container.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\date-picker.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\dialog.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\display.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\dropdown-item.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\dropdown-menu.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\dropdown.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\footer.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\form-item.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\form.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\header.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\icon.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\index.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\input-number.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\input.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\loading.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\main.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\menu-item-group.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\menu-item.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\menu.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\message-box.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\message.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\notification.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\option-group.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\option.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\pagination.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\popover.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\popper.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\progress.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\radio-button.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\radio-group.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\radio.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\rate.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\reset.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\row.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\scrollbar.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\select-dropdown.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\select.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\slider.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\spinner.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\step.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\steps.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\submenu.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\switch.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\tab-pane.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\table-column.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\table.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\tabs.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\tag.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\time-picker.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\time-select.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\tooltip.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\transfer.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\tree.css" />
+    <Content Include="Abp\ElementUI\theme-chalk\upload.css" />
+    <Content Include="Abp\ElementUI\time-picker.js" />
+    <Content Include="Abp\ElementUI\time-select.js" />
+    <Content Include="Abp\ElementUI\tooltip.js" />
+    <Content Include="Abp\ElementUI\transfer.js" />
+    <Content Include="Abp\ElementUI\transitions\collapse-transition.js" />
+    <Content Include="Abp\ElementUI\tree.js" />
+    <Content Include="Abp\ElementUI\umd\locale\af-ZA.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ar.js" />
+    <Content Include="Abp\ElementUI\umd\locale\bg.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ca.js" />
+    <Content Include="Abp\ElementUI\umd\locale\cz.js" />
+    <Content Include="Abp\ElementUI\umd\locale\da.js" />
+    <Content Include="Abp\ElementUI\umd\locale\de.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ee.js" />
+    <Content Include="Abp\ElementUI\umd\locale\el.js" />
+    <Content Include="Abp\ElementUI\umd\locale\en.js" />
+    <Content Include="Abp\ElementUI\umd\locale\es.js" />
+    <Content Include="Abp\ElementUI\umd\locale\fa.js" />
+    <Content Include="Abp\ElementUI\umd\locale\fi.js" />
+    <Content Include="Abp\ElementUI\umd\locale\fr.js" />
+    <Content Include="Abp\ElementUI\umd\locale\he.js" />
+    <Content Include="Abp\ElementUI\umd\locale\hu.js" />
+    <Content Include="Abp\ElementUI\umd\locale\id.js" />
+    <Content Include="Abp\ElementUI\umd\locale\it.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ja.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ko.js" />
+    <Content Include="Abp\ElementUI\umd\locale\kz.js" />
+    <Content Include="Abp\ElementUI\umd\locale\lt.js" />
+    <Content Include="Abp\ElementUI\umd\locale\lv.js" />
+    <Content Include="Abp\ElementUI\umd\locale\mn.js" />
+    <Content Include="Abp\ElementUI\umd\locale\nb-NO.js" />
+    <Content Include="Abp\ElementUI\umd\locale\nl.js" />
+    <Content Include="Abp\ElementUI\umd\locale\pl.js" />
+    <Content Include="Abp\ElementUI\umd\locale\pt-br.js" />
+    <Content Include="Abp\ElementUI\umd\locale\pt.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ru-RU.js" />
+    <Content Include="Abp\ElementUI\umd\locale\sk.js" />
+    <Content Include="Abp\ElementUI\umd\locale\sl.js" />
+    <Content Include="Abp\ElementUI\umd\locale\sv-SE.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ta.js" />
+    <Content Include="Abp\ElementUI\umd\locale\th.js" />
+    <Content Include="Abp\ElementUI\umd\locale\tk.js" />
+    <Content Include="Abp\ElementUI\umd\locale\tr-TR.js" />
+    <Content Include="Abp\ElementUI\umd\locale\ua.js" />
+    <Content Include="Abp\ElementUI\umd\locale\vi.js" />
+    <Content Include="Abp\ElementUI\umd\locale\zh-CN.js" />
+    <Content Include="Abp\ElementUI\umd\locale\zh-TW.js" />
+    <Content Include="Abp\ElementUI\upload.js" />
+    <Content Include="Abp\ElementUI\utils\aria-dialog.js" />
+    <Content Include="Abp\ElementUI\utils\aria-utils.js" />
+    <Content Include="Abp\ElementUI\utils\clickoutside.js" />
+    <Content Include="Abp\ElementUI\utils\date.js" />
+    <Content Include="Abp\ElementUI\utils\dom.js" />
+    <Content Include="Abp\ElementUI\utils\menu\aria-menubar.js" />
+    <Content Include="Abp\ElementUI\utils\menu\aria-menuitem.js" />
+    <Content Include="Abp\ElementUI\utils\menu\aria-submenu.js" />
+    <Content Include="Abp\ElementUI\utils\merge.js" />
+    <Content Include="Abp\ElementUI\utils\popper.js" />
+    <Content Include="Abp\ElementUI\utils\popup\index.js" />
+    <Content Include="Abp\ElementUI\utils\popup\popup-manager.js" />
+    <Content Include="Abp\ElementUI\utils\resize-event.js" />
+    <Content Include="Abp\ElementUI\utils\scroll-into-view.js" />
+    <Content Include="Abp\ElementUI\utils\scrollbar-width.js" />
+    <Content Include="Abp\ElementUI\utils\shared.js" />
+    <Content Include="Abp\ElementUI\utils\sync.js" />
+    <Content Include="Abp\ElementUI\utils\util.js" />
+    <Content Include="Abp\ElementUI\utils\vdom.js" />
+    <Content Include="Abp\ElementUI\utils\vue-popper.js" />
+    <Content Include="Abp\jQuery\jquery-2.2.3.min.js" />
+    <Content Include="Abp\jQuery\jquery.js" />
+    <Content Include="Abp\Framework\scripts\abp.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.blockUI.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.jquery.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.jtable.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.moment.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.signalr-client.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.signalr.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.spin.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.sweet-alert.js" />
+    <Content Include="Abp\Framework\scripts\libs\abp.toastr.js" />
+    <Content Include="Abp\Framework\scripts\libs\angularjs\abp.ng.js" />
+    <Content Include="Abp\Framework\scripts\libs\requirejs\plugins\service.js" />
+    <Content Include="Abp\Framework\scripts\utils\ie10fix.js" />
+    <Content Include="Abp\Framework\styles\abp.css" />
+    <Content Include="Abp\Framework\styles\abp.min.css" />
+    <Content Include="Abp\Framework\styles\abp.mixings.css" />
+    <Content Include="Abp\Framework\styles\abp.mixings.min.css" />
+    <Content Include="Abp\Framework\styles\utils\ie10fix.css" />
+    <Content Include="Abp\vue\polyfill.js" />
+    <Content Include="Abp\vue\vue-router.js" />
+    <Content Include="Abp\vue\vue.js" />
+    <Content Include="Abp\vue\vue.min.js" />
+    <Content Include="Global.asax" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Abp\index.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Abp\Framework\styles\abp.mixings.less" />
+    <Content Include="Abp\Framework\styles\abp.mixings.css.map" />
+    <Content Include="Abp\Framework\styles\abp.less" />
+    <Content Include="Abp\Framework\styles\abp.css.map" />
+    <Content Include="Abp\ElementUI\theme-chalk\fonts\element-icons.ttf" />
+    <Content Include="Abp\ElementUI\theme-chalk\fonts\element-icons.woff" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Abp\Framework\scripts\abp.d.ts" />
+    <TypeScriptCompile Include="Abp\Framework\scripts\libs\abp.jquery.d.ts" />
+    <TypeScriptCompile Include="Abp\Framework\scripts\libs\abp.signalr.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51161</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51152/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

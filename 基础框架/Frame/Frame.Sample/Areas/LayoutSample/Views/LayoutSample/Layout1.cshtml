@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div style="padding:5px 5px 3px 5px ;margin-bottom:2px; border:1px solid #DCDFE6;">
+
+        <div class="row">
+            <div class="col-md-7 col-sm-7" style="text-align:left;">
+                <el-button-group>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg">新增</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg">编辑</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg">删除</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-mail-reply fa-lg" v-on:click="pageRef()">页面跳转</el-button>
+                </el-button-group>
+            </div>
+            <div class="col-md-5 col-sm-5" style="text-align:right;">
+                <el-input placeholder="关键字查询" v-model="pageOptions.searchTxt" size="mini" style="width:300px;" clearable v-on:change="getUserList">
+                    <el-button slot="append" icon="el-icon-search" v-on:click="getUserList"></el-button>
+                </el-input>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+        <el-table v-bind:data="tableOptions.tableData"
+                  ref="dataGrid"
+                  stripe
+                  border
+                  highlight-current-row
+                  tooltip-effect="light"
+                  style="width: 100%;height:100%;"
+                  v-on:selection-change="doRowSelectChange"
+                  v-on:row-click="doRowclick">
+            <el-table-column v-bind:fixed="true" type="index"></el-table-column>
+            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+            <el-table-column prop="title1" label="标题名称1"></el-table-column>
+            <el-table-column prop="title2" label="标题名称2" ></el-table-column>
+            <el-table-column prop="title3" label="标题名称3"></el-table-column>
+            <el-table-column prop="title4" label="标题名称4"></el-table-column>
+            <el-table-column prop="title5" label="标题名称5"></el-table-column>
+
+        </el-table>
+        <div style="text-align:right;padding-top:3px;">
+            <el-pagination background
+                           v-on:size-change="handleSizeChange"
+                           v-on:current-change="handleCurrentChange"
+                           v-bind:current-page="pageOptions.pageIndex"
+                           v-bind:page-sizes="[10, 20, 40]"
+                           v-bind:page-size="10"
+                           v-bind:total="pageOptions.total"
+                           layout="total, sizes, prev, pager, next, jumper">
+            </el-pagination>
+        </div>
+    </div>
+</div>
