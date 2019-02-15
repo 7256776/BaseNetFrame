@@ -14,24 +14,28 @@
     <Compile Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <Compile Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <Compile Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <Compile Remove="wwwroot\Content\Lib\uniform\**" />
     <Content Remove="Views\SupplierAccount\**" />
     <Content Remove="wwwroot\Abp\Framework_bak\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <Content Remove="wwwroot\Content\Lib\uniform\**" />
     <EmbeddedResource Remove="Views\SupplierAccount\**" />
     <EmbeddedResource Remove="wwwroot\Abp\Framework_bak\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <EmbeddedResource Remove="wwwroot\Content\Lib\uniform\**" />
     <None Remove="Views\SupplierAccount\**" />
     <None Remove="wwwroot\Abp\Framework_bak\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout7\**" />
+    <None Remove="wwwroot\Content\Lib\uniform\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,9 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Localization\JsonSource\FrameLocalization-en.json" />
-    <Content Remove="Localization\JsonSource\FrameLocalization-zh-CN.json" />
-    <Content Remove="Localization\JsonSource\FrameLocalization-zh-hans.json" />
     <Content Remove="Views\J_Account\Demo.cshtml" />
     <Content Remove="Views\J_Account\Index.cshtml" />
     <Content Remove="Views\J_Account\Login.cshtml" />
@@ -62,6 +63,7 @@
     <Content Remove="Views\J_Dict\Index.cshtml" />
     <Content Remove="Views\J_Home\DesktopPage.cshtml" />
     <Content Remove="Views\J_Home\Index.cshtml" />
+    <Content Remove="Views\J_Login\Login.cshtml" />
     <Content Remove="Views\J_Menus\Index.cshtml" />
     <Content Remove="Views\J_Menus\SideMenu.cshtml" />
     <Content Remove="Views\J_Menus\TopMenu.cshtml" />
@@ -115,12 +117,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Localization\JsonSource\FrameLocalization-en.json" />
-    <EmbeddedResource Include="Localization\JsonSource\FrameLocalization-zh-CN.json" />
-    <EmbeddedResource Include="Localization\JsonSource\FrameLocalization-zh-hans.json" />
-    <EmbeddedResource Include="Localization\XmlSource\FrameLocalization-en.xml" />
-    <EmbeddedResource Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
-    <EmbeddedResource Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-en.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
     <EmbeddedResource Include="Views\J_Account\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -128,6 +127,15 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\J_AuditLogs\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Account\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Account\UserSettings.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_AuditLogs\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\J_Components\InitPage.js">
@@ -163,13 +171,31 @@
     <EmbeddedResource Include="Views\J_Dict\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Home\DesktopPage.cshtml">
+    <EmbeddedResource Include="Views\J_Components\HeadToolButton.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\QuickSidebar.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchDropdown.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchForm.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\SearchPage.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\TopToolsMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Components\UserInfoExtens.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Dict\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\J_Home\DesktopPage.js">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Menus\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\J_Menus\index.js">
@@ -202,43 +228,16 @@
     <EmbeddedResource Include="Views\J_Role\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Account\Index.cshtml">
+    <EmbeddedResource Include="Views\J_Home\DesktopPage.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\J_Home\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\J_Login\Login.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Account\UserSettings.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_AuditLogs\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\HeadToolButton.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\QuickSidebar.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\SearchDropdown.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\SearchForm.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\SearchPage.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\TopToolsMenu.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Components\UserInfoExtens.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Dict\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\J_Home\Index.cshtml">
+    <EmbeddedResource Include="Views\J_Menus\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\J_Menus\SideMenu.cshtml">
@@ -275,10 +274,10 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\_ViewImports.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\_ViewStart.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="wwwroot\swagger\ui\index.html" />
   </ItemGroup>

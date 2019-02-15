@@ -33,15 +33,9 @@ namespace NetCoreFrame.Sample
         /// <returns></returns>
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
-         
             base.BuildConfigureServices(services);
-
-            //Session 保存到内存
-            //services.AddDistributedMemoryCache();
-            services.AddSession();
             //添加验证码配置
             services.Configure<GeetestOptions>(_appConfiguration.GetSection("GeetestOptions"));
-
             // 配置Log4Net日志
             return services.AddAbp<NetCoreFrameSampleModule>(
                       options => options.IocManager.IocContainer.AddFacility<LoggingFacility>(
@@ -56,13 +50,9 @@ namespace NetCoreFrame.Sample
         /// <param name="env"></param>
         /// <param name="loggerFactory"></param>
         public override void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            // 必须在 UseMvc 之前调用
-            app.UseSession();
-
+        { 
             base.Configure(app, env, loggerFactory);
         }
-
 
     }
 }

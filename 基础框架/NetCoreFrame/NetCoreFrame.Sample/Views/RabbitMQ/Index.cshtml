@@ -3,10 +3,20 @@
 }
 
 <div>
-    <el-input type="textarea" v-bind:rows="2" v-model="mesg">
+    <el-radio-group v-model="formData.queueName">
+        <el-radio-button label="QueueA"></el-radio-button>
+        <el-radio-button label="QueueB"></el-radio-button>
+        <el-radio-button label="QueueC"></el-radio-button>
+        <el-radio-button label="QueueD"></el-radio-button>
+    </el-radio-group>
+    <el-input type="textarea" v-bind:rows="2" v-model="formData.message">
     </el-input>
     <el-button type="primary" v-on:click="doSubmit()">随机发送到队列</el-button>
-    <el-button type="primary" v-on:click="doSubmitDirect()">发送到队列B</el-button>
+
+    <el-button type="primary" v-on:click="doSubmitDirect()">发送到队列A(Direct)</el-button>
+    <el-button type="primary" v-on:click="doSubmitDirect()">发送到队列B(Direct)</el-button>
+
+
     <el-button type="primary" v-on:click="doSubmitFanout()">发送到队列AB</el-button>
     <el-button type="primary" v-on:click="doSubmitTopic1()">发送到匹配队列</el-button>
     <el-button type="primary" v-on:click="doSubmitTopic2()">发送到匹配队列</el-button>

@@ -5,6 +5,7 @@ using Abp.EntityFrameworkCore.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Microsoft.EntityFrameworkCore;
+using NetCoreFrame.Core;
 using NetCoreFrame.Web;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -19,9 +20,12 @@ namespace NetCoreFrame.Sample
         )]
     public class NetCoreFrameSampleModule : AbpModule
     {
-         
+        /// <summary>
+        /// 初始化前
+        /// </summary>
         public override void PreInitialize()
         {
+
             //注册EfDBContext,或者在Startup启动类注册
             Configuration.Modules.AbpEfCore().AddDbContext<SampleFrameDbContext>(options =>
             {
@@ -36,19 +40,16 @@ namespace NetCoreFrame.Sample
             });
         }
 
-        public override void PostInitialize()
-        {
-           
-        }
-
-
+        /// <summary>
+        /// 初始化
+        /// </summary>
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             //这里会自动去扫描程序集中配置好的映射关系
             //DapperExtensions.SetMappingAssemblies(new List<Assembly> { Assembly.GetExecutingAssembly() });
-            
+
             //Configuration.Modules.AbpAutoMapper().Configurators.Add(
             //    // 扫描程序集，查找从AutoMapper.Profile继承的类
             //    cfg => cfg.AddProfiles(Assembly.GetExecutingAssembly())
@@ -56,24 +57,13 @@ namespace NetCoreFrame.Sample
 
         }
 
+        /// <summary>
+        /// 请求初始化
+        /// </summary>
+        public override void PostInitialize()
+        {
 
-
-
+        }
 
     }
-
-
-    //public static class NetCoreFrameDbContextConfigurer
-    //{
-    //    public static void Configure(DbContextOptionsBuilder<SampleFrameDbContext> builder, string connectionString)
-    //    {
-    //        builder.UseSqlServer(connectionString);
-    //    }
-
-    //    public static void Configure(DbContextOptionsBuilder<SampleFrameDbContext> builder, DbConnection connection)
-    //    {
-    //        builder.UseSqlServer(connection);
-    //    }
-    //}
-
 }

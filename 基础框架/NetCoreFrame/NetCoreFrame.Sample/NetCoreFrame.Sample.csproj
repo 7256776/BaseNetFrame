@@ -7,31 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Shared\**" />
-    <Content Remove="Views\Shared\**" />
-    <EmbeddedResource Remove="Views\Shared\**" />
-    <None Remove="Views\Shared\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Models\Class.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Sample\MetadataEdit.cshtml" />
-    <Content Remove="Views\_ViewImports.cshtml" />
-    <Content Remove="Views\_ViewStart.cshtml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-en.xml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Views\J_Components\WebTitle.js" />
-    <None Remove="Views\Sample\MetadataEdit.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Views\J_Components\WebTitle.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Content Include="Localization\XmlSource\FrameLocalization-en.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,42 +42,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\RabbitMQ\Consumer.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Views\RabbitMQ\DirectExchange.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Views\RabbitMQ\FanoutExchange.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Views\RabbitMQ\Producer.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Views\RabbitMQ\TopicExchange.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <None Include="Views\Geetest\Index.cshtml" />
+    <None Include="Views\RabbitMQ\Index.cshtml" />
+    <None Include="Views\Sample\Index.cshtml" />
+    <None Include="Views\Sample\Metadata.cshtml" />
+    <None Include="Views\Sample\MetadataDynamicForm.cshtml" />
+    <None Include="Views\Sample\MetadataForm.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Geetest\Index.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\RabbitMQ\Index.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Sample\Index.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Sample\Metadata.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Sample\MetadataDynamicForm.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Sample\MetadataForm.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\Content\frameCore\img\logo.png">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -99,27 +60,6 @@
     <Content Update="wwwroot\Content\frameCore\img\logoLight.png">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Views\Geetest\Geetest.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Views\Geetest\Index.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Views\RabbitMQ\Index.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Views\Sample\Metadata.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Views\Sample\MetadataDynamicForm.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Views\Sample\MetadataForm.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -38,12 +38,12 @@ namespace NetCoreFrame.Sample.Controllers
         {
             producer = new Producer();
             directExchange = new DirectExchange();
-            fanoutExchange = new FanoutExchange();
-            topicExchange = new TopicExchange();
-            consumerA = new ConsumerA();
-            consumerB = new ConsumerB();
-            consumerC = new ConsumerC();
-            consumerEx = new ConsumerEx();
+            //fanoutExchange = new FanoutExchange();
+            //topicExchange = new TopicExchange();
+            //consumerA = new ConsumerA();
+            //consumerB = new ConsumerB();
+            //consumerC = new ConsumerC();
+            //consumerEx = new ConsumerEx();
 
         }
 
@@ -60,11 +60,22 @@ namespace NetCoreFrame.Sample.Controllers
         }
 
 
-        public Task<JsonResult> SendDirectMessage([FromBody]string msg)
+        public Task<JsonResult> SendDirectMessage([FromBody]SendMessageDto dto)
         {
-            directExchange.SendMQ(msg);
+            directExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }
+
+
+
+
+
+
+
+
+
+
+
 
         public Task<JsonResult> SendFanoutMessage([FromBody]string msg)
         {
@@ -82,6 +93,9 @@ namespace NetCoreFrame.Sample.Controllers
             topicExchange.SendMQ2(msg);
             return Task.FromResult(Json(true));
         }
+
+
+
 
         public Task<JsonResult> GetMessage()
         {

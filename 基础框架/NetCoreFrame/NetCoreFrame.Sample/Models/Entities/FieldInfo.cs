@@ -2,6 +2,7 @@ using Abp.Auditing;
 using Abp.Domain.Entities;
 using Abp.Extensions;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetCoreFrame.Sample
@@ -14,14 +15,17 @@ namespace NetCoreFrame.Sample
     {
        
         [Column("FieldName")]
+        [StringLength(100)]
         public virtual string FieldName { get; set; }
 
        
         [Column("FieldCode")]
+        [StringLength(100)]
         public virtual string FieldCode { get; set; }
 
         
         [Column("FieldJson")]
+        [StringLength(4000)]
         public virtual string FieldJson { get; set; }
 
 

@@ -39,7 +39,7 @@ namespace NetCoreFrame.Sample
                 //执行发送消息
                 consumer.Received += ReceivedMQ;
                 //启动消费者 设置为手动应答消息
-                channel.BasicConsume("hello", false, consumer);
+                channel.BasicConsume("helloA", false, consumer);
             }
         }
 

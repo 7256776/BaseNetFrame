@@ -48,7 +48,7 @@ namespace NetCoreFrame.Application
 
         /// <summary>
         /// 注销之前的业务
-        /// 如不重写该方案讲直接执行父类默认业务
+        /// 如不重写该方案,直接执行父类默认业务
         /// </summary>
         //public override void LogoutExtension()
         //{

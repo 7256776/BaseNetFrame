@@ -8,6 +8,10 @@ jQuery.support.cors = true
 
 //加载组件
 var componentAssemble = {
+    //初始首页内嵌的空组件容器用于重写注入项目中需要加载的自定义内容
+    J_InitPage: function (resolve, reject) {
+        Vue.prototype.pageLoad('j-initpage', 'Views/J_Components/InitPage').then(resolve, reject);
+    },
     //网站标题头
     J_WebTitle: function (resolve, reject) {
         Vue.prototype.pageLoad('j-webtitle', 'Views/J_Components/WebTitle').then(resolve, reject);

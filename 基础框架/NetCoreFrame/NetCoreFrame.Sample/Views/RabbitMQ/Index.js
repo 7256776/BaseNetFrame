@@ -9,6 +9,8 @@ var component = Vue.component('rabbitmq', {
             mesgList:[],
             formData: {
                 id: null,
+                message: '',
+                queueName: '',
             },
         };
     },
@@ -36,10 +38,11 @@ var component = Vue.component('rabbitmq', {
         doSubmitDirect: function () {
             //初始加载数据
             var _this = this;
+
             //
             abp.ajax({
                 url: '/RabbitMQ/SendDirectMessage',
-                data: JSON.stringify(this.mesg),
+                data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
                 console.log();
@@ -47,6 +50,10 @@ var component = Vue.component('rabbitmq', {
             });
 
         },
+
+
+
+
         doSubmitFanout : function () {
             //初始加载数据
             var _this = this;

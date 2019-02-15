@@ -13,10 +13,7 @@ namespace NetCoreFrame.Core
         /// 
         /// </summary>
         /// <param name="dbcontext"></param>
-        public SysMenusRepository(IDbContextProvider<NetCoreFrameDbContext> dbcontext) : base(dbcontext)
-        {
-       
-        }
+        public SysMenusRepository(IDbContextProvider<NetCoreFrameDbContext> dbcontext) : base(dbcontext) { }
 
         /// <summary>
         /// 获取所有启用的菜单
@@ -77,7 +74,7 @@ namespace NetCoreFrame.Core
         /// <param name="dataAll"></param>
         /// <param name="resList"></param>
         /// <returns></returns>
-        private List<SysMenus> ConvertMenusList(List<SysMenus> dataAll, List<SysMenus> resList=null)
+        private List<SysMenus> ConvertMenusList(List<SysMenus> dataAll, List<SysMenus> resList = null)
         {
             int i = 1;
             //获取所有父节点
@@ -94,12 +91,12 @@ namespace NetCoreFrame.Core
                 m.ChildrenMenus = dataAll.Where(p => p.ParentID == m.Id).OrderBy(o => o.OrderBy).ToList();
                 if (m.ChildrenMenus.Any())
                 {
-                    SetChildrenList(dataAll, m,  resList);
+                    SetChildrenList(dataAll, m, resList);
                 }
                 else
                 {
                     m.IsLeaf = true;
-                } 
+                }
                 i = 1;
             }
             //
@@ -125,8 +122,8 @@ namespace NetCoreFrame.Core
             {
                 item.MenuNodeLevel = currentModel.MenuNodeLevel + 1;
                 item.MenuNode = currentModel.MenuNode + item.Id + ".";
-                
-                if (resList!=null)
+
+                if (resList != null)
                 {
                     resList.Add(item);
                 }
@@ -143,10 +140,10 @@ namespace NetCoreFrame.Core
 
             }
         }
-     
+
         #endregion
 
-        
+
 
     }
 }

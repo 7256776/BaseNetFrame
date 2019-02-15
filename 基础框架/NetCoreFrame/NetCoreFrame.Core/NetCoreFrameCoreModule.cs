@@ -43,11 +43,11 @@ namespace NetCoreFrame.Core
             //这货虽然是关闭本地化,但是关闭后似乎系统提示全部变英文了
             //Configuration.Localization.IsEnabled = true;
             //设置应用程序本地化语言 zh-CN  zh-Hans(简体中文)
-            //Configuration.Localization.Languages.Add(new LanguageInfo("zh-CN", "简体中文", "cn.png", true));
+            //Configuration.Localization.Languages.Add(new LanguageInfo("zh-CN", "简体中文", "cn.png", false));
             Configuration.Localization.Languages.Add(new LanguageInfo("zh-Hans", "简体中文", "cn.png", true));
             Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", "us.png", false));
-            //加载本地化资源文件
-            //NetCoreFrameLocalizationConfigurer.LocalPath(Configuration.Localization);
+            //加载本地化资源文件(所加载的文件路径是 启动的web程序集根目录下的Localization目录)
+            NetCoreFrameLocalizationConfigurer.LocalPath(Configuration.Localization);
 
             //初始加载导航菜单
             Configuration.Navigation.Providers.Add<NavigationMenusProvider>();
@@ -98,7 +98,7 @@ namespace NetCoreFrame.Core
         }
 
         public override void Initialize()
-        {
+        { 
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
 

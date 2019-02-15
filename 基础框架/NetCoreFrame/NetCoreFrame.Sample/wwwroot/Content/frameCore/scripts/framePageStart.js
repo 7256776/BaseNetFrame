@@ -12,6 +12,8 @@ var vueRouter = new VueRouter({
 var vueApp = new Vue({
     el: '#app',
     components: {
+        //模板页添加自定义容器通过重写组件注入
+        initpage: componentAssemble.J_InitPage,
         sidemenu: componentAssemble.J_SideMenu,
         quicksidebar: componentAssemble.J_QuickSideBar,
         toptoolsmenu: componentAssemble.J_TopToolsMenu,
