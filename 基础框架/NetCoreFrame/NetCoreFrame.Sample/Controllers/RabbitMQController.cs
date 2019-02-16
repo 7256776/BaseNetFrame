@@ -24,26 +24,20 @@ namespace NetCoreFrame.Sample.Controllers
         //https://www.rabbitmq.com/install-windows.html
         //https://www.wyxxw.cn/blog-detail-2-21-343
         //https://www.cnblogs.com/stulzq/p/7551819.html
+        //http://localhost:15672/
 
-        private readonly Producer producer;
-        private readonly ConsumerA consumerA;
-        private readonly ConsumerB consumerB;
-        private readonly ConsumerC consumerC;
-        private readonly ConsumerEx consumerEx;
+        //需要启动RabbitMQService
+        private readonly BaseExchange baseExchange;
         private readonly DirectExchange directExchange;
         private readonly FanoutExchange fanoutExchange;
         private readonly TopicExchange topicExchange;
 
         public RabbitMQController()
         {
-            producer = new Producer();
+            baseExchange = new BaseExchange();
             directExchange = new DirectExchange();
-            //fanoutExchange = new FanoutExchange();
-            //topicExchange = new TopicExchange();
-            //consumerA = new ConsumerA();
-            //consumerB = new ConsumerB();
-            //consumerC = new ConsumerC();
-            //consumerEx = new ConsumerEx();
+            fanoutExchange = new FanoutExchange();
+            topicExchange = new TopicExchange();
 
         }
 
@@ -52,70 +46,53 @@ namespace NetCoreFrame.Sample.Controllers
             return View();
         }
 
-
-        public Task<JsonResult> SendMessage([FromBody]string msg)
+        /// <summary>
+        /// 基础演示
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public Task<JsonResult> SendMessage([FromBody]SendMessageDto dto)
         {
-            producer.SendMQ(msg);
+            baseExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }
 
-
+        /// <summary>
+        /// 路由模式
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public Task<JsonResult> SendDirectMessage([FromBody]SendMessageDto dto)
         {
             directExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        public Task<JsonResult> SendFanoutMessage([FromBody]string msg)
+        /// <summary>
+        /// 订阅模式
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public Task<JsonResult> SendFanoutMessage([FromBody]SendMessageDto dto)
         {
-            fanoutExchange.SendMQ(msg);
+            fanoutExchange.SendMQ(dto.Message);
             return Task.FromResult(Json(true));
         }
 
-        public Task<JsonResult> SendTopicMessage1([FromBody]string msg)
+        /// <summary>
+        /// #：匹配0-n个字符语句 
+        /// *：匹配一个字符语句
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public Task<JsonResult> SendTopicMessage([FromBody]SendMessageDto dto)
         {
-            topicExchange.SendMQ1(msg);
-            return Task.FromResult(Json(true));
-        }
-        public Task<JsonResult> SendTopicMessage2([FromBody]string msg)
-        {
-            topicExchange.SendMQ2(msg);
+            topicExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }
 
 
 
-
-        public Task<JsonResult> GetMessage()
-        {
-            Producer.dbList.Sort((a, b) =>
-            {
-                if (b.MsgDate > a.MsgDate)
-                    return 1;
-                else
-                {
-                    return -1;
-                }
-            });
-            return Task.FromResult(Json(Producer.dbList));
-        }
-
-        public Task<JsonResult> ClearMessage()
-        {
-            Producer.dbList.Clear();
-            return Task.FromResult(Json(Producer.dbList));
-        }
 
 
 

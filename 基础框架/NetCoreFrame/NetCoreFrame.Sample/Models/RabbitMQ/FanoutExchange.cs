@@ -16,12 +16,14 @@ namespace NetCoreFrame.Sample
         public static ConnectionFactory factory ;
         public static IConnection connection;
         public static IModel channel;
+        public string RabbitmqIp = "127.0.0.1";
 
-        string exchangeName = "FanoutExchange";
-        string queueName1 = "hello";
-        string queueName2 = "helloB";
-        string routeKey = "";
+        public string exchangeName = "FanoutExchange";
+        public string routeKey = "";
 
+        /// <summary>
+        /// 订阅模式发送到所以该交换机队列
+        /// </summary>
         public FanoutExchange()
         {
             if (connection == null || !connection.IsOpen)
@@ -31,24 +33,15 @@ namespace NetCoreFrame.Sample
                 {
                     UserName = "test",//用户名
                     Password = "test",//密码
-                    HostName = "127.0.0.1"//rabbitmq ip
+                    HostName = RabbitmqIp
                 };
 
                 //创建连接
                 connection = factory.CreateConnection();
                 //创建通道
                 channel = connection.CreateModel();
-                //定义一个Direct类型交换机
+                //定义一个 Fanout 类型交换机
                 channel.ExchangeDeclare(exchangeName, ExchangeType.Fanout, false, false, null);
-
-                //定义队列1
-                channel.QueueDeclare(queueName1, false, false, false, null);
-                //定义队列2
-                channel.QueueDeclare(queueName2, false, false, false, null);
-
-                //将队列绑定到交换机
-                channel.QueueBind(queueName1, exchangeName, routeKey, null);
-                channel.QueueBind(queueName2, exchangeName, routeKey, null);
                
             }
         }

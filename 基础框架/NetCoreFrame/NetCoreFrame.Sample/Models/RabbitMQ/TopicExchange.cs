@@ -16,6 +16,8 @@ namespace NetCoreFrame.Sample
         public static ConnectionFactory factory ;
         public static IConnection connection;
         public static IModel channel;
+        public string RabbitmqIp = "127.0.0.1";
+        string exchangeName = "TopicChange";
 
         string exchangeName1 = "TestTopicChange1";
         string exchangeName2 = "TestTopicChange2";
@@ -33,7 +35,7 @@ namespace NetCoreFrame.Sample
                 {
                     UserName = "test",//用户名
                     Password = "test",//密码
-                    HostName = "127.0.0.1"//rabbitmq ip
+                    HostName = RabbitmqIp
                 };
 
                 //创建连接
@@ -41,16 +43,16 @@ namespace NetCoreFrame.Sample
                 //创建通道
                 channel = connection.CreateModel();
                 //定义一个Direct类型交换机
-                channel.ExchangeDeclare(exchangeName1, ExchangeType.Topic, false, false, null);
-                channel.ExchangeDeclare(exchangeName2, ExchangeType.Topic, false, false, null);
-                //定义队列1
-                channel.QueueDeclare(queueName1, false, false, false, null);
-                //定义队列2
-                channel.QueueDeclare(queueName2, false, false, false, null);
-                //将队列绑定到交换机
-                channel.QueueBind(queueName1, exchangeName1, routeKey1, null);
-                //将队列绑定到交换机
-                channel.QueueBind(queueName2, exchangeName1, routeKey2, null);
+                channel.ExchangeDeclare(exchangeName, ExchangeType.Topic, false, false, null);
+                //channel.ExchangeDeclare(exchangeName2, ExchangeType.Topic, false, false, null);
+                ////定义队列1
+                //channel.QueueDeclare(queueName1, false, false, false, null);
+                ////定义队列2
+                //channel.QueueDeclare(queueName2, false, false, false, null);
+                ////将队列绑定到交换机
+                //channel.QueueBind(queueName1, exchangeName1, routeKey1, null);
+                ////将队列绑定到交换机
+                //channel.QueueBind(queueName2, exchangeName1, routeKey2, null);
             }
         }
 
@@ -58,20 +60,21 @@ namespace NetCoreFrame.Sample
         /// 发送到C队列
         /// </summary>
         /// <param name="mesg"></param>
-        public void SendMQ1(string mesg)
+        public void SendMQ(SendMessageDto dto)
         {
+            string mesg = "来自队列(" + dto.QueueName + ")" + dto.Message;
             var sendBytes = Encoding.UTF8.GetBytes(mesg);
             //发布消息
-            channel.BasicPublish(exchangeName1, "TestRouteKey.one", null, sendBytes);
+            channel.BasicPublish(exchangeName, dto.QueueName, null, sendBytes);
         }
 
 
-        public void SendMQ2(string mesg)
-        {
-            var sendBytes = Encoding.UTF8.GetBytes(mesg);
-            //发布消息
-            channel.BasicPublish(exchangeName1, "TestRouteKey.A.EX", null, sendBytes);
-        }
+        //public void SendMQ2(string mesg)
+        //{
+        //    var sendBytes = Encoding.UTF8.GetBytes(mesg);
+        //    //发布消息
+        //    channel.BasicPublish(exchangeName1, "TestRouteKey.A.EX", null, sendBytes);
+        //}
 
     }
 }

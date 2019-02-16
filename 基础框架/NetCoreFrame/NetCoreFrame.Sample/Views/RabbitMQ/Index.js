@@ -27,18 +27,16 @@ var component = Vue.component('rabbitmq', {
             //
             abp.ajax({
                 url: '/RabbitMQ/SendMessage',
-                data: JSON.stringify(this.mesg),
+                data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
                 console.log();
                 abp.message.success('发送成功了.');
             });
-           
         },
         doSubmitDirect: function () {
             //初始加载数据
             var _this = this;
-
             //
             abp.ajax({
                 url: '/RabbitMQ/SendDirectMessage',
@@ -50,21 +48,17 @@ var component = Vue.component('rabbitmq', {
             });
 
         },
-
-
-
-
         doSubmitFanout : function () {
             //初始加载数据
             var _this = this;
             //
             abp.ajax({
                 url: '/RabbitMQ/SendFanoutMessage',
-                data: JSON.stringify(this.mesg),
+                data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
                 console.log();
-                abp.message.success('Fanout模式发送成功了.');
+                abp.message.success('Fanout(订阅模式)发送成功了.');
             });
 
         },
@@ -73,29 +67,30 @@ var component = Vue.component('rabbitmq', {
             var _this = this;
             //
             abp.ajax({
-                url: '/RabbitMQ/SendTopicMessage1',
-                data: JSON.stringify(this.mesg),
+                url: '/RabbitMQ/SendTopicMessage',
+                data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
                 console.log();
                 abp.message.success('Topic模式发送成功了.');
             });
-
         },
         doSubmitTopic2: function () {
             //初始加载数据
             var _this = this;
             //
             abp.ajax({
-                url: '/RabbitMQ/SendTopicMessage2',
-                data: JSON.stringify(this.mesg),
+                url: '/RabbitMQ/SendTopicMessage',
+                data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
                 console.log();
                 abp.message.success('Topic模式发送成功了.');
             });
-
         },
+
+
+
         doGetMesg: function () {
             var _this = this;
             abp.ajax({

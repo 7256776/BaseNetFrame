@@ -6,20 +6,19 @@
     <el-radio-group v-model="formData.queueName">
         <el-radio-button label="QueueA"></el-radio-button>
         <el-radio-button label="QueueB"></el-radio-button>
-        <el-radio-button label="QueueC"></el-radio-button>
-        <el-radio-button label="QueueD"></el-radio-button>
+        <el-radio-button label="QueueC.C"></el-radio-button>
+        <el-radio-button label="QueueD.D.E.F"></el-radio-button>
     </el-radio-group>
     <el-input type="textarea" v-bind:rows="2" v-model="formData.message">
     </el-input>
-    <el-button type="primary" v-on:click="doSubmit()">随机发送到队列</el-button>
+    <el-button type="primary" v-on:click="doSubmit()">基本发送示例</el-button>
+    <el-button type="primary" v-on:click="doSubmitDirect()">路由模式(Direct)</el-button>
+    <el-button type="primary" v-on:click="doSubmitFanout()">订阅模式(Fanout)</el-button>
 
-    <el-button type="primary" v-on:click="doSubmitDirect()">发送到队列A(Direct)</el-button>
-    <el-button type="primary" v-on:click="doSubmitDirect()">发送到队列B(Direct)</el-button>
-
-
-    <el-button type="primary" v-on:click="doSubmitFanout()">发送到队列AB</el-button>
     <el-button type="primary" v-on:click="doSubmitTopic1()">发送到匹配队列</el-button>
     <el-button type="primary" v-on:click="doSubmitTopic2()">发送到匹配队列</el-button>
+
+
     <el-button type="primary" v-on:click="doGetMesg()">刷新</el-button>
     <el-button type="primary" v-on:click="doClearMessage()">清除</el-button>
 
