@@ -36,7 +36,7 @@ namespace NetCoreFrame.Core
 
             //设置数据连接字符串的名称对应 connectionStrings配置的Name值
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(ConstantConfig.DBDefaultName);
-
+           
             //设置工作单元
             Configuration.UnitOfWork.IsolationLevel = IsolationLevel.ReadCommitted;
             Configuration.UnitOfWork.Timeout = TimeSpan.FromMinutes(1);
