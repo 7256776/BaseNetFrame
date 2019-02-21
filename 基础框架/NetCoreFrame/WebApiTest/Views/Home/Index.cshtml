@@ -40,7 +40,7 @@
 
             </el-form>
         </el-tab-pane>
-        <el-tab-pane label="abpToken" name="abpToken">
+        <el-tab-pane label="JwtToken" name="JwtToken">
             <el-form v-bind:model="abpFormData"
                      ref="formAbp"
                      label-position="left"
@@ -63,7 +63,9 @@
                 <el-form-item label="api服务地址" prop="apiUrl" style="width:100%">
                     <el-input v-model="abpFormData.apiUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
                         <template slot="append">
-                            <el-button type="primary" v-on:click="doAbpToken()">获取ToKen/ForgeToKen</el-button>
+                            <el-button type="primary" v-on:click="doJwtToken()">获取ToKen</el-button>
+
+                            <el-button type="primary" v-on:click="doRefreshJwtToken()">获取RefreshToKen</el-button>
                         </template>
                     </el-input>
                 </el-form-item>
@@ -74,8 +76,8 @@
                 </el-form-item>
 
 
-                <el-form-item label="授权ToKen(加密后的)" prop="encryptedAccessToken">
-                    <el-input type="textarea" v-model="abpFormData.encryptedAccessToken" style="width:725px;" v-bind:autosize="{ maxRows: 2}">
+                <el-form-item label="刷新ToKen" prop="encryptedRefreshToken">
+                    <el-input type="textarea" v-model="abpFormData.encryptedRefreshToken" style="width:725px;" v-bind:autosize="{ maxRows: 2}">
                     </el-input>
                 </el-form-item>
              

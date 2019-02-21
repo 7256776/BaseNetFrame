@@ -11,10 +11,12 @@
                 userCode: 'admin',
                 password: '888888',
                 token: '',
+                encryptedRefreshToken: '',
                 encryptedAccessToken: '',
                 expireInDate: '',
                 forgeToKen: '',
                 apiUrl: 'http://localhost:18377/api/TokenAuth/AuthenticateAuth',
+                apiRefreshUrl: 'http://localhost:18377/api/TokenAuth/RefreshJwtToken',
                 apiActionUrl: 'http://localhost:18377/api/services/frame/sysMenus/GetMenusList',
                 returnData: ''
             },
@@ -43,7 +45,7 @@
     },
     methods: {
         //获取token(Abp方案)
-        doAbpToken: function () {
+        doJwtToken: function () {
             var _this = this;
 
             var formData = {
@@ -62,10 +64,17 @@
                 contentType: 'application/json',
                 complete: function (e, state) {
                     if (e.status === 200) {
+                        //未成功获取token
+                        if (!e.responseJSON.result.resultState) {
+                            _this.abpFormData.returnData = e.responseJSON.result.resultMessage
+                            return;
+                        }
+                        _this.abpFormData.returnData = "";
                         //_this.abpFormData.token = e.responseJSON.result;
                         _this.abpFormData.token = e.responseJSON.result.accessToken;
                         _this.abpFormData.expireInDate = e.responseJSON.result.expireInDate;
                         _this.abpFormData.encryptedAccessToken = e.responseJSON.result.encryptedAccessToken;
+                        _this.abpFormData.encryptedRefreshToken = e.responseJSON.result.encryptedRefreshToken;
 
                     } else {
                         _this.abpFormData.returnData = e.statusText
@@ -89,6 +98,41 @@
                 complete: function (e, state) {
                     if (e.status === 200) {
                         _this.abpFormData.returnData = JSON.stringify(e.responseJSON);
+                    } else {
+                        _this.abpFormData.returnData = e.statusText
+                        _this.abpFormData.returnData += '\r\n' + e.responseText
+                    }
+                }
+            });//
+        },
+        //请求服务获取数据(Abp方案)
+        doRefreshJwtToken: function () {
+            var _this = this;
+            $.ajax({
+                //url: _this.abpFormData.apiUrl + _this.abpFormData.apiActionUrl,
+                url: _this.abpFormData.apiRefreshUrl,
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer " + _this.abpFormData.token,
+                    "refresh": _this.abpFormData.encryptedRefreshToken,
+                    //"X-XSRF-TOKEN": _this.abpFormData.forgeToKen
+                },
+                //dataType: "json",
+                contentType: 'application/json',
+                complete: function (e, state) {
+                    if (e.status === 200) {
+                        //未成功获取token
+                        if (!e.responseJSON.result.resultState) {
+                            _this.abpFormData.returnData = e.responseJSON.result.resultMessage
+                            return;
+                        }
+                        _this.abpFormData.returnData = "";
+
+                        _this.abpFormData.token = e.responseJSON.result.accessToken;
+                        _this.abpFormData.expireInDate = e.responseJSON.result.expireInDate;
+                        _this.abpFormData.encryptedAccessToken = e.responseJSON.result.encryptedAccessToken;
+                        _this.abpFormData.encryptedRefreshToken = e.responseJSON.result.encryptedRefreshToken;
+
                     } else {
                         _this.abpFormData.returnData = e.statusText
                         _this.abpFormData.returnData += '\r\n' + e.responseText

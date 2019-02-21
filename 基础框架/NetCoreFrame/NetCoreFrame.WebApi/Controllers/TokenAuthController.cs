@@ -1,11 +1,13 @@
 ﻿using Abp.Auditing;
 using Abp.Runtime.Security;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreFrame.Application;
 using NetCoreFrame.Core;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,20 +21,27 @@ namespace NetCoreFrame.WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class TokenAuthController : NetCoreFrameWebApiControllerBase
     {
+
+        private static ConcurrentDictionary<string, string> _refreshTokens = new ConcurrentDictionary<string, string>();
+
         private readonly IUserInfoAppService _userInfoAppService;
         private readonly IAccounExtens _accounExtens;
         private readonly AuthConfigurerModel _authConfigurerModel;
 
+        private readonly IConfiguration _configuration;
 
         public TokenAuthController(
             IUserInfoAppService userInfoAppService,
             IAccounExtens accounExtens,
-            IOptions<AuthConfigurerModel> options
+            IOptions<AuthConfigurerModel> options,
+             IConfiguration configuration
             )
         {
             _userInfoAppService = userInfoAppService;
             _accounExtens = accounExtens;
             _authConfigurerModel = options.Value;
+
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -56,7 +65,6 @@ namespace NetCoreFrame.WebApi.Controllers
         [HttpPost]
         public async Task<AuthenticateResultModel> Authenticate([FromBody]AuthenticateModel model)
         {
-
             //调用接口实现的登录验证
             SysLoginResult<UserInfo> result = await _accounExtens.LoginRequest(new LoginUser()
             {
@@ -64,16 +72,104 @@ namespace NetCoreFrame.WebApi.Controllers
                 Password = model.Password
             });
 
+            //
+            string refreshToken = GetEncrpyedRefreshToken("模拟生产刷新token");
+            _refreshTokens.TryAdd(result.User.UserCode, refreshToken);
+
             //创建token
-            var accessToken = CreateAccessToken(CreateJwtClaims(result.Identity));
+            return CreateAccessTokenModel(result.Identity.Claims.ToList());
+        }
+
+
+        /// <summary>
+        /// 获取refreshToken
+        /// 验证是通过上次的授权token进行,也可以调整其他方式
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public AuthenticateResultModel RefreshJwtToken()
+        {
+
+            if (!HttpContext.Request.Headers.ContainsKey("Authorization"))
+                return new AuthenticateResultModel("未获取到授权token", false);
+
+            var tokenBearer = HttpContext.Request.Headers["Authorization"];
+
+            string[] qsAuthTokenArr = tokenBearer.ToString().Split(' ');
+            if (qsAuthTokenArr.Length<=1)
+                return new AuthenticateResultModel("未获取到授权token", false);
+
+            string qsAuthToken = qsAuthTokenArr[1];
+            //
+            var jwtHandler = new JwtSecurityTokenHandler();
+            //获取token信息对象
+            var data = jwtHandler.ReadJwtToken(qsAuthToken);
+
+            if (!HttpContext.Request.Headers.ContainsKey("refresh"))
+                return new AuthenticateResultModel("未获取到刷新refreshToken", false);
+
+            #region 验证刷新key
+
+            var token = HttpContext.Request.Headers["refresh"];
+            if (string.IsNullOrWhiteSpace(token))
+                return new AuthenticateResultModel("未获取到授权token", false);
+            //解码刷新token
+            string refreshTokens = SimpleStringCipher.Instance.Decrypt(token, ConstantConfig.DefaultPassPhrase);
+
+            #region 复制原有的票据信息
+            var claimsName = data.Claims.First(c => c.Type == ClaimTypes.Name);
+            var claimsId = data.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+            var claimsUserNameCn = data.Claims.FirstOrDefault(s => s.Type == "UserNameCn");
+            var claimsUserCode = data.Claims.FirstOrDefault(s => s.Type == "UserCode");
+            var claimsIsAdmin = data.Claims.FirstOrDefault(s => s.Type == "IsAdmin");
+            var claimsUserRoleList = data.Claims.FirstOrDefault(s => s.Type == "UserRoleList");
+
+            List<Claim> claims = new List<Claim>() {
+                    claimsName,
+                    claimsId,
+                    claimsUserNameCn,
+                    claimsUserCode,
+                    claimsIsAdmin,
+                    claimsUserRoleList
+                };
+            #endregion
+
+            //通过用户账号寻找是否存在刷新key有效
+            _refreshTokens.TryGetValue(claimsName.Value, out string refreshKey);
+            #endregion
+
+            if (string.IsNullOrWhiteSpace(refreshKey))
+                return new AuthenticateResultModel("原有刷新refreshToken不存在", false);
+            //创建新的token
+            return CreateAccessTokenModel(claims);
+        }
+
+        /// <summary>
+        /// 返回token对象
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <returns></returns>
+        private AuthenticateResultModel CreateAccessTokenModel(List<Claim> claims)
+        {
+            var claimsName = claims.First(c => c.Type == ClaimTypes.Name);
+            var claimsId = claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+
+            //刷新token 此处可以添加个人信息
+            string refreshToken = GetEncrpyedRefreshToken("模拟生产刷新token");
+            _refreshTokens.TryAdd(claimsName.Value, refreshToken);
+
+            //创建token
+            var accessToken = CreateAccessToken(CreateJwtClaims(claims));
 
             return new AuthenticateResultModel
             {
                 AccessToken = accessToken,
                 EncryptedAccessToken = GetEncrpyedAccessToken(accessToken),
+                EncryptedRefreshToken = refreshToken,
                 ExpireInSeconds = _authConfigurerModel.JwtBearer.Expires * 60 * 60,
                 ExpireInDate = DateTime.Now.AddHours(_authConfigurerModel.JwtBearer.Expires),
-                UserId = result.User.Id
+                UserId = claimsId.Value
             };
         }
 
@@ -105,12 +201,12 @@ namespace NetCoreFrame.WebApi.Controllers
 
         /// <summary>
         /// 设置授权扩展信息 
+        /// ClaimsIdentity identity
         /// </summary>
         /// <param name="identity"></param>
         /// <returns></returns>
-        private static List<Claim> CreateJwtClaims(ClaimsIdentity identity)
+        private List<Claim> CreateJwtClaims(List<Claim> claims)
         {
-            var claims = identity.Claims.ToList();
             var nameIdClaim = claims.First(c => c.Type == ClaimTypes.NameIdentifier);
 
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
@@ -127,10 +223,21 @@ namespace NetCoreFrame.WebApi.Controllers
 
         /// <summary>
         ///  加密访问令牌
+        ///  理论上是给get请求使用或其他情况使用
         /// </summary>
         /// <param name="accessToken"></param>
         /// <returns></returns>
         private string GetEncrpyedAccessToken(string accessToken)
+        {
+            return SimpleStringCipher.Instance.Encrypt(accessToken, ConstantConfig.DefaultPassPhrase);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        private string GetEncrpyedRefreshToken(string accessToken)
         {
             return SimpleStringCipher.Instance.Encrypt(accessToken, ConstantConfig.DefaultPassPhrase);
         }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="zh-CN">
+  <texts>
+    <text name="Login" value="登录" />
+    <text name="IsPersistent" value="记住" />
+    <text name="IsRepeat" value="您输入的 {0} 重复,请重新输入" />
+    <text name="AtLeastOneOfThesePermissionsMustBeGranted" value="你没有权限" />
+    <text name="InternalServerError" value="您的请求发生了一个内部错误" />
+
+     
+  </texts>
+</localizationDictionary>
