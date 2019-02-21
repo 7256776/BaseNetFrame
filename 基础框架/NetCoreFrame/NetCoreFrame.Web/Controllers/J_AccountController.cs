@@ -14,12 +14,14 @@ namespace NetCoreFrame.Web.Controllers
     public class J_AccountController : NetCoreFrameControllerBase
     {
         private readonly IUserInfoAppService _userInfoAppService;
-
+        private readonly IAccounExtens _accounExtens;
         public J_AccountController(
-            IUserInfoAppService userInfoAppService
+            IUserInfoAppService userInfoAppService,
+            IAccounExtens accounExtens
             )
         {
             _userInfoAppService = userInfoAppService;
+            _accounExtens = accounExtens;
         }
 
         #region 用户管理
@@ -129,7 +131,10 @@ namespace NetCoreFrame.Web.Controllers
         [AbpMvcAuthorize("UserInfoManager.ResetPass")]
         public async Task<JsonResult> ResetUserPass([FromBody]long id)
         {
-            var ajaxResponse = await _userInfoAppService.ResetUserPass(id);
+            //重置密码 接口实现用户扩展
+            var ajaxResponse = await _accounExtens.ResetUserPass(id);
+            //原接口调用的业务
+            //var ajaxResponse = await _userInfoAppService.ResetUserPass(id);
             return Json(ajaxResponse);
         }
         #endregion

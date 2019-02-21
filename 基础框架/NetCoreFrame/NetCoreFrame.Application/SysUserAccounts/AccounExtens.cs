@@ -44,6 +44,16 @@ namespace NetCoreFrame.Application
         }
 
         /// <summary>
+        /// 用户管理-重置密码
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<AjaxResponse> ResetUserPass(long id)
+        {
+            /*扩展重置密码的业务*/
+            return await _userInfoAppService.ResetUserPass(id);
+        }
+
+        /// <summary>
         /// 注销之前的业务
         /// </summary>
         /// <param name="context"></param>
