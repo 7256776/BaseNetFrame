@@ -34,7 +34,7 @@ namespace NetCoreFrame.WebApi.Controllers
             IUserInfoAppService userInfoAppService,
             IAccounExtens accounExtens,
             IOptions<AuthConfigurerModel> options,
-             IConfiguration configuration
+            IConfiguration configuration
             )
         {
             _userInfoAppService = userInfoAppService;
@@ -80,7 +80,6 @@ namespace NetCoreFrame.WebApi.Controllers
             return CreateAccessTokenModel(result.Identity.Claims.ToList());
         }
 
-
         /// <summary>
         /// 获取refreshToken
         /// 验证是通过上次的授权token进行,也可以调整其他方式
@@ -90,7 +89,7 @@ namespace NetCoreFrame.WebApi.Controllers
         [HttpPost]
         public AuthenticateResultModel RefreshJwtToken()
         {
-
+            #region 验证原有token
             if (!HttpContext.Request.Headers.ContainsKey("Authorization"))
                 return new AuthenticateResultModel("未获取到授权token", false);
 
@@ -105,6 +104,8 @@ namespace NetCoreFrame.WebApi.Controllers
             var jwtHandler = new JwtSecurityTokenHandler();
             //获取token信息对象
             var data = jwtHandler.ReadJwtToken(qsAuthToken);
+
+            #endregion
 
             if (!HttpContext.Request.Headers.ContainsKey("refresh"))
                 return new AuthenticateResultModel("未获取到刷新refreshToken", false);
