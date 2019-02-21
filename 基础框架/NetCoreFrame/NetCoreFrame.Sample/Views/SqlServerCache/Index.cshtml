@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    
+    <el-form v-bind:model="formData"
+             ref="formInfoData"
+             label-position="left"
+             v-bind:inline="true"
+             v-bind:status-icon="true"
+             label-suffix=":"
+             label-width="120px">
+        <el-form-item label="keyName" prop="keyName">
+            <el-input v-model="formData.keyName" style="width:171px" clearable placeholder="Key值" v-bind:maxlength="100">
+            </el-input>
+        </el-form-item>
+
+        <el-form-item label="Value" prop="message">
+            <el-input v-model="formData.message" style="width:480px" clearable placeholder="Value值" v-bind:maxlength="100">
+            </el-input>
+        </el-form-item>
+    </el-form>
+
+    <el-button type="primary" v-on:click="doSet()">设置缓存</el-button>
+    <el-button type="primary" v-on:click="doGet()">读取缓存</el-button>
+
+    
+</div>
+

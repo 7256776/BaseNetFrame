@@ -13,7 +13,6 @@ namespace NetCoreFrame.Sample
         public virtual DbSet<TableInfo> TableInfos { set; get; }
         public virtual DbSet<TempTable> TempTables { set; get; }
 
-
         public SampleFrameDbContext(DbContextOptions<SampleFrameDbContext> options)
          : base(options)
         {

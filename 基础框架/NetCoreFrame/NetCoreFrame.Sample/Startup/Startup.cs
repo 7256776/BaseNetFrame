@@ -18,6 +18,11 @@ using Newtonsoft.Json;
 
 namespace NetCoreFrame.Sample
 {
+    public class LocalSystemClock : Microsoft.Extensions.Internal.ISystemClock
+    {
+        public DateTimeOffset UtcNow => DateTime.Now;
+    }
+
     public class Startup : NetCoreFrame.Web.Startup
     {
 
@@ -34,6 +39,26 @@ namespace NetCoreFrame.Sample
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
             base.BuildConfigureServices(services);
+
+            //Redis缓存SqlServerCache
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "TestDb";
+                options.Configuration = _appConfiguration.GetConnectionString("RedisConnectionString");       //localhost
+            });
+
+
+            //数据库缓存SqlServerCache
+            //services.AddDistributedSqlServerCache(options =>
+            //{
+            //    options.SystemClock = new LocalSystemClock();                                                    //本地时间
+            //    options.ConnectionString = _appConfiguration.GetConnectionString("Default");    //数据库连接
+            //    options.SchemaName = "dbo";                                                                              //数据库对象名称
+            //    options.TableName = "AspNetCoreCache";                                                            //数据库存缓存的对象
+            //    options.DefaultSlidingExpiration = TimeSpan.FromSeconds(10);                             //10秒钟过期
+            //    options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);                        //刷新间隔
+            //});
+
             //添加验证码配置
             services.Configure<GeetestOptions>(_appConfiguration.GetSection("GeetestOptions"));
             // 配置Log4Net日志
