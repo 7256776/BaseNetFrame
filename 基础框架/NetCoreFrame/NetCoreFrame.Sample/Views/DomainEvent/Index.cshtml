@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+
+    <el-form v-bind:model="formData"
+             ref="formInfoData"
+             label-position="left"
+             v-bind:inline="false"
+             v-bind:status-icon="true"
+             label-suffix=":"
+             label-width="120px">
+        <el-form-item label="id" prop="id">
+            <el-input v-model="formData.id" style="width:200px" placeholder="Id值" v-bind:maxlength="100">
+            </el-input>
+        </el-form-item>
+
+        <el-form-item label="Value" prop="message">
+            <el-input v-model="formData.message" style="width:200px" clearable placeholder="Value值" v-bind:maxlength="100">
+            </el-input>
+        </el-form-item>
+    </el-form>
+
+    <el-button type="primary" v-on:click="doInsertLog()">新增</el-button>
+    <el-button type="primary" v-on:click="doUpdateLog()">更新</el-button>
+    <el-button type="primary" v-on:click="doDeleteLog()">删除</el-button>
+    <el-button type="primary" v-on:click="doDoEvent()">自定义驱动事件</el-button>
+
+
+</div>
+

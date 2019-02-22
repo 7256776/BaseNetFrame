@@ -4,6 +4,7 @@ using Abp.AutoMapper;
 using Abp.Dapper.Repositories;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
+using Abp.Events.Bus;
 using Abp.Web.Models;
 using NetCoreFrame.Application;
 using NetCoreFrame.Core;
@@ -23,9 +24,10 @@ namespace NetCoreFrame.Sample
         private readonly IRepository<TableInfo, Guid> _repositoryTableInfo;
         private readonly IRepository<TempTable, long> _repositoryTempTable;
 
-        private readonly IDapperRepository<TempTable, long> _dapperRepositoryTableInfo;
-
+        private readonly IDapperRepository<TempTable, long> _dapperRepositoryTableInfo; 
         private readonly IUnitOfWorkManager _unitOfWorkManager;
+
+
 
         public DataModelAppService(
                 IRepository<TempTable, long> repositoryTempTable,
@@ -42,6 +44,7 @@ namespace NetCoreFrame.Sample
             _dapperRepositoryTableInfo = dapperRepositoryTableInfo;
 
             _unitOfWorkManager = unitOfWorkManager;
+
         }
 
         #region 基础设置
@@ -50,7 +53,7 @@ namespace NetCoreFrame.Sample
         /// </summary>
         /// <returns></returns>
         public List<TableInfo> GetTableList(string tabType)
-        {
+        { 
             var data = _repositoryTableInfo.GetAll().Where(w=>w.TableType == tabType || tabType=="");
             return data.ToList();
         }

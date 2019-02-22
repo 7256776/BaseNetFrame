@@ -9,6 +9,7 @@ namespace NetCoreFrame.Sample
 {
     public class CacheParam
     {
+        public string Id { get; set; }
         public string KeyName { get; set; }
         public string Message { get; set; }
 
