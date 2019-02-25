@@ -37,7 +37,6 @@ namespace RabbitMQService
             //}
             #endregion
 
-
             #region 路由模式(Topic)
             Console.WriteLine("启动!");
             Console.Write("输入路由名称多个用 ',' 分割!");

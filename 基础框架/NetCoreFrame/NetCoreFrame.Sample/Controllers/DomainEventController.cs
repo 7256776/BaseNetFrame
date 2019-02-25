@@ -34,6 +34,7 @@ namespace NetCoreFrame.Sample.Controllers
             return View();
         }
 
+        #region 领域驱动事件的处理
         public JsonResult DoEvent([FromBody]CacheParam param)
         {
             //触发事件
@@ -69,6 +70,31 @@ namespace NetCoreFrame.Sample.Controllers
             _auditLogRepository.Delete(id);
             return Json(true);
         }
+        #endregion
+
+        #region MyRegion
+        [FrameResultHandler]
+        public JsonResult GetCustomResultData()
+        {
+            //触发事件
+            var data = new
+            {
+                name = "名称",
+                value = "值类型"
+            };
+            return Json(data);
+        }
+
+        public JsonResult GetResultData()
+        {
+            var data = new
+            {
+                name = "名称",
+                value = "值类型"
+            };
+            return Json(data);
+        }
+        #endregion
 
     }
 }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NetCoreFrame.Core
 {
     /// <summary>
-    /// Represents a setting for a tenant or user.
+    /// 用于模拟测试表
     /// </summary>
     [AutoMap(typeof(SysSetting))]
     public class SysSettingDto

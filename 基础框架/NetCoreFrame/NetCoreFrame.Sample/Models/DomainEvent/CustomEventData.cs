@@ -19,6 +19,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 自定义驱动事件
+/// </summary>
 namespace NetCoreFrame.Sample
 {
     /// <summary>

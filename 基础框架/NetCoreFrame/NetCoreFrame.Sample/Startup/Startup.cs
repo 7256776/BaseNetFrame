@@ -39,7 +39,7 @@ namespace NetCoreFrame.Sample
         public override IServiceProvider ConfigureServices(IServiceCollection services)
         {
             base.BuildConfigureServices(services);
-
+             
             //Redis缓存SqlServerCache
             services.AddDistributedRedisCache(options =>
             {

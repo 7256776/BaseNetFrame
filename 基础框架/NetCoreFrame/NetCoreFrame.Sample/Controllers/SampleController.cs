@@ -52,6 +52,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// 获取表信息
         /// </summary>
         /// <returns></returns>
+        [FrameResultHandler]
         public JsonResult GetTableList([FromBody]string tabType = "")
         {
             var data = _dataModelAppService.GetTableList(tabType);
@@ -62,6 +63,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// 获取表与字段信息
         /// </summary>
         /// <returns></returns>
+        [FrameResultHandler]
         public JsonResult GetTableAndeFieldList()
         {
             var data = _dataModelAppService.GetTableAndeFieldList();

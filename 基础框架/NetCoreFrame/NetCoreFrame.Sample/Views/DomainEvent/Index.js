@@ -6,12 +6,13 @@ var component = Vue.component('domainevent', {
     data: function () {
         return {
             mesg: null,
-            mesgList:[],
+            mesgList: [],
             formData: {
                 id: null,
                 message: '',
                 keyName: ''
             },
+            resultData: null
         };
     },
     watch: {
@@ -71,8 +72,32 @@ var component = Vue.component('domainevent', {
                 _this.formData.message = data.message;
                 abp.message.success('完成了.');
             });
+        }, 
+        getCustomResultData: function () {
+            //初始加载数据
+            var _this = this;
+            $.ajax({
+                url: '/DomainEvent/GetCustomResultData',
+                type: "POST",
+                //contentType: 'application/json',
+                complete: function (e, state) {
+                    _this.resultData = e.responseText;
+                    abp.message.success('完成了.');
+                }
+            });//
+        }, 
+        getResultData: function () {
+            //初始加载数据
+            var _this = this;
+            //
+            abp.ajax({
+                url: '/DomainEvent/GetResultData',
+                data: JSON.stringify(this.formData),
+                type: 'POST'
+            }).done(function (data, res, e) {
+                _this.resultData = e.responseText;
+                abp.message.success('完成了.');
+            });
         },
-
-
     }
 });

@@ -37,6 +37,7 @@ var component = Vue.component('metadata-dynamicform', {
     },
     methods: {
         initTableData: function () {
+            debugger;
             //初始加载数据
             var _this = this;
             //

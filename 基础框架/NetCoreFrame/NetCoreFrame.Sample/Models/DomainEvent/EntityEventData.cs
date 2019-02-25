@@ -19,6 +19,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 定义视图对象的驱动事件
+/// </summary>
 namespace NetCoreFrame.Sample
 {
  

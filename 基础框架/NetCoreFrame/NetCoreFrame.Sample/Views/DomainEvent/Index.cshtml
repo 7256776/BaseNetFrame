@@ -3,7 +3,9 @@
 }
 
 <div>
-
+    <p>
+        领域事件驱动示例
+    </p>
     <el-form v-bind:model="formData"
              ref="formInfoData"
              label-position="left"
@@ -15,7 +17,6 @@
             <el-input v-model="formData.id" style="width:200px" placeholder="Id值" v-bind:maxlength="100">
             </el-input>
         </el-form-item>
-
         <el-form-item label="Value" prop="message">
             <el-input v-model="formData.message" style="width:200px" clearable placeholder="Value值" v-bind:maxlength="100">
             </el-input>
@@ -27,6 +28,13 @@
     <el-button type="primary" v-on:click="doDeleteLog()">删除</el-button>
     <el-button type="primary" v-on:click="doDoEvent()">自定义驱动事件</el-button>
 
-
+    <p>
+        重写返回值示例
+    </p>
+    <el-input v-model="resultData" type="textarea" v-bind:rows="6" style="width:500px" clearable placeholder="resultData值">
+    </el-input>
+    <p></p>
+    <el-button type="primary" v-on:click="getCustomResultData()">获取进过筛选器过滤的返回数据</el-button>
+    <el-button type="primary" v-on:click="getResultData()">未筛选器过滤返回数据</el-button>
 </div>
 
