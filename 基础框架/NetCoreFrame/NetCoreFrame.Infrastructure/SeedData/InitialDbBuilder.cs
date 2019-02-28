@@ -9,7 +9,7 @@ using System.Linq;
 namespace NetCoreFrame.Infrastructure
 {
 
-    public class MultiAuthScaffoldDbContextFactory : IDesignTimeDbContextFactory<InfrastructureDbContext>
+    public class InitialDbBuilder : IDesignTimeDbContextFactory<InfrastructureDbContext>
     {
         /// <summary>
         ///   执行命令
