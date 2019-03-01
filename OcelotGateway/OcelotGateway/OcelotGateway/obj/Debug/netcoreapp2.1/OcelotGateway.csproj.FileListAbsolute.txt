@@ -12,3 +12,17 @@ C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\bin\Debug\netc
 C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.dll
 C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.pdb
 C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csprojAssemblyReference.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.deps.json
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.runtimeconfig.json
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.runtimeconfig.dev.json
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.dll
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.pdb
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csprojAssemblyReference.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csproj.CoreCompileInputs.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorAssemblyInfo.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorAssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.AssemblyInfoInputs.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.AssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorTargetAssemblyInfo.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.dll
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.pdb

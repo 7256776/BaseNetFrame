@@ -13295,11 +13295,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\1\\WebApiAuthService\\WebApiAuthService.csproj",
+      "projectUniqueName": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\AuthorizationService\\WebApiAuthService\\WebApiAuthService.csproj",
       "projectName": "WebApiAuthService",
-      "projectPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\1\\WebApiAuthService\\WebApiAuthService.csproj",
+      "projectPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\AuthorizationService\\WebApiAuthService\\WebApiAuthService.csproj",
       "packagesPath": "C:\\Users\\zhoujianfeng\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\1\\WebApiAuthService\\obj\\",
+      "outputPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\AuthorizationService\\WebApiAuthService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -184,11 +184,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\EntityObjectModel\\EntityObjectModel.csproj",
+      "projectUniqueName": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\EntityObjectModel\\EntityObjectModel.csproj",
       "projectName": "EntityObjectModel",
-      "projectPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\EntityObjectModel\\EntityObjectModel.csproj",
+      "projectPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\EntityObjectModel\\EntityObjectModel.csproj",
       "packagesPath": "C:\\Users\\zhoujianfeng\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\EntityObjectModel\\obj\\",
+      "outputPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\EntityObjectModel\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

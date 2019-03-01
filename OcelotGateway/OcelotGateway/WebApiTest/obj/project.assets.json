@@ -11796,11 +11796,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\WebApiTest\\WebApiTest.csproj",
+      "projectUniqueName": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\WebApiTest\\WebApiTest.csproj",
       "projectName": "WebApiTest",
-      "projectPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\WebApiTest\\WebApiTest.csproj",
+      "projectPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\WebApiTest\\WebApiTest.csproj",
       "packagesPath": "C:\\Users\\zhoujianfeng\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\WebApiTest\\obj\\",
+      "outputPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\WebApiTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11821,8 +11821,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\EntityObjectModel\\EntityObjectModel.csproj": {
-              "projectPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\EntityObjectModel\\EntityObjectModel.csproj"
+            "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\EntityObjectModel\\EntityObjectModel.csproj": {
+              "projectPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\EntityObjectModel\\EntityObjectModel.csproj"
             }
           }
         }

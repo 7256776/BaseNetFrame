@@ -24,3 +24,29 @@ C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\MicroServiceB\obj\Debug\netc
 C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\MicroServiceB\bin\Debug\netcoreapp2.1\EntityObjectModel.dll
 C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\MicroServiceB\bin\Debug\netcoreapp2.1\EntityObjectModel.pdb
 C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\MicroServiceB\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.deps.json
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.runtimeconfig.json
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.runtimeconfig.dev.json
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.dll
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.pdb
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.Views.dll
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\MicroServiceB.Views.pdb
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\EntityObjectModel.dll
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\bin\Debug\netcoreapp2.1\EntityObjectModel.pdb
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.csprojAssemblyReference.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.csproj.CoreCompileInputs.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.RazorAssemblyInfo.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.RazorAssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.AssemblyInfoInputs.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.AssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.TagHelpers.input.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.TagHelpers.output.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.RazorCoreGenerate.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.RazorTargetAssemblyInfo.cache
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.RazorTargetAssemblyInfo.cs
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.Views.pdb
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.csproj.CopyComplete
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.dll
+F:\Develop\MyProject\AbpFrame\AbpBaseFrame\BaseNetFrame\OcelotGateway\OcelotGateway\MicroServiceB\obj\Debug\netcoreapp2.1\MicroServiceB.pdb

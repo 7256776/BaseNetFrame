@@ -12076,11 +12076,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\OcelotGateway\\OcelotGateway.csproj",
+      "projectUniqueName": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\OcelotGateway\\OcelotGateway.csproj",
       "projectName": "OcelotGateway",
-      "projectPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\OcelotGateway\\OcelotGateway.csproj",
+      "projectPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\OcelotGateway\\OcelotGateway.csproj",
       "packagesPath": "C:\\Users\\zhoujianfeng\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zhoujianfeng\\Desktop\\新建文件夹 (2)\\2\\OcelotGateway\\obj\\",
+      "outputPath": "F:\\Develop\\MyProject\\AbpFrame\\AbpBaseFrame\\BaseNetFrame\\OcelotGateway\\OcelotGateway\\OcelotGateway\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
