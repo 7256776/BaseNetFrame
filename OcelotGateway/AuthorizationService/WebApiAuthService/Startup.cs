@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 using WebApiAuthService;
 
 namespace WebApiAuthService
@@ -37,6 +39,24 @@ namespace WebApiAuthService
 	        "id_token_signing_alg_values_supported": ["RS256"],
 	        "code_challenge_methods_supported": ["plain", "S256"]
         }
+         */
+
+        /*
+
+        https://slproweb.com/products/Win32OpenSSL.html   
+        下载Win64 OpenSSL v1.1.0j
+
+        配置环境变量
+        C:\OpenSSL-Win64\bin
+
+        配置方法
+        https://www.jianshu.com/p/1b82f6d2644e
+        执行步骤 在CMD中执行以下命令
+        1.生成cas.clientservice.key与cas.clientservice.cer  过程中会输入一些证书信息
+        openssl req - newkey rsa: 2048 - nodes - keyout cas.clientservice.key - x509 - days 365 -out cas.clientservice.cer
+        2. 把cas.clientservice.key与cas.clientservice.cer文件打包成一个文件clientservice.pfx
+        openssl pkcs12 - export -in cas.clientservice.cer - inkey cas.clientservice.key -out clientservice.pfx
+
          */
 
         private const string _defaultCorsPolicyName = "localhost";
@@ -144,12 +164,15 @@ namespace WebApiAuthService
             //    }); 
             #endregion
 
+            string cerificate = Path.Combine(Environment.CurrentDirectory, Configuration["Cerificates:Cerificate"]);
+            string pass = Configuration["Cerificates:Password"];
 
             services
             .AddIdentityServer()
             .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
             .AddClientConfigurationValidator<ClientConfigurationValidator>()
 
+            #region 
             //添加一个“AppAuth”（OAuth 2.0 for Native Apps）兼容的重定向URI验证器（进行严格的验证，但也允许随机端口为http://127.0.0.1）。
             //.AddAppAuthRedirectUriValidator()
             //.AddRedirectUriValidator<RedirectUriValidator>()
@@ -164,6 +187,7 @@ namespace WebApiAuthService
             //.AddExtensionGrantValidator<ExtensionGrantValidator>()
             //.AddSecretParser<SecretParser>()
             //.AddSecretValidator<SecretValidator>()
+            #endregion
 
             #region 要使用下面描述的任何缓存
             //要使用下面描述的任何缓存，必须在DI中注册ICache的实现。 此API注册基于ASP.NET Core的ICache 的MemoryCache默认内存缓存实现。
@@ -179,7 +203,7 @@ namespace WebApiAuthService
             .AddResourceStore<ResourceStore>()
             #endregion
 
-
+            #region 缓存配置文件
             //.AddInMemoryIdentityResources(Config.GetIdentityResourceResources())
             //.AddInMemoryApiResources(Config.GetApiResources())
             //.AddInMemoryClients(Config.GetClients())
@@ -190,8 +214,10 @@ namespace WebApiAuthService
             //            SubjectId="1"
             //        }
             //    })
-            .AddDeveloperSigningCredential();
-
+            #endregion
+            //.AddDeveloperSigningCredential()  //临时证书开发使用
+            .AddSigningCredential(new System.Security.Cryptography.X509Certificates.X509Certificate2(cerificate, pass));    //使用OpenSSL证书
+             
             //DbContextOptionsBuilder
             services.AddDbContext<AppDbContext>(options =>
             {
