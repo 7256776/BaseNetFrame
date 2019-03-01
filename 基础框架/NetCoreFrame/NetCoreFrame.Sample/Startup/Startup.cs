@@ -47,7 +47,6 @@ namespace NetCoreFrame.Sample
                 options.Configuration = _appConfiguration.GetConnectionString("RedisConnectionString");       //localhost
             });
 
-
             //数据库缓存SqlServerCache
             //services.AddDistributedSqlServerCache(options =>
             //{
