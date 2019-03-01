@@ -1,0 +1,9 @@
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\bin\Debug\netstandard2.0\EntityObjectModel.deps.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\bin\Debug\netstandard2.0\EntityObjectModel.dll
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\bin\Debug\netstandard2.0\EntityObjectModel.pdb
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\obj\Debug\netstandard2.0\EntityObjectModel.csprojAssemblyReference.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\obj\Debug\netstandard2.0\EntityObjectModel.csproj.CoreCompileInputs.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\obj\Debug\netstandard2.0\EntityObjectModel.AssemblyInfoInputs.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\obj\Debug\netstandard2.0\EntityObjectModel.AssemblyInfo.cs
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\obj\Debug\netstandard2.0\EntityObjectModel.dll
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\EntityObjectModel\obj\Debug\netstandard2.0\EntityObjectModel.pdb

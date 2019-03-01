@@ -1,0 +1,64 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/User/{path}", //下游服务模板
+      "DownstreamScheme": "http", //下游服务schema：http, https
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 40378
+        }
+      ], //下游服务端口号和地址
+      "UpstreamPathTemplate": "/OcelotGatewayA/{path}", //上游服务模板
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ], //上游方法类型Get,Post,Put
+      "FileCacheOptions": {
+        "TtlSeconds": 1,    //缓存时间单位 /秒
+        "Region": ""
+      }, //对下游请求结果进行缓存，主要依赖于CacheManager实现
+      "AddHeadersToRequest": {}, //需要在转发过程中添加到Header的内容
+      "RequestIdKey": "MicroServiceAA",
+      "ReRouteIsCaseSensitive": false, //重写路由是否区分大小写
+      "ServiceName": "", //服务名称
+
+      "RateLimitOptions": { //限流设置
+        "ClientWhitelist": [], //客户端白名单
+        "EnableRateLimiting": false, //是否启用限流设置
+        "Period": "1s", //每次请求时间间隔
+        "PeriodTimespan": 15, //恢复的时间间隔
+        "Limit": 1 //请求数量
+      },
+      "QoSOptions": {
+        //服务质量与熔断,熔断的意思是停止将请求转发到下游服务。当下游服务已经出现故障的时候再请求也是无功而返，并且增加下游服务器和API网关的负担，这个功能是用的Polly来实现的，我们只需要为路由做一些简单配置即可
+        "ExceptionsAllowedBeforeBreaking": 0, //允许多少个异常请求
+        "DurationOfBreak": 0, //熔断的时间，单位为秒
+        "TimeoutValue": 0 //如果下游请求的处理时间超过多少则自如将请求设置为超时
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/User/{path}", //模块{path}
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 40382
+        }
+      ],
+      "UpstreamPathTemplate": "/OcelotGatewayB/{path}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowScopes": [] //ApiResource授权访问范围,即ApiName
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+
+  }
+
+}

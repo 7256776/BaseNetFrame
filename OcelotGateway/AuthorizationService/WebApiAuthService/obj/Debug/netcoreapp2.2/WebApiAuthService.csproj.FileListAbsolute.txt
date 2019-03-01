@@ -1,0 +1,14 @@
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\bin\Debug\netcoreapp2.2\WebApiAuthService.deps.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\bin\Debug\netcoreapp2.2\WebApiAuthService.runtimeconfig.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\bin\Debug\netcoreapp2.2\WebApiAuthService.runtimeconfig.dev.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\bin\Debug\netcoreapp2.2\WebApiAuthService.dll
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\bin\Debug\netcoreapp2.2\WebApiAuthService.pdb
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.csproj.CoreCompileInputs.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.RazorAssemblyInfo.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.RazorAssemblyInfo.cs
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.AssemblyInfoInputs.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.AssemblyInfo.cs
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.RazorTargetAssemblyInfo.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.dll
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.pdb
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\1\WebApiAuthService\obj\Debug\netcoreapp2.2\WebApiAuthService.csprojAssemblyReference.cache

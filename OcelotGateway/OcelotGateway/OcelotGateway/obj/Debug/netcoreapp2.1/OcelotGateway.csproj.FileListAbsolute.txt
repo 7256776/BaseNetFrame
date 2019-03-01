@@ -1,0 +1,14 @@
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.deps.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.runtimeconfig.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.runtimeconfig.dev.json
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.dll
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csproj.CoreCompileInputs.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorAssemblyInfo.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorAssemblyInfo.cs
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.AssemblyInfoInputs.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.AssemblyInfo.cs
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorTargetAssemblyInfo.cache
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.pdb
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.dll
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.pdb
+C:\Users\zhoujianfeng\Desktop\新建文件夹 (2)\2\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csprojAssemblyReference.cache
