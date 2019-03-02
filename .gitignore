@@ -1,3 +1,15 @@
 /OcelotGateway/AuthorizationService/.vs
 
 /OcelotGateway/OcelotGateway/.vs
+/OcelotGateway/AuthorizationService/WebApiAuthService/obj
+/OcelotGateway/AuthorizationService/WebApiAuthService/bin
+/OcelotGateway/OcelotGateway/EntityObjectModel/bin
+/OcelotGateway/OcelotGateway/EntityObjectModel/obj
+/OcelotGateway/OcelotGateway/MicroServiceA/bin
+/OcelotGateway/OcelotGateway/MicroServiceA/obj
+/OcelotGateway/OcelotGateway/MicroServiceB/bin
+/OcelotGateway/OcelotGateway/MicroServiceB/obj
+/OcelotGateway/OcelotGateway/OcelotGateway/bin
+/OcelotGateway/OcelotGateway/OcelotGateway/obj
+/OcelotGateway/OcelotGateway/WebApiTest/bin
+/OcelotGateway/OcelotGateway/WebApiTest/obj
