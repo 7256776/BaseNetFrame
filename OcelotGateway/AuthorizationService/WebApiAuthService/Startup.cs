@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using WebApiAuthService;
+using static WebApiAuthService.RSAHelper;
 
 namespace WebApiAuthService
 {
@@ -167,6 +174,39 @@ namespace WebApiAuthService
             string cerificate = Path.Combine(Environment.CurrentDirectory, Configuration["Cerificates:Cerificate"]);
             string pass = Configuration["Cerificates:Password"];
 
+            //RSA：证书长度2048以上，否则抛异常
+            //配置AccessToken的加密证书
+            var rsa = new RSACryptoServiceProvider();
+            //从配置文件获取加密证书
+            rsa.ImportCspBlob(Convert.FromBase64String(Configuration["SigningCredential"]));
+
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = OAuthDefaults.DisplayName;
+            //})
+            //.AddCookie()
+            //.AddOAuth(OAuthDefaults.DisplayName, options =>
+            //{
+            //    options.ClientId = "oauth.code";
+            //    options.ClientSecret = "secret";
+            //    options.AuthorizationEndpoint = "https://oidc.faasx.com/connect/authorize";
+            //    options.TokenEndpoint = "https://oidc.faasx.com/connect/token";
+            //    options.CallbackPath = "/signin-oauth";
+            //    options.Scope.Add("openid");
+            //    options.Scope.Add("profile");
+            //    options.Scope.Add("email");
+            //    options.SaveTokens = true;        // 事件执行顺序 ：
+            //                                      // 1.创建Ticket之前触发
+            //    options.Events.OnCreatingTicket = context => Task.CompletedTask;        // 2.创建Ticket失败时触发
+            //    options.Events.OnRemoteFailure = context => Task.CompletedTask;        // 3.Ticket接收完成之后触发
+            //    options.Events.OnTicketReceived = context => Task.CompletedTask;        // 4.Challenge时触发，默认跳转到OAuth服务器
+            //    // options.Events.OnRedirectToAuthorizationEndpoint = context => context.Response.Redirect(context.RedirectUri);
+            //});
+
+
             services
             .AddIdentityServer()
             .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
@@ -174,7 +214,7 @@ namespace WebApiAuthService
 
             #region 
             //添加一个“AppAuth”（OAuth 2.0 for Native Apps）兼容的重定向URI验证器（进行严格的验证，但也允许随机端口为http://127.0.0.1）。
-            //.AddAppAuthRedirectUriValidator()
+            .AddAppAuthRedirectUriValidator()
             //.AddRedirectUriValidator<RedirectUriValidator>()
 
             //使用JWT对客户机认证的支持。
@@ -216,8 +256,10 @@ namespace WebApiAuthService
             //    })
             #endregion
             //.AddDeveloperSigningCredential()  //临时证书开发使用
-            .AddSigningCredential(new System.Security.Cryptography.X509Certificates.X509Certificate2(cerificate, pass));    //使用OpenSSL证书
+            .AddSigningCredential(new RsaSecurityKey(rsa)); //设置加密证书
+            //.AddSigningCredential(new System.Security.Cryptography.X509Certificates.X509Certificate2(cerificate, pass));    //使用OpenSSL证书
              
+
             //DbContextOptionsBuilder
             services.AddDbContext<AppDbContext>(options =>
             {

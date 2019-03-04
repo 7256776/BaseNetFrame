@@ -34,12 +34,22 @@ namespace WebApiTest.Controllers
 
             if (httpModel.ActionType.ToUpper() == "GET")
             {
-                var data = httpClientHubBase.GetData<UserInfo>(httpModel.Url);
-                return Json(data);
+                //var data = httpClientHubBase.GetData<UserInfo>(httpModel.Url);
+                try
+                {
+                    var data = httpClientHubBase.GetData<dynamic>(httpModel.Url);
+                    return Json(data);
+                }
+                catch (Exception ex)
+                {
+
+              
+                }
+               
             }
             else if (httpModel.ActionType.ToUpper() == "POST")
             {
-                var data = httpClientHubBase.PostData<List<UserInfo>>(httpModel.Url, httpModel.ParamData);
+                var data = httpClientHubBase.PostData<dynamic>(httpModel.Url, httpModel.ParamData);
                 return Json(data);
             }
 

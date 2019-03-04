@@ -1,3 +1,9 @@
 /OcelotGateway/AuthorizationService/.vs
 
 /OcelotGateway/OcelotGateway/.vs
+/OcelotGateway/AuthorizationService/WebApiAuthService/bin
+/OcelotGateway/AuthorizationService/WebApiAuthService/obj
+/OcelotGateway/OcelotGateway/OcelotGateway/bin
+/OcelotGateway/OcelotGateway/OcelotGateway/obj
+/OcelotGateway/OcelotGateway/WebApiTest/obj
+/OcelotGateway/OcelotGateway/WebApiTest/bin

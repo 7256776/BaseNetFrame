@@ -97,7 +97,7 @@
             data: JSON.stringify(data),
             contentType: 'application/json',
             complete: function (e, state) {
-                debugger;
+                //debugger;
                 if (e.status == 200)
                     $('#resultText').val(e.responseText);
                 else

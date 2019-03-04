@@ -43,18 +43,10 @@ namespace WebApiAuthService
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets =  {new Secret("secret".Sha256())  },
-                    AccessTokenLifetime=15,
-
-                    //AllowOfflineAccess = true,//如果要获取refresh_tokens ,必须把AllowOfflineAccess设置为true
-                    RefreshTokenExpiration = TokenExpiration.Absolute,
-                    AbsoluteRefreshTokenLifetime = 20,
+                    AccessTokenLifetime=120,
+                
                     AllowedScopes = {
-                        "apiA",
-                       //PersistedGrantTypes.ReferenceToken,
-                       //PersistedGrantTypes.RefreshToken,
-                        //StandardScopes.OfflineAccess, //如果要获取refresh_tokens ,必须在scopes中加上OfflineAccess
-                        //StandardScopes.OpenId,//如果要获取id_token,必须在scopes中加上OpenId和Profile，id_token需要通过refresh_tokens获取AccessToken的时候才能拿到（还未找到原因）
-                        //StandardScopes.Profile//如果要获取id_token,必须在scopes中加上OpenId和Profile
+                        "apiA", 
                     },
                 },
           
@@ -68,10 +60,15 @@ namespace WebApiAuthService
                     ClientId = "clientCode",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     ClientSecrets = {new Secret("secretPass".Sha256())},
-                    AccessTokenLifetime=10,
+                    AccessTokenLifetime=120,      //AccessToken的过期时间
 
                     AllowOfflineAccess = true,//如果要获取refresh_tokens ,必须把AllowOfflineAccess设置为true
-                    RefreshTokenUsage=TokenUsage.OneTimeOnly,//每次发出一个新的刷新令牌
+                    /*
+                        TokenUsage.OneTimeOnly,   //默认状态，每次发出一个新的刷新令牌,RefreshToken只能使用一次，使用一次之后旧的就不能使用了，只能使用新的RefreshToken
+                        TokenUsage.ReUse,   //可重复使用RefreshToken，RefreshToken，当然过期了就不能使用了
+                     */
+                    RefreshTokenUsage=TokenUsage.OneTimeOnly,
+                    
 
                     //Sliding=每次获取后刷新令牌都更新有效期 (两种方法去其一)
                     RefreshTokenExpiration = TokenExpiration.Sliding,      
@@ -87,6 +84,8 @@ namespace WebApiAuthService
                         //StandardScopes.OpenId,//如果要获取id_token,必须在scopes中加上OpenId和Profile，id_token需要通过refresh_tokens获取AccessToken的时候才能拿到（还未找到原因）
                         //StandardScopes.Profile//如果要获取id_token,必须在scopes中加上OpenId和Profile
                     },
+
+
 
                 },
             };
