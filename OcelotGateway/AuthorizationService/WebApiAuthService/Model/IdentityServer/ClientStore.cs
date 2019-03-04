@@ -72,7 +72,7 @@ namespace WebApiAuthService
 
                     //Sliding=每次获取后刷新令牌都更新有效期 (两种方法去其一)
                     RefreshTokenExpiration = TokenExpiration.Sliding,      
-                    SlidingRefreshTokenLifetime=360,
+                    SlidingRefreshTokenLifetime=10,
 
                     //Absolute=从获取后就确定了刷新令牌有效期, Sliding=每次获取后刷新令牌都更新有效期
                     //RefreshTokenExpiration = TokenExpiration.Absolute,     
@@ -96,5 +96,6 @@ namespace WebApiAuthService
 
     }
 
+  
 
 }

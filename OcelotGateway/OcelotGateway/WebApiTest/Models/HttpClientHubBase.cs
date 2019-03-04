@@ -18,6 +18,7 @@ namespace WebApiTest.Models
         public HttpClientHubBase()
         {
             _httpClient = HttpClientFactory.Create();
+
         }
 
         #region POST«Î«Û

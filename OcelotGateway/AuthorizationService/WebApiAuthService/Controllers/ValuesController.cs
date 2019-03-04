@@ -34,9 +34,9 @@ namespace WebApiAuthService.Controllers
             //var decryptStr = rsAHelper.Decrypt(encryptStr);
 
             //var publicKeyRSA = rsAHelper.CreateRsaProviderFromPublicKey(RSAHelper.publicKey);
-            //var privateKeyRSA = rsAHelper.CreateRsaProviderFromPrivateKey(RSAHelper.privateKey);
+            var privateKeyRSA = rsAHelper.CreateRsaProviderFromPrivateKey(RSAHelper.privateKey);
 
-            rsAHelper.MainTest();
+            //rsAHelper.MainTest();
 
             return new JsonResult(true);
         }

@@ -146,9 +146,10 @@ namespace WebApiAuthService
         #region 使用私钥创建RSA实例
 
         public RSA CreateRsaProviderFromPrivateKey(string privateKey)
-        {
+        { 
             var privateKeyBits = Convert.FromBase64String(privateKey);
             var rsa = RSA.Create();
+
             var rsaParameters = new RSAParameters();
             using (BinaryReader binr = new BinaryReader(new MemoryStream(privateKeyBits)))
             {
@@ -328,9 +329,9 @@ namespace WebApiAuthService
             RSA2
         }
 
-        #region  
+        #region  OpenSSL的公钥加密/私钥解密
 
-        public  void MainTest()
+        public void MainTest()
         {
             var plainText = "加密文本";
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using IdentityServer4.Services;
+using IdentityServer4.Stores;
+using IdentityServer4.Validation;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -180,7 +183,18 @@ namespace WebApiAuthService
             //从配置文件获取加密证书
             rsa.ImportCspBlob(Convert.FromBase64String(Configuration["SigningCredential"]));
 
+            #region 生成RSE加密证书
+            //using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(2048))
+            //{
+            //    string data1 = Convert.ToBase64String(provider.ExportCspBlob(false));   //PublicKey
+            //    string data = Convert.ToBase64String(provider.ExportCspBlob(true));    //PrivateKey
+            //}
+            #endregion
 
+            //刷新token持久化
+            //services.AddSingleton<IPersistedGrantStore, PersistedGrantStore>();
+
+            #region 
             //services.AddAuthentication(options =>
             //{
             //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -205,16 +219,16 @@ namespace WebApiAuthService
             //    options.Events.OnTicketReceived = context => Task.CompletedTask;        // 4.Challenge时触发，默认跳转到OAuth服务器
             //    // options.Events.OnRedirectToAuthorizationEndpoint = context => context.Response.Redirect(context.RedirectUri);
             //});
-
+            #endregion
 
             services
             .AddIdentityServer()
             .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
             .AddClientConfigurationValidator<ClientConfigurationValidator>()
-
+            
             #region 
             //添加一个“AppAuth”（OAuth 2.0 for Native Apps）兼容的重定向URI验证器（进行严格的验证，但也允许随机端口为http://127.0.0.1）。
-            .AddAppAuthRedirectUriValidator()
+            //.AddAppAuthRedirectUriValidator()
             //.AddRedirectUriValidator<RedirectUriValidator>()
 
             //使用JWT对客户机认证的支持。
@@ -255,10 +269,10 @@ namespace WebApiAuthService
             //        }
             //    })
             #endregion
-            //.AddDeveloperSigningCredential()  //临时证书开发使用
-            .AddSigningCredential(new RsaSecurityKey(rsa)); //设置加密证书
+            .AddDeveloperSigningCredential();  //临时证书开发使用
+            //.AddSigningCredential(new RsaSecurityKey(rsa)); //设置加密证书
             //.AddSigningCredential(new System.Security.Cryptography.X509Certificates.X509Certificate2(cerificate, pass));    //使用OpenSSL证书
-             
+
 
             //DbContextOptionsBuilder
             services.AddDbContext<AppDbContext>(options =>
@@ -288,5 +302,44 @@ namespace WebApiAuthService
 
             app.UseMvc();
         }
+
+
+
+        public int GetIntegerSize(BinaryReader binr)
+        {
+            byte bt = 0; int count = 0;
+            bt = binr.ReadByte();
+            if (bt != 0x02)
+                return 0;
+            bt = binr.ReadByte();
+            if (bt == 0x81)
+                count = binr.ReadByte();
+            else
+           if (bt == 0x82)
+            {
+                var highbyte = binr.ReadByte();
+                var lowbyte = binr.ReadByte();
+                byte[] modint = { lowbyte, highbyte, 0x00, 0x00 };
+                count = BitConverter.ToInt32(modint, 0);
+            }
+            else
+            {
+                count = bt;
+            }
+            while (binr.ReadByte() == 0x00)
+            {
+                count -= 1;
+            }
+            binr.BaseStream.Seek(-1, SeekOrigin.Current);
+            return count;
+        }
+
+
+
+
+
+
+
+
     }
 }
