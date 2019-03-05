@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <p>
+ 
+        <input type="button" id="btn" value="请求Policy" onclick="doPolicySample()" />
+    </p>
+    
+</div>
+<script>
+
+    //获取token(测试用)
+    function doPolicySample() {
+
+        var urlData = "/Home/PolicySample";
+
+        $.ajax({
+            url: urlData,
+            type: "POST",
+            //data: requestData,
+            //contentType: 'application/json',
+            //dataType: "json", 
+            complete: function (e, status) {
+                debugger;
+               
+            }
+        });
+    }
+
+</script>
+ 
