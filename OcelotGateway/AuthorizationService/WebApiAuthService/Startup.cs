@@ -1,4 +1,6 @@
-﻿using IdentityServer4.Services;
+﻿using AspectCore.Configuration;
+using AspectCore.Extensions.DependencyInjection;
+using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,16 +8,20 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using WebAop.Aop;
 using WebApiAuthService;
+using WebApiAuthService.Controllers;
 using static WebApiAuthService.RSAHelper;
 
 namespace WebApiAuthService
@@ -79,7 +85,7 @@ namespace WebApiAuthService
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -109,71 +115,7 @@ namespace WebApiAuthService
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            #region 注释
-            /*
-            AddSigningCredential
-            添加一个签名密钥服务，该服务将指定的密钥提供给各种令牌创建 / 验证服务。 您可以传入X509Certificate2，SigningCredential或对证书存储区中证书的引用。
-            AddDeveloperSigningCredential
-            在启动时创建临时密钥。 这是仅用于开发场景，当您没有证书使用。 生成的密钥将被保存到文件系统，以便在服务器重新启动之间保持稳定（可以通过传递false来禁用）。 这解决了在开发期间client / api元数据缓存不同步的问题。
-            AddValidationKey
-            添加验证令牌的密钥。 它们将被内部令牌验证器使用，并将显示在发现文档中。 您可以传入X509Certificate2，SigningCredential或对证书存储区中证书的引用。 这对于关键的转换场景很有用。
-            */
-
-            /*
-            AddInMemoryClients
-            添加基于IClientStore和ICorsPolicyService的内存集合注册实现，以注册客户端配置对象。
-            AddInMemoryIdentityResources
-            添加基于IResourceStore的IdentityResource的内存集合注册实现，以注册身份验证资源。
-            AddInMemoryApiResources
-            添加基于IResourceStore的ApiResource的内存集合注册实现，以注册API资源。
-            AddTestUsers
-            基于TestUserStore的TestUser对象的集合注册实现。 还注册IProfileService和IResourceOwnerPasswordValidator的实现。
-             */
-            #endregion
-
-            #region  
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()
-            //    .AddInMemoryIdentityResources(new List<IdentityResource>
-            //    {
-            //        new IdentityResources.Address(),
-            //        new IdentityResources.OpenId(),
-            //        new IdentityResources.Profile()
-            //    })
-            //    .AddInMemoryApiResources(new List<ApiResource>
-            //    {
-            //        new ApiResource("apiA","myapi"),      //api资源定义 scopes
-            //        new ApiResource("apiB","myapi")
-            //    })
-            //    .AddInMemoryClients(new[] {
-            //        new Client
-            //        {
-            //            ClientId="clientCode",
-            //            AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
-            //            ClientSecrets={
-            //                new Secret("secretPass".Sha256())
-            //            },
-            //            AllowedScopes={"apiA"},
-            //        },
-            //        new Client
-            //        {
-            //            ClientId="client",
-            //            AllowedGrantTypes=GrantTypes.ClientCredentials,
-            //            ClientSecrets={
-            //                new Secret("secret".Sha256())
-            //            },
-            //            AllowedScopes={"apiA"},
-            //        }
-            //    })
-            //    .AddTestUsers(new List<TestUser> {
-            //        new TestUser{
-            //            Username="zjf",
-            //            Password="zjf",
-            //            SubjectId="1"
-            //        }
-            //    }); 
-            #endregion
-
+            #region 生成RSE加密证书
             string cerificate = Path.Combine(Environment.CurrentDirectory, Configuration["Cerificates:Cerificate"]);
             string pass = Configuration["Cerificates:Password"];
 
@@ -182,8 +124,7 @@ namespace WebApiAuthService
             var rsa = new RSACryptoServiceProvider();
             //从配置文件获取加密证书
             rsa.ImportCspBlob(Convert.FromBase64String(Configuration["SigningCredential"]));
-
-            #region 生成RSE加密证书
+            //动态生成加密证书
             //using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(2048))
             //{
             //    string data1 = Convert.ToBase64String(provider.ExportCspBlob(false));   //PublicKey
@@ -225,8 +166,10 @@ namespace WebApiAuthService
             .AddIdentityServer()
             .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
             .AddClientConfigurationValidator<ClientConfigurationValidator>()
-            
+
             #region 
+            //.AddValidators()
+            //.AddDefaultSecretValidators()
             //添加一个“AppAuth”（OAuth 2.0 for Native Apps）兼容的重定向URI验证器（进行严格的验证，但也允许随机端口为http://127.0.0.1）。
             //.AddAppAuthRedirectUriValidator()
             //.AddRedirectUriValidator<RedirectUriValidator>()
@@ -257,10 +200,11 @@ namespace WebApiAuthService
             .AddResourceStore<ResourceStore>()
             #endregion
 
-            #region 缓存配置文件
+            #region 内存授权配置文件
             //.AddInMemoryIdentityResources(Config.GetIdentityResourceResources())
             //.AddInMemoryApiResources(Config.GetApiResources())
             //.AddInMemoryClients(Config.GetClients())
+            //添加基于IResourceStore的ApiResource的内存集合注册实现，以注册API资源。
             //.AddTestUsers(new List<TestUser> {
             //        new TestUser{
             //            Username="zjf",
@@ -273,7 +217,6 @@ namespace WebApiAuthService
             //.AddSigningCredential(new RsaSecurityKey(rsa)); //设置加密证书
             //.AddSigningCredential(new System.Security.Cryptography.X509Certificates.X509Certificate2(cerificate, pass));    //使用OpenSSL证书
 
-
             //DbContextOptionsBuilder
             services.AddDbContext<AppDbContext>(options =>
             {
@@ -281,6 +224,76 @@ namespace WebApiAuthService
             });
 
 
+            services.AddTransient<ICustomService, CustomService>();
+            services.AddTransient<IIgnoreService, IgnoreService>();
+
+            //services.AddTransient<CustomInterceptorAllAttribute>(provider => new CustomInterceptorAllAttribute("service"));
+
+            #region 注册全局拦截器
+            //注册全局拦截器
+            services.ConfigureDynamicProxy(config =>
+            {
+                #region 根据策略忽略拦截器
+                //WebAop 命名空间下的Service不会被代理
+                //config.NonAspectPredicates.AddNamespace("WebA*");
+
+                //最后一级为 Aop 的命名空间下的Service不会被代理
+                //config.NonAspectPredicates.AddNamespace("*.Aop");
+
+                //IIgnoreService接口不会被代理
+                //config.NonAspectPredicates.AddService("IIgnoreService");
+
+                //前缀缀为Service的接口和类不会被代理
+                //config.NonAspectPredicates.AddService("*Service");
+
+                //命名为 Get 的方法不会被代理
+                //config.NonAspectPredicates.AddMethod("GetB");
+
+                //为 Get 前缀的方法不会被代理
+                //config.NonAspectPredicates.AddMethod("Get*");
+                #endregion
+
+                //通过自定义策略来确定该筛选器所使用的范围
+                config.Interceptors.AddTyped<CustomInterceptorAttribute>(new AspectPredicate(IsValidFn));
+
+                config.Interceptors.AddTyped<AppFilterAttribute>(
+                     new AspectPredicate[] { new AspectPredicate(IsValidFn2) }
+                    );
+
+            });
+
+            #endregion
+
+            return services.BuildDynamicProxyServiceProvider();
+
+        }
+
+        /// <summary>
+        /// 自定义策略筛选器
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public bool IsValidFn(MethodInfo e)
+        {
+            if (e.Name== "GetB" || e.Name == "GetA" || e.Name == "GetC")
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 自定义策略筛选器
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public bool IsValidFn2(MethodInfo e)
+        {
+            if (e.Name == "GetB" || e.Name == "GetA" || e.Name == "GetC")
+            {
+                return false;
+            }
+            return true;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -304,37 +317,7 @@ namespace WebApiAuthService
         }
 
 
-
-        public int GetIntegerSize(BinaryReader binr)
-        {
-            byte bt = 0; int count = 0;
-            bt = binr.ReadByte();
-            if (bt != 0x02)
-                return 0;
-            bt = binr.ReadByte();
-            if (bt == 0x81)
-                count = binr.ReadByte();
-            else
-           if (bt == 0x82)
-            {
-                var highbyte = binr.ReadByte();
-                var lowbyte = binr.ReadByte();
-                byte[] modint = { lowbyte, highbyte, 0x00, 0x00 };
-                count = BitConverter.ToInt32(modint, 0);
-            }
-            else
-            {
-                count = bt;
-            }
-            while (binr.ReadByte() == 0x00)
-            {
-                count -= 1;
-            }
-            binr.BaseStream.Seek(-1, SeekOrigin.Current);
-            return count;
-        }
-
-
+ 
 
 
 

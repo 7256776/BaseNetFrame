@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using WebAop.Aop;
 using static WebApiAuthService.RSAHelper;
 
 namespace WebApiAuthService.Controllers
@@ -12,11 +13,20 @@ namespace WebApiAuthService.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly AppDbContext _context;
-         
-        public ValuesController(AppDbContext context)
+
+        private readonly ICustomService _service;
+        private readonly IIgnoreService _lgnoreService;
+
+        public ValuesController(
+            AppDbContext context, 
+            ICustomService service,
+            IIgnoreService lgnoreService)
         {
             _context = context;
+            _service = service;
+            _lgnoreService = lgnoreService;
         }
+
 
 
         // GET http://localhost:27749/api/values/GetData
@@ -41,9 +51,23 @@ namespace WebApiAuthService.Controllers
             return new JsonResult(true);
         }
 
+        /// <summary>
+        /// http://localhost:27749/api/values/GetAopData
+        /// </summary>
+        /// <returns></returns>
+        [CustomInterceptor]
+        public JsonResult GetAopData()
+        {
+            SysUser user = new SysUser() { UserName="名称",UserCode="编码"};
+            _lgnoreService.GetA(user);
+            _lgnoreService.GetB();
+            _lgnoreService.GetC();
 
+            _service.Call();
+            //_service.Say();
 
-      
+            return new JsonResult(true);
+        }
 
     }
 }

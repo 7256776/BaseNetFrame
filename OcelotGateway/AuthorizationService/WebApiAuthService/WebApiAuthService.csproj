@@ -12,6 +12,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspectCore.Core" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.AspectScope" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.AspNetCore" Version="1.0.1" />
+    <PackageReference Include="AspectCore.Extensions.Autofac" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.Configuration" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.Hosting" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.Reflection" Version="1.2.0" />
     <PackageReference Include="McApp.AppCore.IdentityServer4" Version="3.5.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />

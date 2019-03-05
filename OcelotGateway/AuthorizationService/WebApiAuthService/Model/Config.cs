@@ -18,6 +18,10 @@ namespace WebApiAuthService
 {
     public class Config
     {
+        /// <summary>
+        /// 添加基于IResourceStore的IdentityResource的内存集合注册实现，以注册身份验证资源。
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<IdentityResource> GetIdentityResourceResources()
         {
             return new List<IdentityResource>
@@ -27,7 +31,10 @@ namespace WebApiAuthService
             };
         }
 
-        // scopes define the API resources in your system
+        /// <summary>
+        /// 添加基于IResourceStore的ApiResource的内存集合注册实现，以注册API资源。
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
@@ -36,7 +43,10 @@ namespace WebApiAuthService
             };
         }
 
-        // clients want to access resources (aka scopes)
+        /// <summary>
+        /// 添加基于IClientStore和ICorsPolicyService的内存集合注册实现，以注册客户端配置对象。
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<Client> GetClients()
         {
             // client credentials client
