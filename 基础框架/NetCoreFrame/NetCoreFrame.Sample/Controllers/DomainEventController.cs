@@ -3,6 +3,7 @@ using Abp.Domain.Repositories;
 using Abp.Events.Bus;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using NetCoreFrame.Application;
 using NetCoreFrame.Core;
 using NetCoreFrame.Web;
 using Newtonsoft.Json;

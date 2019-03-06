@@ -23,7 +23,7 @@ namespace NetCoreFrame.Application
             IocManager.RegisterAssemblyByConvention(thisAssembly);
 
             //Configuration.Modules.AbpAutoMapper().Configurators.Add(
-            //    // 扫描程序集，查找从AutoMapper.Profile继承的类
+            //    // 扫描程序集，查找从AutoMapper.Profile继承的类 获取自定义设置的映射关系
             //    cfg => cfg.AddProfiles(thisAssembly)
             //);
         }
@@ -41,4 +41,37 @@ namespace NetCoreFrame.Application
 
 
     }
+
+    #region 自定义映射关系 示例
+    /*
+     
+    public class CustomProfile: AutoMapper.Profile
+    {
+        public CustomProfile()
+        {
+            CreateMap<ModelA, ModelB>()
+            .ForMember(d => d.NameCodeText, opt => { opt.MapFrom(s => s.NameText); })
+            .ForMember(d => d.NameText, opt => { opt.MapFrom(s => s.NameCodeText); });
+        }
+    }
+
+    public class ModelA
+    {
+        public string NameText { get; set; }
+        public string NameCodeText { get; set; }
+    }
+
+    //[AutoMap(typeof(ModelA))]
+    public class ModelB
+    {
+        public string NameText { get; set; }
+        public string NameCodeText { get; set; }
+
+    }
+    */
+    #endregion
+
+
+
+
 }

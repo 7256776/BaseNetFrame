@@ -17,6 +17,13 @@ namespace WebApiTest
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// 设置程序集属性的生产事件可以复制资源文件
+        /// xcopy /y /e /i  "../NetCoreFrame.Web/wwwroot" "$(ProjectDir)/wwwroot"
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
