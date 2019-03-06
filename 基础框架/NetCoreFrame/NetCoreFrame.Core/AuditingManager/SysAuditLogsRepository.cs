@@ -59,7 +59,8 @@ namespace NetCoreFrame.Core
         /// <returns></returns>
         public int CleanAuditLog()
         {
-            string sql = " DELETE FROM SYS_AUDITLOGS  ";
+            //string sql = " DELETE FROM SYS_AUDITLOGS  ";
+            string sql = " TRUNCATE TABLE SYS_AUDITLOGS  ";
             return base.Context.Database.ExecuteSqlCommand(sql);
         }
 
