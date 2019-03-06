@@ -18,10 +18,10 @@ using Newtonsoft.Json;
 
 namespace NetCoreFrame.Sample
 {
-    public class LocalSystemClock : Microsoft.Extensions.Internal.ISystemClock
-    {
-        public DateTimeOffset UtcNow => DateTime.Now;
-    }
+    //public class LocalSystemClock : Microsoft.Extensions.Internal.ISystemClock
+    //{
+    //    public DateTimeOffset UtcNow => DateTime.Now;
+    //}
 
     public class Startup : NetCoreFrame.Web.Startup
     {
@@ -29,7 +29,6 @@ namespace NetCoreFrame.Sample
         public Startup(IHostingEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
         }
-
 
         /// <summary>
         /// 注入服务配置

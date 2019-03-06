@@ -1,4 +1,5 @@
 ﻿using Abp.Dapper;
+using Abp.Dependency;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Configuration;
 using Abp.Localization;
@@ -10,6 +11,7 @@ using Abp.Reflection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Transactions;
 
@@ -44,10 +46,16 @@ namespace NetCoreFrame.Core
             //Configuration.Localization.IsEnabled = true;
             //设置应用程序本地化语言 zh-CN  zh-Hans(简体中文)
             //Configuration.Localization.Languages.Add(new LanguageInfo("zh-CN", "简体中文", "cn.png", false));
-            Configuration.Localization.Languages.Add(new LanguageInfo("zh-Hans", "简体中文", "cn.png", true));
-            Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", "us.png", false));
+            Configuration.Localization.Languages.Add(new LanguageInfo("zh-Hans", "简体中文", "cn.png", false));
+            Configuration.Localization.Languages.Add(new LanguageInfo("en", "English", "us.png", true));
             //加载本地化资源文件(所加载的文件路径是 启动的web程序集根目录下的Localization目录)
             NetCoreFrameLocalizationConfigurer.LocalPath(Configuration.Localization);
+
+            //数据库获取多语言(待完成)
+            //Configuration.Localization.Sources.Add(
+            //   new FrameDictionaryLocalizationSource(ConstantConfig.LocalizationName,new FrameLocalizationDictionaryProvider())
+            //);
+
 
             //初始加载导航菜单
             Configuration.Navigation.Providers.Add<NavigationMenusProvider>();

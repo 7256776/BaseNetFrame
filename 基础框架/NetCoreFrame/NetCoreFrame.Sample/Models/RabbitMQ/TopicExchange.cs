@@ -19,12 +19,12 @@ namespace NetCoreFrame.Sample
         public string RabbitmqIp = "127.0.0.1";
         string exchangeName = "TopicChange";
 
-        string exchangeName1 = "TestTopicChange1";
-        string exchangeName2 = "TestTopicChange2";
-        string queueName1 = "hello";
-        string queueName2 = "helloC";
-        string routeKey1 = "TestRouteKey.*";
-        string routeKey2 = "TestRouteKey.#";
+        //string exchangeName1 = "TestTopicChange1";
+        //string exchangeName2 = "TestTopicChange2";
+        //string queueName1 = "hello";
+        //string queueName2 = "helloC";
+        //string routeKey1 = "TestRouteKey.*";
+        //string routeKey2 = "TestRouteKey.#";
 
         public TopicExchange()
         {
