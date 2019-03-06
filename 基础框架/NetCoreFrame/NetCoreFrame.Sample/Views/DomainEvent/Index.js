@@ -72,6 +72,19 @@ var component = Vue.component('domainevent', {
                 _this.formData.message = data.message;
                 abp.message.success('完成了.');
             });
+        },
+        DoEventAsync: function () {
+            //初始加载数据
+            var _this = this;
+            //
+            abp.ajax({
+                url: '/DomainEvent/DoEventAsync',
+                data: JSON.stringify(this.formData),
+                type: 'POST'
+            }).done(function (data, res, e) {
+                _this.formData.message = data;
+                abp.message.success('完成了.');
+            });
         }, 
         getCustomResultData: function () {
             //初始加载数据

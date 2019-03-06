@@ -35,10 +35,35 @@ namespace NetCoreFrame.Sample.Controllers
         }
 
         #region 领域驱动事件的处理
+        public  Task<JsonResult> DoEventAsync([FromBody]CacheParam param)
+        {
+            EventDataDto dto = new EventDataDto { EventDataName = "参数" };
+            //触发事件
+            _eventBus.TriggerAsync(this, dto);
+
+            //return Json(param);
+            return Task.FromResult(Json(dto.EventDataName)) ;
+        }
+
+        /// <summary>
+        /// 基本驱动事件 示例
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public JsonResult DoEvent([FromBody]CacheParam param)
         {
             //触发事件
             _eventBus.Trigger(this, new CustomEventData { CacheParamModel = param });
+
+            #region 还可以通过注册来实现
+            CustomEventHandler customEventHandler = new CustomEventHandler();
+            //注册
+            _eventBus.Register<CustomEventData>(customEventHandler.SetHandleEvent);
+            //触发事件
+            _eventBus.Trigger(this, new CustomEventData { CacheParamModel = param });
+            //注销
+            _eventBus.Unregister<CustomEventData>(customEventHandler.SetHandleEvent);
+            #endregion
             return Json(param);
         }
 
@@ -72,7 +97,7 @@ namespace NetCoreFrame.Sample.Controllers
         }
         #endregion
 
-        #region MyRegion
+        #region 自定义数据返回筛选器
         [FrameResultHandler]
         public JsonResult GetCustomResultData()
         {
