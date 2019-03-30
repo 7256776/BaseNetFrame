@@ -76,9 +76,6 @@
     <Reference Include="Abp.Web.Mvc, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Abp.Web.Mvc.3.5.0\lib\net461\Abp.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Abp.Web.Resources">
-      <HintPath>..\packages\Abp.Web.Resources.3.3.0\lib\net461\Abp.Web.Resources.dll</HintPath>
-    </Reference>
     <Reference Include="Abp.Web.SignalR, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Abp.Web.SignalR.3.5.0\lib\net461\Abp.Web.SignalR.dll</HintPath>
     </Reference>
