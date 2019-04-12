@@ -1,5 +1,5 @@
 {
-  //自定义页面资源文件配置
+  //自定义页面资源文件配置  分支11
   "CustomWebResource": {
     "style": [
       "/Content/frameCore/css/customStyle.css"
