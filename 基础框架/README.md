@@ -1,3 +1,3 @@
 ﻿# 
-NetCore基础框架
-NetFramework基础框架
+AspNetCore基础框架
+AspNetFramework基础框架
