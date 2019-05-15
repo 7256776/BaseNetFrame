@@ -47,6 +47,34 @@ var component = Vue.component('sqlservercache', {
             });
 
         },
+        doRemove: function () {
+            //初始加载数据
+            var _this = this;
+            //
+            abp.ajax({
+                url: '/SqlServerCache/Remove',
+                data: JSON.stringify(this.formData),
+                type: 'POST'
+            }).done(function (data, res, e) {
+                _this.formData.message = data;
+                abp.message.success('清除成功了.');
+            });
+
+        },
+        doRefresh: function () {
+            //初始加载数据
+            var _this = this;
+            //
+            abp.ajax({
+                url: '/SqlServerCache/Refresh',
+                data: JSON.stringify(this.formData),
+                type: 'POST'
+            }).done(function (data, res, e) {
+                _this.formData.message = data;
+                abp.message.success('刷新成功了.');
+            });
+
+        }
 
 
     }

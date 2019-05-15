@@ -3,7 +3,13 @@
 }
 
 <div>
-    
+    <p>
+        1. 使用数据库缓存需要 命令行执行创建表的操作<br />
+        dotnet sql-cache create "Server=.;User=sa;Password=sa;Database=FrameDB" dbo AspNetCoreCache
+    </p>
+    <p>
+        2.配置Startup.cs
+    </p>
     <el-form v-bind:model="formData"
              ref="formInfoData"
              label-position="left"
@@ -15,16 +21,15 @@
             <el-input v-model="formData.keyName" style="width:171px" clearable placeholder="Key值" v-bind:maxlength="100">
             </el-input>
         </el-form-item>
-
         <el-form-item label="Value" prop="message">
             <el-input v-model="formData.message" style="width:480px" clearable placeholder="Value值" v-bind:maxlength="100">
             </el-input>
         </el-form-item>
     </el-form>
-
     <el-button type="primary" v-on:click="doSet()">设置缓存</el-button>
     <el-button type="primary" v-on:click="doGet()">读取缓存</el-button>
+    <el-button type="primary" v-on:click="doRemove()">清除缓存</el-button>
+    <el-button type="primary" v-on:click="doRefresh()">刷新缓存</el-button>
 
-    
 </div>
 
