@@ -3,39 +3,67 @@
 }
 
 <div>
-    <p>
+    <p style="font-size:16px;font-weight:800;">
         领域事件驱动示例
+    </p>
+    <el-input v-model="formData.keyName" style="width:400px" clearable placeholder="输入参数" v-bind:maxlength="100">
+    </el-input>
+    <br />
+    <el-button type="primary" v-on:click="DoEventAsync()">驱动事件</el-button>
+    <el-button type="primary" v-on:click="doDoEvent()">自定义驱动事件</el-button>
+    <p>
+        <br />驱动事件: 演示通过后台事件驱动方式给输入的参数赋值后返回新的结果.
+        <br />自定义驱动事件: 演示对象内部子对象的变更也会触发, 并且可以通过手动注册.
+    </p>
+    <hr />
+    <p style="font-size:16px;font-weight:800;">
+        对象监控示例
     </p>
     <el-form v-bind:model="formData"
              ref="formInfoData"
              label-position="left"
-             v-bind:inline="false"
+             v-bind:inline="true"
              v-bind:status-icon="true"
              label-suffix=":"
              label-width="120px">
         <el-form-item label="id" prop="id">
-            <el-input v-model="formData.id" style="width:200px" placeholder="Id值" v-bind:maxlength="100">
-            </el-input>
+            <el-input v-model="formData.id" style="width:200px" placeholder="Id值" v-bind:maxlength="100"> </el-input>
         </el-form-item>
         <el-form-item label="Value" prop="message">
             <el-input v-model="formData.message" style="width:200px" clearable placeholder="Value值" v-bind:maxlength="100">
             </el-input>
         </el-form-item>
     </el-form>
-
     <el-button type="primary" v-on:click="doInsertLog()">新增</el-button>
     <el-button type="primary" v-on:click="doUpdateLog()">更新</el-button>
     <el-button type="primary" v-on:click="doDeleteLog()">删除</el-button>
-    <el-button type="primary" v-on:click="doDoEvent()">自定义驱动事件</el-button>
-    <el-button type="primary" v-on:click="DoEventAsync()">驱动事件</el-button>
-
+    <p>通过监控实体对象的新增、更新、删除过程返回的监控过程</p>
+    <p style="color:palevioletred;font-weight:900;">
+        监控结果:
+        <span v-for="item in resultModelData">&nbsp; {{item.dataContent}}&nbsp;</span>
+    </p>
     <p>
+        根据操作方式分:
+        <br />1.  新增: 数据新增持久化时触发
+        <br />2.  更新: 数据获取后修改触发,更新数据持久化也会触发.
+        <br />3.  删除: 数据删除后触发
+    </p>
+    <p>
+        根据监控事件分:
+        <br />1.  新增: 仅在数据新增持久化过程中触发
+        <br />2.  更新: 仅在数据更新持久化过程中触发.
+        <br />3.  删除: 仅在删除触发
+        <br />4.  变更: 实体对象所有过程中都会触发
+        <br />注: 在监控事件过程中修改对象数据会反复触发 更新 与 变更操作造成死循环.
+    </p>
+    <hr />
+    <p style="font-size:16px;font-weight:800;">
         重写返回值示例
     </p>
     <el-input v-model="resultData" type="textarea" v-bind:rows="6" style="width:500px" clearable placeholder="resultData值">
     </el-input>
     <p></p>
-    <el-button type="primary" v-on:click="getCustomResultData()">获取进过筛选器过滤的返回数据</el-button>
+    <el-button type="primary" v-on:click="getCustomResultData()">获取经过筛选器过滤的返回数据</el-button>
     <el-button type="primary" v-on:click="getResultData()">未筛选器过滤返回数据</el-button>
 </div>
 

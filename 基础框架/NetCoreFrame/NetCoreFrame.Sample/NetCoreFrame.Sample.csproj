@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Domain\**" />
+    <Content Remove="Models\Domain\**" />
+    <EmbeddedResource Remove="Models\Domain\**" />
+    <None Remove="Models\Domain\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Models\Class.cs" />
   </ItemGroup>
 
@@ -40,7 +47,6 @@
 
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
-    <Folder Include="Models\Domain\" />
     <Folder Include="wwwroot\SampleResource\img\" />
   </ItemGroup>
 

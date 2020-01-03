@@ -25,6 +25,8 @@ using System.Threading.Tasks;
 /// </summary>
 namespace NetCoreFrame.Sample
 {
+    #region 注册事件驱动示例
+
     /// <summary>
     /// 定义事件所需 的参数对象
     /// </summary>
@@ -34,15 +36,6 @@ namespace NetCoreFrame.Sample
 
         public SysSettingDto SysSettingDtoModel { get; set; }
     }
-
-    /// <summary>
-    /// 定义事件所需 的参数对象
-    /// </summary>
-    public class EventDataDto : EventData
-    {
-        public string EventDataName { get; set; }
-    }
-
 
     /// <summary>
     /// 事件激活实现
@@ -56,7 +49,7 @@ namespace NetCoreFrame.Sample
     ///         注销
     ///         IEventBus.Unregister<CustomEventData>(activityWriter.HandleEvent);
     /// </summary>
-    public class CustomEventHandler : IEventHandler<CustomEventData>, ITransientDependency
+    public class CustomEventHandler : IEventHandler<CustomEventData>//, ITransientDependency
     {
         /// <summary>
         /// 默认注入的实现
@@ -78,6 +71,9 @@ namespace NetCoreFrame.Sample
 
     }
 
+    #endregion
+
+    #region 事件驱动基础示例
     /// <summary>
     /// 可以根据事件参数对象定义多个事件驱动实体
     /// </summary>
@@ -89,12 +85,21 @@ namespace NetCoreFrame.Sample
         /// <param name="eventData"></param>
         public void HandleEvent(EventDataDto eventData)
         {
-            eventData.EventDataName += "事件驱动";
-            Thread.Sleep(3000);
+            eventData.EventDataName += " 3:事件驱动";
+            //Thread.Sleep(3000);
         }
 
     }
 
+    /// <summary>
+    /// 定义事件所需 的参数对象
+    /// </summary>
+    public class EventDataDto : EventData
+    {
+        public string EventDataName { get; set; }
+    }
+
+    #endregion
 
 
 }

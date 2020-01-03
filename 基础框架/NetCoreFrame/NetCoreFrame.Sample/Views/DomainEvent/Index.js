@@ -12,6 +12,7 @@ var component = Vue.component('domainevent', {
                 message: '',
                 keyName: ''
             },
+            resultModelData: null,
             resultData: null
         };
     },
@@ -32,7 +33,9 @@ var component = Vue.component('domainevent', {
                 type: 'POST'
             }).done(function (data, res, e) {
                 _this.formData.id = data;
+                _this.resultModelData = [];
                 abp.message.success('新增成功了.');
+                _this.getEntityEventProcessData()
             });
         },
         doUpdateLog: function () {
@@ -45,7 +48,9 @@ var component = Vue.component('domainevent', {
                 type: 'POST'
             }).done(function (data, res, e) {
                 _this.formData.message = data.message;
+                _this.resultModelData = [];
                 abp.message.success('更新成功了.');
+                _this.getEntityEventProcessData()
             });
         },
         doDeleteLog: function () {
@@ -57,7 +62,20 @@ var component = Vue.component('domainevent', {
                 data: JSON.stringify(this.formData.id),
                 type: 'POST'
             }).done(function (data, res, e) {
+                _this.resultModelData = [];
                 abp.message.success('更新成功了.');
+                _this.getEntityEventProcessData()
+            });
+        },
+        getEntityEventProcessData: function () {
+            //初始加载数据
+            var _this = this;
+            //
+            abp.ajax({
+                url: '/DomainEvent/GetEntityEventProcessData',
+                type: 'POST'
+            }).done(function (data, res, e) {
+                _this.resultModelData = data;
             });
         },
         doDoEvent: function () {
@@ -69,7 +87,7 @@ var component = Vue.component('domainevent', {
                 data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
-                _this.formData.message = data.message;
+                _this.formData.keyName = data.message;
                 abp.message.success('完成了.');
             });
         },
@@ -82,12 +100,11 @@ var component = Vue.component('domainevent', {
                 data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
-                _this.formData.message = data;
+                _this.formData.keyName = data;
                 abp.message.success('完成了.');
             });
         }, 
         getCustomResultData: function () {
-            //初始加载数据
             var _this = this;
             $.ajax({
                 url: '/DomainEvent/GetCustomResultData',
@@ -100,7 +117,6 @@ var component = Vue.component('domainevent', {
             });//
         }, 
         getResultData: function () {
-            //初始加载数据
             var _this = this;
             //
             abp.ajax({
