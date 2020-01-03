@@ -10,7 +10,7 @@ using System.Linq;
 namespace NetCoreFrame.Application
 {
     [AbpAuthorize]
-    [Audited]
+    [DisableAuditing]
     public class SysAuditLogsAppService : NetCoreFrameApplicationBase, ISysAuditLogsAppService
     {
         private readonly IRepository<SysAuditLog, long> _auditLogRepository;
@@ -31,7 +31,6 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        [DisableAuditing] 
         public PagedResultDto<SysAuditList> GetAuditLogList(RequestParam<dynamic> requestParam)
         {
             var model = requestParam.ToEntityObject<SysAuditInput>();
@@ -64,7 +63,7 @@ namespace NetCoreFrame.Application
         //[RemoteService(true)] 设置是否生成该服务为接口
         public int DelAuditLog()
         {
-            return _sysAuditLogsRepository.CleanAuditLog();
+             return _sysAuditLogsRepository.CleanAuditLog();
         }
 
 

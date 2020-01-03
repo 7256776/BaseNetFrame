@@ -71,6 +71,7 @@ namespace NetCoreFrame.Core
 
         /// <summary>
         /// 获取abp系统默认本地化信息(待解决)
+        /// ToFix
         /// </summary>
         /// <param name="permissionName"></param>
         /// <returns></returns>

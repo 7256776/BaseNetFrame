@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace NetCoreFrame.Core
 {
+    /// <summary>
+    /// 聊天消息持久化实现
+    /// </summary>
     public class SysChatRecordRepository : EfCoreRepositoryBase<NetCoreFrameDbContext, SysChatRecord, Guid>, ISysChatRecordRepository
     {
 

@@ -52,6 +52,7 @@ namespace NetCoreFrame.Web
                 hostingEnvironment.EnvironmentName,
                 hostingEnvironment.IsDevelopment());
 
+            //提供有关当前环境和平台的信息和操作方法
             //Environment
         }
 

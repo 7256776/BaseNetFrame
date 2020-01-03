@@ -86,7 +86,6 @@ namespace NetCoreFrame.Core
 
             #region 
 
-
             #region 通知对象
 
             #region NotificationInfo To SYS_NOTIFICATIONSSEND
@@ -158,6 +157,7 @@ namespace NetCoreFrame.Core
             SysNotificationInfoContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
 
             #endregion
+
             #endregion
 
             #region 设置审计日志字符串长度 AuditLog
@@ -230,7 +230,6 @@ namespace NetCoreFrame.Core
 
             #endregion
 
-
             #endregion
              
             base.OnModelCreating(modelBuilder);
@@ -266,7 +265,7 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
-        /// 
+        /// 根据数据库进行转换字段与表名称的大小写
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>

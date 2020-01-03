@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace NetCoreFrame.Core
 {
     /// <summary>
-    /// 通知数据持久化实现
+    /// 用户订阅通知数据持久化实现
     /// 也可以采用ISingletonDependency(单例模式)
     /// </summary>
     public class NotificationStore : INotificationStore, ITransientDependency

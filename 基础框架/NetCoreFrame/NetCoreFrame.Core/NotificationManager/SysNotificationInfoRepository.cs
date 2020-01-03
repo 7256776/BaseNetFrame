@@ -14,6 +14,9 @@ using System.Text;
 
 namespace NetCoreFrame.Core
 {
+    /// <summary>
+    /// 通知订阅数据持久化实现
+    /// </summary>
     public class SysNotificationInfoRepository : EfCoreRepositoryBase<NetCoreFrameDbContext, SysNotificationInfo, Guid>, ISysNotificationInfoRepository
     {
 

@@ -14,12 +14,14 @@
     <None Remove="Localization\XmlSource\FrameLocalization-en.xml" />
     <None Remove="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
     <None Remove="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+    <None Remove="Views\Geetest\Index.js" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Localization\XmlSource\FrameLocalization-en.xml" />
     <Content Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
     <Content Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+    <Content Include="Views\Geetest\Index.js" />
   </ItemGroup>
 
   <ItemGroup>

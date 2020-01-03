@@ -12,7 +12,10 @@ using Microsoft.Extensions.Options;
 namespace NetCoreFrame.Web
 {
 
-
+    /// <summary>
+    /// 页面添加 js,css资源引用
+    /// 配置网站目录下 customResource.json 文件
+    /// </summary>
     public class WebResourceManager : IWebResourceManager
     {
 

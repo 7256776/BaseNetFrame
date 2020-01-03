@@ -16,6 +16,7 @@
   <ItemGroup>
     <Compile Remove="20181215154453_20180329001.cs" />
     <Compile Remove="Class1.cs" />
+    <Compile Remove="Migrations\20200103023709_init.cs" />
     <Compile Remove="Migrations\Configuration.cs" />
     <Compile Remove="SeedData\DefaultFrameDB.cs" />
     <Compile Remove="SeedData\SeedHelper.cs" />
@@ -34,10 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -24,7 +24,7 @@ namespace NetCoreFrame.Sample
         public virtual decimal?  NumberData { get; set; }
 
         [Column("DATETIMEDATA")]
-        public virtual DateTime DateTimeData { get; set; }
+        public virtual DateTime? DateTimeData { get; set; }
 
         [Column("DROPDOWNLISTDATA")]
         public virtual string DropdownListData { get; set; }

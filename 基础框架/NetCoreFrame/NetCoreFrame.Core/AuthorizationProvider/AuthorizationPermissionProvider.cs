@@ -51,7 +51,7 @@ namespace NetCoreFrame.Core
                 {
                     continue;
                 }
-                var root = context.CreatePermission(item.PermissionName.ToLower(), item.MenuDisplayName.L());
+                var root = context.CreatePermission(item.PermissionName.ToLower(), item.MenuDisplayName.ToLocalizable());
                 var sysMenuActions = actionList.Where(w => w.MenuID == item.Id).ToList();
                 foreach (var action in sysMenuActions)
                 {
@@ -59,7 +59,7 @@ namespace NetCoreFrame.Core
                     {
                         continue;
                     }
-                    root.CreateChildPermission(action.PermissionName.ToLower(), action.ActionDisplayName.L());
+                    root.CreateChildPermission(action.PermissionName.ToLower(), action.ActionDisplayName.ToLocalizable());
                 }
             }
 

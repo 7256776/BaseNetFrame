@@ -24,8 +24,8 @@ namespace NetCoreFrame.Core
                         name: item.Name,                                     //配置名称
                         defaultValue: item.Value,                           //配置默认值
                         customData: "",                                        //添加自定义数据
-                        description: item.Name.L(),
-                        displayName: item.Name.L(),
+                        description: item.Name.ToLocalizable(),
+                        displayName: item.Name.ToLocalizable(),
                         group: null,                                                //配置分组(用于ui页面布局)
                         isInherited: true,                                        //是否继承上级
                         isVisibleToClients: true,                              //是否显示到客户端json

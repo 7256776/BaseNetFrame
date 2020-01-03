@@ -55,13 +55,16 @@ namespace NetCoreFrame.Core
 
         /// <summary>
         /// 清空日志
+        /// 清空日志调用时需要关闭相关操作的日志记录功能避免锁表导致超时 [DisableAuditing]
         /// </summary>
         /// <returns></returns>
         public int CleanAuditLog()
         {
             //string sql = " DELETE FROM SYS_AUDITLOGS  ";
+            //该方式清空日志表速度快但是返回是 -1
             string sql = " TRUNCATE TABLE SYS_AUDITLOGS  ";
-            return base.Context.Database.ExecuteSqlCommand(sql);
+            int result= base.Context.Database.ExecuteSqlCommand(sql);
+            return result;
         }
 
     }

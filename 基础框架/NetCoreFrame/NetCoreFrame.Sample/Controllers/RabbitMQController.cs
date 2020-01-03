@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Abp.UI;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -27,17 +28,13 @@ namespace NetCoreFrame.Sample.Controllers
         //http://localhost:15672/
 
         //需要启动RabbitMQService
-        private readonly BaseExchange baseExchange;
-        private readonly DirectExchange directExchange;
-        private readonly FanoutExchange fanoutExchange;
-        private readonly TopicExchange topicExchange;
+        private  BaseExchange baseExchange;
+        private  DirectExchange directExchange;
+        private  FanoutExchange fanoutExchange;
+        private  TopicExchange topicExchange;
 
         public RabbitMQController()
         {
-            baseExchange = new BaseExchange();
-            directExchange = new DirectExchange();
-            fanoutExchange = new FanoutExchange();
-            topicExchange = new TopicExchange();
 
         }
 
@@ -53,6 +50,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public Task<JsonResult> SendMessage([FromBody]SendMessageDto dto)
         {
+            baseExchange = new BaseExchange();
             baseExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }
@@ -64,6 +62,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public Task<JsonResult> SendDirectMessage([FromBody]SendMessageDto dto)
         {
+            directExchange = new DirectExchange();
             directExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }
@@ -75,6 +74,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public Task<JsonResult> SendFanoutMessage([FromBody]SendMessageDto dto)
         {
+            fanoutExchange = new FanoutExchange();
             fanoutExchange.SendMQ(dto.Message);
             return Task.FromResult(Json(true));
         }
@@ -87,6 +87,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public Task<JsonResult> SendTopicMessage([FromBody]SendMessageDto dto)
         {
+            topicExchange = new TopicExchange();
             topicExchange.SendMQ(dto);
             return Task.FromResult(Json(true));
         }

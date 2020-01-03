@@ -67,10 +67,11 @@
                     <el-table-column prop="" label="筛选" width="80" show-overflow-tooltip>
                         <template slot-scope="scope">
                             <el-button-group> 
+                                <!--其他筛选输入框在完成数据后自动回触发筛选因此取消按钮点击操作-->
                                 <!--<el-tooltip content="筛选" placement="top">
                                     <el-button type="primary" icon="el-icon-search" circle v-on:click="doSearchLog"></el-button>
                                 </el-tooltip> -->
-                                <el-tooltip content="移除筛选条件" placement="top">
+                                <el-tooltip content="清空条件刷新" placement="top">
                                     <el-button type="warning" icon="el-icon-delete" circle v-on:click="doClear"></el-button>
                                 </el-tooltip>
                             </el-button-group>

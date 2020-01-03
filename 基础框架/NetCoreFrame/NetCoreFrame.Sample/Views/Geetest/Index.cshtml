@@ -3,16 +3,71 @@
 }
 
 <div>
-    
-
     <geetest-plug v-on:doPostCallback="doPostCallback"></geetest-plug>
-    
-
     <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doSubmit()">登录操作</el-button>
 
     <p>官网 https://docs.geetest.com/index</p>
     <p>账号 7256776@qq.com</p>
     <span style="display:none;">5demima</span>
+    
+    <hr />
+
+    <div>
+        <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doCreateAsymmetricAlgorithmSecretKey()">获取秘钥</el-button>
+        <div style="max-height:calc(100vh);overflow:auto;border:1px solid #C8CDF3;">
+            <jsonformat v-bind:jsonObj="formData.privateKey">
+            </jsonformat>
+        </div>
+        <hr />
+        <p>注1: 秘钥长度最小是 512 输入数字必须128的倍数</p>
+        <p>注2: 加密与解密需要采用同一种秘钥算法</p>
+        <table cellpadding="10" cellspacing="10" style="width:500px;">
+            <tr>
+                <td>
+                    <el-select v-model="formData.rsaEncryption"
+                               default-first-option
+                               style="width:200px;"
+                               clearable
+                               placeholder="秘钥算法">
+                        <el-option v-for="item in rsaEncryption" v-bind:label="item.text" v-bind:value="item.text"></el-option>
+                    </el-select>
+                    <el-input v-model="formData.keySizeInBits" clearable placeholder="秘钥长度(1024)" style="width:200px;"></el-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <el-input type="textarea" v-model="formData.originalData" clearable placeholder="加密前数据">
+                    </el-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <el-input type="textarea" v-model="formData.encryptData" clearable placeholder="加密后数据">
+                    </el-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <el-input type="textarea" v-model="formData.decryptData" clearable placeholder="解密后数据"></el-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <el-input type="textarea" v-model="formData.signData" clearable placeholder="签名后数据"></el-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doEncryptData()">加密</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doDecryptData()">解密</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg " v-on:click="doSignData()">签名</el-button>
+                </td>
+            </tr>
+        </table>
+        <p>非对称加密规则：加密可以采用私有Key或公有Key，解密只能采用私有Key。</p>
+        <p>非对称签名规则：签名只能采用私有Key，签名验证可以采用私有Key或公有Key。</p>
+        <p>总结：公钥加密、私钥解密、私钥签名、公钥验签</p>
+    </div>
 </div>
 
 

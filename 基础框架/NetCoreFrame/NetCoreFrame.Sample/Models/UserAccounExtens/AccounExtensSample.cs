@@ -1,10 +1,11 @@
 ﻿using Abp.Application.Services;
 using Abp.Dependency;
 using Abp.Web.Models;
+using NetCoreFrame.Application;
 using NetCoreFrame.Core;
 using System.Threading.Tasks;
 
-namespace NetCoreFrame.Application
+namespace NetCoreFrame.Sample
 {
 
     /// <summary>

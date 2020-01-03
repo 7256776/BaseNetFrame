@@ -3,6 +3,9 @@ using NetCoreFrame.Core;
 
 namespace NetCoreFrame.Web
 { 
+    /// <summary>
+    /// 控制器基类,所有控制需继承该类
+    /// </summary>
     public class NetCoreFrameControllerBase : AbpController 
     {
         protected NetCoreFrameControllerBase()

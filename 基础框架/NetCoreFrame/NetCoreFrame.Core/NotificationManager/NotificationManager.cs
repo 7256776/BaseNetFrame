@@ -298,10 +298,10 @@ namespace NetCoreFrame.Application
 
             UserInfo userModel = _cacheManagerExtens.GetUserInfoCache(recipientId);
             string promptContent = "您有一条来自[" + userModel.UserNameCn + "]的消息";
-            string promptTitle = "你有一条新消息";
+            string promptTitle = "您有一条新消息";
 
             FrameNotificationData frameNotificationData = new FrameNotificationData(promptContent);
-            frameNotificationData.NotificationType = "chat";    //推送的类型用于前端js验证
+            frameNotificationData.NotificationType = "chat";    //推送的类型用于前端JS判断
             frameNotificationData.Title = promptTitle;
             frameNotificationData.NotificationDetailed = chatDetailed;
             frameNotificationData.SendId = AbpSessionExtens.UserId.Value;

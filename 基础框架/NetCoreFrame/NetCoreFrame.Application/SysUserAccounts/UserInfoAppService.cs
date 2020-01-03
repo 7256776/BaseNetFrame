@@ -197,9 +197,7 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         [AbpAuthorize("UserInfoManager.SaveUser")]
         public async Task<AjaxResponse> SaveUserModel(UserInput model)
-        {
-          
-
+        { 
             if (model.ID == null)
             {
                 UserInfo modelInput = model.MapTo<UserInfo>();

@@ -49,6 +49,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <returns></returns>
         public JsonResult DelAuditLog()
         {
+            //页面取消操作成功判断执行完成即可,刷新列表
             int res= _sysAuditLogsAppService.DelAuditLog();
             return Json(res >= 0 ? true : false);
         }

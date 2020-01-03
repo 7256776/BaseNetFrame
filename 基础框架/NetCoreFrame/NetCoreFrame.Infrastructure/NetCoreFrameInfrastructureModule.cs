@@ -15,6 +15,9 @@ namespace NetCoreFrame.Infrastructure
         typeof(NetCoreFrameCoreModule))]
     public class NetCoreFrameInfrastructureModule : AbpModule
     {
+        /// <summary>
+        /// 初始化注册数据库连接
+        /// </summary>
         public override void PreInitialize()
         {
             Configuration.Modules.AbpEfCore().AddDbContext<InfrastructureDbContext>(options =>

@@ -10,7 +10,7 @@ namespace NetCoreFrame.Core
     public static class ConstantConfig
     {
         /// <summary>
-        /// 
+        /// 默认密码,可用于基础密码设置,目前用于用户账号创建初始密码
         /// </summary>
         public static string DefaultPassword = "888888";
 
@@ -31,24 +31,25 @@ namespace NetCoreFrame.Core
         public static string WebContentRootPath = "";
 
         /// <summary>
-        /// 
+        /// 转义需要转换的本地化语言
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ILocalizableString L(this string name)
+        public static ILocalizableString ToLocalizable(this string name)
         {
             return new LocalizableString(name, LocalizationName);
         }
 
         /// <summary>
-        /// 默认数据配置 名称
+        /// 默认数据库配置 名称
         /// </summary>
         public static string DBDefaultName = "Default";
 
         /// <summary>
         /// 数据库对象名称 SqlServer通常是 dbo; Oracle数据库通常是用户名称
+        /// ConfigurationManager.AppSettings["DBSchemaName"];
         /// </summary>
-        public static string DBSchemaName = "";// ConfigurationManager.AppSettings["DBSchemaName"];
+        public static string DBSchemaName = ""; 
 
         /// <summary>
         /// Jwt密钥加密使用 DefaultPassPhrase
@@ -57,12 +58,12 @@ namespace NetCoreFrame.Core
         /// </summary>
         public static string DefaultPassPhrase = "jiamishiyongdekey";
 
-        #region Setting配置信息名称
+        #region FrameConfig.json 配置信息名称
 
         /// <summary>
         /// 公司名称
         /// </summary>
-        public readonly static string CompanyName = "ProjectName";
+        public readonly static string CompanyName = "CompanyName";
 
         /// <summary>
         /// 公司网站

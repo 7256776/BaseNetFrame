@@ -16,6 +16,11 @@ using System.Threading.Tasks;
 
 namespace NetCoreFrame.Web
 {
+    /// <summary>
+    /// 该类是个修补扩展
+    /// 来源 https://github.com/dotnet/sdk/pull/876
+    /// 目前未使用,如有使用去掉该注释
+    /// </summary>
     public class MvcConfiguration : IDesignTimeMvcBuilderConfiguration
     {
         private class DirectReferenceAssemblyResolver : ICompilationAssemblyResolver

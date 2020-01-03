@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace NetCoreFrame.Core
 {
+    /// <summary>
+    /// ToDevelop 
+    /// 数据库获取多语言(待完成)
+    /// </summary>
     public class FrameLocalizationDictionaryProvider : ILocalizationDictionaryProvider
     {
         public ILocalizationDictionary DefaultDictionary { get; set; }

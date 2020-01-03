@@ -20,15 +20,11 @@ namespace NetCoreFrame.Web
         }
     }
 
-
     public interface IMyService
-
     {
-
         Task<string> SayHello();
 
         Task Sleep();
-
     }
 
     public class MyService : IMyService
@@ -37,8 +33,6 @@ namespace NetCoreFrame.Web
         {
             return await Task.Factory.StartNew(() => "Hello");
         }
-
-
 
         public async Task Sleep()
         {

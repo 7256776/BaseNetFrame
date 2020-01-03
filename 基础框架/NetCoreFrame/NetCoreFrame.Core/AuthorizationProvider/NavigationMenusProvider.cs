@@ -121,7 +121,7 @@ namespace NetCoreFrame.Core
             string isMultilingual = _settingManager.GetSettingValueForApplication(ConstantConfig.IsMultilingual);
             if (isMultilingual == "true")
             {
-                return menuDisplayName.L();
+                return menuDisplayName.ToLocalizable();
             }
             return new FixedLocalizableString(menuDisplayName);
         }

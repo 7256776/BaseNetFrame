@@ -37,22 +37,28 @@ namespace NetCoreFrame.Sample
                     Password = "test",//密码
                     HostName = RabbitmqIp
                 };
-
-                //创建连接
-                connection = factory.CreateConnection();
-                //创建通道
-                channel = connection.CreateModel();
-                //定义一个Direct类型交换机
-                channel.ExchangeDeclare(exchangeName, ExchangeType.Topic, false, false, null);
-                //channel.ExchangeDeclare(exchangeName2, ExchangeType.Topic, false, false, null);
-                ////定义队列1
-                //channel.QueueDeclare(queueName1, false, false, false, null);
-                ////定义队列2
-                //channel.QueueDeclare(queueName2, false, false, false, null);
-                ////将队列绑定到交换机
-                //channel.QueueBind(queueName1, exchangeName1, routeKey1, null);
-                ////将队列绑定到交换机
-                //channel.QueueBind(queueName2, exchangeName1, routeKey2, null);
+                try
+                {
+                    //创建连接
+                    connection = factory.CreateConnection();
+                    //创建通道
+                    channel = connection.CreateModel();
+                    //定义一个Direct类型交换机
+                    channel.ExchangeDeclare(exchangeName, ExchangeType.Topic, false, false, null);
+                    //channel.ExchangeDeclare(exchangeName2, ExchangeType.Topic, false, false, null);
+                    ////定义队列1
+                    //channel.QueueDeclare(queueName1, false, false, false, null);
+                    ////定义队列2
+                    //channel.QueueDeclare(queueName2, false, false, false, null);
+                    ////将队列绑定到交换机
+                    //channel.QueueBind(queueName1, exchangeName1, routeKey1, null);
+                    ////将队列绑定到交换机
+                    //channel.QueueBind(queueName2, exchangeName1, routeKey2, null);
+                }
+                catch (Exception ex)
+                {
+                    throw new Abp.UI.UserFriendlyException("RabbitMQ", "请检查是否开启或安装RabbitMQ服务!", ex);
+                }
             }
         }
 

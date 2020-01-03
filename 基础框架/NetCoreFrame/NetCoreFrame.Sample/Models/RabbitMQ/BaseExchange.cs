@@ -32,17 +32,24 @@ namespace NetCoreFrame.Sample
                     Password = "test",//密码
                     HostName = "127.0.0.1"//rabbitmq ip
                 };
-                //创建连接
-                connection = factory.CreateConnection();
-                ////创建通道
-                //channel = connection.CreateModel();
-                ////定义一个Direct类型交换机
-                //channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, false, false, null);
-                //////定义一个队列
-                //channel.QueueDeclare(queueName, false, false, false, null);
-                ////将队列绑定到交换机
-                //channel.QueueBind(queueName, exchangeName, routeKey, null);
+                try
+                {
+                    //创建连接
+                    connection = factory.CreateConnection();
 
+                    ////创建通道
+                    //channel = connection.CreateModel();
+                    ////定义一个Direct类型交换机
+                    //channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, false, false, null);
+                    //////定义一个队列
+                    //channel.QueueDeclare(queueName, false, false, false, null);
+                    ////将队列绑定到交换机
+                    //channel.QueueBind(queueName, exchangeName, routeKey, null);
+                }
+                catch (Exception ex)
+                {
+                    throw new Abp.UI.UserFriendlyException("RabbitMQ", "请检查是否开启或安装RabbitMQ服务!", ex);
+                }
             }
         }
 

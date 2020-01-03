@@ -48,14 +48,14 @@ namespace NetCoreFrame.Core
             if (currentPermission == null)
             {
                 IReadOnlyList<Permission> permissionList = _permissionManager.GetAllPermissions();
-                currentPermission = permissionList[0].CreateChildPermission(model.PermissionName.ToLower(), model.MenuDisplayName.L());
+                currentPermission = permissionList[0].CreateChildPermission(model.PermissionName.ToLower(), model.MenuDisplayName.ToLocalizable());
             }
             //添加授权动作
             foreach (var action in model.SysMenuActions)
             {
                 if (!string.IsNullOrEmpty(action.PermissionName) && _permissionManager.GetPermissionOrNull(action.PermissionName.ToLower()) == null)
                 {
-                    currentPermission.CreateChildPermission(action.PermissionName.ToLower(), action.ActionDisplayName.L());
+                    currentPermission.CreateChildPermission(action.PermissionName.ToLower(), action.ActionDisplayName.ToLocalizable());
                 }
             } 
 
