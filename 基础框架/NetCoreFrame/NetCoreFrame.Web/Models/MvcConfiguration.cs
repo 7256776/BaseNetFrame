@@ -18,8 +18,9 @@ namespace NetCoreFrame.Web
 {
     /// <summary>
     /// 该类是个修补扩展
+    /// 允许。net Core 2.0项目引用磁盘上的程序集
     /// 来源 https://github.com/dotnet/sdk/pull/876
-    /// 目前未使用,如有使用去掉该注释
+    /// 目前未使用已经排除出项目,如有使用去掉该注释
     /// </summary>
     public class MvcConfiguration : IDesignTimeMvcBuilderConfiguration
     {
