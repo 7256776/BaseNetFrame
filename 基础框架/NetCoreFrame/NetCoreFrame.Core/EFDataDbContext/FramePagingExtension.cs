@@ -1,6 +1,10 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using Abp.Domain.Services;
 using Abp.Extensions;
+using Abp.ObjectMapping;
+using AutoMapper;
+using NetCoreFrame.Application;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -63,9 +67,9 @@ namespace NetCoreFrame.Core
         {
             //构建分页查询
             var quer = queryable.Skip(pageModel.SkipCount).Take(pageModel.MaxResultCount);
-            //返回数据集合
+            //返回数据集合(触发数据库查询)
             var dataList = quer.ToList();
-            //返回数据总条数
+            //返回数据总条数(触发数据库查询)
             var dataCount = queryable.Count();
             return new PagedResultDto<TEntity>(dataCount, dataList);
         }
@@ -78,30 +82,26 @@ namespace NetCoreFrame.Core
         /// <param name="queryable"></param>
         /// <param name="pageModel"></param>
         /// <returns></returns>
+        //public static PagedResultDto<TEntity> GetPagingData<TEntity>(this IQueryable<TEntity> queryable, PagingDto pageModel)
         public static PagedResultDto<DtoTEntity> GetPagingData<TEntity, DtoTEntity>(this IQueryable<TEntity> queryable, PagingDto pageModel)
         {
             queryable = queryable.ApplySorting(pageModel);
             var pagedResultDto = queryable.BuildPaging(pageModel);
-            //完成映射
-            var data = pagedResultDto.Items.MapTo<List<DtoTEntity>>();
-            return new PagedResultDto<DtoTEntity>(pagedResultDto.TotalCount, data);
-        }
+            //构建返回对象
+            List<DtoTEntity> data = new List<DtoTEntity>();
+            PagedResultDto<DtoTEntity> pagedResultDestination = new PagedResultDto<DtoTEntity>(pagedResultDto.TotalCount,data);
+            //由于该分页扩展类是静态对象,因此此处单独初始化映射关系进行对象的转换
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<TEntity, DtoTEntity>());
+            var mapper = config.CreateMapper();
+            foreach (var item in pagedResultDto.Items)
+            {
+                data.Add(mapper.Map<TEntity, DtoTEntity>(item));
+            }
+            return pagedResultDestination;
 
-        /// <summary>
-        /// 分页查询并转换到仓储DTO对象
-        /// </summary>
-        /// <typeparam name="TEntity">数据实体对象</typeparam>
-        /// <typeparam name="DtoTEntity">仓储实体对象</typeparam>
-        /// <param name="queryable">主查询表达式(必须包含排序)</param>
-        /// <param name="pageModel">分页属性对象</param>
-        /// <returns></returns>
-        public static PagedResultDto<DtoTEntity> GetPagingData<TEntity, DtoTEntity>(this IOrderedQueryable<TEntity> queryable, PagingDto pageModel)
-        {
-            queryable = queryable.ApplyThenSorting(pageModel);
-            var pagedResultDto = queryable.BuildPaging(pageModel);
-            //完成映射
-            var data = pagedResultDto.Items.MapTo<List<DtoTEntity>>();
-            return new PagedResultDto<DtoTEntity>(pagedResultDto.TotalCount, data);
+            //该方案由于Abp库的扩展函数已过时不推荐使用
+            //var data = pagedResultDto.Items.MapTo<List<DtoTEntity>>();
+            //return new PagedResultDto<DtoTEntity>(pagedResultDto.TotalCount, data);
         }
 
         /// <summary>
@@ -129,9 +129,6 @@ namespace NetCoreFrame.Core
             queryable = queryable.ApplyThenSorting(pageModel);
             return queryable.BuildPaging(pageModel);
         }
-
-
-
 
     }
 }
