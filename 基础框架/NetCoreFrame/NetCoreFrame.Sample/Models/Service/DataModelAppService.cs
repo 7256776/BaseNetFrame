@@ -101,8 +101,8 @@ namespace NetCoreFrame.Sample
         public async Task<AjaxResponse> SaveMetaModel(FieldInfoDto model)
         {
             if (model.Id == null)
-            {
-                model.Id = await _repositoryFieldInfo.InsertAndGetIdAsync(model.MapTo<FieldInfo>());
+            { 
+                model.Id = await _repositoryFieldInfo.InsertAndGetIdAsync(ObjectMapper.Map<FieldInfo>(model));
             }
             else
             {
@@ -129,7 +129,7 @@ namespace NetCoreFrame.Sample
         {
             if (model.Id == null)
             {
-                model.Id = await _repositoryTempTable.InsertAndGetIdAsync(model.MapTo<TempTable>());
+                model.Id = await _repositoryTempTable.InsertAndGetIdAsync(ObjectMapper.Map<TempTable>(model));
             }
             else
             {
@@ -164,7 +164,7 @@ namespace NetCoreFrame.Sample
         {
             if (model.Id == null)
             {
-                model.Id = await _dapperRepositoryTableInfo.InsertAndGetIdAsync(model.MapTo<TempTable>());
+                model.Id = await _dapperRepositoryTableInfo.InsertAndGetIdAsync(ObjectMapper.Map<TempTable>(model));
             }
             else
             {

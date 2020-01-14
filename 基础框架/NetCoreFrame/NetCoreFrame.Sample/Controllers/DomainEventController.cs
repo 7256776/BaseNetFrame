@@ -76,7 +76,7 @@ namespace NetCoreFrame.Sample.Controllers
         public JsonResult InsertLog([FromBody]CacheParam param)
         {
             SysSetting sysSetting = new SysSetting() { Name = param.Message };
-            SysSettingDto modelInput = sysSetting.MapTo<SysSettingDto>();
+            SysSettingDto modelInput = ObjectMapper.Map<SysSettingDto>(sysSetting);
             var data = _auditLogRepository.Insert(sysSetting);
             return Json(data.Id);
         }

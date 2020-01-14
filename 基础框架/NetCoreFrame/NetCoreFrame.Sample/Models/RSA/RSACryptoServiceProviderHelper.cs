@@ -28,6 +28,7 @@ namespace NetCoreFrame.Sample
     public class RSACryptoServiceProviderHelper
     {
         #region 公钥&私有的XML格式示例
+        /*
         static string PublicKey = @"<RSAKeyValue>
                                         <Modulus>
                                             nwbjN1znmyL2KyOIrRy/PbWZpTi+oekJIoGNc6jHCl0JNZLFHNs70fyf7y44BH8L8MBkSm5sSwCZfLm5nAsDNOmuEV5Uab5DuWYSE4R2Z3NkKexJJ4bnmXEZYXPMzTbXIpyvU2y9YVrz1BjjRPeHsb6daVdrBgjs4+2b/ok9myM=
@@ -47,6 +48,7 @@ namespace NetCoreFrame.Sample
                                         <InverseQ>P1y+6el2+1LsdwL14hYCILvsTKGokGSKD35N7HakLmHNjXiU05hN1cnXMsGIZGg+pNHmz/yuPmgNLJoNZCQiCg==</InverseQ>
                                         <D>D27DriO99jg2W4lfQi2AAaUV/Aq9tUjAMjEQYSEH7+GHe0N7DYnZDE/P1Y5OsWEC76I8GV0N9Vlhi9EaSiJndRvUgphTL2YuAjrVr59Il+lwh/LUBN46AX3cmQm3cFf1F1FXKj4S+QCx/qrCH4mmKpynuQsPL/1XiQSWpugI30E=</D>
                                     </RSAKeyValue>";
+         */
         #endregion
 
         /// <summary>
