@@ -86,9 +86,8 @@
 
     <el-dialog title="模块授权"
                v-bind:visible.sync="pageOptions.menuDialog"
-               width="800px">
+               width="1000px">
         <div>
-
             <el-table ref="dataGridMenu"
                       v-bind:data="gridDataMenu"
                       style="width: 100%"
@@ -135,7 +134,7 @@
 
     <el-dialog title="用户授权"
                v-bind:visible.sync="pageOptions.userDialog"
-               width="800px">
+               width="1000px">
         <div>
             <el-transfer v-model="transferOptions.currentRoleUser"
                          v-bind:data="transferOptions.dataRoleUser"

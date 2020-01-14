@@ -154,7 +154,6 @@
                     abp.ajax.logError(data.error);
 
                     $dfd && $dfd.reject(data.error, jqXHR);
-                    
                     userOptions.error && userOptions.error(data.error, jqXHR);
 
                     if (jqXHR.status === 401 && userOptions.abpHandleError !== false) {

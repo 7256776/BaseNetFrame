@@ -645,9 +645,6 @@ $(function () {
 
 });
 
-
-
-
 //
 var serviceConnection = serviceConnection || {};
 //webapi授权业务

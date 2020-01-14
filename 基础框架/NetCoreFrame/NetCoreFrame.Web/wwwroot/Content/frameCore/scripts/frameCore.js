@@ -169,7 +169,7 @@ var initFrame = function (Vue, options) {
             //console.log('componentUpdated=所在组件的 VNode 及其孩子的 VNode 全部更新时调用')
         },
         unbind: function (el, binding, vnode, oldVnode) {
-            //console.log('unbind=只调用一次，指令与元素解绑时调用。');
+            //console.log('unbind=只调用一次，指令在元素解绑时调用。');
         }
     });
 

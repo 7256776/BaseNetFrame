@@ -1,8 +1,5 @@
 ﻿var abp = abp || {};
 (function () {
-
-    var zjf = new signalR.HubConnectionBuilder().withUrl("/signalr").build();
-
     // 检查是否定义
     if (!signalR) {
         return;
