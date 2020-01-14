@@ -59,6 +59,17 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 新增 订阅
+        /// </summary>
+        /// <param name="subscription"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void InsertSubscription(NotificationSubscriptionInfo subscription)
+        {
+            _notificationSubscriptionsRepository.Insert(subscription);
+        }
+
+        /// <summary>
         /// 删除用户订阅的通知
         /// </summary>
         /// <param name="user">用户对象</param>
@@ -75,6 +86,26 @@ namespace NetCoreFrame.Core
                 await _notificationSubscriptionsRepository.DeleteAsync(s =>
                 s.UserId == user.UserId &&
                 s.NotificationName == notificationName);
+            }
+        }
+
+        /// <summary>
+        /// 删除用户订阅的通知
+        /// </summary>
+        /// <param name="user">用户对象</param>
+        /// <param name="notificationName">通知名称</param>
+        /// <param name="entityTypeName">忽略该参数</param>
+        /// <param name="entityId">忽略该参数</param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void DeleteSubscription(UserIdentifier user, string notificationName, string entityTypeName, string entityId)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                _notificationSubscriptionsRepository.Delete(s =>
+               s.UserId == user.UserId &&
+               s.NotificationName == notificationName);
             }
         }
 
@@ -96,10 +127,27 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 获取订阅了 通知名称=<see cref="notificationName"/> 集合
+        /// </summary>
+        /// <param name="notificationName">通知名称</param>
+        /// <param name="entityTypeName">忽略该参数</param>
+        /// <param name="entityId">忽略该参数</param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public List<NotificationSubscriptionInfo> GetSubscriptions(string notificationName, string entityTypeName, string entityId)
+        {   
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                return _notificationSubscriptionsRepository.GetAllList(s => s.NotificationName == notificationName);
+            }
+        }
+
+        /// <summary>
         /// 获取租户订阅的通知
         /// (注该方法忽略租户id过滤查询的结果是所有订阅 <see cref="notificationName"/>的信息)
         /// </summary>
-        /// <param name="tenantId">租户Id</param>
+        /// <param name="tenantId">租户Id 忽略该参数</param>
         /// <param name="notificationName">通知名称</param>
         /// <param name="entityTypeName">忽略该参数</param>
         /// <param name="entityId">忽略该参数</param>
@@ -113,7 +161,7 @@ namespace NetCoreFrame.Core
                 return await _notificationSubscriptionsRepository.GetAllListAsync(s => s.NotificationName == notificationName);
             }
         }
-
+         
         /// <summary>
         ///  获取多个租户订阅的通知
         ///  (注该方法忽略租户id过滤查询的结果是所有订阅 <see cref="notificationName"/>的信息)
@@ -135,6 +183,28 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        ///  获取多个租户订阅的通知
+        ///  (注该方法忽略租户id过滤查询的结果是所有订阅 <see cref="notificationName"/>的信息)
+        /// </summary>
+        /// <param name="tenantIds">租户集合</param>
+        /// <param name="notificationName">通知名称</param>
+        /// <param name="entityTypeName">忽略该参数</param>
+        /// <param name="entityId">忽略该参数</param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public List<NotificationSubscriptionInfo> GetSubscriptions(int?[] tenantIds, string notificationName, string entityTypeName, string entityId)
+        {
+            var subscriptions = new List<NotificationSubscriptionInfo>();
+            foreach (var tenantId in tenantIds)
+            {
+                //ToFix 待验证
+                var data = Task.FromResult(GetSubscriptionsAsync(tenantId, notificationName, entityTypeName, entityId)).Result.Result;
+                subscriptions.AddRange(data);
+            }
+            return subscriptions;
+        }
+         
+        /// <summary>
         /// 获取用户订阅的通知
         /// </summary>
         /// <param name="user"></param>
@@ -150,6 +220,22 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 获取用户订阅的通知
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public List<NotificationSubscriptionInfo> GetSubscriptions(UserIdentifier user)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                return _notificationSubscriptionsRepository.GetAllList(s => s.UserId == user.UserId);
+            }
+        }
+
+
+        /// <summary>
         /// 验证该用户是否订阅了 <see cref="notificationName"/> 通知
         /// </summary>
         /// <param name="user">用户对象</param>
@@ -159,12 +245,34 @@ namespace NetCoreFrame.Core
         /// <returns></returns>
         [UnitOfWork]
         public virtual async Task<bool> IsSubscribedAsync(UserIdentifier user, string notificationName, string entityTypeName = null, string entityId = null)
-        {  //关闭多租户查询
+        {  
+            //关闭多租户查询
             using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
             {
                 return await _notificationSubscriptionsRepository.CountAsync(s =>
-                s.UserId == user.UserId &&
-                s.NotificationName == notificationName
+                                                                                                                s.UserId == user.UserId &&
+                                                                                                                s.NotificationName == notificationName
+                ) > 0;
+            }
+        }
+
+        /// <summary>
+        /// 验证该用户是否订阅了 <see cref="notificationName"/> 通知
+        /// </summary>
+        /// <param name="user">用户对象</param>
+        /// <param name="notificationName">通知名称</param>
+        /// <param name="entityTypeName">忽略该参数</param>
+        /// <param name="entityId">忽略该参数</param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public bool IsSubscribed(UserIdentifier user, string notificationName, string entityTypeName, string entityId)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                return _notificationSubscriptionsRepository.Count(s =>
+                                                                                                s.UserId == user.UserId &&
+                                                                                                s.NotificationName == notificationName
                 ) > 0;
             }
         }
@@ -185,6 +293,18 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 新增通知信息(发送时产生)
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void InsertNotification(NotificationInfo notification)
+        {
+            _notificationRepository.Insert(notification);
+            _unitOfWorkManager.Current.SaveChanges();
+        }
+
+        /// <summary>
         /// 获取通知或null
         /// </summary>
         /// <param name="notificationId"></param>
@@ -196,6 +316,17 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 获取通知或null
+        /// </summary>
+        /// <param name="notificationId"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public NotificationInfo GetNotificationOrNull(Guid notificationId)
+        {
+            return _notificationRepository.FirstOrDefault(notificationId);
+        }
+
+        /// <summary>
         /// 删除通知
         /// </summary>
         /// <param name="notification"></param>
@@ -203,6 +334,16 @@ namespace NetCoreFrame.Core
         public virtual async Task DeleteNotificationAsync(NotificationInfo notification)
         {
             await _notificationRepository.DeleteAsync(notification);
+        }
+
+        /// <summary>
+        /// 删除通知
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
+        public void DeleteNotification(NotificationInfo notification)
+        {
+            _notificationRepository.Delete(notification);
         }
         #endregion
 
@@ -225,6 +366,22 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 保存接收到的通知
+        /// </summary>
+        /// <param name="userNotification"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void InsertUserNotification(UserNotificationInfo userNotification)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                _userNotificationInfoRepository.Insert(userNotification);
+                _unitOfWorkManager.Current.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// 设置通知状态
         /// </summary>
         /// <param name="tenantId"></param>
@@ -232,15 +389,34 @@ namespace NetCoreFrame.Core
         /// <param name="state"></param>
         /// <returns></returns>
         [UnitOfWork]
-        public virtual async Task UpdateUserNotificationStateAsync(int? tenantId, Guid notificationsToUserId, UserNotificationState state)
+        public virtual async Task UpdateUserNotificationStateAsync(int? tenantId, Guid userNotificationId, UserNotificationState state)
         {
-            var userNotificationInfo = await _userNotificationInfoRepository.FirstOrDefaultAsync(notificationsToUserId);
+            var userNotificationInfo = await _userNotificationInfoRepository.FirstOrDefaultAsync(userNotificationId);
             if (userNotificationInfo == null)
             {
                 return;
             }
             userNotificationInfo.State = state;
             await _unitOfWorkManager.Current.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// 设置通知状态
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="notificationsToUserId"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void UpdateUserNotificationState(int? tenantId, Guid userNotificationId, UserNotificationState state)
+        {
+            var userNotificationInfo = _userNotificationInfoRepository.FirstOrDefault(userNotificationId);
+            if (userNotificationInfo == null)
+            {
+                return;
+            }
+            userNotificationInfo.State = state;
+            _unitOfWorkManager.Current.SaveChanges();
         }
 
         /// <summary>
@@ -261,6 +437,23 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 设置用户 <see cref="user"/> 所有通知的状态
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void UpdateAllUserNotificationStates(UserIdentifier user, UserNotificationState state)
+        {
+            var userNotifications = _userNotificationInfoRepository.GetAllList(un => un.UserId == user.UserId);
+            foreach (var userNotification in userNotifications)
+            {
+                userNotification.State = state;
+            }
+            _unitOfWorkManager.Current.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// 删除通知
         /// </summary>
         /// <param name="tenantId"></param>
@@ -273,6 +466,18 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 删除通知
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="notificationsToUserId"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void DeleteUserNotification(int? tenantId, Guid userNotificationId)
+        {
+            _userNotificationInfoRepository.Delete(userNotificationId);
+        }
+         
+        /// <summary>
         /// 删除通知用户 <see cref="user"/> 所有通知
         /// </summary>
         /// <param name="user"></param>
@@ -284,22 +489,95 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 删除通知用户 <see cref="user"/> 所有通知
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="state"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public async Task  DeleteAllUserNotificationsAsync(UserIdentifier user, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            await _userNotificationInfoRepository.DeleteAsync(un => 
+                                                                                           un.UserId == user.UserId && 
+                                                                                           un.State == state.Value && 
+                                                                                           un.CreationTime >= startDate.Value && 
+                                                                                           un.CreationTime <= endDate.Value);
+        }
+
+        /// <summary>
+        /// 删除通知用户 <see cref="user"/> 所有通知
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="state"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void DeleteAllUserNotifications(UserIdentifier user, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            _userNotificationInfoRepository.Delete(un =>
+                                                                        un.UserId == user.UserId &&
+                                                                        un.State == state.Value &&
+                                                                        un.CreationTime >= startDate.Value &&
+                                                                        un.CreationTime <= endDate.Value);
+        }
+
+        /// <summary>
         /// 查询用户接收到的所有通知
         /// </summary>
         /// <param name="user"></param>
         /// <param name="state"></param>
         /// <param name="skipCount"></param>
         /// <param name="maxResultCount"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         /// <returns></returns>
-        [UnitOfWork]
-        public virtual Task<List<UserNotificationInfoWithNotificationInfo>> GetUserNotificationsWithNotificationsAsync(UserIdentifier user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue)
+        public List<UserNotificationInfoWithNotificationInfo> GetUserNotificationsWithNotifications(UserIdentifier user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
         {
             //关闭多租户查询
             using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
             {
                 var query = from userNotificationInfo in _userNotificationInfoRepository.GetAll()
                             join tenantNotificationInfo in _tenantNotificationRepository.GetAll() on userNotificationInfo.TenantNotificationId equals tenantNotificationInfo.Id
-                            where userNotificationInfo.UserId == user.UserId && (state == null || userNotificationInfo.State == state.Value)
+                            where userNotificationInfo.UserId == user.UserId
+                                    && (state == null || userNotificationInfo.State == state.Value)
+                                    && (startDate == null || userNotificationInfo.CreationTime >= startDate.Value)
+                                    && (endDate == null || userNotificationInfo.CreationTime <= endDate.Value)
+                            orderby tenantNotificationInfo.CreationTime descending
+                            select new { userNotificationInfo, tenantNotificationInfo = tenantNotificationInfo };
+
+                query = query.PageBy(skipCount, maxResultCount);
+
+                var list = query.ToList();
+
+                return list.Select(a => new UserNotificationInfoWithNotificationInfo(a.userNotificationInfo, a.tenantNotificationInfo)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// 查询用户接收到的所有通知
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="state"></param>
+        /// <param name="skipCount"></param>
+        /// <param name="maxResultCount"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public Task<List<UserNotificationInfoWithNotificationInfo>> GetUserNotificationsWithNotificationsAsync(UserIdentifier user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                var query = from userNotificationInfo in _userNotificationInfoRepository.GetAll()
+                            join tenantNotificationInfo in _tenantNotificationRepository.GetAll() on userNotificationInfo.TenantNotificationId equals tenantNotificationInfo.Id
+                            where userNotificationInfo.UserId == user.UserId 
+                                    && (state == null || userNotificationInfo.State == state.Value) 
+                                    && (startDate == null || userNotificationInfo.CreationTime >= startDate.Value)
+                                    && (endDate == null || userNotificationInfo.CreationTime <= endDate.Value)
                             orderby tenantNotificationInfo.CreationTime descending
                             select new { userNotificationInfo, tenantNotificationInfo = tenantNotificationInfo };
 
@@ -318,14 +596,45 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="user"></param>
         /// <param name="state"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         /// <returns></returns>
         [UnitOfWork]
-        public virtual async Task<int> GetUserNotificationCountAsync(UserIdentifier user, UserNotificationState? state = null)
+        public virtual async Task<int> GetUserNotificationCountAsync(UserIdentifier user, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             //关闭多租户查询
             using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
             {
-                return await _userNotificationInfoRepository.CountAsync(un => un.UserId == user.UserId && (state == null || un.State == state.Value));
+                return await _userNotificationInfoRepository.CountAsync(un =>
+                                                                                                            un.UserId == user.UserId &&
+                                                                                                            (state == null || un.State == state.Value) &&
+                                                                                                            (startDate == null || un.CreationTime >= startDate.Value) &&
+                                                                                                            (endDate == null || un.CreationTime <= endDate.Value)
+                                                                                                            );
+            }
+        }
+
+
+        /// <summary>
+        /// 获取用户接收到通知的总条数
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="state"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public int GetUserNotificationCount(UserIdentifier user, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                return _userNotificationInfoRepository.Count(un =>
+                                                                                                un.UserId == user.UserId &&
+                                                                                                (state == null || un.State == state.Value) &&
+                                                                                                (startDate == null || un.CreationTime >= startDate.Value) &&
+                                                                                                (endDate == null || un.CreationTime <= endDate.Value)
+                                                                                                );
             }
         }
 
@@ -357,6 +666,33 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
+        /// 查询该租户下用户的通知
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="userNotificationId"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public UserNotificationInfoWithNotificationInfo GetUserNotificationWithNotificationOrNull(int? tenantId, Guid userNotificationId)
+        {
+            //关闭多租户查询
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                var query = from userNotificationInfo in _userNotificationInfoRepository.GetAll()
+                            join tenantNotificationInfo in _tenantNotificationRepository.GetAll() on userNotificationInfo.TenantNotificationId equals tenantNotificationInfo.Id
+                            where userNotificationInfo.Id == userNotificationId
+                            select new { userNotificationInfo, tenantNotificationInfo = tenantNotificationInfo };
+
+                var item = query.FirstOrDefault();
+                if (item == null)
+                {
+                    return null;
+                }
+
+                return new UserNotificationInfoWithNotificationInfo(item.userNotificationInfo, item.tenantNotificationInfo);
+            }
+        }
+
+        /// <summary>
         /// 新增用户通知信息
         /// </summary>
         /// <param name="tenantNotificationInfo"></param>
@@ -370,6 +706,19 @@ namespace NetCoreFrame.Core
             }
         }
 
+        /// <summary>
+        /// 新增用户通知信息
+        /// </summary>
+        /// <param name="tenantNotificationInfo"></param>
+        /// <returns></returns>
+        [UnitOfWork]
+        public void InsertTenantNotification(TenantNotificationInfo tenantNotificationInfo)
+        {
+            using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
+            {
+                _tenantNotificationRepository.Insert(tenantNotificationInfo);
+            }
+        } 
         #endregion
 
     }

@@ -41,7 +41,7 @@ namespace NetCoreFrame.Application
         [AbpAuthorize("DictManager")]
         public List<SysDict> GetSysDictListByDictType(string dictType)
         {
-            var listSysDict = _sysDictRepository.GetAllList().Where(p=>p.DictType == dictType).OrderBy(t=>t.DictCode).ToList();
+            var listSysDict = _sysDictRepository.GetAll().Where(p=>p.DictType == dictType).OrderBy(t=>t.DictCode).ToList();
             return listSysDict;
         }
 
@@ -71,13 +71,14 @@ namespace NetCoreFrame.Application
                     }
                     if (item.EditState.ToUpper() == "ADD")
                     {
-                        await _sysDictRepository.InsertAsync(item.MapTo<SysDict>());
+                        SysDict model = ObjectMapper.Map<SysDict>(item);
+                        await _sysDictRepository.InsertAsync(model);
                     }
                     else
                     {
                         var submitData = _sysDictRepository.Get(item.Id.Value);
-                        //var m = ObjectMapper.Map(item, submitData);
-                        await _sysDictRepository.UpdateAsync(item.MapTo(submitData));
+                        SysDict model = ObjectMapper.Map<SysDict>(submitData);
+                        await _sysDictRepository.UpdateAsync(model);
                     }
                 }
             }

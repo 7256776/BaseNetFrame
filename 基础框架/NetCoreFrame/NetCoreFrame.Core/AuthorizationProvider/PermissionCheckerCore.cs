@@ -53,6 +53,17 @@ namespace NetCoreFrame.Core
             return isGranted;
         }
 
+
+        public bool IsGranted(string permissionName)
+        {
+            bool isGranted = Task.FromResult(_userInfoManager.IsGrantedAsync(permissionName)).Result.Result;
+            if (!isGranted)
+            {
+                //AuthorizationException(permissionName);
+            }
+            return isGranted;
+        }
+
         /// <summary>
         /// 验证授权(指定用户)
         /// </summary>
@@ -62,6 +73,16 @@ namespace NetCoreFrame.Core
         public async Task<bool> IsGrantedAsync(UserIdentifier user, string permissionName)
         {
             bool isGranted = await _userInfoManager.IsGrantedAsync(user, permissionName);
+            if (!isGranted)
+            {
+                //AuthorizationException(permissionName);
+            }
+            return isGranted;
+        }
+
+        public bool IsGranted(UserIdentifier user, string permissionName)
+        {
+            bool isGranted = Task.FromResult(_userInfoManager.IsGrantedAsync(user, permissionName)).Result.Result;
             if (!isGranted)
             {
                 //AuthorizationException(permissionName);
@@ -85,5 +106,7 @@ namespace NetCoreFrame.Core
                 );
         }
 
+
+       
     }
 }

@@ -15,7 +15,6 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <returns></returns>
         Task<List<SysDictType>> GetSysDictTypeListAsync();
-        Task<List<SysDictType>> GetSysDictTypeListAAA();
 
         /// <summary>
         ///  查询字典类型对象

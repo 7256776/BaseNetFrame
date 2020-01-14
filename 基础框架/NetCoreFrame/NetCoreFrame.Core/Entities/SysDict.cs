@@ -44,7 +44,7 @@ namespace NetCoreFrame.Core
         /// </summary>	 
         [Column("ISACTIVE")]
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool? IsActive { get; set; } = true;
 
 
     }

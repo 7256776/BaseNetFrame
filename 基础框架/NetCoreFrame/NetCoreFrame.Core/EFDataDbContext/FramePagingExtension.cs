@@ -87,9 +87,9 @@ namespace NetCoreFrame.Core
         {
             queryable = queryable.ApplySorting(pageModel);
             var pagedResultDto = queryable.BuildPaging(pageModel);
+            #region 映射对象
             //构建返回对象
             List<DtoTEntity> data = new List<DtoTEntity>();
-            PagedResultDto<DtoTEntity> pagedResultDestination = new PagedResultDto<DtoTEntity>(pagedResultDto.TotalCount,data);
             //由于该分页扩展类是静态对象,因此此处单独初始化映射关系进行对象的转换
             var config = new MapperConfiguration(cfg => cfg.CreateMap<TEntity, DtoTEntity>());
             var mapper = config.CreateMapper();
@@ -97,6 +97,8 @@ namespace NetCoreFrame.Core
             {
                 data.Add(mapper.Map<TEntity, DtoTEntity>(item));
             }
+            PagedResultDto<DtoTEntity> pagedResultDestination = new PagedResultDto<DtoTEntity>(pagedResultDto.TotalCount, data);
+            #endregion
             return pagedResultDestination;
 
             //该方案由于Abp库的扩展函数已过时不推荐使用

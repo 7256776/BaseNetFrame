@@ -116,7 +116,7 @@ namespace NetCoreFrame.Core
             UserInfo userInfo = _cacheManagerExtens.GetUserInfoCache(user.UserId);
             return await IsValidationGrantedAsync(userInfo,permissionName);
         }
-
+         
         /// <summary>
         /// 获取当前用户的授权
         /// </summary>

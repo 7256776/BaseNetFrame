@@ -47,7 +47,7 @@ namespace NetCoreFrame.Application
             List<SysMenus> dataAll= _sysMenusRepository.GetAllList();
             //转换数据集合的关系格式
             dataAll = _sysMenusRepository.ConvertMenusByChildrenList(dataAll);
-            return dataAll.MapTo<List<MenusOut>>();
+            return ObjectMapper.Map<List<MenusOut>>(dataAll); 
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NetCoreFrame.Application
                 }
             }
             List<SysMenus> resData = _sysMenusRepository.ConvertMenusByOrderByList(dataAll);
-            return resData.MapTo<List<MenusOut>>();
+            return ObjectMapper.Map<List<MenusOut>>(resData);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace NetCoreFrame.Application
         {
             //查询模块以及所包含的授权动作
             var data = _sysMenusRepository.GetAllIncluding(x => x.SysMenuActions).FirstOrDefault(x => x.Id == id);
-            return data.MapTo<MenusInput>(); 
+            return ObjectMapper.Map<MenusInput>(data); 
         }
 
         /// <summary>
@@ -110,8 +110,7 @@ namespace NetCoreFrame.Application
         public  AjaxResponse SaveMenusModel(MenusInput model)
         {
             long resId;
-
-            MenuData menuData = model.MapTo<MenuData>();
+            MenuData menuData = ObjectMapper.Map<MenuData>(model);
             var isRepeat = IsPermissionRepeat(menuData);
             if (isRepeat)
             {
@@ -120,20 +119,21 @@ namespace NetCoreFrame.Application
 
             if (model.Id == null)
             {
-                SysMenus modelInput = model.MapTo<SysMenus>();
+                SysMenus modelInput = ObjectMapper.Map<SysMenus>(model);
                 resId =  _sysMenusRepository.InsertAndGetId(modelInput);
             }
             else
             {
 
-                MenusUpdata modelInput = model.MapTo<MenusUpdata>();
+                MenusUpdata modelInput = ObjectMapper.Map<MenusUpdata>(model);
                 long id = Convert.ToInt64(model.Id);
                 //获取需要更新的数据
                 SysMenus data = _sysMenusRepository.Get(id);
                 //映射需要修改的数据对象
                 SysMenus m = ObjectMapper.Map(modelInput, data);
                 //修改动作明细数据
-                List<SysMenuAction> menuActionList = model.SysMenuActions.MapTo<List<SysMenuAction>>();
+                List<SysMenuAction> menuActionList = ObjectMapper.Map<List<SysMenuAction>>(model.SysMenuActions);
+
                 if (menuActionList!=null && menuActionList.Any())
                 {
                     _sysMenuActionRepository.UpdataMenusAction(menuActionList, id);
@@ -152,8 +152,8 @@ namespace NetCoreFrame.Application
             _cacheManagerExtens.RemoveMenuActionPermissionCache();
 
             //重置初始菜单以及授权
-            _navigationMenusExt.UpNavigationMenusProvider(model.MapTo<SysMenus>());
-
+            _navigationMenusExt.UpNavigationMenusProvider(ObjectMapper.Map<SysMenus>(model));
+            
             return new AjaxResponse { Success = true, Result = new { id = resId } };
         }
 

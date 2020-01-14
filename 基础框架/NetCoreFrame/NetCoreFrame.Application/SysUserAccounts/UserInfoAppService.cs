@@ -68,7 +68,7 @@ namespace NetCoreFrame.Application
         public async Task<SysLoginResult<UserInfo>> VerifyAuthAndSignIn(LoginUser model)
         {
             //验证并返回登录用户对象
-            SysLoginResult<UserInfo> resLoginUser = await _sysSignInManager.LoginAuth(model.MapTo<UserInfo>());
+            SysLoginResult<UserInfo> resLoginUser = await _sysSignInManager.LoginAuth(ObjectMapper.Map<UserInfo>(model));
             if (resLoginUser.Identity != null)
             {
                 //注册登录凭证
@@ -86,7 +86,7 @@ namespace NetCoreFrame.Application
         public async Task<SysLoginResult<UserInfo>> LoginAuth(LoginUser model)
         {
             //验证并返回登录用户对象
-            SysLoginResult<UserInfo> resLoginUser = await _sysSignInManager.LoginAuth(model.MapTo<UserInfo>());
+            SysLoginResult<UserInfo> resLoginUser = await _sysSignInManager.LoginAuth(ObjectMapper.Map<UserInfo>(model));
             return resLoginUser;
         }
 
@@ -174,7 +174,8 @@ namespace NetCoreFrame.Application
             using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.SoftDelete))
             {
                 //获取用户数据
-                UserOut data = _userInfoRepository.Get(id).MapTo<UserOut>();
+                UserInfo model = _userInfoRepository.Get(id);
+                UserOut data = ObjectMapper.Map<UserOut>(model);
                 //获取用户扩展的数据
                 data.UserInfoEx = _userInfoExtens.GetUserModel(id);
 
@@ -200,7 +201,7 @@ namespace NetCoreFrame.Application
         { 
             if (model.ID == null)
             {
-                UserInfo modelInput = model.MapTo<UserInfo>();
+                UserInfo modelInput = ObjectMapper.Map<UserInfo>(model);
                 //查询范围包含已经逻辑删除的数据
                 using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.SoftDelete))
                 {
@@ -217,6 +218,7 @@ namespace NetCoreFrame.Application
                     modelInput.ImageUrl = "w";
                 //新增用户对象(新增前默认验证UserCode的账号是否存在如果存在不做新增)
                 await _userInfoManager.CreateAsync(modelInput);
+                //EF 保存当前用户数据对象
                 _unitOfWorkManager.Current.SaveChanges();
                 //获取新增后的主键id
                 model.ID = modelInput.Id;

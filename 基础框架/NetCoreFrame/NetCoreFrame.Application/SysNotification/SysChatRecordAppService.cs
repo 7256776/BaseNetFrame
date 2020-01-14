@@ -82,7 +82,7 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         public async Task InsertChatRecordAsync(SysCharSend model)
         {
-            SysChatRecord sysChatRecord = model.MapTo<SysChatRecord>();
+            SysChatRecord sysChatRecord = ObjectMapper.Map<SysChatRecord>(model); 
 
             sysChatRecord.SenderUserId = AbpSession.UserId.Value;
             List<SysChatRecord> dataList = SysChatRecord.CreateSysChatRecord(sysChatRecord);

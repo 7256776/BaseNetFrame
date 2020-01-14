@@ -44,11 +44,11 @@ namespace NetCoreFrame.Application
         public List<RoleOut> GetRoleList()
         {
             var data = _sysRolesRepository.GetAll();
-            return data.MapTo<List<RoleOut>>();
+            return ObjectMapper.Map<List<RoleOut>>(data); 
         }
 
-        /// <summary>
-        /// 查询角色对象
+        /// <summary> 
+        /// 查询角色对象       
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -56,7 +56,7 @@ namespace NetCoreFrame.Application
         public RoleOut GetRoleModel(long id)
         {
             var data = _sysRolesRepository.Get(id);
-            return data.MapTo<RoleOut>();
+            return ObjectMapper.Map<RoleOut>(data);
         }
 
         /// <summary>
@@ -71,10 +71,10 @@ namespace NetCoreFrame.Application
             RoleToUserReturn roleToUSer = new RoleToUserReturn();
             //带授权用户集合(默认是查询所有用户)
             var userAll= _userInfoRepository.GetAllList();
-            roleToUSer.RoleNotUser= userAll.ToList().MapTo<List<UserOut>>();
+            roleToUSer.RoleNotUser= ObjectMapper.Map<List<UserOut>>(userAll.ToList()); 
             //查询授权用户集合
             var inData = _sysRolesRepository.GetRoleToUSer(roleId);
-            roleToUSer.RoleInUser = inData.ToList().MapTo<List<RoleUser>>();
+            roleToUSer.RoleInUser = ObjectMapper.Map<List<RoleUser>>(inData); 
             return roleToUSer;
         }
 
@@ -88,7 +88,7 @@ namespace NetCoreFrame.Application
         {
             if (model.ID == null)
             {
-                SysRoles modelInput = model.MapTo<SysRoles>();
+                SysRoles modelInput = ObjectMapper.Map<SysRoles>(model);
                 await _sysRolesRepository.InsertAndGetIdAsync(modelInput);
             }
             else
@@ -138,8 +138,8 @@ namespace NetCoreFrame.Application
         {
             //删除原有授权
             _sysMenuActionRepository.DelRoleToMenuAction(Convert.ToInt64(model.ID));
-            //新增授权
-            _sysMenuActionRepository.AddRoleToMenuAction(model.MenusActionList.MapTo<List<SysMenus>>(), Convert.ToInt64(model.ID));
+            //新增授权 
+            _sysMenuActionRepository.AddRoleToMenuAction(ObjectMapper.Map<List<SysMenus>>(model.MenusActionList), Convert.ToInt64(model.ID));
             //修改角色授权信息后移除缓存
             _cacheManagerExtens.RemoveRoleToPermissionCache(Convert.ToInt64(model.ID));
             //删除缓存所有用户信息(确保所有用户的角色重新获取)
@@ -164,8 +164,8 @@ namespace NetCoreFrame.Application
                 //未设置授权用户直接返回
                 return new AjaxResponse { Success = true };
             }
-            //新增授权
-            _sysRolesRepository.AddRoleToUser(model.RoleToUserList.MapTo<List<SysRoleToUser>>());
+            //新增授权 
+            _sysRolesRepository.AddRoleToUser(ObjectMapper.Map<List<SysRoleToUser>>(model.RoleToUserList));
             //清空所设置用户的缓存
             foreach (var item in model.RoleToUserList)
             {

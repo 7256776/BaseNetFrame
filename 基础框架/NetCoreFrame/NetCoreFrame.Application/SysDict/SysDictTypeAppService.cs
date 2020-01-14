@@ -39,13 +39,6 @@ namespace NetCoreFrame.Application
             return await _sysDicTypetRepository.GetAllListAsync();
         }
 
-
-        [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<List<SysDictType>> GetSysDictTypeListAAA()
-        {
-            return await _sysDicTypetRepository.GetAllListAsync();
-        }
-
         /// <summary>
         ///  查询字典类型对象
         /// </summary>
@@ -74,7 +67,7 @@ namespace NetCoreFrame.Application
             //新增或修改
             if (model.Id == null)
             {
-                SysDictType modelInput = model.MapTo<SysDictType>();
+                SysDictType modelInput = ObjectMapper.Map<SysDictType>(model);
                 resId = await _sysDicTypetRepository.InsertAndGetIdAsync(modelInput);
             }
             else

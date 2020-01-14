@@ -21,6 +21,11 @@ namespace NetCoreFrame.Core
             _auditLogRepository = auditLogRepository;
         }
 
+        public void Save(AuditInfo auditInfo)
+        {
+            _auditLogRepository.Insert(SysAuditLog.CreateFromAuditInfo(auditInfo));
+        }
+
         /// <summary>
         /// 保存日志信息
         /// </summary>

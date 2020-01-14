@@ -43,8 +43,7 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         public async Task<AjaxResponse> SaveNotificationInfoAsync(SysNotificationInfoInput modelInput)
         {
-            SysNotificationInfo notificationInfo = modelInput.MapTo<SysNotificationInfo>();
-
+            SysNotificationInfo notificationInfo = ObjectMapper.Map<SysNotificationInfo>(modelInput);
             //验证通知类型名称(NotificationName)是否重复
             var res = await _sysNotificationInfoRepository.IsSubscriptionRepeat(notificationInfo);
             if (res)
@@ -75,7 +74,7 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         public async Task DelNotificationInfoAsync(SysNotificationInfoInput modelInput)
         {
-            SysNotificationInfo notificationInfo = modelInput.MapTo<SysNotificationInfo>();
+            SysNotificationInfo notificationInfo = ObjectMapper.Map<SysNotificationInfo>(modelInput);
             await _sysNotificationInfoRepository.DeleteNotificationAndSubscriptionAsync(notificationInfo);
         }
 
@@ -194,7 +193,7 @@ namespace NetCoreFrame.Application
         {
             Check.NotNull(requestParam.Params, nameof(requestParam.Params));
 
-            SysUserNotificationInfo sysUserNotificationInfo = requestParam.Params.MapTo<SysUserNotificationInfo>();
+            SysUserNotificationInfo sysUserNotificationInfo = ObjectMapper.Map<SysUserNotificationInfo>(requestParam.Params);
             if (sysUserNotificationInfo.UserId==null)
             {
                 sysUserNotificationInfo.UserId = AbpSession.UserId;

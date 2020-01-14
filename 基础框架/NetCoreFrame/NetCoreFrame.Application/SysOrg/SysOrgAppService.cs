@@ -44,7 +44,7 @@ namespace NetCoreFrame.Application
             string parentOrgNode = "";
 
             //验证重复
-            if (CheckOrgCode(model.MapTo<SysOrgData>()))
+            if (CheckOrgCode(ObjectMapper.Map<SysOrgData>(model)))
             {
                 throw new UserFriendlyException("机构编码重复", "您设置的机构编码" + model.OrgCode + "重复!");
             }
@@ -60,7 +60,7 @@ namespace NetCoreFrame.Application
 
             if (model.Id == null)
             {
-                SysOrg modelInput = model.MapTo<SysOrg>();
+                SysOrg modelInput = ObjectMapper.Map<SysOrg>(model);
                 modelInput.OrgNode = parentOrgNode + model.OrgCode + ".";
                 resId = await _sysOrgRepository.InsertAndGetIdAsync(modelInput);
             }
