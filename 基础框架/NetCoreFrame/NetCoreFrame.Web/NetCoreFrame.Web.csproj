@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>d6e945ec-e13f-4cd6-b29f-99229f458a55</UserSecretsId>
     <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
   </PropertyGroup>
@@ -44,6 +44,7 @@
     <Compile Remove="Controllers\TestServiceController.cs" />
     <Compile Remove="Models\ErrorViewModel.cs" />
     <Compile Remove="Models\JObjectModelBinder.cs" />
+    <Compile Remove="Models\MvcConfiguration.cs" />
     <Compile Remove="Startup\Startup - 复制.cs" />
   </ItemGroup>
 
@@ -283,23 +284,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="4.0.2" />
-    <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.0.2" />
-    <PackageReference Include="Abp.Castle.Log4Net" Version="4.0.2" />
-    <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="3.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.6" />
+    <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.11.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="4.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
