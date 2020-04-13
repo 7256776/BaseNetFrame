@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreFrame.Application
 {
-    [AutoMap(typeof(SysMenus))]
+    [AutoMap(typeof(SysMenus),typeof(MenusInput))]
     public class MenusUpdata
     {
         /// <summary>

@@ -1,0 +1,154 @@
+﻿@{
+    Layout = null;
+}
+<div class="row">
+    <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+        <el-button-group>
+            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAdd()" ref="btnAdd" v-IsAuthorized>新增</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()" ref="btnEdit" v-IsAuthorized>编辑</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelForm()" ref="btnDel" v-IsAuthorized>删除</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-sitemap fa-lg" v-on:click="doRoleMenu()" ref="btnMenu" v-IsAuthorized>模块授权</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-user-circle fa-lg" v-on:click="doUserMenu()" ref="btnUser" v-IsAuthorized>用户授权</el-button>
+        </el-button-group>
+    </div>
+
+    <!--v-bind:cell-style="{'padding':'2px'}"-->
+    <!--v-bind:header-cell-style="{'padding':'2px'}"-->
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+        <el-table v-bind:data="tableOptions.tableData"
+                  ref="dataGrid"
+                  stripe
+                  border
+                  highlight-current-row
+                  tooltip-effect="light"
+                  style="width: 100%"
+                  v-on:selection-change="doRowSelectChange"
+                  v-on:row-click="doRowclick">
+            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+            <el-table-column prop="roleName" label="角色名称" width="180">
+            </el-table-column>
+            <el-table-column prop="description" label="描述">
+            </el-table-column>
+            <el-table-column label="启用状态" width="100px" align="center">
+                <template slot-scope="scope">
+                    <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
+                </template>
+            </el-table-column>
+        </el-table>
+
+    </div>
+
+    <el-dialog title="角色基础信息"
+               v-bind:visible.sync="pageOptions.formDialog"
+               width="600px">
+        <div>
+            <el-form v-bind:model="formData"
+                     v-bind:rules="formRules"
+                     ref="formInputData"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+
+                <el-form-item label="id" prop="id" v-show="false">
+                </el-form-item>
+
+                <el-form-item label="角色名称" prop="roleName">
+                    <el-input v-model="formData.roleName" style="width:165px" clearable suffix-icon="fa fa-id-card-o" v-bind:maxlength="30">
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="启用状态" prop="isActive">
+                    <el-select v-model="formData.isActive"
+                               default-first-option
+                               clearable
+                               style="width:165px"
+                               placeholder="请选择">
+                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="禁用" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="描述" prop="description">
+                    <el-input type="textarea" v-model="formData.description" style="width:445px" clearable v-bind:maxlength="150">
+                    </el-input>
+                </el-form-item>
+
+            </el-form>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="pageOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog title="模块授权"
+               v-bind:visible.sync="pageOptions.menuDialog"
+               width="1000px">
+        <div>
+            <el-table ref="dataGridMenu"
+                      v-bind:data="gridDataMenu"
+                      style="width: 100%"
+                      v-bind:row-style="tableRowClassName"
+                      stripe
+                      highlight-current-row
+                      tooltip-effect="light"
+                      v-on:select="doMenuGridSelect"
+                      v-on:select-all="doMenuGridSelectAll"
+                      max-height="400">
+                <el-table-column type="selection" prop="isCheck" style="padding-left:50px;">
+                </el-table-column>
+                <el-table-column label="模块标题" width="180" prop="menuDisplayName">
+                    <template slot-scope="scope">
+                        <div>
+                            <span v-for="item in scope.row.menuNodeLevel-1">&nbsp;&nbsp;&nbsp;</span>
+                            <el-button type="text" size="mini" v-on:click="doCell(scope.row)">
+                                <i v-if="(scope.row.expandState=='plus' || !scope.row.expandState) && !scope.row.isLeaf" class="fa fa-plus-square"></i>
+                                <i v-else-if="!scope.row.isLeaf" class="fa fa-minus-square "></i>
+                                <i v-else style="color:#fff;" class="fa fa-square-o"></i>
+                            </el-button>
+                            {{ scope.row.menuDisplayName }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="动作标题" prpo="menuName">
+                    <template slot-scope="scope">
+                        &nbsp;
+                        <div style="float:left;">
+                            <el-checkbox border v-for="item in scope.row.sysMenuActions" v-model="item.isCheck" v-bind:label="item.id" v-bind:key="item.id" size="mini"  v-on:change="doActionsCell(scope.row)">
+                                {{ item.actionDisplayName }}
+                            </el-checkbox>
+                        </div>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div slot="footer" style="padding-right:10px;">
+            <el-button type="info" v-on:click="pageOptions.menuDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doSaveRoleMenus()" icon="fa fa-handshake-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog title="用户授权"
+               v-bind:visible.sync="pageOptions.userDialog"
+               width="1000px">
+        <div>
+            <el-transfer v-model="transferOptions.currentRoleUser"
+                         v-bind:data="transferOptions.dataRoleUser"
+                         v-bind:props="transferOptions.props"
+                         v-bind:render-content="transferOptions.renderFunc"
+                         v-bind:titles="transferOptions.titles"
+                         v-bind:button-texts="transferOptions.buttonTexts"
+                         v-bind:filter-method="transferOptions.filterMethod"
+                         class="frame-transfer-panel"
+                         filterable>
+            </el-transfer>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="pageOptions.userDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" ico="fa fa-check-square" v-on:click="doSaveRoleUser()" icon="fa fa-handshake-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+</div>

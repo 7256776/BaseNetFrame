@@ -99,7 +99,7 @@ namespace NetCoreFrame.WebApi
             }
             else
             {
-                app.UseExceptionHandler("/J_Error");
+                app.UseExceptionHandler("/SysError");
             }
             //静态文件服务中间件(默认文件夹wwwroot)
             app.UseStaticFiles();

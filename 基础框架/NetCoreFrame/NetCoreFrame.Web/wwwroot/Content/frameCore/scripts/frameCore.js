@@ -12,72 +12,72 @@ jQuery.support.cors = true
 //加载组件
 var componentAssemble = {
     //初始首页内嵌的空组件容器用于重写注入项目中需要加载的自定义内容
-    J_InitPage: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-initpage', 'Views/J_Components/InitPage').then(resolve, reject);
+    SysInitPage: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-initpage', 'Views/SysComponents/InitPage').then(resolve, reject);
     },
     //网站标题头
-    J_WebTitle: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-webtitle', 'Views/J_Components/WebTitle').then(resolve, reject);
+    SysWebTitle: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-webtitle', 'Views/SysComponents/WebTitle').then(resolve, reject);
     },
 
     //用户表单扩展
-    J_UserInfoExtens: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-userinfoextens', 'Views/J_Components/UserInfoExtens').then(resolve, reject);
+    SysUserInfoExtens: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-userinfoextens', 'Views/SysComponents/UserInfoExtens').then(resolve, reject);
     },
 
     //侧边菜单
-    J_SideMenu: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-sidemenu', 'Views/J_Menus/SideMenu').then(resolve, reject);
+    SysSideMenu: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-sidemenu', 'Views/SysMenus/SideMenu').then(resolve, reject);
     },
 
     //侧边菜单(子菜单)
-    J_SideMenuSub: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-sidemenusub', 'Views/J_Menus/SideMenuSub').then(resolve, reject);
+    SysSideMenuSub: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-sidemenusub', 'Views/SysMenus/SideMenuSub').then(resolve, reject);
     },
 
     //页面顶部横向布局菜单
-    J_TopMenu: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-topmenu', 'Views/J_Menus/TopMenu').then(resolve, reject);
+    SysTopMenu: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-topmenu', 'Views/SysMenus/TopMenu').then(resolve, reject);
     },
 
     //页面顶部横向布局菜单(子菜单折叠)
-    J_TopMenuSub: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-topmenusub', 'Views/J_Menus/TopMenusSub').then(resolve, reject);
+    SysTopMenuSub: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-topmenusub', 'Views/SysMenus/TopMenusSub').then(resolve, reject);
     },
 
     //页面顶部横向布局菜单(子菜单平铺)
-    J_TopMenuFullSub: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-topmenufullsub', 'Views/J_Menus/TopMenusFullSub').then(resolve, reject);
+    SysTopMenuFullSub: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-topmenufullsub', 'Views/SysMenus/TopMenusFullSub').then(resolve, reject);
     },
 
     //JSON格式化组件
-    J_JsonFormat: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-jsonformat', 'Views/J_Components/jsonFormat').then(resolve, reject);
+    SysJsonFormat: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-jsonformat', 'Views/SysComponents/jsonFormat').then(resolve, reject);
     },
 
     //侧扩展窗体(聊天窗体)
-    J_QuickSideBar: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-quicksidebar', 'Views/J_Components/QuickSidebar').then(resolve, reject);
+    SysQuickSideBar: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-quicksidebar', 'Views/SysComponents/QuickSidebar').then(resolve, reject);
     },
 
     //页面顶部工具栏菜单
-    J_TopToolsMenu: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-toptoolsmenu', 'Views/J_Components/TopToolsMenu').then(resolve, reject);
+    SysTopToolsMenu: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-toptoolsmenu', 'Views/SysComponents/TopToolsMenu').then(resolve, reject);
     },
 
     //搜索工具栏
-    J_SearchForm: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-searchform', 'Views/J_Components/SearchForm').then(resolve, reject);
+    SysSearchForm: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-searchform', 'Views/SysComponents/SearchForm').then(resolve, reject);
     },
 
     //搜索工具栏内嵌扩展菜单
-    J_SearchDropdown: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-searchdropdown', 'Views/J_Components/SearchDropdown').then(resolve, reject);
+    SysSearchDropdown: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-searchdropdown', 'Views/SysComponents/SearchDropdown').then(resolve, reject);
     },
 
     //头部工具栏
-    J_HeadToolButton: function (resolve, reject) {
-        Vue.prototype.pageLoad('j-headtoolbutton', 'Views/J_Components/HeadToolButton').then(resolve, reject);
+    SysHeadToolButton: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-headtoolbutton', 'Views/SysComponents/HeadToolButton').then(resolve, reject);
     },
 };
 
@@ -89,7 +89,7 @@ var initFrame = function (Vue, options) {
     // 设置全局方法或属性 (通过Vue.initGlobalAuthorized 调用 )
     Vue.initGlobalAuthorized = function (e) {
         abp.ajax({
-            url: '/J_Account/GetUserPermission',
+            url: '/SysAccount/GetUserPermission',
             async: false,
             type: 'POST'
         }).done(function (data, res, e) {
@@ -180,8 +180,6 @@ var initFrame = function (Vue, options) {
             async: false
         }).responseText;
     };
-
-
 
     /**
      * @param {any} pageOption : {

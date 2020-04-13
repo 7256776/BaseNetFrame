@@ -105,7 +105,7 @@ namespace NetCoreFrame.Web
             }
             else
             {
-                app.UseExceptionHandler("/J_Error");
+                app.UseExceptionHandler("/SysError");
             }
 
             //静态文件服务中间件(默认文件夹wwwroot)
@@ -145,7 +145,7 @@ namespace NetCoreFrame.Web
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=J_Home}/{action=index}/{id?}");
+                    template: "{controller=SysHome}/{action=index}/{id?}");
             });
 
             #region Swagger

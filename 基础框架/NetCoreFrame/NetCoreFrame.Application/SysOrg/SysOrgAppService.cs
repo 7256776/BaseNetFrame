@@ -69,7 +69,7 @@ namespace NetCoreFrame.Application
                 //获取需要更新的数据
                 SysOrg data = _sysOrgRepository.Get((Guid) model.Id);
 
-                //父节点或者OrgCode有变化则当前节点及其子节点的OrgNode也需要改变
+                //父节点ID或者OrgCode有变化则当前节点及其子节点的OrgNode也需要改变
                 if (data.ParentOrgID != model.ParentOrgID || data.OrgCode != model.OrgCode)
                 {
                     string oldOrgNode = data.OrgNode;

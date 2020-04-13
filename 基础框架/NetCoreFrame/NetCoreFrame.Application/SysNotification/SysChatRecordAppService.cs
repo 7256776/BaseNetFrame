@@ -96,11 +96,11 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 删除聊天消息
         /// </summary>
-        /// <param name="receiveUserId">接收人</param>
         /// <param name="senderUserId">发送人</param>
         /// <returns></returns>
         public async Task<bool> DeleteChatRecordAsync( long senderUserId)
         {
+            //当前登录用户
             long receiveUserId = AbpSession.UserId.Value;
             var res= await _sysChatRecordRepository.DeleteChatRecordAsync(receiveUserId, senderUserId);
             return res > 0 ? true : false;

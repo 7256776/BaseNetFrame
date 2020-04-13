@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+
+<ul class="nav navbar-nav">
+    <li class="menu-dropdown classic-menu-dropdown active">
+        <router-link to="/Views/SysHome/DesktopPage" class="nav-link nav-toggle">
+            <i class="fa fa-home fa-fw"></i>
+            <span class="title">桌面（首页）</span>
+        </router-link>
+    </li>
+    
+    <li class="menu-dropdown classic-menu-dropdown " v-for="item in menusdata" v-if="menuType=='folding'">
+        <router-link v-bind:to="toUrl(item.url)" class="nav-link">
+            <i v-bind:class="icoClass(item.icon)"></i>
+            <span class="title">{{item.displayName}} </span>
+            <!--<span class="badge badge_danger">6</span>-->
+            <!--<span class="selected"></span>-->
+            <span class="arrow " v-if="isLeaf(item.items)"></span>
+        </router-link>
+
+        <!--子菜单--> 
+        <topmenusub v-bind:menusdata="item.items" v-if="isLeaf(item.items)"></topmenusub>
+    </li>
+
+
+    <!--mega-menu-full-->
+    <li class="menu-dropdown mega-menu-dropdown " v-bind:class="isMenusColFull ? 'mega-menu-full' : ''" v-for="item in menusdata" v-if="menuType=='tile'">
+        <router-link v-bind:to="toUrl(item.url)" href='javascript:;'>
+            <i v-bind:class="icoClass(item.icon)"></i>
+            {{item.displayName}}
+            <span class="arrow " v-if="isLeaf(item.items)"></span>
+        </router-link>
+
+        <!--子菜单-->
+        <ul class="dropdown-menu" v-if="isLeaf(item.items)">
+            <li>
+                <div class="mega-menu-content">
+                    <div class="row">
+                        <div v-bind:class="getMenusColClass()" v-for='index in menusCol'>
+                            <!--子菜单内容-->
+                            <topmenufullsub v-bind:menusdata="item.items" v-bind:menusIndex="index" v-bind:menusCol="menusCol"></topmenufullsub>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </li>
+
+</ul>
+

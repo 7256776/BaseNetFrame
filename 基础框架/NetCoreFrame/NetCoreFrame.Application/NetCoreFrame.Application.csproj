@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="SysMenu\Dtos\MenusUpdata.cs" />
     <Compile Remove="SysUserAccounts\ILoginExtens.cs" />
     <Compile Remove="SysUserAccounts\LoginExtens.cs" />
   </ItemGroup>

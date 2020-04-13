@@ -132,21 +132,17 @@ namespace NetCoreFrame.Application
         public PagedResultDto<UserOut> GetUserList(RequestParam<UserOut> requestParam)
         {
             //反序列化参数对象
-         
             var model = requestParam.Params;
-
+            //
             var queue = _userInfoRepository.GetAll();
-            if (model != null && model.UserCode != null)
+            if (model != null && !string.IsNullOrEmpty(model.UserCode))
             {
-                queue = _userInfoRepository.GetAll().Where(w =>
+                queue = queue.Where(w =>
                             w.UserCode.Contains(model.UserCode) ||
                             w.UserNameCn.Contains(model.UserCode)
-                ).OrderBy(o => o.UserNameCn);
+                );
             }
-            else
-            {
-                queue = _userInfoRepository.GetAll().OrderBy(o => o.UserNameCn);
-            }
+            queue = queue.OrderBy(o => o.UserNameCn);
             //此处添加超级管理员判断
             if (AbpSession.IsAdmin)
             {
@@ -235,19 +231,17 @@ namespace NetCoreFrame.Application
                     UserInfo data = _userInfoRepository.Get(id);
                     //映射需要修改的数据对象
                     UserInfo modelInput = ObjectMapper.Map(model, data);
-
                     //提交修改
                     await _userInfoManager.UpdateAsync(modelInput);
                 }
                 //清除缓存
                 _cacheManagerExtens.RemoveUserInfoCache(id);
             }
-
+            //用户扩展信息,如有扩展字段需要重写该部分
             bool isFlag = await _userInfoExtens.UpdateUserInfo(model);
             if (!isFlag)
             {
                 throw new UserFriendlyException("用户扩展信息", "用户扩展信息保存失败!");
-
             }
             return new AjaxResponse { Success = true };
         }
@@ -271,7 +265,10 @@ namespace NetCoreFrame.Application
                     //清除缓存
                     _cacheManagerExtens.RemoveUserInfoCache(id);
                 }
-
+                else
+                {
+                    throw new UserFriendlyException("删除用户", "请勿删除当前登录用户!");
+                }
             }
         }
 
@@ -285,43 +282,49 @@ namespace NetCoreFrame.Application
         public object GetUserPermission()
         {
             List<RoleToPermissionCache> resData = new List<RoleToPermissionCache>();
+            //通过session获取当前登录用户角色集合
             List<string> roleList = AbpSession.UserRoleList;
+            #region 获取菜单以及动作按钮授权
             foreach (var item in roleList)
             {
-                //获取的是动作按钮授权
-                var permissionList = _cacheManagerExtens.GetRoleToPermissionCache(Convert.ToInt64(item));
-                    //.Where(w => !string.IsNullOrEmpty(w.PermissionName));
+                var permissionList = _cacheManagerExtens.GetRoleToPermissionCache(Convert.ToInt64(item)); //.Where(w => !string.IsNullOrEmpty(w.PermissionName));
                 foreach (var pitem in permissionList.ToList())
                 {
-                    var data = resData.Where(w =>
-                      w.MenuId == pitem.MenuId
-                     && w.HandleName == pitem.HandleName
-                      && w.PermissionName == pitem.PermissionName
-                      );
+                    //去重复
+                    var data = resData.Where(w => w.MenuId == pitem.MenuId && w.HandleName == pitem.HandleName && w.PermissionName == pitem.PermissionName);
                     if (!data.Any())
-                    {
                         resData.Add(pitem);
-                    }
                 }
             }
+            #endregion
 
+            /*
+             * RequiresAuthModel
+             *  开放模式 = 1 (不受权限控制)  
+             *  登陆模式 = 2 (所有登录用户)  
+             *  授权模式 = 3 (授权模式)  
+             */
+            #region 加载不需要授权的菜单以及动作按钮授权
             List<MenuActionPermissionCache> menuActionPermissionList = _cacheManagerExtens.GetMenuActionPermissionCache();
-            var permissionData = menuActionPermissionList  .Where(w => w.IsActive == true  && w.RequiresAuthModel!="3");
+            var permissionData = menuActionPermissionList.Where(w => w.IsActive == true && w.RequiresAuthModel != "3");
             foreach (var item in permissionData)
             {
                 var data = resData.Where(w =>
-                      (w.MenuId == item.MenuId && w.HandleName == item.MenuName && item.IsMenu && w.PermissionName == item.PermissionName) || 
+                      (w.MenuId == item.MenuId && w.HandleName == item.MenuName && item.IsMenu && w.PermissionName == item.PermissionName) ||
                       (w.MenuId == item.MenuId && w.HandleName == item.ActionName && !item.IsMenu && w.PermissionName == item.PermissionName)
                       );
                 if (!data.Any())
                 {
-                    resData.Add(new RoleToPermissionCache() {
-                        MenuName= item.MenuName,
-                        HandleName= item.IsMenu? item.MenuName: item.ActionName 
+                    resData.Add(new RoleToPermissionCache()
+                    {
+                        MenuName = item.MenuName,
+                        HandleName = item.IsMenu ? item.MenuName : item.ActionName
                     });
                 }
             }
+            #endregion
 
+            //登录用户信息
             var userData = _cacheManagerExtens.GetUserInfoCache(AbpSession.UserId.Value);
 
             return new
@@ -419,7 +422,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns>返回重置后的密码</returns>
-        [RemoteService(false)]
+        [RemoteService(false)]  //取消该函数自动编译成 WebApi 
         [AbpAuthorize("UserInfoManager.ResetPass")]
         public async Task<AjaxResponse> ResetUserPass(long id)
         {

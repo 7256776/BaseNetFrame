@@ -43,7 +43,6 @@ namespace NetCoreFrame.Core
             return ConvertMenusList(dataAll);
         }
 
-
         /// <summary>
         /// 转换根节点
         /// </summary>

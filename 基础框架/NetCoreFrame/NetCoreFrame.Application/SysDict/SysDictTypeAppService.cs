@@ -18,7 +18,6 @@ namespace NetCoreFrame.Application
         private readonly ISysDictTypeRepository _sysDicTypetRepository;
         private readonly ISysDictAppService _sysDictAppService;
 
-
         public SysDictTypeAppService(
             ISysDictTypeRepository sysDictTypeRepository,
              ISysDictAppService sysDictAppService
@@ -32,8 +31,7 @@ namespace NetCoreFrame.Application
         /// 获取字典类型数据
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")]
-        //[Authorize]
+        [AbpAuthorize("DictManager")] 
         public async Task<List<SysDictType>> GetSysDictTypeListAsync()
         {
             return await _sysDicTypetRepository.GetAllListAsync();
@@ -63,7 +61,6 @@ namespace NetCoreFrame.Application
             {
                 throw new UserFriendlyException("字典类型值重复", "您设置的字典类型值" + model.DictType + "重复!");
             }
-
             //新增或修改
             if (model.Id == null)
             {
@@ -74,14 +71,12 @@ namespace NetCoreFrame.Application
             {
                 //获取需要更新的数据
                 SysDictType data = _sysDicTypetRepository.Get((Guid)model.Id);
-
                 //映射需要修改的数据对象
                 SysDictType m = ObjectMapper.Map(model, data);
                 //提交修改
                 await _sysDicTypetRepository.UpdateAsync(m);
                 resId = model.Id;
             }
-
             //保存字典编码
             if (model.SysDictInputList != null && model.SysDictInputList.Any())
             {

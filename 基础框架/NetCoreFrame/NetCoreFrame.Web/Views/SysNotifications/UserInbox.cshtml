@@ -1,0 +1,219 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="inbox">
+
+    <div class="row">
+        <div class="col-md-3" style="padding-left:0px;padding-right:5px;">
+            <div class="inbox-sidebar" v-show="tabMenu.tabMenu1">
+                <i class="fa fa-bell fa-1x"></i>&nbsp;&nbsp;已订阅的通知 
+                @* <a href="javascript:;" data-title="Compose" class="btn red compose-btn btn-block"><i class="fa fa-edit"></i> 按钮</a>*@
+                <ul class="inbox-nav">
+                    <li class="divider"></li>
+                    <li v-bind:class="item.notificationName==tableOptions.searchTxt ? 'active' : ''" v-for="item in subscription">
+                        <a href="javascript:;" v-on:click="doSelectSubscription(item.notificationName)" data-type="inbox" data-title="Inbox">
+                            {{item.notificationDisplayName}}
+                            <span class="badge badge-warning" v-on:click="doSubDel(item.notificationName)"><b>退</b></span>
+                        </a>
+                    </li>
+                </ul>
+                <span v-show="subscriptionOut.length>0">
+                    <i class="fa fa-bell-slash fa-1x"></i>&nbsp;&nbsp;未订阅的通知
+                </span>
+                <ul class="inbox-nav">
+                    <li class="divider"></li>
+                    <li v-bind:class="item.notificationName==tableOptions.searchTxt ? 'active' : ''" v-for="item in subscriptionOut">
+                        <a href="javascript:;" v-on:click="doSelectSubscription(item.notificationName)" data-type="inbox" data-title="Inbox">
+                            {{item.notificationDisplayName}}
+                            <span class="badge badge-success" v-on:click="doSubAdd(item.notificationName)"><b>订</b></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="inbox-sidebar" v-show="tabMenu.tabMenu2">
+                <i class="fa fa-wechat fa-1x"></i>用户列表&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:;" v-on:click="getAllClients"><i class="fa fa-refresh"></i>刷新</a>
+                <ul class="inbox-contacts">
+                    <li class="divider margin-bottom-20"></li>
+                    <li v-for="item in chatData.chatUserAll">
+                        <a href="javascript:;" v-on:click="doSetCurrentUser(item)">
+                            <img class="contact-pic" v-bind:src="GlobalAuthorizedEntity.DefaultImgUrl + item.imageUrl + '_40.png'" v-bind:alt="item.imageUrl ">
+                            <span class="contact-name">{{item.userNameCn}}</span>
+                            <el-tooltip effect="dark" v-bind:content="item.isOnline?'在线':'不在线'" placement="left">
+                                <span class="contact-status " v-bind:class="item.isOnline?'bg-green':'bg-default'"></span>
+                            </el-tooltip>
+                            <span class="badge badge-success" v-if="item.chatCount>0">{{item.chatCount}}</span>
+                            <a href="javascript:;" v-on:click="doDeleteChatRecord(item.userId)"><i class="fa fa-trash-o  fa-lg"></i></a>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9" style="padding-left:0px;padding-right:0px;">
+            <div class="portlet light bordered">
+                <div class="portlet-title tabbable-line">
+                    <div class="caption caption-md">
+                        <i class="icon-globe theme-font hide"></i>
+                        <span class="caption-subject font-blue-madison bold ">{{tabMenu.tabTitle}} </span>
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active" v-on:click="doTab(0)">
+                            <a href="#tab_userNotification" data-toggle="tab">我的通知</a>
+                        </li>
+                        <li v-on:click="doTab(1)">
+                            <a href="#tab_userChat" data-toggle="tab">我的消息</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="portlet-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_userNotification">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-7" style="text-align:left;padding-bottom:3px;">
+                                    <el-button-group>
+                                        <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDel()" >删除通知</el-button>
+                                        <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doClean()" >清空通知</el-button>
+                                        <el-button size="mini" type="primary" icon="fa fa-envelope-open-o fa-lg" v-on:click="doRead()" >设置已读</el-button>
+                                    </el-button-group>
+                                </div>
+                                <div class="col-md-5 col-sm-5" style="text-align:right;">
+                                    <el-pagination background
+                                                   v-on:size-change="handleSizeChange"
+                                                   v-on:current-change="handleCurrentChange"
+                                                   v-bind:current-page="pageOptions.pageIndex"
+                                                   v-bind:page-sizes="[20, 50, 100]"
+                                                   v-bind:page-size="pageOptions.maxResultCount"
+                                                   v-bind:total="pageOptions.total"
+                                                   layout="total, prev, next">
+                                    </el-pagination>
+                                </div>
+                            </div>
+                            <el-table v-bind:data="formatData"
+                                      v-loading="tableOptions.gridLoading"
+                                      ref="dataGrid"
+                                      stripe
+                                      border
+                                      highlight-current-row
+                                      tooltip-effect="light"
+                                      style="width: 100%;"
+                                      v-on:selection-change="doRowSelectChange"
+                                      v-on:row-click="doRowclick">
+                                <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                                <el-table-column prop="state" label="状态" width="50" align="center">
+                                    <template slot-scope="scope">
+                                        <el-tooltip :content="scope.row.state==0 ?'未读':'已读'" placement="top-start">
+                                            <i class="fa fa-envelope-open-o" v-if="scope.row.state==1"></i>
+                                            <i class="fa fa-envelope" v-if="scope.row.state==0"></i>
+                                        </el-tooltip>
+                                    </template>
+                                </el-table-column>
+
+                                <el-table-column prop="formatData.Message" label="通知标题" show-overflow-tooltip width="200"></el-table-column>
+                                <el-table-column prop="formatData.NotificationDetailed" label="通知内容" show-overflow-tooltip></el-table-column>
+                                <el-table-column prop="creationTime" label="发送日期" width="180">
+                                    <template slot-scope="scope">
+                                        <span>{{abp.frameCore.format.formatDate (scope.row.creationTime,'yyyy-MM-dd hh:mm:ss')}}</span>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                            <div style="text-align:right;padding-top:3px;">
+                                <el-pagination background
+                                               v-on:size-change="handleSizeChange"
+                                               v-on:current-change="handleCurrentChange"
+                                               v-bind:current-page="pageOptions.pageIndex"
+                                               v-bind:page-sizes="[20, 50, 100]"
+                                               v-bind:page-size="pageOptions.maxResultCount"
+                                               v-bind:total="pageOptions.total"
+                                               layout="total, sizes, prev, pager, next, jumper">
+                                </el-pagination>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane " id="tab_userChat">
+                            <div class="row" >
+                                <div class="col-md-5 col-sm-4">
+                                    <div class="todo-tasklist">
+                                        <div class="row">
+                                            <div class="col-md-7 col-sm-7" style="text-align:left;padding-bottom:3px;">
+                                                <el-input placeholder="消息内容筛选" v-model="chatData.chatSearch" size="mini" style="width:180px;" v-bind:clearable="true" v-on:change="doSearchChat" >
+                                                    <el-button slot="append" icon="el-icon-search" v-on:click="doSearchChat"></el-button>
+                                                </el-input>
+                                            </div>
+                                            <div class="col-md-5 col-sm-5" style="text-align:right;">
+                                                <el-pagination background
+                                                               v-on:size-change="handleChatSizeChange"
+                                                               v-on:current-change="handleChatCurrentChange"
+                                                               v-bind:current-page="pagingChatDto.pageIndex"
+                                                               v-bind:page-sizes="[10, 20, 30]"
+                                                               v-bind:page-size="pagingChatDto.maxResultCount"
+                                                               v-bind:total="pagingChatDto.total"
+                                                               layout="total, prev, next">
+                                                </el-pagination>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="min-height:100px;">
+                                            <div class="todo-tasklist-item " v-for="item in chatData.chatContentList " v-bind:class="item.senderUserId== chatData.currentUserId?'todo-tasklist-item-border-green':'todo-tasklist-item-border-red'">
+                                                <img class="todo-userpic" v-bind:class="item.senderUserId== chatData.currentUserId?'pull-left':'pull-right'" v-bind:src="doShowUserImg(item)" style="width:27px;height:27px">
+                                                <div class="todo-tasklist-item-title " v-bind:style="item.senderUserId== chatData.currentUserId? 'text-align:left':'text-align:right'"> {{item.senderUserId== chatData.currentUserId? chatData.currentUserName : '我'}} </div>
+                                                <div class="todo-tasklist-item-text">
+                                                    {{item.chatDetailed}}
+                                                </div>
+                                                <div class="todo-tasklist-controls " v-bind:class="item.senderUserId== chatData.currentUserId?'pull-right':'pull-left'">
+                                                    <span class="todo-tasklist-date">
+                                                        <i class="fa fa-calendar"></i> {{abp.frameCore.format.formatDate (item.creationTime,'yyyy-MM-dd hh:mm:ss')}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12" style="text-align:right;">
+                                            <el-pagination background
+                                                           v-on:size-change="handleChatSizeChange"
+                                                           v-on:current-change="handleChatCurrentChange"
+                                                           v-bind:current-page="pagingChatDto.pageIndex"
+                                                           v-bind:page-sizes="[10, 20, 30]"
+                                                           v-bind:page-size="pagingChatDto.maxResultCount"
+                                                           v-bind:total="pagingChatDto.total"
+                                                           layout="sizes, jumper, prev, next">
+                                            </el-pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="todo-tasklist-devider"> </div>
+                                <div class="col-md-7 col-sm-8">
+                                        <div class="form" >
+                                            <div class="form-group" >
+                                                <div class="col-md-8 col-sm-8"  style="padding-bottom:10px;">
+                                                    <div class="todo-taskbody-user" >
+                                                        <img class="todo-userpic pull-left" v-bind:src="chatData.currentSendUserImgUrl" v-show="chatData.isShowSend">
+                                                        <span class="todo-username pull-left">{{chatData.currentUserName}}</span>
+                                                        @*<button type="button" class="todo-username-btn btn btn-circle btn-default btn-sm">&nbsp;edit&nbsp;</button>*@
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-md-4 col-sm-4">
+                                                        <div class="todo-taskbody-date pull-right">
+                                                            <button type="button" class="todo-username-btn btn btn-circle btn-default btn-sm">&nbsp; Complete &nbsp;</button>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                            <div class="form-group">
+                                                <el-input ref="txtSms" v-model="charSend.chatDetailed" type="textarea" v-bind:autosize="{ minRows: 4, maxRows: 10}" suffix-icon="fa fa-vcard fa-fw" clearable maxlength="140" show-word-limit>
+                                                </el-input>
+                                            </div>
+                                            <div class="form-actions right " style="padding:0px;">
+                                                <el-button-group v-show="chatData.isShowSend">
+                                                    <el-button type="primary" icon="fa fa-send fa-lg" v-on:click="doSendCaht()" v-bind:loading="btnLoad">&nbsp;&nbsp;发送</el-button>
+                                                </el-button-group>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

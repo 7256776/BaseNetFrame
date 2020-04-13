@@ -28,6 +28,7 @@ namespace NetCoreFrame.Application
     /// <summary>
     /// 
     /// </summary>
+    [AutoMap(typeof(SysRoleToUser))]
     public class RoleUser
     {
         /// <summary>
@@ -61,6 +62,9 @@ namespace NetCoreFrame.Application
         /// </summary>
         public List<RoleUser> RoleInUser { get; set; }
 
+        /// <summary>
+        /// 角色关联的用户
+        /// </summary>
         public List<SysRoleToUser> SysRoleToUser { get; set; }
 
     }

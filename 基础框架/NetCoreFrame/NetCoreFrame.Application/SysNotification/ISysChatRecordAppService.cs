@@ -42,7 +42,6 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 删除聊天消息
         /// </summary>
-        /// <param name="receiveUserId">接收人</param>
         /// <param name="senderUserId">发送人</param>
         /// <returns></returns>
         Task<bool> DeleteChatRecordAsync(long senderUserId);

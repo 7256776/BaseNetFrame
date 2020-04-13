@@ -11,8 +11,6 @@ namespace NetCoreFrame.Core
         /// <returns></returns>
         List<RoleToPermissionCache> GetRoleToPermissionCache(long roleId);
 
-        List<RoleToPermissionCache> GetRoleToPermissionCache1(long roleId, List<RoleToPermissionCache> list);
-
         /// <summary>
         /// 移除指定角色的授权
         /// </summary>

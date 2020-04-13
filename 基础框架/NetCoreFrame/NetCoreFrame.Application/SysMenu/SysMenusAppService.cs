@@ -59,9 +59,8 @@ namespace NetCoreFrame.Application
         [AbpAuthorize]
         public List<MenusOut> GetMenusListOrderBy(long? roleId = null)
         {
-            //获取所有菜单模块
-            List<SysMenus> dataAll1 = _sysMenusRepository.GetMenusAll().ToList();
-            List<SysMenus> dataAll = _sysMenusRepository.GetAllIncluding(x => x.SysMenuActions).ToList();
+            //查询相关子表数据
+            List<SysMenus> dataAll= _sysMenusRepository.GetAllIncluding(x => x.SysMenuActions).ToList();
             if (roleId != null)
             {
                 //获取当前角色的包含的菜单
@@ -70,17 +69,14 @@ namespace NetCoreFrame.Application
                 foreach (var item in dataAll)
                 {
                     var data = roleToMenuAction.Where(p => p.MenuID == item.Id);
-                    if (data.Any())
+                    if (!data.Any())
+                        continue;
+                    item.IsCheck = true;
+                    foreach (var subAction in item.SysMenuActions)
                     {
-                        item.IsCheck = true;
-                        foreach (var subAction in item.SysMenuActions)
-                        {
-                            var action = roleToMenuAction.Where(p => p.MenuID == item.Id && p.MenuActionID == subAction.Id);
-                            if (action.Any())
-                            {
-                                subAction.IsCheck = true;
-                            }
-                        }
+                        var action = roleToMenuAction.Where(p => p.MenuID == item.Id && p.MenuActionID == subAction.Id);
+                        if (action.Any())
+                            subAction.IsCheck = true;
                     }
                 }
             }
@@ -110,50 +106,43 @@ namespace NetCoreFrame.Application
         public  AjaxResponse SaveMenusModel(MenusInput model)
         {
             long resId;
+            #region 验证
             MenuData menuData = ObjectMapper.Map<MenuData>(model);
             var isRepeat = IsPermissionRepeat(menuData);
             if (isRepeat)
             {
                 throw new UserFriendlyException("菜单授权名称重复", "您设置的授权名称"+ model.PermissionName + "重复!");
             }
-
+            #endregion
             if (model.Id == null)
             {
+                #region 新增
                 SysMenus modelInput = ObjectMapper.Map<SysMenus>(model);
                 resId =  _sysMenusRepository.InsertAndGetId(modelInput);
+                #endregion
             }
             else
             {
-
-                MenusUpdata modelInput = ObjectMapper.Map<MenusUpdata>(model);
+                #region 编辑
                 long id = Convert.ToInt64(model.Id);
                 //获取需要更新的数据
                 SysMenus data = _sysMenusRepository.Get(id);
                 //映射需要修改的数据对象
-                SysMenus m = ObjectMapper.Map(modelInput, data);
+                SysMenus sysMenus = ObjectMapper.Map(model, data);
+                //清空映射对象中的子表集合(子表集合单独处理,不采用EF的循环调整对象的方式)
+                sysMenus.SysMenuActions.Clear();
                 //修改动作明细数据
                 List<SysMenuAction> menuActionList = ObjectMapper.Map<List<SysMenuAction>>(model.SysMenuActions);
-
-                if (menuActionList!=null && menuActionList.Any())
-                {
-                    _sysMenuActionRepository.UpdataMenusAction(menuActionList, id);
-                }
-                else
-                {
-                    //如果保存时候未发现有设置的动作列表就清除掉原有的动作
-                    _sysMenuActionRepository.DelMenusAction(id);
-                }
+                _sysMenuActionRepository.UpdataMenusAction(menuActionList, id); 
                 //修改菜单主数据
-                var resModel =  _sysMenusRepository.Update(m);
+                var resModel =  _sysMenusRepository.Update(sysMenus);
                 resId = resModel.Id;
+                #endregion
             }
-
             //清除模块缓存
             _cacheManagerExtens.RemoveMenuActionPermissionCache();
-
             //重置初始菜单以及授权
             _navigationMenusExt.UpNavigationMenusProvider(ObjectMapper.Map<SysMenus>(model));
-            
             return new AjaxResponse { Success = true, Result = new { id = resId } };
         }
 
@@ -182,17 +171,15 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 查询授权是否重复
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">
+        /// 必须包含参数 授权名称PermissionName; 菜单Id
+        /// </param>
         /// <returns></returns>
         [AbpAuthorize]
         public bool IsPermissionRepeat(MenuData model)
         {
             var data = _sysMenusRepository.FirstOrDefault(w => w.PermissionName == model.PermissionName && w.Id != model.Id);
-            if (data != null)
-            {
-                return true;
-            }
-            return false;
+            return data != null ? true : false;
         }
 
 

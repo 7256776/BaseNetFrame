@@ -20,7 +20,7 @@ namespace NetCoreFrame.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+         
             #region 菜单
 
             #region 菜单id
@@ -43,7 +43,7 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuSysId,
                     ParentID = null,
                     MenuDisplayName = "系统设置",
-                    MenuName = "j-sys",
+                    MenuName = "sys-config",
                     PermissionName = "",
                     RequiresAuthModel = "1",
                     Url = "",
@@ -57,10 +57,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuMenusId,
                     ParentID = menuSysId,
                     MenuDisplayName = "菜单管理",
-                    MenuName = "j-menus",
+                    MenuName = "sys-menus",
                     PermissionName = "MenusManager",
                     RequiresAuthModel = "3",
-                    Url = "/Views/J_Menus/Index",
+                    Url = "/Views/SysMenus/Index",
                     Icon = "fa-list-ol",
                     OrderBy = 1,
                     IsActive = true
@@ -71,10 +71,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuUserId,
                     ParentID = menuSysId,
                     MenuDisplayName = "用户管理",
-                    MenuName = "j-account",
+                    MenuName = "sys-account",
                     PermissionName = "UserInfoManager",
                     RequiresAuthModel = "3",
-                    Url = "/Views/J_Account/index",
+                    Url = "/Views/SysAccount/index",
                     Icon = "fa-users",
                     OrderBy = 2,
                     IsActive = true
@@ -85,10 +85,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuRoleId,
                     ParentID = menuSysId,
                     MenuDisplayName = "角色管理",
-                    MenuName = "j-roles",
+                    MenuName = "sys-roles",
                     PermissionName = "RoleManager",
                     RequiresAuthModel = "3",
-                    Url = "/Views/J_Role/Index",
+                    Url = "/Views/SysRole/Index",
                     Icon = "fa-vcard",
                     OrderBy = 3,
                     IsActive = true
@@ -99,10 +99,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuNotificationsId,
                     ParentID = menuSysId,
                     MenuDisplayName = "消息通知",
-                    MenuName = "j-notifications",
+                    MenuName = "sys-notifications",
                     PermissionName = "NotificationsManager",
                     RequiresAuthModel = "3",
-                    Url = "/Views/J_Notifications/Index",
+                    Url = "/Views/SysNotifications/Index",
                     Icon = "fa-bullhorn",
                     OrderBy = 5,
                     IsActive = true
@@ -113,10 +113,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuAuditlogsId,
                     ParentID = menuSysId,
                     MenuDisplayName = "日志管理",
-                    MenuName = "j-auditlogs",
+                    MenuName = "sys-auditlogs",
                     PermissionName = "LogManager",
                     RequiresAuthModel = "3",
-                    Url = "/Views/J_AuditLogs/Index",
+                    Url = "/Views/SysAuditLogs/Index",
                     Icon = "fa-book",
                     OrderBy = 7,
                     IsActive = true
@@ -127,10 +127,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuOrgId,
                     ParentID = menuSysId,
                     MenuDisplayName = "组织机构",
-                    MenuName = "j-org",
+                    MenuName = "sys-org",
                     PermissionName = "OrgManager",
                     RequiresAuthModel = "2",
-                    Url = "/Views/J_Org/Index",
+                    Url = "/Views/SysOrg/Index",
                     Icon = "fa-university",
                     OrderBy = 6,
                     IsActive = true
@@ -141,10 +141,10 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuDictId,
                     ParentID = menuSysId,
                     MenuDisplayName = "字典管理",
-                    MenuName = "j-dict",
+                    MenuName = "sys-dict",
                     PermissionName = "DictManager",
                     RequiresAuthModel = "3",
-                    Url = "/Views/J_Dict/Index",
+                    Url = "/Views/SysDict/Index",
                     Icon = "fa-bookmark",
                     OrderBy = 7,
                     IsActive = true

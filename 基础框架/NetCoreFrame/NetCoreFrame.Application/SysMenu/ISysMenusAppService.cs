@@ -44,7 +44,7 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 查询授权是否重复
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">必须包含参数 授权名称PermissionName; 菜单Id</param>
         /// <returns></returns>
         bool IsPermissionRepeat(MenuData model);
 

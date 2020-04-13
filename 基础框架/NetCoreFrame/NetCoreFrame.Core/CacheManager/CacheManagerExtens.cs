@@ -63,29 +63,15 @@ namespace NetCoreFrame.Core
         /// <returns></returns>
         public List<RoleToPermissionCache> GetRoleToPermissionCache(long roleId)
         {
-            //没发现与下面方式有嘛区别(注释下)
-            //ITypedCache<string, List<SysMenus>> myCache = _cacheManager.GetCache(MenuCacheName).AsTyped<string, List<SysMenus>>();
-            //List<SysMenus> sss = myCache.Get(n, () => GetMenuAll());
+            //另一种写法(注释下)
+            //ITypedCache<string, List<RoleToPermissionCache>> myCache = _cacheManager.GetCache(ROLE_PERMISSION).AsTyped<string, List<RoleToPermissionCache>>();
+            //List<RoleToPermissionCache> roleToPermissionList = myCache.Get(roleId.ToString(), () => _sysRolesRepository.GetRoleToMenuActions(roleId));
 
             return _cacheManager
                      .GetCache<string, List<RoleToPermissionCache>>(ROLE_PERMISSION)
                      .Get(roleId.ToString(), () =>
                      {
                          return _sysRolesRepository.GetRoleToMenuActions(roleId);
-                     });
-        }
-
-        public List<RoleToPermissionCache> GetRoleToPermissionCache1(long roleId , List<RoleToPermissionCache> list)
-        {
-            //没发现与下面方式有嘛区别(注释下)
-            //ITypedCache<string, List<SysMenus>> myCache = _cacheManager.GetCache(MenuCacheName).AsTyped<string, List<SysMenus>>();
-            //List<SysMenus> sss = myCache.Get(n, () => GetMenuAll());
-
-            return _cacheManager
-                     .GetCache<string, List<RoleToPermissionCache>>(ROLE_PERMISSION)
-                     .Get(roleId.ToString(), () =>
-                     {
-                         return list;
                      });
         }
 

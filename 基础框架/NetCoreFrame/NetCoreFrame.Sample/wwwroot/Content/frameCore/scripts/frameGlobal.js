@@ -403,44 +403,44 @@ var globalVue = new Vue({
     var frameRoutesList = [
         {
             //首页
-            path: '/Views/J_Home/DesktopPage',
-            name: 'j-home',
+            path: '/Views/SysHome/DesktopPage',
+            name: 'sys-home',
             //meta: {
             //    menuData: [{
-            //        url: '/Views/J_Home/DesktopPage',
+            //        url: '/Views/SysHome/DesktopPage',
             //        displayName: '首页'
             //    }]
             //}
         },
         {
             //我的设置
-            path: '/Views/J_Account/UserSettings',
-            name: 'j-usersetting',
+            path: '/Views/SysAccount/UserSettings',
+            name: 'sys-usersetting',
             meta: {
                 menuData: [{
-                    url: '/Views/J_Account/UserSettings',
+                    url: '/Views/SysAccount/UserSettings',
                     displayName: '我的设置'
                 }]
             }
         },
         {
             //我的收件箱
-            path: '/Views/J_Notifications/UserInbox',
-            name: 'j-userinbox',
+            path: '/Views/SysNotifications/UserInbox',
+            name: 'sys-userinbox',
             meta: {
                 menuData: [{
-                    url: '/Views/J_Notifications/UserInbox',
+                    url: '/Views/SysNotifications/UserInbox',
                     displayName: '我的收件箱'
                 }]
             }
         },
         {
             //搜索结果页
-            path: '/Views/J_Components/SearchPage',
-            name: 'j-searchpage',
+            path: '/Views/SysComponents/SearchPage',
+            name: 'sys-searchpage',
             meta: {
                 menuData: [{
-                    url: '/Views/J_Components/SearchPage',
+                    url: '/Views/SysComponents/SearchPage',
                     displayName: '搜索结果页'
                 }]
             }
@@ -574,10 +574,8 @@ $(function () {
             abp.frameCore.notifications.showUiNotifications(userNotification);
 
             //触发所有注册了(frame.received.ui.event)的事件
-            //加个延时测试
-            setInterval(function () {
-                abp.event.trigger('frame.received.ui.event');
-            }, 1000);
+            //延时测试   setInterval(function () { }, 1000);
+            abp.event.trigger('frame.received.ui.event');
         } else if (notification.data.notificationType === "chat") {
             //触发所有注册了(frame.received.chat.event)的事件
             abp.event.trigger('frame.received.chat.event', userNotification);

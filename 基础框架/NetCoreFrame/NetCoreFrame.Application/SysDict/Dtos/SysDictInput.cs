@@ -37,6 +37,6 @@ namespace NetCoreFrame.Application
         /// </summary>	 
         public bool IsActive { get; set; }
 
-        public string EditState { get; set; }
+        public string EditState { get; set; } = "";
     }
 }

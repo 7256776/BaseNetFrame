@@ -1,5 +1,5 @@
 ﻿
-Vue.component('j-webtitle', {
+Vue.component('sys-webtitle', {
     template: "<div>"+
         "<span style=\"margin-left: 60px;\">框架示例</span>" +  
         "</div>",

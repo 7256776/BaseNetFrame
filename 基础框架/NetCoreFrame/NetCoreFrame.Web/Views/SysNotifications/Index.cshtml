@@ -1,0 +1,233 @@
+﻿@{
+    Layout = null;
+}
+ 
+<div class="row">
+    <div class="col-md-12" style="padding-left:0px;padding-right:5px;">
+        <div class="todo-ui"> 
+            <div class="todo-sidebar" style="margin-right:5px;border:0px solid #DCDFE6;">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
+                            <span class="caption-subject font-green-sharp bold uppercase ">通知分类 </span>
+                            <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">新增通知分类</span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <a class="btn green btn-circle btn-outline btn-sm todo-projects-config" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    设置 &nbsp;<i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a v-on:click="doAddSubscription"><i class="fa fa fa-file-text-o fa-lg"></i>新增通知</a>
+                                    </li>
+                                    <li>
+                                        <a v-on:click="doDelSubscription"><i class="fa fa-trash-o fa-lg"></i>删除通知</a>
+                                    </li>
+                                    <li class="divider"> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body todo-project-list-content" style="min-height:300px">
+                        <div class="todo-project-list">
+                            <ul class="nav nav-stacked">
+                                <li v-for="item in notificationsData" v-bind:class="item.id==formData.id ? 'active' : ''">
+                                    <a v-on:click="doNotificationsClick(item.id)">
+                                        <i class="fa fa-bell-o fa-lg"></i>
+                                        {{item.notificationDisplayName}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="todo-content" style="border:1px solid #DCDFE6;">
+                <div class="profile-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title tabbable-line">
+                                    <div class="caption caption-md">
+                                        <i class="icon-globe theme-font hide"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">通知管理</span>
+                                    </div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_subscriptions" data-toggle="tab">通知设置</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_radioSends" data-toggle="tab">通知广播</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_subscriptions">
+                                            <el-form v-bind:model="formData"
+                                                     v-bind:rules="formRules"
+                                                     ref="formNotificationData"
+                                                     label-position="top"
+                                                     v-bind:inline="true"
+                                                     v-bind:status-icon="true"
+                                                     label-suffix=":"
+                                                     label-width="100px">
+
+                                                <el-form-item label="通知名称" prop="notificationDisplayName" style="width:32%;">
+                                                    <el-input v-model="formData.notificationDisplayName" style="width:100%;" suffix-icon="fa fa-commenting-o fa-fw" clearable v-bind:maxlength="30">
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="类型名称" prop="notificationName" style="width:32%;">
+                                                    <el-input v-model="formData.notificationName" style="width:100%;" suffix-icon="fa fa-commenting fa-fw" clearable v-bind:maxlength="50" >
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="通知类型" prop="notificationType" style="width:31%;">
+                                                    <el-select v-model="formData.notificationType" placeholder="请选择通知类型" style="width:100%;">
+                                                        <el-option label="提示消息" value="sms"> </el-option>
+                                                        <el-option label="其他" value="other"> </el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                                <el-form-item label="通知描述" prop="notificationDescribe" style="width:97%;">
+                                                    <el-input v-model="formData.notificationDescribe" style="width:100%;" suffix-icon="fa fa-file-code-o fa-fw" clearable v-bind:maxlength="100">
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="" prop="" style="width:97%;text-align: right;">
+                                                    <el-button-group>
+                                                        <el-button type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveSubscription()">&nbsp;&nbsp;保存</el-button>
+                                                    </el-button-group>
+                                                </el-form-item>
+                                                <!--重置表单时一并清空-->
+                                                <el-form-item label="" prop="id" v-show="false">
+                                                </el-form-item>
+                                            </el-form>
+                                            <hr />
+                                            <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+                                                <div class="row">
+                                                    <div class="col-md-9 ">
+                                                        <el-button-group>
+                                                            <el-tooltip content="设置下列被勾选用户订阅的通知" placement="top">
+                                                                <el-button type="primary" icon="fa fa-bell fa-lg" v-on:click="doSubAdd()" plain>&nbsp;&nbsp;订阅通知</el-button>
+                                                            </el-tooltip>
+                                                            <el-tooltip content="取消下列被勾选用户订阅的通知" placement="top">
+                                                                <el-button type="primary" icon="fa fa-bell-slash fa-lg" v-on:click="doSubDel()" plain>&nbsp;取消订阅</el-button>
+                                                            </el-tooltip>
+                                                        </el-button-group>
+                                                    </div>
+                                                    <div class="col-md-3 ">
+                                                        <el-input placeholder="用户账号/名称 筛选" clearable prefix-icon="el-icon-search"  v-model="tableOptions.searchTxt">
+                                                        </el-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <el-table v-bind:data="searchGrid"
+                                                      ref="dataGrid"
+                                                      stripe
+                                                      border
+                                                      highlight-current-row
+                                                      tooltip-effect="light"
+                                                      style="width: 100%"
+                                                      v-on:selection-change="doRowSelectChange"
+                                                      v-on:row-click="doRowclick">
+                                                <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                                                <el-table-column prop="imageUrl" label="用户" width="50" >
+                                                    <template slot-scope="scope">
+                                                        <img v-bind:src="formatUserImg(scope.row)" v-bind:alt="scope.row.userCode" style="height:28px;width:28px;" />
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column prop="userCode" label="用户账号">
+                                                </el-table-column>
+                                                <el-table-column prop="userNameCn" label="用户名称">
+                                                </el-table-column>
+                                                <el-table-column prop="notificationName" label="是否订阅">
+                                                    <template slot-scope="scope">
+                                                        <el-tooltip :content="scope.row.isSubscription?'订阅':'未订阅'" placement="right">
+                                                            <el-switch v-model="scope.row.isSubscription"
+                                                                       v-on:change="scope.row.isSubscription ? doSubAdd(scope.row) : doSubDel(scope.row)"
+                                                                       content="订阅"
+                                                                       placement="top"
+                                                                       active-color="#13ce66"
+                                                                       inactive-color="#666">
+                                                            </el-switch>
+                                                        </el-tooltip>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                        </div>
+                                        <div class="tab-pane" id="tab_radioSends">
+                                            <el-form v-bind:model="formSendData"
+                                                     v-bind:rules="formRules"
+                                                     ref="formSendNotificationData"
+                                                     label-position="top"
+                                                     v-bind:inline="true"
+                                                     v-bind:status-icon="true"
+                                                     label-suffix=":"
+                                                     label-width="100px">
+
+                                                <el-form-item label="通知类型" prop="notificationNameList" style="width:70%;">
+                                                    <el-select v-model="formSendData.notificationNameList" multiple placeholder="请选择通知类型" style="width:100%;">
+                                                        <el-option v-for="item in notificationsData"
+                                                                   :key="item.id"
+                                                                   :label="item.notificationDisplayName"
+                                                                   :value="item.notificationName">
+                                                        </el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                                <el-form-item label="通知标题" prop="notificationTitle" style="width:70%;">
+                                                    <el-input v-model="formSendData.notificationTitle" suffix-icon="fa fa-commenting-o fa-fw" clearable>
+                                                        <el-select v-model="formSendData.severity" slot="prepend" placeholder="请选择" style="width:100px;">
+                                                            <el-option label="普通" value="0">
+                                                                <span style="float: left;color:#909399;font-size:16pt;" class="el-icon-info"></span>&nbsp;&nbsp;
+                                                                <span style="float: right; color: #8492a6; font-size: 14px">普通</span>
+                                                            </el-option>
+                                                            <el-option label="完成" value="1">
+                                                                <span style="float: left;color:#67C23A;font-size:16pt;" class="el-icon-success"></span>&nbsp;&nbsp;
+                                                                <span style="float: right; color: #8492a6; font-size: 14px">完成</span>
+                                                            </el-option>
+                                                            <el-option label="警告" value="2">
+                                                                <span style="float: left;color:#E6A23C;font-size:16pt;" class="el-icon-warning"></span>&nbsp;&nbsp;
+                                                                <span style="float: right; color: #8492a6; font-size: 14px">警告</span>
+                                                            </el-option>
+                                                            <el-option label="错误" value="3">
+                                                                <span style="float: left;color:#F77D6C;font-size:16pt;" class="el-icon-error"></span>&nbsp;&nbsp;
+                                                                <span style="float: right; color: #8492a6; font-size: 14px">错误</span>
+                                                            </el-option>
+                                                        </el-select>
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="通知内容" prop="notificationContent" style="width:70%;">
+                                                    <el-input v-model="formSendData.notificationContent" type="textarea" v-bind:autosize="{ minRows: 2, maxRows: 4}" suffix-icon="fa fa-vcard fa-fw" clearable>
+                                                    </el-input>
+                                                </el-form-item>
+                                                <el-form-item label="接收人(默认不选择接收人直接送到所有人)" prop="recipient" style="width:70%;">
+                                                    <el-select v-model="formSendData.recipient"
+                                                               placeholder="请选择接收人(默认不选择接收人直接送到所有人)"
+                                                               multiple
+                                                               filterable
+                                                               style="width:100%;">
+                                                        <el-option v-for="item in tableOptions.tableData"
+                                                                   :key="item.userId"
+                                                                   :label="item.userNameCn"
+                                                                   :value="item.userId">
+                                                        </el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                                <el-form-item style="width:70%;text-align: right;">
+                                                    <el-button-group>
+                                                        <el-button type="primary" icon="fa fa-send fa-lg" v-on:click="doSend()">&nbsp;&nbsp;发送</el-button>
+                                                    </el-button-group>
+                                                </el-form-item>
+                                            </el-form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

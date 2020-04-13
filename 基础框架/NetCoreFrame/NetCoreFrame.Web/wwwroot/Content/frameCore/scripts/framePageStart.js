@@ -13,15 +13,15 @@ var vueApp = new Vue({
     el: '#app',
     components: {
         //模板页添加自定义容器通过重写组件注入
-        initpage: componentAssemble.J_InitPage,
-        sidemenu: componentAssemble.J_SideMenu,
-        quicksidebar: componentAssemble.J_QuickSideBar,
-        toptoolsmenu: componentAssemble.J_TopToolsMenu,
-        topmenu: componentAssemble.J_TopMenu,
-        searchform: componentAssemble.J_SearchForm,
-        searchdropdown: componentAssemble.J_SearchDropdown,
-        webtitle: componentAssemble.J_WebTitle,
-        headtoolbutton: componentAssemble.J_HeadToolButton
+        initpage: componentAssemble.SysInitPage,
+        sidemenu: componentAssemble.SysSideMenu,
+        quicksidebar: componentAssemble.SysQuickSideBar,
+        toptoolsmenu: componentAssemble.SysTopToolsMenu,
+        topmenu: componentAssemble.SysTopMenu,
+        searchform: componentAssemble.SysSearchForm,
+        searchdropdown: componentAssemble.SysSearchDropdown,
+        webtitle: componentAssemble.SysWebTitle,
+        headtoolbutton: componentAssemble.SysHeadToolButton
     },
     data: function () {
         return {
@@ -141,7 +141,7 @@ var vueApp = new Vue({
         },
         getMenuList: function () {
             var _this = this;
-            abp.ajax({ url: '/J_Home/MenuList', }).done(function (data) {
+            abp.ajax({ url: '/SysHome/MenuList', }).done(function (data) {
                 if (data) {
                     _this.menusData = data.items;
                 }

@@ -74,7 +74,7 @@ namespace NetCoreFrame.Application
             roleToUSer.RoleNotUser= ObjectMapper.Map<List<UserOut>>(userAll.ToList()); 
             //查询授权用户集合
             var inData = _sysRolesRepository.GetRoleToUSer(roleId);
-            roleToUSer.RoleInUser = ObjectMapper.Map<List<RoleUser>>(inData); 
+            roleToUSer.RoleInUser = ObjectMapper.Map<List<RoleUser>>(inData.ToList()); 
             return roleToUSer;
         }
 
@@ -158,7 +158,7 @@ namespace NetCoreFrame.Application
         {
             //删除原有授权
             _sysRolesRepository.DelRoleToUser(model.RoleID);
-
+            
             if (model.RoleToUserList==null || !model.RoleToUserList.Any())
             {
                 //未设置授权用户直接返回
@@ -173,6 +173,6 @@ namespace NetCoreFrame.Application
             }
             return new AjaxResponse { Success = true };
         }
-
+ 
     }
 }

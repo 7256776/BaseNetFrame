@@ -89,14 +89,12 @@ namespace NetCoreFrame.Core
             //return base.Context.Database.ExecuteSqlCommandAsync(sqlStr.ToString(), parameters);
             #endregion
 
-
             StringBuilder sqlStr = new StringBuilder();
             sqlStr.Append("DELETE FROM   Sys_ChatRecord ");
             sqlStr.Append("WHERE ");
             sqlStr.Append($"(SenderUserId =  '{senderUserId}'  AND ReceiveUserId = '{receiveUserId}' AND SendOrReceive = '2') ");
             sqlStr.Append(" OR  ");
             sqlStr.Append($"(SenderUserId = '{receiveUserId}'    AND ReceiveUserId = '{senderUserId}' AND SendOrReceive = '1') ");
-
             return base.Context.Database.ExecuteSqlCommandAsync(sqlStr.ToString());
             //return Task.FromResult(1);
         }

@@ -79,7 +79,9 @@ namespace NetCoreFrame.Application
         }
 
         /// <summary>
-        ///  查询订阅该通知的用户
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// IsSubscription = true 订阅 
+        /// IsSubscription = false 为订阅
         /// </summary>
         /// <param name="notificationInfo"></param>
         /// <returns></returns>

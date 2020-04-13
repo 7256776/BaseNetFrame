@@ -26,17 +26,27 @@ namespace NetCoreFrame.Core
         {
             foreach (var m in modelList)
             {
-              base.Insert(m);
+                base.Insert(m);
             }
         }
 
         /// <summary>
         /// 更新动作列表
+        /// 1.modelList 为空 将移除所有该模块动作数据
+        /// 2.新增修改不会调整原有数据主键ID
+        /// 3.modelList 集合的数据中数据库不存在将进行删除
         /// </summary>
         /// <param name="modelList"></param>
         /// <param name="menuId"></param>
         public void UpdataMenusAction(List<SysMenuAction> modelList, long menuId)
         {
+            //如果没有集合就清空原有数据
+            if (modelList == null || !modelList.Any())
+            {
+                DelMenusAction(menuId);
+                return;
+            }
+           
             //首先新增
             foreach (var m in modelList)
             {
@@ -44,7 +54,7 @@ namespace NetCoreFrame.Core
             }
             //读取数据
             var delList = base.GetAll().Where(p => p.MenuID == menuId).ToList();
-            //判断删除
+            //判断删除(数据库存在但是页面没有传递的对象将被删除,避免导致数据主键Id变更的情况)
             foreach (var delItem in delList)
             {
                 var isDel = modelList.Where(w => w.Id == delItem.Id);

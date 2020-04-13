@@ -14,7 +14,6 @@ namespace NetCoreFrame.Application
     public class SysDictAppService : NetCoreFrameApplicationBase, ISysDictAppService
     {
         private readonly ISysDictRepository _sysDictRepository;
-     
 
         public SysDictAppService(
             ISysDictRepository sysDictRepository
@@ -63,7 +62,7 @@ namespace NetCoreFrame.Application
             {
                 foreach (var item in listSysDict)
                 {
-                    if (item.EditState.ToUpper() != "MODIFY" && item.EditState.ToUpper() != "ADD")
+                    if (string.IsNullOrEmpty(item.EditState) && item.EditState.ToUpper() != "MODIFY" && item.EditState.ToUpper() != "ADD")
                         continue;
                     if (CheckDictCode(item))
                     {
@@ -77,9 +76,11 @@ namespace NetCoreFrame.Application
                     else
                     {
                         var submitData = _sysDictRepository.Get(item.Id.Value);
-                        SysDict model = ObjectMapper.Map<SysDict>(submitData);
+                        //映射需要修改的数据对象
+                        SysDict model = ObjectMapper.Map(item, submitData);
                         await _sysDictRepository.UpdateAsync(model);
                     }
+                    UnitOfWorkManager.Current.SaveChanges();
                 }
             }
 
@@ -129,7 +130,6 @@ namespace NetCoreFrame.Application
             {
                 return new AjaxResponse { Success = true, Result = 0 };
             }
-
             foreach (var item in childrenList)
             {
                 _sysDictRepository.Delete(item.Id);

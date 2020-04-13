@@ -18,7 +18,7 @@ namespace NetCoreFrame.Web
             LoginPath = loginPath;
         }
 
-        public string LoginPath { get; set; } = "/J_Login/Login";
+        public string LoginPath { get; set; } = "/SysLogin/Login";
 
       
     }

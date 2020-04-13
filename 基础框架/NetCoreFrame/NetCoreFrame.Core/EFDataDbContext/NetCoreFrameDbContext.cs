@@ -110,22 +110,20 @@ namespace NetCoreFrame.Core
             #region NotificationSubscriptionInfo To SYS_NOTIFICATIONSUBSCRIPTIONS
             var NotificationSubscriptionInfoContext = modelBuilder.Entity<NotificationSubscriptionInfo>().ToTable(ToDBAttributeCase("Sys_NotificationSubscriptions"));
             NotificationSubscriptionInfoContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-            NotificationSubscriptionInfoContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
-            NotificationSubscriptionInfoContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
             NotificationSubscriptionInfoContext.Property(p => p.TenantId).HasColumnName(ToDBAttributeCase("TenantId"));
             NotificationSubscriptionInfoContext.Property(p => p.UserId).HasColumnName(ToDBAttributeCase("UserId"));
             NotificationSubscriptionInfoContext.Property(p => p.NotificationName).HasColumnName(ToDBAttributeCase("NotificationName"));
             NotificationSubscriptionInfoContext.Property(p => p.EntityTypeName).HasColumnName(ToDBAttributeCase("EntityTypeName"));
             NotificationSubscriptionInfoContext.Property(p => p.EntityTypeAssemblyQualifiedName).HasColumnName(ToDBAttributeCase("EntityTypeAssemblyName"));
             NotificationSubscriptionInfoContext.Property(p => p.EntityId).HasColumnName(ToDBAttributeCase("EntityId"));
+            NotificationSubscriptionInfoContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            NotificationSubscriptionInfoContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
             #endregion
 
             #region TenantNotificationInfo To SYS_NOTIFICATIONSTOTENANT
 
             var TenantNotificationInfoContext = modelBuilder.Entity<TenantNotificationInfo>().ToTable(ToDBAttributeCase("Sys_NotificationsToTenant"));
             TenantNotificationInfoContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-            TenantNotificationInfoContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
-            TenantNotificationInfoContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
             TenantNotificationInfoContext.Property(p => p.TenantId).HasColumnName(ToDBAttributeCase("TenantId"));
             TenantNotificationInfoContext.Property(p => p.NotificationName).HasColumnName(ToDBAttributeCase("NotificationName"));
             TenantNotificationInfoContext.Property(p => p.Data).HasColumnName(ToDBAttributeCase("Data"));
@@ -134,6 +132,8 @@ namespace NetCoreFrame.Core
             TenantNotificationInfoContext.Property(p => p.EntityTypeAssemblyQualifiedName).HasColumnName(ToDBAttributeCase("EntityTypeAssemblyName"));
             TenantNotificationInfoContext.Property(p => p.EntityId).HasColumnName(ToDBAttributeCase("EntityId"));
             TenantNotificationInfoContext.Property(p => p.Severity).HasColumnName(ToDBAttributeCase("Severity"));
+            TenantNotificationInfoContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            TenantNotificationInfoContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
 
             #endregion
 
@@ -231,7 +231,8 @@ namespace NetCoreFrame.Core
             #endregion
 
             #endregion
-             
+
+
             base.OnModelCreating(modelBuilder);
         }
 

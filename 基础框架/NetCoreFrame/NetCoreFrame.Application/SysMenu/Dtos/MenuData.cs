@@ -12,12 +12,12 @@ namespace NetCoreFrame.Application
     {
 
         /// <summary>
-        /// 主键
+        /// 主键(用于映射模块表ID)
         /// </summary>	 
         public long? Id { get; set; }
 
         /// <summary>
-        /// 模块主键
+        /// 模块主键ID
         /// </summary>	 
         public long? MenuID { get; set; }
 

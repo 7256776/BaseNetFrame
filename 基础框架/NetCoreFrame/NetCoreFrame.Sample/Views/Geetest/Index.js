@@ -3,7 +3,7 @@ var component = Vue.component('geetest-test', {
     template: Vue.frameTemplate('Geetest/Index'),
     components: {
         "geetest-plug": sampleAssemble.GeetestPlug,
-        jsonformat: componentAssemble.J_JsonFormat
+        jsonformat: componentAssemble.SysJsonFormat
     },
     created: function () {
     },

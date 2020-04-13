@@ -18,6 +18,7 @@
     <Compile Remove="Class1.cs" />
     <Compile Remove="Migrations\20200103023709_init.cs" />
     <Compile Remove="Migrations\Configuration.cs" />
+    <Compile Remove="Migrations\InitDataBase.cs" />
     <Compile Remove="SeedData\DefaultFrameDB.cs" />
     <Compile Remove="SeedData\SeedHelper.cs" />
   </ItemGroup>

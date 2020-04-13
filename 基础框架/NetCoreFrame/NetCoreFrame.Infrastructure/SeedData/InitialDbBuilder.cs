@@ -13,9 +13,8 @@ namespace NetCoreFrame.Infrastructure
     {
         /// <summary>
         ///   执行命令
-        ///   1. Add-Migration init                 (如需撤销该操作 Remove-Migration)
-        ///   2. Add-Migration InitDataBase
-        ///   3. Update-Database -Verbose
+        ///   1. Add-Migration InitDataBase                init生成的类名称后缀,前缀是日期表示 (如需撤销该操作 Remove-Migration)
+        ///   2. Update-Database -Verbose
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
@@ -30,7 +29,7 @@ namespace NetCoreFrame.Infrastructure
 
             builder.UseSqlServer(configuration.GetConnectionString(ConstantConfig.DBDefaultName));
             //builder.UseSqlServer("Server=.; Database=FrameDB_a; user id=sa;pwd=sa;");
-
+         
             return new InfrastructureDbContext(builder.Options);
         }
 

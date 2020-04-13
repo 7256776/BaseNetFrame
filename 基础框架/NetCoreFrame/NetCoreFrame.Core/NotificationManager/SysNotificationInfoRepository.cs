@@ -124,7 +124,9 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
-        /// 获取订阅通知 NotificationName 的用户
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// IsSubscription = true 订阅 
+        /// IsSubscription = false 为订阅
         /// </summary>
         /// <param name="notificationInfo"></param>
         /// <returns></returns>
@@ -251,26 +253,23 @@ namespace NetCoreFrame.Core
         public async Task DelUserNotificationAsync(List<Guid> idList)
         {
             #region ef方式 逐条删除 
-
+            //删除用户通知表的通知信息
             foreach (var item in idList)
             {
-                //删除用户通知表的通知信息
                 await _userNotificationInfoRepository.DeleteAsync(d => d.Id == item);
             }
-
             //先执行删除
             UnitOfWorkManager.Current.SaveChanges();
+            //删除对应通知主信息
+            var result = base.Context.Database.ExecuteSqlCommand("DELETE FROM Sys_NotificationsToTenant WHERE Id NOT IN(SELECT DISTINCT TenantNotificationId FROM Sys_NotificationsToUser)");
+            #endregion
 
+            #region 方式二
             //该方案在EfCore下需要分两次查询因此改为直接脚本执行
             ////查询是否该通知是否已经被所有用户删除
-            //var dataList1 = base.Context.TenantNotificationInfos
-            //                          .Where(w => !Context.UserNotificationInfos.Select(s => s.TenantNotificationId).Contains(w.Id)).Select(e => e.Id);
+            //var data = base.Context.TenantNotificationInfos.Where(w => !Context.UserNotificationInfos.Select(s => s.TenantNotificationId).Contains(w.Id)).Select(e => e.Id);
             ////移除掉所有用户删除的通知
             //await _tenantNotificationRepository.DeleteAsync(d => data.Contains(d.Id));
-
-
-            var result = base.Context.Database.ExecuteSqlCommand("DELETE FROM Sys_NotificationsToTenant WHERE Id NOT IN(SELECT DISTINCT TenantNotificationId FROM Sys_NotificationsToUser)");
-
             #endregion
         }
 

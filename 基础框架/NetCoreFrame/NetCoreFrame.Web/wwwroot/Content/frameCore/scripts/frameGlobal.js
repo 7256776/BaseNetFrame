@@ -62,6 +62,7 @@ var globalVue = new Vue({
 
     /*******************************************************格式化公用函数*********************************************************/
     frameCore.format = frameCore.format || {};
+
     /*
     * 设置命名空间的对象(调用方式 : abp.frameCore.format.formatDate )
     * 格式化日期
@@ -107,6 +108,46 @@ var globalVue = new Vue({
         }
         return str;
     }
+     
+    /**
+    * 将数值四舍五入(保留2位小数)后格式化成金额形式
+    *(调用方式 : abp.frameCore.format.amountFormat )
+    * @param num 数值(Number或者String)
+    * @return 金额格式的字符串,如'1,234,567.45'
+    * @type String
+    */
+    frameCore.format.amountFormat = function (num) {
+        num = num.toString().replace(/\$|\,/g, '');
+        if (isNaN(num))
+            num = "0";
+        sign = (num == (num = Math.abs(num)));
+        num = Math.floor(num * 100 + 0.50000000001);
+        cents = num % 100;
+        num = Math.floor(num / 100).toString();
+        if (cents < 10)
+            cents = "0" + cents;
+        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
+                num.substring(num.length - (4 * i + 3));
+        return (((sign) ? '' : '-') + num + '.' + cents);
+    }
+
+    /**
+    * 过滤特殊字符以及汉字
+    *(调用方式 : abp.frameCore.format.stringReplace )
+    * @param value 需要过滤的字符串
+    * @return 完成替换后的字符串
+    * @type String
+    */
+    frameCore.format.stringReplace = function (value) {
+        var reg = new RegExp("[`~!@#$^&*()=+|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？·]");
+        var regZh = /[\u4e00-\u9fa5]/g;
+        var str = '';
+        for (var i = 0, l = value.length; i < value.length; i++) {
+            str = str + value.substr(i, 1).replace(reg, '');
+        }
+        return str.replace(regZh, "");   
+    }
 
     /*******************************************************通知公用函数*********************************************************/
     frameCore.notifications = frameCore.notifications || {};
@@ -134,6 +175,40 @@ var globalVue = new Vue({
 
     /*******************************************************常规公用函数*********************************************************/
     frameCore.utils = frameCore.utils || {};
+
+/*
+ * 电话号码验证 (调用方式 : abp.frameCore.utils.checkChars )
+ * 验证规则：仅允许包含 数字 字母大小写
+    * @param str 验证的字符串
+    * @param rule 验证的规则 该参数必须是数组 , 为空为包含全部规则
+    *               参数示例:  ['zh', 'en', 'num']
+    *                  zh = 允许汉字
+    *                  en = 允许字母
+    *                  num = 允许数字
+*/
+    frameCore.utils.checkChars = function (str, rule) {
+        if (!rule || rule.length==0) {
+            rule= ['zh', 'en', 'num'];
+        }
+        //
+        var checkRule = {
+            zh: '\\u4e00-\\u9fa5',      //允许汉字
+            en: 'A-Za-z',                     //允许字母
+            num: '0-9'                        //允许数字
+        };
+    
+        //初始正则条件
+        var tempStr = '';
+        rule.forEach(function (item, index) {
+            tempStr = tempStr + checkRule[item];
+        });
+        //拼接最终的正则
+        eval("var tempRe = /^[" + tempStr + "]+$/;");
+        if (tempRe.test(str)) {
+            return true;
+        }
+        return false;
+    };
 
     /*
      * 电话号码验证 (调用方式 : abp.frameCore.utils.checkPhone )
@@ -261,29 +336,6 @@ var globalVue = new Vue({
         };
         return fn(bankno);
     };
-
-    /**
-    * 将数值四舍五入(保留2位小数)后格式化成金额形式
-    *
-    * @param num 数值(Number或者String)
-    * @return 金额格式的字符串,如'1,234,567.45'
-    * @type String
-    */
-    frameCore.utils.amountFormat = function (num) {
-        num = num.toString().replace(/\$|\,/g, '');
-        if (isNaN(num))
-            num = "0";
-        sign = (num == (num = Math.abs(num)));
-        num = Math.floor(num * 100 + 0.50000000001);
-        cents = num % 100;
-        num = Math.floor(num / 100).toString();
-        if (cents < 10)
-            cents = "0" + cents;
-        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
-            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
-                num.substring(num.length - (4 * i + 3));
-        return (((sign) ? '' : '-') + num + '.' + cents);
-    }
 
     /*
      * 递归查询返回查询单个对象 (调用方式 : abp.frameCore.utils.queryRecursive )
@@ -425,6 +477,7 @@ var globalVue = new Vue({
             return false;
         }
     };
+
     /*****************************************************初始化自义定页面路由对象***********************************************************/
     frameCore.frameRoutes = frameCore.frameRoutes || {};
 
@@ -432,44 +485,44 @@ var globalVue = new Vue({
     var frameRoutesList = [
         {
             //首页
-            path: '/Views/J_Home/DesktopPage',
-            name: 'j-home',
+            path: '/Views/SysHome/DesktopPage',
+            name: 'sys-home',
             //meta: {
             //    menuData: [{
-            //        url: '/Views/J_Home/DesktopPage',
+            //        url: '/Views/Sys_Home/DesktopPage',
             //        displayName: '首页'
             //    }]
             //}
         },
         {
             //我的设置
-            path: '/Views/J_Account/UserSettings',
-            name: 'j-usersetting',
+            path: '/Views/SysAccount/UserSettings',
+            name: 'sys-usersetting',
             meta: {
                 menuData: [{
-                    url: '/Views/J_Account/UserSettings',
+                    url: '/Views/SysAccount/UserSettings',
                     displayName: '我的设置'
                 }]
             }
         },
         {
             //我的收件箱
-            path: '/Views/J_Notifications/UserInbox',
-            name: 'j-userinbox',
+            path: '/Views/SysNotifications/UserInbox',
+            name: 'sys-userinbox',
             meta: {
                 menuData: [{
-                    url: '/Views/J_Notifications/UserInbox',
+                    url: '/Views/SysNotifications/UserInbox',
                     displayName: '我的收件箱'
                 }]
             }
         },
         {
             //搜索结果页
-            path: '/Views/J_Components/SearchPage',
-            name: 'j-searchpage',
+            path: '/Views/SysComponents/SearchPage',
+            name: 'sys-searchpage',
             meta: {
                 menuData: [{
-                    url: '/Views/J_Components/SearchPage',
+                    url: '/Views/SysComponents/SearchPage',
                     displayName: '搜索结果页'
                 }]
             }
@@ -599,12 +652,13 @@ $(function () {
         if (notification.data.notificationType === "sms") {
             //直接调用abp的消息弹出ui
             //abp.notifications.showUiNotifyForUserNotification(userNotification);
-            //调用自己定义的消息发送
+            //调用自己定义的消息发送(页面显示消息提示窗口)
             abp.frameCore.notifications.showUiNotifications(userNotification);
-
             //触发所有注册了(frame.received.ui.event)的事件
             abp.event.trigger('frame.received.ui.event');
         } else if (notification.data.notificationType === "chat") {
+            //(页面显示消息提示窗口)
+            abp.frameCore.notifications.showUiNotifications(userNotification);
             //触发所有注册了(frame.received.chat.event)的事件
             abp.event.trigger('frame.received.chat.event', userNotification);
         } else {
@@ -612,8 +666,7 @@ $(function () {
         }
     });
 
-
-    //外部项目调用实现该回调事件
+    //注册事件,外部项目调用实现该回调事件
     abp.event.on('frame.received.event', function (userNotification) {
 
         /* 
@@ -640,8 +693,6 @@ $(function () {
         */
 
     });
-
-
 
 });
 
