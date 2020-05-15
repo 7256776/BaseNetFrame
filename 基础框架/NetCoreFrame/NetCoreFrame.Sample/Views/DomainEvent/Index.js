@@ -34,7 +34,7 @@ var component = Vue.component('domainevent', {
             }).done(function (data, res, e) {
                 _this.formData.id = data;
                 _this.resultModelData = [];
-                abp.message.success('新增成功了.');
+                abp.message.success(tipsType.addSuccess);
                 _this.getEntityEventProcessData()
             });
         },
@@ -49,7 +49,7 @@ var component = Vue.component('domainevent', {
             }).done(function (data, res, e) {
                 _this.formData.message = data.message;
                 _this.resultModelData = [];
-                abp.message.success('更新成功了.');
+                abp.message.success(tipsType.editSuccess);
                 _this.getEntityEventProcessData()
             });
         },
@@ -63,7 +63,7 @@ var component = Vue.component('domainevent', {
                 type: 'POST'
             }).done(function (data, res, e) {
                 _this.resultModelData = [];
-                abp.message.success('更新成功了.');
+                abp.message.success(tipsType.editSuccess);
                 _this.getEntityEventProcessData()
             });
         },

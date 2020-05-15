@@ -76,8 +76,7 @@
                                    default-first-option
                                    style="width:180px"
                                    placeholder="请选择">
-                            <el-option label="公司" value="1"></el-option>
-                            <el-option label="部门" value="2"></el-option>
+                            <el-option v-bind:label="item.dictContent" v-bind:value="item.dictCode"  v-bind:key="item.id" v-for="item in orgTypeData"></el-option>
                         </el-select>
                     </el-form-item>
 
@@ -96,7 +95,8 @@
                                   v-bind:maxlength="150"
                                   style="width:475px;"
                                   autosize
-                                  placeholder="请输入备注信息">
+                                  placeholder="请输入备注信息"
+                                  show-word-limit>
                         </el-input>
                     </el-form-item>
 

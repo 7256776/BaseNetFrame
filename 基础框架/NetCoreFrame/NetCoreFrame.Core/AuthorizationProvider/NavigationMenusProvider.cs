@@ -57,8 +57,6 @@ namespace NetCoreFrame.Core
 
         public void CreateMenuItemDefinition(MenuDefinition menuDefinition)
         {
-
-
             //获取所有模块
             List<SysMenus> data = _menusRepository.GetAllList().Where(p => p.IsActive == true).ToList();
             //转换模块数据格式,转换成子父节点包含的形式

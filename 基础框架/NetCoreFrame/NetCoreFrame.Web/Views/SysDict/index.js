@@ -2,7 +2,7 @@
     {
         template: Vue.frameTemplate('SysDict/Index'),
         created: function () {
-            this.getSysDictTypeDataList();
+            this.getSysDictTypeDataList(); 
         },
         data: function () {
             return {
@@ -30,9 +30,10 @@
                     searchTxt: '',
                     tableData: [],
                     selectRows: [],
-                    selectRow: {}
+                    selectRow: {},
+                    tableDataBak: {},
                 },
-                expands:[]
+                expands: []
             };
         },
         watch: {
@@ -73,7 +74,7 @@
                             type: 'POST'
                         }).done(function (data, res, e) {
                             //
-                            abp.message.success('删除成功');
+                            abp.message.success(tipsType.delSuccess);
                             _this.getSysDictTypeDataList();
                             _this.$nextTick(function () {
                                 _this.$refs["formSysDictData"].resetFields();
@@ -89,7 +90,7 @@
                     url: '/SysDict/GetSysDictTypeList'
                 }).done(function (data) {
                     _this.sysDictData = data;
-                    if (_this.sysDictData.length > 0 ) {
+                    if (_this.sysDictData.length > 0) {
                         //设置表单以及表格状态
                         _this.doSysDictTypeClick(_this.sysDictData[0].id);
                     }
@@ -99,7 +100,7 @@
                 this.tableOptions.searchTxt = "";
                 this.$refs["formSysDictData"].resetFields();
                 this.formData.id = id;
-                this.pageOptions.isDictType = true;             
+                this.pageOptions.isDictType = true;
                 this.pageOptions.tableEditState = false;
                 this.getData();
             },
@@ -120,55 +121,80 @@
                     data: JSON.stringify(_this.formData.dictType)
                 }).done(function (data) {
                     _this.tableOptions.tableData = data;
+                    //备份一次字典数据
+                    _this.tableOptions.tableDataBak = JSON.parse(JSON.stringify(data));
+                    //
+                    _this.doRemoveExpandIcon();
                 });
             },
             doRowSelectChange: function (selection) {
                 this.tableOptions.selectRows = selection;
             },
             doRowCurrentChange: function (currentRow, oldCurrentRow) {
+                var _this = this;
                 if (!currentRow) {
                     return;
                 }
+                if (oldCurrentRow && oldCurrentRow.editState == "modify") {
+                    //
+                    _this.setExpands(oldCurrentRow);
+                    this.$confirm(
+                      '当前行数据已变更是否保存?',
+                      '提示',
+                      {
+                          type: 'warning'
+                      }).then(function () {
+                          _this.doSaveRow();
+                      }).catch(function () {
+                          //
+                          _this.tableOptions.currentEditRow = oldCurrentRow;
+                          _this.doCancel();
+                      });
+                } else {
+                    this.setExpands(currentRow);
+                }
+                //
                 if (oldCurrentRow) {
                     oldCurrentRow.showState = false;
                 }
-                this.$refs.dataGrid.clearSelection(); //清空选择行
-                this.tableOptions.selectRow = null; //将当前选中行置空
-                this.$refs.dataGrid.toggleRowSelection(currentRow); //设置当前行为选中行
-                this.tableOptions.selectRow = currentRow; //设置当前选中行对象
-            },
-            doRowclick: function (row, event, column) {
-                this.setExpands(row);
+                this.$refs.dataGrid.clearSelection();                              //清空选择行
+                this.tableOptions.selectRow = null;                              //将当前选中行置空
+                this.$refs.dataGrid.toggleRowSelection(currentRow);   //设置当前行为选中行
+                this.tableOptions.selectRow = currentRow;                 //设置当前选中行对象
+                this.doRemoveExpandIcon();                                       //隐藏展开图标
             },
             setExpands: function (row) {
                 var _this = this;
                 row.showState = true; //将行对象设置为可编辑状态
-
-                _this.expands = [];//实现展开当前行的时候，其他行都能收起来,添加前先清空这个数组
+                //实现展开当前行的时候，其他行都能收起来,添加前先清空这个数组
+                _this.expands = [];
+                //rowKey 是自定义索引用于记录所选择展开的行
                 row.rowKey = _this.tableOptions.tableData.indexOf(row);
                 _this.expands.push(row.rowKey);
                 //设置当前行为选中行并触发事件(doRowCurrentChange)
                 _this.$refs.dataGrid.setCurrentRow(row);
             },
-            doSaveDictAll: function () {
+            doSaveDictType: function () {
                 var _this = this;
-                //验证字典编码值的必填项
-                var validData = _this.tableOptions.tableData.filter(function (item, index) {
-                    if (!item.dictCode || !item.dictContent) {
-                        return true;
+                /*
+                    (注释该段业务,保存字典类型的时候不保存对应的字典值明细数据,主要考虑页面操作习惯以及与明细自带的保存冲突问题)
+                    //验证字典编码值的必填项
+                    var validData = _this.tableOptions.tableData.filter(function (item, index) {
+                        if (!item.dictCode || !item.dictContent) {
+                            return true;
+                        }
+                    });
+                    if (validData.length > 0) {
+                        abp.message.warn('请设置字典编码或字典名称！');
+                        return;
                     }
-                });
-                if (validData.length > 0) {
-                    abp.message.warn('请设置字典编码或字典名称！');
-                    return;
-                }
-                //获取需要保存的字典编码对象
-                _this.formData.sysDictInputList = _this.tableOptions.tableData.filter(function(item,index) {
-                    if (item.editState === "add" || item.editState === "modify") {
-                        return true;
-                    }
-                });
-
+                    //获取需要保存的字典编码对象
+                    _this.formData.sysDictInputList = _this.tableOptions.tableData.filter(function(item,index) {
+                        if (item.editState === "add" || item.editState === "modify") {
+                            return true;
+                        }
+                    });
+                */
                 this.$refs["formSysDictData"].validate(
                     function (valid) {
                         if (!valid) {
@@ -185,9 +211,9 @@
                                 _this.getDataList();
                                 //_this.pageOptions.isDictType = true;
                                 //_this.pageOptions.tableEditState = false;
-                                abp.message.success('保存成功');
+                                abp.message.success(tipsType.saveSuccess);
                             } else {
-                                abp.message.error('保存失败');
+                                abp.message.error(tipsType.saveFail);
                             }
                         });
                     }
@@ -206,7 +232,9 @@
                     editState: "add"
                 };
                 this.tableOptions.tableData.push(newRow);
-                this.setExpands(newRow); 
+                //同时备份一份原有数据
+                this.tableOptions.tableDataBak.push(JSON.parse(JSON.stringify(newRow)));
+                this.setExpands(newRow);
             },
             doSubDel: function () {
                 var _this = this;
@@ -226,7 +254,7 @@
                             type: 'POST'
                         }).done(function (data, res, e) {
                             _this.getDataList();
-                            abp.message.success('删除成功');
+                            abp.message.success(tipsType.delSuccess);
                         });
                     });
             },
@@ -252,25 +280,28 @@
                 }).done(function (data, res, e) {
                     row.showState = false;
                     row.editState = null;
+                    //修改后保存修改后的值
+                    _this.tableOptions.tableDataBak[index] = JSON.parse(JSON.stringify(row));
                     _this.expands = [];
-                    abp.message.success('保存成功');
+                    _this.$refs.dataGrid.setCurrentRow(null);
+                    abp.message.success(tipsType.saveSuccess);
                 });
 
             },
             doCancel: function () {
-                var _this = this;
-                var index = _this.expands[0];
-                var row = _this.tableOptions.tableData[index];
-                row.showState = false;
-                if (row.editState !== "add" && row.editState !== "modify") {
-                    _this.expands = [];
-                    return;
-                }
+                var index = this.expands[0];
+                var row = this.tableOptions.tableData[index];
+                //取消后还原数据
+                this.tableOptions.tableData[index] = JSON.parse(JSON.stringify(this.tableOptions.tableDataBak[index]));
+                this.tableOptions.tableData[index].showState = false;
+                this.tableOptions.tableData[index].editState = '';
                 //取消后如果编码或名称没有填写就移除掉该行
                 if (!row.dictCode && !row.dictContent) {
-                    _this.tableOptions.tableData.splice(index, 1)
+                    this.tableOptions.tableData.splice(index, 1)
                 }
-                _this.expands = [];
+                this.expands = [];
+                this.$refs.dataGrid.setCurrentRow(null);
+                this.doRemoveExpandIcon();
             },
             fnStyle: function (e) {
                 //设置编辑行的样式
@@ -279,6 +310,10 @@
                 }
             },
             doGridInputChange: function (e, row) {
+                //设置行编辑状态
+                if (row.editState != 'add') {
+                    row.editState = 'modify';
+                }
                 if (!row.dictCode) {
                     return;
                 }
@@ -288,9 +323,6 @@
                     //移除过滤掉特殊字符
                     row.dictCode = abp.frameCore.format.stringReplace(row.dictCode);
                     return;
-                }
-                if (row.editState != 'add') {
-                    row.editState = 'modify';
                 }
             },
             validateDictCode: function (rule, value, callback) {
@@ -305,6 +337,16 @@
                 }
                 //验证通过执行
                 callback();
+            },
+            doRemoveExpandIcon: function () {
+                //设置所有展开的图标不做显示
+                this.$nextTick(function () {
+                    var expandIcon = document.getElementsByClassName('el-table__expand-icon');
+                    for (var i = 0; i < expandIcon.length; i++) {
+                        expandIcon[i].style.display = "none";
+                        expandIcon[i].style.height = "0px";
+                    }
+                });
             }
 
 

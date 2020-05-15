@@ -8,7 +8,7 @@
             @*<el-tabs v-model="tabActivatePage">*@
                 @*<el-tab-pane label="菜单管理" name="menu">*@
                     <el-tree ref="treeData"
-                             style="min-height:525px;"
+                             style="min-height:580px;"
                              v-bind:data="treeData"
                              v-bind:props="defaultProps"
                              node-key="Id"
@@ -58,36 +58,37 @@
                                      clearable
                                      suffix-icon="fa fa-list-ol"
                                      placeholder="选择模块上级节点(如需创建根节点,该选择为空)"
+                                     v-bind:style="formFormItem2"
                                      style="width:475px;">
                         </el-cascader>
 
                     </el-form-item>
 
                     <el-form-item label="模块标题" prop="menuDisplayName">
-                        <el-input v-model="formData.menuDisplayName" style="width:180px" clearable placeholder="模块显示名称" suffix-icon="fa fa-list-ol" v-bind:maxlength="50">
+                        <el-input v-model="formData.menuDisplayName" v-bind:style="formFormItem1" clearable placeholder="模块显示名称" suffix-icon="fa fa-list-ol" v-bind:maxlength="50" >
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="模块名称" prop="menuName">
-                        <el-input v-model="formData.menuName" style="width:180px" clearable placeholder="模块名称" suffix-icon="fa fa-list-ul" v-bind:maxlength="50">
+                        <el-input v-model="formData.menuName" v-bind:style="formFormItem1" clearable placeholder="模块名称" suffix-icon="fa fa-list-ul" v-bind:maxlength="50" >
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="授权名称" prop="permissionName">
-                        <el-input v-model="formData.permissionName" style="width:475px" clearable placeholder="模块授权名称" suffix-icon="fa fa-key" v-bind:maxlength="80">
+                        <el-input v-model="formData.permissionName" v-bind:style="formFormItem2" clearable placeholder="模块授权名称" suffix-icon="fa fa-key" v-bind:maxlength="80" show-word-limit>
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="路由地址" prop="url">
-                        <el-input v-model="formData.url" style="width:475px" clearable placeholder="视图路径(例: /Views/Home/Index)" suffix-icon="fa fa-chain" v-bind:maxlength="80">
-                        </el-input>
+                            <el-input v-model="formData.url" v-bind:style="formFormItem2" clearable placeholder="视图路径(例: /Views/Home/Index)" suffix-icon="fa fa-chain" v-bind:maxlength="80" show-word-limit>
+                            </el-input>
                     </el-form-item>
 
                     <el-form-item label="权限模式" prop="requiresAuthModel">
                         <el-select v-model="formData.requiresAuthModel"
                                    default-first-option
                                    clearable
-                                   style="width:180px"
+                                   v-bind:style="formFormItem1"
                                    placeholder="请选择">
                             <el-option label="开放模式" value="1">
                                 <span style="float: left">开放模式</span>
@@ -107,7 +108,7 @@
                     <el-form-item label="启用状态" prop="isActive">
                         <el-select v-model="formData.isActive"
                                    default-first-option
-                                   style="width:180px"
+                                   v-bind:style="formFormItem1"
                                    placeholder="请选择">
                             <el-option label="启用" v-bind:value="true"></el-option>
                             <el-option label="禁用" v-bind:value="false"></el-option>
@@ -115,20 +116,21 @@
                     </el-form-item>
 
                     <el-form-item label="模块图标" prop="icon">
-                        <el-input v-model="formData.icon" style="width:180px" clearable placeholder="图标样式名称" suffix-icon="fa fa-file-photo-o">
+                        <el-input v-model="formData.icon" v-bind:style="formFormItem1" clearable placeholder="图标样式名称" suffix-icon="fa fa-file-photo-o">
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="模块排序" prop="orderBy">
-                        <el-input-number v-model="formData.orderBy" :step="1" style="width:180px" v-bind:min="0"></el-input-number>
+                        <el-input-number v-model="formData.orderBy" :step="1" v-bind:style="formFormItem1" v-bind:min="0"></el-input-number>
                     </el-form-item>
 
                     <el-form-item label="模块注释" prop="description">
                         <el-input v-model="formData.description"
                                   type="textarea"
                                   v-bind:maxlength="150"
-                                  style="width:475px;"
-                                  autosize
+                                  v-bind:style="formFormItem2"
+                                  autosize 
+                                  show-word-limit 
                                   placeholder="请输入注释信息">
                         </el-input>
                     </el-form-item>
@@ -179,7 +181,7 @@
 
     <el-dialog title="动作信息"
                v-bind:visible.sync="pageOptions.formDialog"
-               width="600px">
+               v-bind:width="formWinCol2">
         <div>
             <el-form v-bind:model="formSubData"
                      v-bind:rules="formSubRules"
@@ -189,14 +191,13 @@
                      v-bind:status-icon="true"
                      label-suffix=":"
                      label-width="100px">
-
                 <el-form-item label="动作名称" prop="actionDisplayName">
-                    <el-input v-model="formSubData.actionDisplayName" style="width:165px" clearable suffix-icon="fa fa-flash ">
+                    <el-input v-model="formSubData.actionDisplayName" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-flash ">
                     </el-input>
                 </el-form-item>
 
                 <el-form-item label="动作编码" prop="actionName">
-                    <el-input v-model="formSubData.actionName" style="width:165px" clearable suffix-icon="fa fa-flash ">
+                    <el-input v-model="formSubData.actionName" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-flash ">
                     </el-input>
                 </el-form-item>
 
@@ -204,7 +205,7 @@
                     <el-select v-model="formSubData.requiresAuthModel"
                                default-first-option
                                clearable
-                               style="width:165px"
+                               v-bind:style="formFormItem1"
                                placeholder="请选择">
                         <el-option label="开放模式" value="1">
                             <span style="float: left">开放模式</span>
@@ -225,7 +226,7 @@
                     <el-select v-model="formSubData.isActive"
                                default-first-option
                                clearable
-                               style="width:165px"
+                               v-bind:style="formFormItem1"
                                placeholder="请选择">
                         <el-option label="启用" v-bind:value="true"></el-option>
                         <el-option label="禁用" v-bind:value="false"></el-option>
@@ -233,19 +234,17 @@
                 </el-form-item>
 
                 <el-form-item label="授权名称" prop="permissionName">
-                    <el-input v-model="formSubData.permissionName" style="width:445px" clearable suffix-icon="fa fa-key">
+                    <el-input v-model="formSubData.permissionName" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-key">
                     </el-input>
                 </el-form-item>
 
                 <el-form-item label="动作注释" prop="description">
-                    <el-input v-model="formSubData.description" type="textarea" style="width:445px;" autosize placeholder="注释内容">
+                    <el-input v-model="formSubData.description" type="textarea" v-bind:style="formFormItem2" autosize placeholder="注释内容">
                     </el-input>
                 </el-form-item>
-
                 <!--重置表单时一并清空-->
                 <el-form-item label="" prop="id" v-show="false">
                 </el-form-item>
-
             </el-form>
         </div>
         <div slot="footer" style="padding-right:20px;">

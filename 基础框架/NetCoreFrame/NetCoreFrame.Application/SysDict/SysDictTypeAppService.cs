@@ -31,7 +31,7 @@ namespace NetCoreFrame.Application
         /// 获取字典类型数据
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")] 
+        [AbpAuthorize] 
         public async Task<List<SysDictType>> GetSysDictTypeListAsync()
         {
             return await _sysDicTypetRepository.GetAllListAsync();
@@ -41,7 +41,7 @@ namespace NetCoreFrame.Application
         ///  查询字典类型对象
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")]
+        [AbpAuthorize]
         public async Task<SysDictType> GetSysDictTypeByIdAsync(Guid id)
         {
             return await _sysDicTypetRepository.GetAsync(id);
@@ -52,7 +52,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("DictManager.SaveDict")]
+        [AbpAuthorize]
         public async Task<AjaxResponse> SaveSysDictTypeModel(SysDictTypeInput model)
         {
             Guid? resId;
@@ -77,15 +77,15 @@ namespace NetCoreFrame.Application
                 await _sysDicTypetRepository.UpdateAsync(m);
                 resId = model.Id;
             }
-            //保存字典编码
-            if (model.SysDictInputList != null && model.SysDictInputList.Any())
-            {
-                AjaxResponse res = await _sysDictAppService.SaveSysDictModel(model.SysDictInputList);
-                if (!res.Success)
-                {
-                    return res;
-                }
-            }
+            //保存字典编码 (注释该段业务,保存字典类型的时候不保存对应的字典值明细数据,主要考虑页面操作习惯以及与明细自带的保存冲突问题)
+            //if (model.SysDictInputList != null && model.SysDictInputList.Any())
+            //{
+            //    AjaxResponse res = await _sysDictAppService.SaveSysDictModel(model.SysDictInputList);
+            //    if (!res.Success)
+            //    {
+            //        return res;
+            //    }
+            //}
             return new AjaxResponse { Success = true, Result = new { id = resId } };
         }
 
@@ -94,7 +94,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")]
+        [AbpAuthorize]
         public bool CheckDictCode(SysDictTypeInput model)
         {
             var data = _sysDicTypetRepository.FirstOrDefault(p => p.DictType == model.DictType && p.Id != model.Id);
@@ -105,7 +105,7 @@ namespace NetCoreFrame.Application
         /// 删除一个字典类型
         /// </summary>
         /// <param name="id"></param>
-        [AbpAuthorize("DictManager.DelDict")]
+        [AbpAuthorize]
         public void DelSysDictType(SysDictTypeInput model)
         {
             if (model.Id == null) return;

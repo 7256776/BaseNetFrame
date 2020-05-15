@@ -4,8 +4,7 @@
  * */
 //
 Vue.config.productionTip = false
-
-
+ 
 //设置jquery支持IE9的跨域
 jQuery.support.cors = true
 
@@ -265,7 +264,7 @@ var initFrame = function (Vue, options) {
         //
         return new Promise(function (resolve, reject) {
             if (!path) {
-                reject('您还冒配置路由地址呀');
+                reject('请检查模块配置的路由地址.');
                 return;
             }
             var script = document.createElement('script');
@@ -306,17 +305,97 @@ var initFrame = function (Vue, options) {
         return applicationPath + "AbpLocalization/ChangeCulture?cultureName=" + name + "&returnUrl=" + requestPath;
     };
 
-    //注册组件this共有函数或属性
+    //注册组件this共有函数或属性 暂留预设
     Vue.prototype.getServiceUrl = function (url) {
-
         return url;
     }
+
 
 }
 
 //应用初始化
 Vue.use(initFrame)
 
+//简单的状态管理对象
+var frameStore = Vue.observable({
+    screenHeight: 0,
+    screenWidth: 0
+});
+
+//混入全局对象(待改造)
+Vue.mixin({
+    created: function () {
+       
+    },
+      //混入公用数据
+     data: function () {
+         return {
+             /*
+              *  统一表单样式
+              *  formWinCol2    ┓
+              *  formWinCol3    ┣ 设置表单的列数 分别 2-4列
+              *  formWinCol4    ┛
+              *  
+              *  formFormItem1  ┓
+              *  formFormItem2  ┣   设置表单元素的宽度,结合表单列数适配
+              *  formFormItem3  ┣   数字 1-4表示所占用的列数
+              *  formFormItem4  ┛
+              */
+             formWinCol2: '675px',                                  
+             formWinCol3: '985px',
+             formWinCol4: '1300px',
+             formFormItem1: { width: '200px' },
+             formFormItem2: { width: '513px' },
+             formFormItem3: { width: '825px' },
+             formFormItem4: { width: '1140px' },
+         }
+    },
+    computed: {
+        frameWidthStyle: function () {
+            return function (size) {
+                var n = this.frameWidth(size);
+                return { width: n, overflow: 'auto' };
+            }
+        },
+        frameHeightStyle: function () {
+            return function (size) {
+                var n = this.frameHeight(size) ;
+                return { height: n, overflow: 'auto' };
+            }
+        },
+        frameWidth: function () {
+            return function (size) {
+                return this._sysWinSize(frameStore.screenWidth, size) + 'px';
+            }
+        },
+        frameHeight: function () {
+            return function (size) {
+                return this._sysWinSize(frameStore.screenHeight, size) - 200 + 'px';
+            }
+        }
+    },
+    methods: {
+        _sysWinSize: function (num, size) {
+            if (!size) {
+                return num;
+            }
+            size = size.toUpperCase();
+              if(size == 'L') {
+                return num * 0.8;
+            }
+            else if (size == 'M') {
+                return num * 0.6;
+            }
+            else if (size == 'S') {
+                return num * 0.4;
+            } else {
+                return num;
+            }
+        },
+
+    }
+
+})
  
 
 

@@ -3,6 +3,8 @@ var component = Vue.component('sys-notifications', {
     template: Vue.frameTemplate('SysNotifications/Index'),
     created: function () {
         this.getNotificationsDataList(true);
+        //
+        this.getAllUserDataList();
     },
     data: function () {
         return {
@@ -42,8 +44,16 @@ var component = Vue.component('sys-notifications', {
             tableOptions: {
                 searchTxt:'',
                 tableData: [],
+                tableAllData: [],
                 selectRows: [],
                 selectRow: {}
+            },
+            pageOptions: {
+                formDialog: false,
+                isUserCode: false,
+                pageIndex: 1,
+                maxResultCount: 20,
+                total: 0
             }
         };
     },
@@ -51,18 +61,7 @@ var component = Vue.component('sys-notifications', {
     //监听
     },
     computed: {
-        searchGrid: function () {
-            var _this = this;
-            if (!this.tableOptions.searchTxt) {
-                return this.tableOptions.tableData;
-            }
-            return this.tableOptions.tableData.filter(function (item, index) {
-                if (item.userCode.indexOf(_this.tableOptions.searchTxt) > -1 || item.userNameCn.indexOf(_this.tableOptions.searchTxt) > -1) {
-                    return true;
-                }
-                return false;
-            });
-        }
+       
     },
     methods: {       
         doRowSelectChange: function (selection) {
@@ -92,14 +91,13 @@ var component = Vue.component('sys-notifications', {
                             url: '/SysNotifications/SaveNotificationInfo',
                             data: JSON.stringify(_this.formData)
                         }).done(function (data, res, e) {
-                            //_this.getUserList();
                             if (data) {
                                 _this.formData.id = data;
                                 _this.getNotificationsDataList();
                                 _this.getDataList();
-                                abp.message.success('保存成功');
+                                abp.message.success(tipsType.saveSuccess);
                             } else {
-                                abp.message.error('保存失败');
+                                abp.message.error(tipsType.saveFail);
                             }
                         })
                     } else {
@@ -127,7 +125,7 @@ var component = Vue.component('sys-notifications', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     //
-                    abp.message.success('删除成功');
+                    abp.message.success(tipsType.delSuccess);
                     _this.getNotificationsDataList();
                 });
             });
@@ -135,6 +133,8 @@ var component = Vue.component('sys-notifications', {
         },
         doAddSubscription: function () {
             this.$refs["formNotificationData"].resetFields();
+            //清空用户筛选条件
+            this.tableOptions.searchTxt = '';
             this.tableOptions.tableData = [];
         },
         getData: function () {
@@ -144,16 +144,40 @@ var component = Vue.component('sys-notifications', {
                 data: JSON.stringify(_this.formData.id)
             }).done(function (data) {
                 _this.formData = data;
+                //清空用户筛选条件
+                _this.tableOptions.searchTxt = '';
                 _this.getDataList();
+            });
+        },
+        getAllUserDataList: function () {
+            var _this = this;
+            abp.ajax({
+                url: '/SysAccount/GetAllUserList',
+                data: JSON.stringify({})
+            }).done(function (data) {
+                _this.tableOptions.tableAllData = data;
             });
         },
         getDataList: function () {
             var _this = this;
+           //查询参数
+            var parameter = {
+                params: {
+                    notificationName: this.formData.notificationName,
+                    userNameCn: this.tableOptions.searchTxt
+                },
+                pagingDto: this.pageOptions
+            };
             abp.ajax({
                 url: '/SysNotifications/GetSubscriptionByName',
-                data: JSON.stringify(_this.formData.notificationName)
+                data: JSON.stringify(parameter)
             }).done(function (data) {
-                _this.tableOptions.tableData = data;
+                //
+                _this.pageOptions.total = data.totalCount;
+                _this.tableOptions.tableData = data.items;
+                _this.tableOptions.selectRow = {};
+                _this.tableOptions.selectRows = [];
+
             });
         },
         getNotificationsDataList: function (isInit) {
@@ -221,7 +245,6 @@ var component = Vue.component('sys-notifications', {
         },
         doSend: function (type) {
             var _this = this;
-
             this.$refs["formSendNotificationData"].validate(
                 function (valid) {
                     if (valid) {
@@ -230,7 +253,7 @@ var component = Vue.component('sys-notifications', {
                             url: '/SysNotifications/NotificationsSend',
                             data: JSON.stringify(_this.formSendData)
                         }).done(function (data, res, e) {
-                            abp.message.success('发送成功');
+                            abp.message.success('SendSuccess');
                             //触发消息提示UI (可以考虑不触发,收到消息signalR进行调用订阅信息获取)
                             //abp.event.trigger('frame.received.ui.event');
                         }).fail(function (data, res, e) {
@@ -254,7 +277,19 @@ var component = Vue.component('sys-notifications', {
             }
             //验证通过执行
             callback();
-        }
+        },
+        handleSizeChange: function (val) {
+            this.pageOptions.maxResultCount = val;
+            this.getDataList();
+        },
+        handleCurrentChange: function (val, e) {
+            this.pageOptions.pageIndex = val;
+            this.getDataList();
+        },
+        doSearchData: function () {
+            this.pageOptions.pageIndex = 1;
+            this.getDataList();
+        },
 
     }
 });

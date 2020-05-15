@@ -81,7 +81,6 @@ namespace NetCoreFrame.Web.Controllers
         {
             //设置注销前的调用
             _accounExtens.LogoutExtension();
-
             //
             _userInfoAppService.SignOut();
             //跳转到桌面页面自动判断是否cookic失效

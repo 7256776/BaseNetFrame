@@ -48,6 +48,7 @@ namespace NetCoreFrame.Core
             var isGranted = await _userInfoManager.IsGrantedAsync(permissionName);
             if (!isGranted)
             {
+                //该方法是为了转义提示消息的本地化,由于该方法会在启动时候调用,导致抛出异常中断后续代码因此取消该转义
                 //AuthorizationException(permissionName);
             }
             return isGranted;
@@ -59,7 +60,7 @@ namespace NetCoreFrame.Core
             bool isGranted = Task.FromResult(_userInfoManager.IsGrantedAsync(permissionName)).Result.Result;
             if (!isGranted)
             {
-                //AuthorizationException(permissionName);
+                AuthorizationException(permissionName);
             }
             return isGranted;
         }
@@ -75,7 +76,7 @@ namespace NetCoreFrame.Core
             bool isGranted = await _userInfoManager.IsGrantedAsync(user, permissionName);
             if (!isGranted)
             {
-                //AuthorizationException(permissionName);
+                AuthorizationException(permissionName);
             }
             return isGranted;
         }
@@ -85,7 +86,7 @@ namespace NetCoreFrame.Core
             bool isGranted = Task.FromResult(_userInfoManager.IsGrantedAsync(user, permissionName)).Result.Result;
             if (!isGranted)
             {
-                //AuthorizationException(permissionName);
+               AuthorizationException(permissionName);
             }
             return isGranted;
         }

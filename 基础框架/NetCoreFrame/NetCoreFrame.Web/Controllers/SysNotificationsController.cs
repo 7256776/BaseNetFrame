@@ -98,14 +98,16 @@ namespace NetCoreFrame.Web.Controllers
 
         /// <summary>
         /// 获取通知 NotificationName 相关用户订阅的关系
-        /// IsSubscription = true 订阅 
-        /// IsSubscription = false 为订阅
+        /// 分页查询
         /// </summary>
-        /// <param name="subscription"></param>
-        /// <returns></returns>
-        public async Task<JsonResult> GetSubscriptionByName([FromBody]string notificationName)
+        /// <param name="requestParam"></param>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
+        public async Task<JsonResult> GetSubscriptionByName([FromBody]RequestParam<SysUserNotificationInfo> requestParam)
         {
-            var data = await _sysNotificationAppService.GetSubscriptionByNameAsync(notificationName);
+            var data = await _sysNotificationAppService.QueryableSubscriptionByNameAsync(requestParam);
             return Json(data);
         }
 
@@ -160,6 +162,11 @@ namespace NetCoreFrame.Web.Controllers
             return Json(data);
         }
 
+        /// <summary>
+        /// 清空消息
+        /// </summary>
+        /// <param name="notificationName"></param>
+        /// <returns></returns>
         public async Task<JsonResult> CleanUserNotificationByName([FromBody]string notificationName)
         {
             long userId = AbpSession.UserId.Value;

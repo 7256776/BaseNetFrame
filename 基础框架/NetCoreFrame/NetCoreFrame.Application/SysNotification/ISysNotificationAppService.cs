@@ -26,11 +26,26 @@ namespace NetCoreFrame.Application
         Task DelNotificationInfoAsync(SysNotificationInfoInput modelInput);
 
         /// <summary>
-        ///  查询订阅的通知以及用户信息
+        ///  获取通知 NotificationName 相关用户订阅的关系
+        ///  查询所有用户
         /// </summary>
         /// <param name="notificationInfo"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
         Task<List<SysNotificationSubscriptionInfo>> GetSubscriptionByNameAsync(string notificationName);
+
+        /// <summary>
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// 分页查询
+        /// </summary>
+        /// <param name="requestParam"></param>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
+        Task<PagedResultDto<SysNotificationSubscriptionInfo>> QueryableSubscriptionByNameAsync(RequestParam<SysUserNotificationInfo> requestParam);
 
         /// <summary>
         ///  查询通知名称列表

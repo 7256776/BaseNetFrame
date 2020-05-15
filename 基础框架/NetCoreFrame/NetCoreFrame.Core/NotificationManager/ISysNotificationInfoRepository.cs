@@ -34,11 +34,25 @@ namespace NetCoreFrame.Core
         Task<bool> IsSubscriptionRepeat(SysNotificationInfo notificationInfo);
 
         /// <summary>
-        /// 查询订阅了该通知的用户
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// 根据订阅的通知名称查询所有
         /// </summary>
         /// <param name="notificationInfo"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
         Task<List<SysNotificationSubscriptionInfo>> GetSubscriptionByNameAsync(SysNotificationInfo notificationInfo);
+
+        /// <summary>
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// 分页查询
+        /// </summary>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
+        Task<IQueryable<SysNotificationSubscriptionInfo>> QueryableSubscriptionByNameAsync(SysUserNotificationInfo notificationInfo);
 
         /// <summary>
         /// 删除通知基础信息以及该通知的订阅
@@ -63,7 +77,7 @@ namespace NetCoreFrame.Core
         Task<IQueryable<SysUserNotificationInfo>> GetUserNotificationsAsync(SysUserNotificationInfo model);
 
         /// <summary>
-        /// 清空消息
+        /// 清空所订阅的 notificationName 通知信息
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="notificationName"></param>

@@ -3,8 +3,6 @@ var component = Vue.component('sys-roles', {
     //template: $.ajax({ url: abp.appPath + 'SysRole/Index', async: false }).responseText,  //等同于 Vue.frameTemplate('SysRole/Index')
     template: Vue.frameTemplate('SysRole/Index'),
     created: function () {
-
-        window.onresize = this.winResize;
         this.getDataList();
     },
     data: function () {
@@ -26,23 +24,24 @@ var component = Vue.component('sys-roles', {
                 roleName: null,
                 description: null,
                 isActive: true
-            }, 
+            },
             pageOptions: {
                 menuDialog: false,
                 userDialog: false,
-                formDialog: false
+                formDialog: false,
             },
             tableOptions: {
                 tableData: [],
                 selectRows: [],
-                selectRow: {}
+                selectRow: {},
+                isCheckAll: false
             },
             transferOptions: {
                 props: { key: 'id', label: 'userName' },
                 titles: ['待授权用户', '已授权用户'],
                 buttonTexts: ['取消授权', '确定授权'],
                 renderFunc: function (h, option) {
-                    return h('span',  option.userNameCn + ' [' + option.userCode + ']');
+                    return h('span', option.userNameCn + ' [' + option.userCode + ']');
                 },
                 dataRoleUser: [],
                 currentRoleUser: [],
@@ -52,59 +51,13 @@ var component = Vue.component('sys-roles', {
                     }
                     return false;
                 }
-            }
+            },
         };
     },
     watch: {
-    //监听
+        //监听 
     },
     methods: {
-        winResize: function (e,a,d,f) {
-            var screenWidth = document.body.clientWidth;
-            var screenHeight = document.body.clientHeight;
-
-        },
-        tableRowClassName: function (e) {
-            //根节点固定为显示状态
-            if (e.row.menuNodeLevel === 1) {
-                return '';
-            }
-            if (!e.row.isExpand) {
-                return 'display:none';
-            }
-        },
-        doCell: function (row) {
-            //判断是否查询所有子节点
-            var isAll = false;
-            //设置图标状态
-            if (!row["expandState"]) {
-                row["expandState"] = "minus";
-            } else if (row["expandState"] === "minus") {
-                row["expandState"] = "plus";
-                isAll = true;
-            } else {
-                row["expandState"] = "minus";
-            }
-
-            this.gridDataMenu.forEach(function (item, index) {
-                //var isExpand = false;
-                if (row.id === item.parentID) {
-                    //设置展开或收缩
-                    item.isExpand = !item.isExpand;
-                    //设置图标状态
-                    item["expandState"] = item.isExpand ? "plus" : "minus";
-                }
-                //设置所有子节点收缩
-                if (isAll && item.menuNode.indexOf(row.menuNode) >= 0) {
-                    if (item.menuNode !== row.menuNode) {
-                        item.isExpand = false;
-                    }
-                    item["expandState"] = "plus";
-                }
-            });
-            //
-            //this.$refs["dataGrid"].doLayout();
-        }, 
         doActionsCell: function (row) {
             if (!row.sysMenuActions) {
                 return;
@@ -115,15 +68,12 @@ var component = Vue.component('sys-roles', {
                     return true;
                 }
             });
-            var _this = this;
-            this.gridDataMenu.forEach(function (item, index) {
-                //当授权动作节点被选中的情况同时选中菜单节点
-                if (item.id == row.id && isActionsCheck) {
-                    _this.$refs.dataGridMenu.toggleRowSelection(item, true);
-                    item.isCheck = true;
-                }
-            });
-        }, 
+            //动作菜单被选中同时选中相关的父节点对象
+            if (isActionsCheck) {
+                row.isCheck = isActionsCheck;
+                this.doSetMenuGridParentSelect(row, this.gridDataMenu);
+            }
+        },
         doRowSelectChange: function (selection) {
             this.tableOptions.selectRows = selection;
         },
@@ -137,7 +87,7 @@ var component = Vue.component('sys-roles', {
         getDataList: function () {
             var _this = this;
             abp.ajax({
-                url: '/SysRole/GetRoleList' ,
+                url: '/SysRole/GetRoleList',
                 data: JSON.stringify(_this.formData)
                 //type: 'POST'
             }).done(function (data) {
@@ -145,20 +95,21 @@ var component = Vue.component('sys-roles', {
                 //abp.message.success('created new person with id = ' + data.personId);
             });
         },
-        doRoleMenu: function () {
+        doAddRoleMenu: function () {
             if (this.tableOptions.selectRows.length === 0) {
                 abp.message.warn('请选择一行数据');
                 return;
             }
             this.pageOptions.menuDialog = true;
-
+        },
+        doRoleMenu: function () {
             var _this = this;
             abp.ajax({
                 url: '/SysRole/GetMenusListOrderByRole',
                 data: JSON.stringify(_this.tableOptions.selectRow.id)
             }).done(function (data, res, e) {
                 _this.gridDataMenu = data;
-                //设置授权的菜单为选中状态
+                //特殊处理全选按钮的显示状态
                 _this.$nextTick(function () {
                     _this.gridDataMenu.forEach(function (item, index) {
                         _this.$refs.dataGridMenu.toggleRowSelection(item, item.isCheck);
@@ -188,50 +139,74 @@ var component = Vue.component('sys-roles', {
                     });
                 }
             });
+
+        },
+        doSetMenuGridChildrenSelect: function (list, isCheck) {
+            var _this = this;
+            if (!list || list.length == 0) {
+                return;
+            }
+            list.forEach(function (item, index) {
+                //设置所有子节点的选中状态
+                item.isCheck = isCheck;
+                //设置动作节点的选中状态
+                if (item.sysMenuActions) {
+                    item.sysMenuActions.forEach(function (item, index) {
+                        item.isCheck = isCheck;
+                    })
+                }
+                //递归
+                _this.doSetMenuGridChildrenSelect(item.childrenMenus, isCheck);
+            });
+        },
+        doSetMenuGridParentSelect: function (row, dataList) {
+            var _this = this;
+            if (!row || !dataList || dataList.length == 0) {
+                return;
+            }
+            //设置父节点的选中状态
+            dataList.forEach(function (item, index) {
+                if (item.id == row.parentID) {
+                    item.isCheck = row.isCheck;
+                    //所有节点中查询父节点
+                    _this.doSetMenuGridParentSelect(item, _this.gridDataMenu);
+                } else {
+                    //当前节点下查询父节点
+                    _this.doSetMenuGridParentSelect(row, item.childrenMenus);
+                }
+                 //特殊处理全选按钮的显示状态
+                if (!item.parentID) {
+                    _this.$refs.dataGridMenu.toggleRowSelection(item, item.isCheck);
+                }
+            });
         },
         doMenuGridSelectAll: function (selection) {
             var _this = this;
-            var isCheck = false;
-            if (selection.length > 0) {
-                isCheck = true;
-            }
-            //设置所有子节点的选中状态
-            this.gridDataMenu.forEach(function (item, index) {
-                //设置所有子节点的选中状态
-                item.isCheck = isCheck;
-                _this.$refs.dataGridMenu.toggleRowSelection(item, isCheck);
-                //
-                item.sysMenuActions.forEach(function (item, index) {
-                    item.isCheck = isCheck;
-                })
-            });
-        },
-        doMenuGridSelect: function (selection, row) {
-            var _this = this;
-            //查询是否被选中
-            row.isCheck = selection.some(function (item, index) {
-                if (item.id === row.id) {
+            //通过查询当前根节点是否选中来确定是否全选状态
+            var isCheck = selection.some(function (item, index) {
+                if (!item.parentID) {
                     return true;
                 }
-            });
-           
-            //设置所有子节点被选中
+            })
+            //设置根节点模块选择状态
             this.gridDataMenu.forEach(function (item, index) {
-                //设置所有子节点的选中状态
-                if (item.menuNode.indexOf(row.menuNode) >= 0) {
-                    item.isCheck = row.isCheck;
-                    _this.$refs.dataGridMenu.toggleRowSelection(item, row.isCheck);
-                    //
-                    item.sysMenuActions.forEach(function (itemSub, index) {
-                        itemSub.isCheck = row.isCheck;
-                    });
-                }
-                //此处只有子节点选中的情况才会设置相关父节点为选中状态,取消子节点不做调整
-                if (row.menuNode.indexOf(item.menuNode) >= 0 && row.isCheck) {
-                    item.isCheck = row.isCheck;//设置选择值
-                    _this.$refs.dataGridMenu.toggleRowSelection(item, row.isCheck);//设置选择状态
-                }
+                item.isCheck = isCheck;
             });
+            //设置所有节点选择状态
+            this.doSetMenuGridChildrenSelect(this.gridDataMenu, isCheck);
+        },
+        doMenuGridSelect: function (row) {
+            //特殊处理全选按钮的显示状态
+            if (!row.parentID) {
+                this.$refs.dataGridMenu.toggleRowSelection(row, row.isCheck);
+            }
+            var list = [row];
+            //
+            this.doSetMenuGridChildrenSelect(list, row.isCheck);
+            //同时设置当前节点上级节点为选中状态
+            if (row.isCheck) {
+                this.doSetMenuGridParentSelect(row, this.gridDataMenu);
+            }
         },
         doSaveRoleUser: function () {
             var _this = this;
@@ -252,7 +227,7 @@ var component = Vue.component('sys-roles', {
                 type: 'POST'
             }).done(function (data, res, e) {
                 _this.pageOptions.userDialog = false;
-                abp.message.success('用户授权完成');
+                abp.message.success('OperationComplete');
             }).fail(function (res, e) {
                 //console.log(res)
             });
@@ -269,7 +244,7 @@ var component = Vue.component('sys-roles', {
             }).done(function (data, res, e) {
                
                 _this.pageOptions.menuDialog = false;
-                abp.message.success('模块授权完成');
+                abp.message.success('OperationComplete');
             }).fail(function (res, e) {
                 //console.log(res)
             });
@@ -312,7 +287,7 @@ var component = Vue.component('sys-roles', {
                         }).done(function (data, res, e) {
                             _this.getDataList();
                             _this.pageOptions.formDialog = false
-                            abp.message.success('保存成功');
+                            abp.message.success(tipsType.saveSuccess);
                             _this.$refs.dataGrid.clearSelection();
                         }).fail(function (res, e) {
                             //console.log(res)
@@ -340,11 +315,11 @@ var component = Vue.component('sys-roles', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     //
-                    abp.message.success('删除成功');
+                    abp.message.success(tipsType.delSuccess);
                     _this.getDataList();
                 });
             });
-        }
+        },
 
     } 
 });

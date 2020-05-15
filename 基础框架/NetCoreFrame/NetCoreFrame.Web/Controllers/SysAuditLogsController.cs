@@ -37,6 +37,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
+        [AbpMvcAuthorize("LogManager")]
         public JsonResult GetAuditLogList([FromBody]RequestParam<dynamic> requestParam)
         { 
             var data = _sysAuditLogsAppService.GetAuditLogList(requestParam);

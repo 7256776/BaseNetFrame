@@ -207,7 +207,7 @@ var component = Vue.component('sys-account', {
                              */
                             _this.pageOptions.formDialog = false;
                             _this.getUserList();
-                            abp.message.success('保存成功');
+                            abp.message.success(tipsType.saveSuccess);
                         });
                         //基本上可以忽略监控fail,abp已经完成了这部分处理
                         //fail(function (res, e) { });
@@ -237,7 +237,7 @@ var component = Vue.component('sys-account', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     //
-                    abp.message.success('删除成功');
+                    abp.message.success(tipsType.delSuccess);
                     _this.getUserList();
                 });
             });

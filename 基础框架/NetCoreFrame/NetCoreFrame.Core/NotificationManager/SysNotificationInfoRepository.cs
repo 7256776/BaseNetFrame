@@ -125,11 +125,13 @@ namespace NetCoreFrame.Core
 
         /// <summary>
         /// 获取通知 NotificationName 相关用户订阅的关系
-        /// IsSubscription = true 订阅 
-        /// IsSubscription = false 为订阅
+        /// 根据订阅的通知名称查询所有
         /// </summary>
         /// <param name="notificationInfo"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
         public async Task<List<SysNotificationSubscriptionInfo>> GetSubscriptionByNameAsync(SysNotificationInfo notificationInfo)
         {
             var list = from u in base.Context.UserInfos
@@ -152,6 +154,38 @@ namespace NetCoreFrame.Core
                        };
 
             return await Task.FromResult(list.ToList());
+        }
+
+        /// <summary>
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// 分页查询
+        /// </summary>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
+        public async Task<IQueryable<SysNotificationSubscriptionInfo>> QueryableSubscriptionByNameAsync(SysUserNotificationInfo notificationInfo)
+        {
+            var list = from u in base.Context.UserInfos
+                       join n in base.Context.NotificationSubscriptionInfos on
+                                new { id = u.Id, nname = notificationInfo.NotificationName } equals new { id = n.UserId, nname = n.NotificationName }
+                       into br
+                       from un in br.DefaultIfEmpty()
+                       where u.UserNameCn.Contains(notificationInfo.UserNameCn) || u.UserCode.Contains(notificationInfo.UserNameCn)
+                       select new SysNotificationSubscriptionInfo
+                       {
+                           UserId = u.Id,
+                           UserCode = u.UserCode,
+                           UserNameCn = u.UserNameCn,
+                           ImageUrl = u.ImageUrl,
+                           TenantId = un.TenantId,
+                           EntityId = un.EntityId,
+                           EntityTypeAssemblyQualifiedName = un.EntityTypeAssemblyQualifiedName,
+                           EntityTypeName = un.EntityTypeName,
+                           NotificationName = un.NotificationName,
+                           IsSubscription = un.NotificationName == null ? false : true
+                       };
+            return await Task.FromResult(list);
         }
 
         /// <summary>
@@ -210,7 +244,7 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
-        /// 清空消息
+        /// 清空所订阅的 notificationName 通知信息
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="notificationName"></param>

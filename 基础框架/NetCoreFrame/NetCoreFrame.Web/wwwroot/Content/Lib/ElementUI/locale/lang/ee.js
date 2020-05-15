@@ -19,10 +19,10 @@ exports.default = {
       startTime: 'Algusaeg',
       endDate: 'Lõpukuupäev',
       endTime: 'Lõpuaeg',
-      prevYear: 'Previous Year', // to be translated
-      nextYear: 'Next Year', // to be translated
-      prevMonth: 'Previous Month', // to be translated
-      nextMonth: 'Next Month', // to be translated
+      prevYear: 'Eelmine aasta',
+      nextYear: 'Järgmine aasta',
+      prevMonth: 'Eelmine kuu',
+      nextMonth: 'Järgmine kuu',
       year: '',
       month1: 'Jaanuar',
       month2: 'Veebruar',
@@ -70,7 +70,8 @@ exports.default = {
     cascader: {
       noMatch: 'Sobivad andmed puuduvad',
       loading: 'Laadimine',
-      placeholder: 'Vali'
+      placeholder: 'Vali',
+      noData: 'Andmed puuduvad'
     },
     pagination: {
       goto: 'Mine lehele',
@@ -85,7 +86,7 @@ exports.default = {
       error: 'Vigane sisend'
     },
     upload: {
-      deleteTip: 'press delete to remove', // to be translated
+      deleteTip: 'Vajuta "Kustuta", et eemaldada',
       delete: 'Kustuta',
       preview: 'Eelvaate',
       continue: 'Jätka'
@@ -107,6 +108,12 @@ exports.default = {
       filterPlaceholder: 'Sisesta märksõna',
       noCheckedFormat: '{total} objekti',
       hasCheckedFormat: '{checked}/{total} valitud'
+    },
+    image: {
+      error: 'FAILED' // to be translated
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
     }
   }
 };

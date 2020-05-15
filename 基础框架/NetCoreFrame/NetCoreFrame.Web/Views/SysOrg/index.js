@@ -3,10 +3,12 @@ var component = Vue.component('sys-org', {
     template: Vue.frameTemplate('SysOrg/Index'),
     created: function () {
         this.initMenusData();
+        this.getOrgType();
     },
     data: function () {
         return {
             treeData: [],
+            orgTypeData: [],
             defaultProps: {
                 children:'childrenSysOrg',
                 label: 'orgName',
@@ -49,6 +51,15 @@ var component = Vue.component('sys-org', {
                 url: '/SysOrg/GetSysOrgList'
             }).done(function (data, res, e) {
                 _this.treeData = data; 
+            });
+        },
+        getOrgType: function () {
+            var _this = this;
+            abp.ajax({
+                url: '/SysDict/GetDictByType',
+                data: JSON.stringify('JGLX')
+            }).done(function (data, res, e) {
+                _this.orgTypeData = data;
             });
         },
         doNodeClick: function (data, node, e) {
@@ -119,7 +130,7 @@ var component = Vue.component('sys-org', {
                             _this.formData.id = data.id; 
                             //重载树菜单
                             _this.initMenusData();
-                            abp.message.success('保存成功');
+                            abp.message.success(tipsType.saveSuccess);
                         });
                     }
                 }
@@ -152,7 +163,7 @@ var component = Vue.component('sys-org', {
                     _this.pageOptions.selectedParent = [];
                     //重载树菜单
                     _this.initMenusData();
-                    abp.message.success('删除成功');
+                    abp.message.success(tipsType.delSuccess);
                 });
             });
         },

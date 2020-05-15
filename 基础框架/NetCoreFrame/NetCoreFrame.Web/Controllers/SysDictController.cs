@@ -80,7 +80,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpMvcAuthorize("DictManager.DelDict")]
+        [AbpMvcAuthorize("DictManager.DelDictType")]
         public JsonResult DelSysDictType([FromBody]SysDictTypeInput model)
         {
             if (model.Id == null)
@@ -123,7 +123,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="listSysDict"></param>
         /// <returns></returns>
-        [AbpMvcAuthorize("DictManager.DeleteDict")]
+        [AbpMvcAuthorize("DictManager.DelDict")]
         public JsonResult DeleteSysDict([FromBody]List<SysDictInput> listSysDict)
         {
             _sysDictAppService.DelSysDict(listSysDict);

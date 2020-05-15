@@ -222,7 +222,7 @@ var frameStyle = function () {
             frameSideLayout.frameColor = $('#hdFrameColor').val();
 
             Cookies.set('FrameSideLayout', frameSideLayout, { expires: 365 });
-        }
+        };
 
         // 设置主题颜色
         var setColor = function (color) {

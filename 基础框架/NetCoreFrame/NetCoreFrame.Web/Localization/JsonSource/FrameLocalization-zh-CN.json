@@ -24,8 +24,22 @@
     "DefaultError403": "您未被授权!",
     "DefaultErrorDetail403": "您未被授权执行该操作.",
     "DefaultError404": "未找到资源!",
-    "DefaultErrorDetail404": "服务器上找不到请求的资源."
+    "DefaultErrorDetail404": "服务器上找不到请求的资源.",
 
+    "Tips": "Tips",
+    "Info": "消息",
+    "Warning": "警告",
+    "Error": "错误",
+    "Details": "详细信息",
+    "OperationComplete": "操作完成",
+    "SendSuccess": "发送成功",
+
+    "Save": "保存",
+    "Editor": "修改",
+    "Add": "新增",
+    "Del": "删除",
+    "Successful": "成功",
+    "Failure": "失败"
   }
 }
 

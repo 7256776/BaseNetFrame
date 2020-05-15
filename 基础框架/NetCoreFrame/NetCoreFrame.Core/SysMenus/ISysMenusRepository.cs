@@ -16,7 +16,7 @@ namespace NetCoreFrame.Core
         IQueryable<SysMenus> GetMenusAll();
 
         /// <summary>
-        /// 转换菜单列表分贝按照根节点菜单按顺序加载子菜单,数据不包含子节点集合:
+        /// 转换菜单列表根据根节点菜单顺序加载子菜单,数据不包含子节点集合
         /// <para>[{                                          </para>
         /// <para>    id:"1",                               </para>
         /// <para>    MenuName:"菜单名称",    </para>

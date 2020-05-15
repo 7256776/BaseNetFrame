@@ -14,6 +14,7 @@
     "IsRepeat": "You enter the {0} of the repeat, please input again",
     "AtLeastOneOfThesePermissionsMustBeGranted": "nokey",
     "ValidationError": "Your request is not valid!",
+    "InternalServerError": "Your request has an error. Please refresh the page and try again!",
     "ValidationNarrativeTitle": "The following errors were detected during validation!..",
 
     "DefaultError": "An error has occurred!",
@@ -23,6 +24,20 @@
     "DefaultError403": "You are not authorized!",
     "DefaultErrorDetail403": "You are not allowed to perform this operation.",
     "DefaultError404": "Resource not found!",
-    "DefaultErrorDetail404": "The resource requested could not found on the server."
+    "DefaultErrorDetail404": "The resource requested could not found on the server.",
+
+    "Tips": "Tips ",
+    "Info": "Info ",
+    "Warning": "Warning ",
+    "Error": "Error ",
+    "Details": "Details",
+    "OperationComplete": "Operation complete",
+    "SendSuccess": "Send success",
+    "Save": "Save ",
+    "Editor": "Modify ",
+    "Add": "Added ",
+    "Del": "Delete ",
+    "Successful": "Success ",
+    "Failure": "Failure"
   }
 }

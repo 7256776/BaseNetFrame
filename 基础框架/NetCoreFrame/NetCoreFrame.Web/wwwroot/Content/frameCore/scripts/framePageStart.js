@@ -38,6 +38,11 @@ var vueApp = new Vue({
     },
     router: vueRouter,
     created: function () {
+        //注册页面窗体变化事件
+        window.onresize = this.winResize;
+        //初次加载初始化页面尺寸
+        this.winResize();
+        //获取系统设置
         this.frameTopLayout.menusCol = abp.setting.getInt("FrameTopLayoutMenusCol");
         this.frameTopLayout.menusColFull = abp.setting.getBoolean("FrameTopLayoutMenusColFull");
         this.frameTopLayout.headToolButton = abp.setting.getBoolean("HeadToolButton");
@@ -56,6 +61,10 @@ var vueApp = new Vue({
         this.InitRouter();
     },
     methods: {
+        winResize: function () {
+            frameStore.screenWidth = document.documentElement.clientWidth;
+            frameStore.screenHeight = document.documentElement.clientHeight ;
+        },
         //此处监听页面加载完成后的事件
         initializationPage: function (fn) {
             /*

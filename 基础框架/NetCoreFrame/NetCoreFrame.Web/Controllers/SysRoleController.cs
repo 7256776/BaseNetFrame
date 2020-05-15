@@ -2,6 +2,7 @@
 using Abp.Auditing;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreFrame.Application;
+using NetCoreFrame.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,15 +14,17 @@ namespace NetCoreFrame.Web.Controllers
     {
         private readonly ISysRoleAppService _sysRoleManager;
         private readonly ISysMenusAppService _sysMenusManager;
-         
-         
+        private readonly IUserInfoAppService _userInfoAppService;
+
         public SysRoleController(
             ISysRoleAppService sysRoleManager, 
-            ISysMenusAppService sysMenusManager 
+            ISysMenusAppService sysMenusManager,
+            IUserInfoAppService userInfoAppService
             )
         {
             _sysRoleManager = sysRoleManager;
             _sysMenusManager = sysMenusManager;
+            _userInfoAppService = userInfoAppService;
              
         }
 

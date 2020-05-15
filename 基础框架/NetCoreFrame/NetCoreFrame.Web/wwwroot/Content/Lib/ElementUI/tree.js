@@ -37,12 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,48 +80,43 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 328);
+/******/ 	return __webpack_require__(__webpack_require__.s = 57);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
-// IMPORTANT: Do NOT use ES2015 features in this file.
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier /* server only */
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
 
   // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
     options._compiled = true
   }
 
@@ -112,7 +127,7 @@ module.exports = function normalizeComponent (
 
   // scopedId
   if (scopeId) {
-    options._scopeId = scopeId
+    options._scopeId = 'data-v-' + scopeId
   }
 
   var hook
@@ -140,34 +155,32 @@ module.exports = function normalizeComponent (
     // never gets called
     options._ssrRegister = hook
   } else if (injectStyles) {
-    hook = injectStyles
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
   }
 
   if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
+    if (options.functional) {
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
       // register for functioal component in vue file
+      var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
-        return existing(h, context)
+        return originalRender(h, context)
       }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
     }
   }
 
   return {
-    esModule: esModule,
     exports: scriptExports,
     options: options
   }
@@ -176,21 +189,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/mixins/emitter");
-
-/***/ }),
-
-/***/ 12:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/locale");
-
-/***/ }),
-
-/***/ 16:
+/***/ 17:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/checkbox");
@@ -204,491 +203,134 @@ module.exports = require("element-ui/lib/utils/dom");
 
 /***/ }),
 
-/***/ 22:
+/***/ 20:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/locale");
+
+/***/ }),
+
+/***/ 28:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/transitions/collapse-transition");
 
 /***/ }),
 
-/***/ 328:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 4:
+/***/ (function(module, exports) {
 
-module.exports = __webpack_require__(329);
-
-
-/***/ }),
-
-/***/ 329:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _tree = __webpack_require__(330);
-
-var _tree2 = _interopRequireDefault(_tree);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* istanbul ignore next */
-_tree2.default.install = function (Vue) {
-  Vue.component(_tree2.default.name, _tree2.default);
-};
-
-exports.default = _tree2.default;
+module.exports = require("element-ui/lib/mixins/emitter");
 
 /***/ }),
 
-/***/ 330:
+/***/ 57:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_vue__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_vue__);
-/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0e114f3f_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tree_vue__ = __webpack_require__(335);
-var normalizeComponent = __webpack_require__(0)
-/* script */
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/tree/src/tree.vue?vue&type=template&id=547575a6&
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "el-tree",
+      class: {
+        "el-tree--highlight-current": _vm.highlightCurrent,
+        "is-dragging": !!_vm.dragState.draggingNode,
+        "is-drop-not-allow": !_vm.dragState.allowDrop,
+        "is-drop-inner": _vm.dragState.dropType === "inner"
+      },
+      attrs: { role: "tree" }
+    },
+    [
+      _vm._l(_vm.root.childNodes, function(child) {
+        return _c("el-tree-node", {
+          key: _vm.getNodeKey(child),
+          attrs: {
+            node: child,
+            props: _vm.props,
+            "render-after-expand": _vm.renderAfterExpand,
+            "show-checkbox": _vm.showCheckbox,
+            "render-content": _vm.renderContent
+          },
+          on: { "node-expand": _vm.handleNodeExpand }
+        })
+      }),
+      _vm.isEmpty
+        ? _c("div", { staticClass: "el-tree__empty-block" }, [
+            _c("span", { staticClass: "el-tree__empty-text" }, [
+              _vm._v(_vm._s(_vm.emptyText))
+            ])
+          ])
+        : _vm._e(),
+      _c("div", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.dragState.showDropIndicator,
+            expression: "dragState.showDropIndicator"
+          }
+        ],
+        ref: "dropIndicator",
+        staticClass: "el-tree__drop-indicator"
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
 
-/* template */
+// CONCATENATED MODULE: ./packages/tree/src/tree.vue?vue&type=template&id=547575a6&
 
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0e114f3f_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tree_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
+// EXTERNAL MODULE: external "element-ui/lib/utils/merge"
+var merge_ = __webpack_require__(9);
+var merge_default = /*#__PURE__*/__webpack_require__.n(merge_);
 
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+// CONCATENATED MODULE: ./packages/tree/src/model/util.js
+var NODE_KEY = '$treeNodeId';
 
+var markNodeData = function markNodeData(node, data) {
+  if (!data || data[NODE_KEY]) return;
+  Object.defineProperty(data, NODE_KEY, {
+    value: node.id,
+    enumerable: false,
+    configurable: false,
+    writable: false
+  });
+};
 
-/***/ }),
+var util_getNodeKey = function getNodeKey(key, data) {
+  if (!key) return data[NODE_KEY];
+  return data[key];
+};
 
-/***/ 331:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _node = __webpack_require__(332);
-
-var _node2 = _interopRequireDefault(_node);
-
-var _util = __webpack_require__(36);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var TreeStore = function () {
-  function TreeStore(options) {
-    var _this = this;
-
-    _classCallCheck(this, TreeStore);
-
-    this.currentNode = null;
-    this.currentNodeKey = null;
-
-    for (var option in options) {
-      if (options.hasOwnProperty(option)) {
-        this[option] = options[option];
-      }
+var findNearestComponent = function findNearestComponent(element, componentName) {
+  var target = element;
+  while (target && target.tagName !== 'BODY') {
+    if (target.__vue__ && target.__vue__.$options.name === componentName) {
+      return target.__vue__;
     }
-
-    this.nodesMap = {};
-
-    this.root = new _node2.default({
-      data: this.data,
-      store: this
-    });
-
-    if (this.lazy && this.load) {
-      var loadFn = this.load;
-      loadFn(this.root, function (data) {
-        _this.root.doCreateChildren(data);
-        _this._initDefaultCheckedNodes();
-      });
-    } else {
-      this._initDefaultCheckedNodes();
-    }
+    target = target.parentNode;
   }
-
-  TreeStore.prototype.filter = function filter(value) {
-    var filterNodeMethod = this.filterNodeMethod;
-    var traverse = function traverse(node) {
-      var childNodes = node.root ? node.root.childNodes : node.childNodes;
-
-      childNodes.forEach(function (child) {
-        child.visible = filterNodeMethod.call(child, value, child.data, child);
-
-        traverse(child);
-      });
-
-      if (!node.visible && childNodes.length) {
-        var allHidden = true;
-
-        childNodes.forEach(function (child) {
-          if (child.visible) allHidden = false;
-        });
-
-        if (node.root) {
-          node.root.visible = allHidden === false;
-        } else {
-          node.visible = allHidden === false;
-        }
-      }
-      if (!value) return;
-
-      if (node.visible && !node.isLeaf) node.expand();
-    };
-
-    traverse(this);
-  };
-
-  TreeStore.prototype.setData = function setData(newVal) {
-    var instanceChanged = newVal !== this.root.data;
-    if (instanceChanged) {
-      this.root.setData(newVal);
-      this._initDefaultCheckedNodes();
-    } else {
-      this.root.updateChildren();
-    }
-  };
-
-  TreeStore.prototype.getNode = function getNode(data) {
-    if (data instanceof _node2.default) return data;
-    var key = (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object' ? data : (0, _util.getNodeKey)(this.key, data);
-    return this.nodesMap[key] || null;
-  };
-
-  TreeStore.prototype.insertBefore = function insertBefore(data, refData) {
-    var refNode = this.getNode(refData);
-    refNode.parent.insertBefore({ data: data }, refNode);
-  };
-
-  TreeStore.prototype.insertAfter = function insertAfter(data, refData) {
-    var refNode = this.getNode(refData);
-    refNode.parent.insertAfter({ data: data }, refNode);
-  };
-
-  TreeStore.prototype.remove = function remove(data) {
-    var node = this.getNode(data);
-    if (node) {
-      node.parent.removeChild(node);
-    }
-  };
-
-  TreeStore.prototype.append = function append(data, parentData) {
-    var parentNode = parentData ? this.getNode(parentData) : this.root;
-
-    if (parentNode) {
-      parentNode.insertChild({ data: data });
-    }
-  };
-
-  TreeStore.prototype._initDefaultCheckedNodes = function _initDefaultCheckedNodes() {
-    var _this2 = this;
-
-    var defaultCheckedKeys = this.defaultCheckedKeys || [];
-    var nodesMap = this.nodesMap;
-
-    defaultCheckedKeys.forEach(function (checkedKey) {
-      var node = nodesMap[checkedKey];
-
-      if (node) {
-        node.setChecked(true, !_this2.checkStrictly);
-      }
-    });
-  };
-
-  TreeStore.prototype._initDefaultCheckedNode = function _initDefaultCheckedNode(node) {
-    var defaultCheckedKeys = this.defaultCheckedKeys || [];
-
-    if (defaultCheckedKeys.indexOf(node.key) !== -1) {
-      node.setChecked(true, !this.checkStrictly);
-    }
-  };
-
-  TreeStore.prototype.setDefaultCheckedKey = function setDefaultCheckedKey(newVal) {
-    if (newVal !== this.defaultCheckedKeys) {
-      this.defaultCheckedKeys = newVal;
-      this._initDefaultCheckedNodes();
-    }
-  };
-
-  TreeStore.prototype.registerNode = function registerNode(node) {
-    var key = this.key;
-    if (!key || !node || !node.data) return;
-
-    var nodeKey = node.key;
-    if (nodeKey !== undefined) this.nodesMap[node.key] = node;
-  };
-
-  TreeStore.prototype.deregisterNode = function deregisterNode(node) {
-    var key = this.key;
-    if (!key || !node || !node.data) return;
-
-    var childNodes = node.childNodes;
-    for (var i = 0, j = childNodes.length; i < j; i++) {
-      var child = childNodes[i];
-      this.deregisterNode(child);
-    }
-
-    delete this.nodesMap[node.key];
-  };
-
-  TreeStore.prototype.getCheckedNodes = function getCheckedNodes() {
-    var leafOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-    var checkedNodes = [];
-    var traverse = function traverse(node) {
-      var childNodes = node.root ? node.root.childNodes : node.childNodes;
-
-      childNodes.forEach(function (child) {
-        if (child.checked && (!leafOnly || leafOnly && child.isLeaf)) {
-          checkedNodes.push(child.data);
-        }
-
-        traverse(child);
-      });
-    };
-
-    traverse(this);
-
-    return checkedNodes;
-  };
-
-  TreeStore.prototype.getCheckedKeys = function getCheckedKeys() {
-    var _this3 = this;
-
-    var leafOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-    return this.getCheckedNodes(leafOnly).map(function (data) {
-      return (data || {})[_this3.key];
-    });
-  };
-
-  TreeStore.prototype.getHalfCheckedNodes = function getHalfCheckedNodes() {
-    var nodes = [];
-    var traverse = function traverse(node) {
-      var childNodes = node.root ? node.root.childNodes : node.childNodes;
-
-      childNodes.forEach(function (child) {
-        if (child.indeterminate) {
-          nodes.push(child.data);
-        }
-
-        traverse(child);
-      });
-    };
-
-    traverse(this);
-
-    return nodes;
-  };
-
-  TreeStore.prototype.getHalfCheckedKeys = function getHalfCheckedKeys() {
-    var _this4 = this;
-
-    return this.getHalfCheckedNodes().map(function (data) {
-      return (data || {})[_this4.key];
-    });
-  };
-
-  TreeStore.prototype._getAllNodes = function _getAllNodes() {
-    var allNodes = [];
-    var nodesMap = this.nodesMap;
-    for (var nodeKey in nodesMap) {
-      if (nodesMap.hasOwnProperty(nodeKey)) {
-        allNodes.push(nodesMap[nodeKey]);
-      }
-    }
-
-    return allNodes;
-  };
-
-  TreeStore.prototype.updateChildren = function updateChildren(key, data) {
-    var node = this.nodesMap[key];
-    if (!node) return;
-    var childNodes = node.childNodes;
-    for (var i = childNodes.length - 1; i >= 0; i--) {
-      var child = childNodes[i];
-      this.remove(child.data);
-    }
-    for (var _i = 0, j = data.length; _i < j; _i++) {
-      var _child = data[_i];
-      this.append(_child, node.data);
-    }
-  };
-
-  TreeStore.prototype._setCheckedKeys = function _setCheckedKeys(key) {
-    var leafOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var checkedKeys = arguments[2];
-
-    var allNodes = this._getAllNodes().sort(function (a, b) {
-      return b.level - a.level;
-    });
-    var cache = Object.create(null);
-    var keys = Object.keys(checkedKeys);
-    allNodes.forEach(function (node) {
-      return node.setChecked(false, false);
-    });
-    for (var i = 0, j = allNodes.length; i < j; i++) {
-      var node = allNodes[i];
-      var nodeKey = node.data[key].toString();
-      var checked = keys.indexOf(nodeKey) > -1;
-      if (!checked) {
-        if (node.checked && !cache[nodeKey]) {
-          node.setChecked(false, false);
-        }
-        continue;
-      }
-
-      var parent = node.parent;
-      while (parent && parent.level > 0) {
-        cache[parent.data[key]] = true;
-        parent = parent.parent;
-      }
-
-      if (node.isLeaf || this.checkStrictly) {
-        node.setChecked(true, false);
-        continue;
-      }
-      node.setChecked(true, true);
-
-      if (leafOnly) {
-        (function () {
-          node.setChecked(false, false);
-          var traverse = function traverse(node) {
-            var childNodes = node.childNodes;
-            childNodes.forEach(function (child) {
-              if (!child.isLeaf) {
-                child.setChecked(false, false);
-              }
-              traverse(child);
-            });
-          };
-          traverse(node);
-        })();
-      }
-    }
-  };
-
-  TreeStore.prototype.setCheckedNodes = function setCheckedNodes(array) {
-    var leafOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-    var key = this.key;
-    var checkedKeys = {};
-    array.forEach(function (item) {
-      checkedKeys[(item || {})[key]] = true;
-    });
-
-    this._setCheckedKeys(key, leafOnly, checkedKeys);
-  };
-
-  TreeStore.prototype.setCheckedKeys = function setCheckedKeys(keys) {
-    var leafOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-    this.defaultCheckedKeys = keys;
-    var key = this.key;
-    var checkedKeys = {};
-    keys.forEach(function (key) {
-      checkedKeys[key] = true;
-    });
-
-    this._setCheckedKeys(key, leafOnly, checkedKeys);
-  };
-
-  TreeStore.prototype.setDefaultExpandedKeys = function setDefaultExpandedKeys(keys) {
-    var _this5 = this;
-
-    keys = keys || [];
-    this.defaultExpandedKeys = keys;
-
-    keys.forEach(function (key) {
-      var node = _this5.getNode(key);
-      if (node) node.expand(null, _this5.autoExpandParent);
-    });
-  };
-
-  TreeStore.prototype.setChecked = function setChecked(data, checked, deep) {
-    var node = this.getNode(data);
-
-    if (node) {
-      node.setChecked(!!checked, deep);
-    }
-  };
-
-  TreeStore.prototype.getCurrentNode = function getCurrentNode() {
-    return this.currentNode;
-  };
-
-  TreeStore.prototype.setCurrentNode = function setCurrentNode(node) {
-    this.currentNode = node;
-  };
-
-  TreeStore.prototype.setUserCurrentNode = function setUserCurrentNode(node) {
-    var key = node[this.key];
-    var currNode = this.nodesMap[key];
-    this.setCurrentNode(currNode);
-  };
-
-  TreeStore.prototype.setCurrentNodeKey = function setCurrentNodeKey(key) {
-    var node = this.getNode(key);
-    if (node) {
-      this.currentNode = node;
-    }
-  };
-
-  return TreeStore;
-}();
-
-exports.default = TreeStore;
-;
-
-/***/ }),
-
-/***/ 332:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.getChildState = undefined;
-
+  return null;
+};
+// CONCATENATED MODULE: ./packages/tree/src/model/node.js
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _merge = __webpack_require__(9);
-
-var _merge2 = _interopRequireDefault(_merge);
-
-var _util = __webpack_require__(36);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var getChildState = exports.getChildState = function getChildState(node) {
+
+
+
+var getChildState = function getChildState(node) {
   var all = true;
   var none = true;
   var allWithoutDisable = true;
@@ -752,7 +394,7 @@ var getPropertyFromData = function getPropertyFromData(node, prop) {
 
 var nodeIdSeed = 0;
 
-var Node = function () {
+var node_Node = function () {
   function Node(options) {
     _classCallCheck(this, Node);
 
@@ -764,6 +406,7 @@ var Node = function () {
     this.expanded = false;
     this.parent = null;
     this.visible = true;
+    this.isCurrent = false;
 
     for (var name in options) {
       if (options.hasOwnProperty(name)) {
@@ -804,7 +447,9 @@ var Node = function () {
     } else if (this.level > 0 && store.lazy && store.defaultExpandAll) {
       this.expand();
     }
-
+    if (!Array.isArray(this.data)) {
+      markNodeData(this, this.data);
+    }
     if (!this.data) return;
     var defaultExpandedKeys = store.defaultExpandedKeys;
     var key = store.key;
@@ -814,6 +459,7 @@ var Node = function () {
 
     if (key && store.currentNodeKey !== undefined && this.key === store.currentNodeKey) {
       store.currentNode = this;
+      store.currentNode.isCurrent = true;
     }
 
     if (store.lazy) {
@@ -825,7 +471,7 @@ var Node = function () {
 
   Node.prototype.setData = function setData(data) {
     if (!Array.isArray(data)) {
-      (0, _util.markNodeData)(this, data);
+      markNodeData(this, data);
     }
 
     this.data = data;
@@ -883,7 +529,7 @@ var Node = function () {
           }
         }
       }
-      (0, _merge2.default)(child, {
+      merge_default()(child, {
         parent: this,
         store: this.store
       });
@@ -938,11 +584,13 @@ var Node = function () {
 
   Node.prototype.removeChildByData = function removeChildByData(data) {
     var targetNode = null;
-    this.childNodes.forEach(function (node) {
-      if (node.data === data) {
-        targetNode = node;
+
+    for (var i = 0; i < this.childNodes.length; i++) {
+      if (this.childNodes[i].data === data) {
+        targetNode = this.childNodes[i];
+        break;
       }
-    });
+    }
 
     if (targetNode) {
       this.removeChild(targetNode);
@@ -969,7 +617,7 @@ var Node = function () {
         if (data instanceof Array) {
           if (_this.checked) {
             _this.setChecked(true, true);
-          } else {
+          } else if (!_this.store.checkStrictly) {
             reInitChecked(_this);
           }
           done();
@@ -986,7 +634,7 @@ var Node = function () {
     var defaultProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     array.forEach(function (item) {
-      _this2.insertChild((0, _merge2.default)({ data: item }, defaultProps), undefined, true);
+      _this2.insertChild(merge_default()({ data: item }, defaultProps), undefined, true);
     });
   };
 
@@ -1108,16 +756,18 @@ var Node = function () {
     var newNodes = [];
 
     newData.forEach(function (item, index) {
-      if (item[_util.NODE_KEY]) {
-        newDataMap[item[_util.NODE_KEY]] = { index: index, data: item };
+      if (item[NODE_KEY]) {
+        newDataMap[item[NODE_KEY]] = { index: index, data: item };
       } else {
         newNodes.push({ index: index, data: item });
       }
     });
 
-    oldData.forEach(function (item) {
-      if (!newDataMap[item[_util.NODE_KEY]]) _this4.removeChildByData(item);
-    });
+    if (!this.store.lazy) {
+      oldData.forEach(function (item) {
+        if (!newDataMap[item[NODE_KEY]]) _this4.removeChildByData(item);
+      });
+    }
 
     newNodes.forEach(function (_ref) {
       var index = _ref.index,
@@ -1164,11 +814,6 @@ var Node = function () {
       return getPropertyFromData(this, 'label');
     }
   }, {
-    key: 'icon',
-    get: function get() {
-      return getPropertyFromData(this, 'icon');
-    }
-  }, {
     key: 'key',
     get: function get() {
       var nodeKey = this.store.key;
@@ -1209,193 +854,923 @@ var Node = function () {
   return Node;
 }();
 
-exports.default = Node;
+/* harmony default export */ var model_node = (node_Node);
+// CONCATENATED MODULE: ./packages/tree/src/model/tree-store.js
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/***/ }),
-
-/***/ 333:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_node_vue__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_node_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_node_vue__);
-/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_node_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_node_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_635fb9e9_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tree_node_vue__ = __webpack_require__(334);
-var normalizeComponent = __webpack_require__(0)
-/* script */
+function tree_store_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tree_node_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_635fb9e9_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tree_node_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
-/***/ }),
+var tree_store_TreeStore = function () {
+  function TreeStore(options) {
+    var _this = this;
 
-/***/ 334:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+    tree_store_classCallCheck(this, TreeStore);
 
-"use strict";
-var render = function () {
-var this$1 = this;
-var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.node.visible),expression:"node.visible"}],ref:"node",staticClass:"el-tree-node",class:{
-    'is-expanded': _vm.expanded,
-    'is-current': _vm.tree.store.currentNode === _vm.node,
-    'is-hidden': !_vm.node.visible,
-    'is-focusable': !_vm.node.disabled,
-    'is-checked': !_vm.node.disabled && _vm.node.checked
-  },attrs:{"role":"treeitem","tabindex":"-1","aria-expanded":_vm.expanded,"aria-disabled":_vm.node.disabled,"aria-checked":_vm.node.checked,"draggable":_vm.tree.draggable},on:{"click":function($event){$event.stopPropagation();_vm.handleClick($event)},"contextmenu":function ($event) { return this$1.handleContextMenu($event); },"dragstart":function($event){$event.stopPropagation();_vm.handleDragStart($event)},"dragover":function($event){$event.stopPropagation();_vm.handleDragOver($event)},"dragend":function($event){$event.stopPropagation();_vm.handleDragEnd($event)},"drop":function($event){$event.stopPropagation();_vm.handleDrop($event)}}},[_c('div',{staticClass:"el-tree-node__content",style:({ 'padding-left': (_vm.node.level - 1) * _vm.tree.indent + 'px' })},[_c('span',{staticClass:"el-tree-node__expand-icon el-icon-caret-right",class:{ 'is-leaf': _vm.node.isLeaf, expanded: !_vm.node.isLeaf && _vm.expanded },on:{"click":function($event){$event.stopPropagation();_vm.handleExpandIconClick($event)}}}),(_vm.showCheckbox)?_c('el-checkbox',{attrs:{"indeterminate":_vm.node.indeterminate,"disabled":!!_vm.node.disabled},on:{"change":_vm.handleCheckChange},nativeOn:{"click":function($event){$event.stopPropagation();}},model:{value:(_vm.node.checked),callback:function ($$v) {_vm.$set(_vm.node, "checked", $$v)},expression:"node.checked"}}):_vm._e(),(_vm.node.loading)?_c('span',{staticClass:"el-tree-node__loading-icon el-icon-loading"}):_vm._e(),_c('node-content',{attrs:{"node":_vm.node}})],1),_c('el-collapse-transition',[(!_vm.renderAfterExpand || _vm.childNodeRendered)?_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.expanded),expression:"expanded"}],staticClass:"el-tree-node__children",attrs:{"role":"group","aria-expanded":_vm.expanded}},_vm._l((_vm.node.childNodes),function(child){return _c('el-tree-node',{key:_vm.getNodeKey(child),attrs:{"render-content":_vm.renderContent,"render-after-expand":_vm.renderAfterExpand,"node":child},on:{"node-expand":_vm.handleChildNodeExpand}})})):_vm._e()])],1)}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
+    this.currentNode = null;
+    this.currentNodeKey = null;
 
-/***/ }),
-
-/***/ 335:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"el-tree",class:{
-    'el-tree--highlight-current': _vm.highlightCurrent,
-    'is-dragging': !!_vm.dragState.draggingNode,
-    'is-drop-not-allow': !_vm.dragState.allowDrop,
-    'is-drop-inner': _vm.dragState.dropType === 'inner'
-  },attrs:{"role":"tree"}},[_vm._l((_vm.root.childNodes),function(child){return _c('el-tree-node',{key:_vm.getNodeKey(child),attrs:{"node":child,"props":_vm.props,"render-after-expand":_vm.renderAfterExpand,"render-content":_vm.renderContent},on:{"node-expand":_vm.handleNodeExpand}})}),(!_vm.root.childNodes || _vm.root.childNodes.length === 0)?_c('div',{staticClass:"el-tree__empty-block"},[_c('span',{staticClass:"el-tree__empty-text"},[_vm._v(_vm._s(_vm.emptyText))])]):_vm._e(),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.dragState.showDropIndicator),expression:"dragState.showDropIndicator"}],ref:"dropIndicator",staticClass:"el-tree__drop-indicator"})],2)}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
-
-/***/ 36:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-var NODE_KEY = exports.NODE_KEY = '$treeNodeId';
-
-var markNodeData = exports.markNodeData = function markNodeData(node, data) {
-  if (data[NODE_KEY]) return;
-  Object.defineProperty(data, NODE_KEY, {
-    value: node.id,
-    enumerable: false,
-    configurable: false,
-    writable: false
-  });
-};
-
-var getNodeKey = exports.getNodeKey = function getNodeKey(key, data) {
-  if (!key) return data[NODE_KEY];
-  return data[key];
-};
-
-var findNearestComponent = exports.findNearestComponent = function findNearestComponent(element, componentName) {
-  var target = element;
-  while (target && target.tagName !== 'BODY') {
-    if (target.__vue__ && target.__vue__.$options.name === componentName) {
-      return target.__vue__;
+    for (var option in options) {
+      if (options.hasOwnProperty(option)) {
+        this[option] = options[option];
+      }
     }
-    target = target.parentNode;
+
+    this.nodesMap = {};
+
+    this.root = new model_node({
+      data: this.data,
+      store: this
+    });
+
+    if (this.lazy && this.load) {
+      var loadFn = this.load;
+      loadFn(this.root, function (data) {
+        _this.root.doCreateChildren(data);
+        _this._initDefaultCheckedNodes();
+      });
+    } else {
+      this._initDefaultCheckedNodes();
+    }
   }
-  return null;
-};
 
-/***/ }),
+  TreeStore.prototype.filter = function filter(value) {
+    var filterNodeMethod = this.filterNodeMethod;
+    var lazy = this.lazy;
+    var traverse = function traverse(node) {
+      var childNodes = node.root ? node.root.childNodes : node.childNodes;
 
-/***/ 9:
-/***/ (function(module, exports) {
+      childNodes.forEach(function (child) {
+        child.visible = filterNodeMethod.call(child, value, child.data, child);
 
-module.exports = require("element-ui/lib/utils/merge");
+        traverse(child);
+      });
 
-/***/ }),
+      if (!node.visible && childNodes.length) {
+        var allHidden = true;
 
-/***/ 95:
-/***/ (function(module, exports, __webpack_require__) {
+        childNodes.forEach(function (child) {
+          if (child.visible) allHidden = false;
+        });
 
-"use strict";
+        if (node.root) {
+          node.root.visible = allHidden === false;
+        } else {
+          node.visible = allHidden === false;
+        }
+      }
+      if (!value) return;
+
+      if (node.visible && !node.isLeaf && !lazy) node.expand();
+    };
+
+    traverse(this);
+  };
+
+  TreeStore.prototype.setData = function setData(newVal) {
+    var instanceChanged = newVal !== this.root.data;
+    if (instanceChanged) {
+      this.root.setData(newVal);
+      this._initDefaultCheckedNodes();
+    } else {
+      this.root.updateChildren();
+    }
+  };
+
+  TreeStore.prototype.getNode = function getNode(data) {
+    if (data instanceof model_node) return data;
+    var key = (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== 'object' ? data : util_getNodeKey(this.key, data);
+    return this.nodesMap[key] || null;
+  };
+
+  TreeStore.prototype.insertBefore = function insertBefore(data, refData) {
+    var refNode = this.getNode(refData);
+    refNode.parent.insertBefore({ data: data }, refNode);
+  };
+
+  TreeStore.prototype.insertAfter = function insertAfter(data, refData) {
+    var refNode = this.getNode(refData);
+    refNode.parent.insertAfter({ data: data }, refNode);
+  };
+
+  TreeStore.prototype.remove = function remove(data) {
+    var node = this.getNode(data);
+
+    if (node && node.parent) {
+      if (node === this.currentNode) {
+        this.currentNode = null;
+      }
+      node.parent.removeChild(node);
+    }
+  };
+
+  TreeStore.prototype.append = function append(data, parentData) {
+    var parentNode = parentData ? this.getNode(parentData) : this.root;
+
+    if (parentNode) {
+      parentNode.insertChild({ data: data });
+    }
+  };
+
+  TreeStore.prototype._initDefaultCheckedNodes = function _initDefaultCheckedNodes() {
+    var _this2 = this;
+
+    var defaultCheckedKeys = this.defaultCheckedKeys || [];
+    var nodesMap = this.nodesMap;
+
+    defaultCheckedKeys.forEach(function (checkedKey) {
+      var node = nodesMap[checkedKey];
+
+      if (node) {
+        node.setChecked(true, !_this2.checkStrictly);
+      }
+    });
+  };
+
+  TreeStore.prototype._initDefaultCheckedNode = function _initDefaultCheckedNode(node) {
+    var defaultCheckedKeys = this.defaultCheckedKeys || [];
+
+    if (defaultCheckedKeys.indexOf(node.key) !== -1) {
+      node.setChecked(true, !this.checkStrictly);
+    }
+  };
+
+  TreeStore.prototype.setDefaultCheckedKey = function setDefaultCheckedKey(newVal) {
+    if (newVal !== this.defaultCheckedKeys) {
+      this.defaultCheckedKeys = newVal;
+      this._initDefaultCheckedNodes();
+    }
+  };
+
+  TreeStore.prototype.registerNode = function registerNode(node) {
+    var key = this.key;
+    if (!key || !node || !node.data) return;
+
+    var nodeKey = node.key;
+    if (nodeKey !== undefined) this.nodesMap[node.key] = node;
+  };
+
+  TreeStore.prototype.deregisterNode = function deregisterNode(node) {
+    var _this3 = this;
+
+    var key = this.key;
+    if (!key || !node || !node.data) return;
+
+    node.childNodes.forEach(function (child) {
+      _this3.deregisterNode(child);
+    });
+
+    delete this.nodesMap[node.key];
+  };
+
+  TreeStore.prototype.getCheckedNodes = function getCheckedNodes() {
+    var leafOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var includeHalfChecked = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var checkedNodes = [];
+    var traverse = function traverse(node) {
+      var childNodes = node.root ? node.root.childNodes : node.childNodes;
+
+      childNodes.forEach(function (child) {
+        if ((child.checked || includeHalfChecked && child.indeterminate) && (!leafOnly || leafOnly && child.isLeaf)) {
+          checkedNodes.push(child.data);
+        }
+
+        traverse(child);
+      });
+    };
+
+    traverse(this);
+
+    return checkedNodes;
+  };
+
+  TreeStore.prototype.getCheckedKeys = function getCheckedKeys() {
+    var _this4 = this;
+
+    var leafOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    return this.getCheckedNodes(leafOnly).map(function (data) {
+      return (data || {})[_this4.key];
+    });
+  };
+
+  TreeStore.prototype.getHalfCheckedNodes = function getHalfCheckedNodes() {
+    var nodes = [];
+    var traverse = function traverse(node) {
+      var childNodes = node.root ? node.root.childNodes : node.childNodes;
+
+      childNodes.forEach(function (child) {
+        if (child.indeterminate) {
+          nodes.push(child.data);
+        }
+
+        traverse(child);
+      });
+    };
+
+    traverse(this);
+
+    return nodes;
+  };
+
+  TreeStore.prototype.getHalfCheckedKeys = function getHalfCheckedKeys() {
+    var _this5 = this;
+
+    return this.getHalfCheckedNodes().map(function (data) {
+      return (data || {})[_this5.key];
+    });
+  };
+
+  TreeStore.prototype._getAllNodes = function _getAllNodes() {
+    var allNodes = [];
+    var nodesMap = this.nodesMap;
+    for (var nodeKey in nodesMap) {
+      if (nodesMap.hasOwnProperty(nodeKey)) {
+        allNodes.push(nodesMap[nodeKey]);
+      }
+    }
+
+    return allNodes;
+  };
+
+  TreeStore.prototype.updateChildren = function updateChildren(key, data) {
+    var node = this.nodesMap[key];
+    if (!node) return;
+    var childNodes = node.childNodes;
+    for (var i = childNodes.length - 1; i >= 0; i--) {
+      var child = childNodes[i];
+      this.remove(child.data);
+    }
+    for (var _i = 0, j = data.length; _i < j; _i++) {
+      var _child = data[_i];
+      this.append(_child, node.data);
+    }
+  };
+
+  TreeStore.prototype._setCheckedKeys = function _setCheckedKeys(key) {
+    var leafOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var checkedKeys = arguments[2];
+
+    var allNodes = this._getAllNodes().sort(function (a, b) {
+      return b.level - a.level;
+    });
+    var cache = Object.create(null);
+    var keys = Object.keys(checkedKeys);
+    allNodes.forEach(function (node) {
+      return node.setChecked(false, false);
+    });
+    for (var i = 0, j = allNodes.length; i < j; i++) {
+      var node = allNodes[i];
+      var nodeKey = node.data[key].toString();
+      var checked = keys.indexOf(nodeKey) > -1;
+      if (!checked) {
+        if (node.checked && !cache[nodeKey]) {
+          node.setChecked(false, false);
+        }
+        continue;
+      }
+
+      var parent = node.parent;
+      while (parent && parent.level > 0) {
+        cache[parent.data[key]] = true;
+        parent = parent.parent;
+      }
+
+      if (node.isLeaf || this.checkStrictly) {
+        node.setChecked(true, false);
+        continue;
+      }
+      node.setChecked(true, true);
+
+      if (leafOnly) {
+        (function () {
+          node.setChecked(false, false);
+          var traverse = function traverse(node) {
+            var childNodes = node.childNodes;
+            childNodes.forEach(function (child) {
+              if (!child.isLeaf) {
+                child.setChecked(false, false);
+              }
+              traverse(child);
+            });
+          };
+          traverse(node);
+        })();
+      }
+    }
+  };
+
+  TreeStore.prototype.setCheckedNodes = function setCheckedNodes(array) {
+    var leafOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var key = this.key;
+    var checkedKeys = {};
+    array.forEach(function (item) {
+      checkedKeys[(item || {})[key]] = true;
+    });
+
+    this._setCheckedKeys(key, leafOnly, checkedKeys);
+  };
+
+  TreeStore.prototype.setCheckedKeys = function setCheckedKeys(keys) {
+    var leafOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    this.defaultCheckedKeys = keys;
+    var key = this.key;
+    var checkedKeys = {};
+    keys.forEach(function (key) {
+      checkedKeys[key] = true;
+    });
+
+    this._setCheckedKeys(key, leafOnly, checkedKeys);
+  };
+
+  TreeStore.prototype.setDefaultExpandedKeys = function setDefaultExpandedKeys(keys) {
+    var _this6 = this;
+
+    keys = keys || [];
+    this.defaultExpandedKeys = keys;
+
+    keys.forEach(function (key) {
+      var node = _this6.getNode(key);
+      if (node) node.expand(null, _this6.autoExpandParent);
+    });
+  };
+
+  TreeStore.prototype.setChecked = function setChecked(data, checked, deep) {
+    var node = this.getNode(data);
+
+    if (node) {
+      node.setChecked(!!checked, deep);
+    }
+  };
+
+  TreeStore.prototype.getCurrentNode = function getCurrentNode() {
+    return this.currentNode;
+  };
+
+  TreeStore.prototype.setCurrentNode = function setCurrentNode(currentNode) {
+    var prevCurrentNode = this.currentNode;
+    if (prevCurrentNode) {
+      prevCurrentNode.isCurrent = false;
+    }
+    this.currentNode = currentNode;
+    this.currentNode.isCurrent = true;
+  };
+
+  TreeStore.prototype.setUserCurrentNode = function setUserCurrentNode(node) {
+    var key = node[this.key];
+    var currNode = this.nodesMap[key];
+    this.setCurrentNode(currNode);
+  };
+
+  TreeStore.prototype.setCurrentNodeKey = function setCurrentNodeKey(key) {
+    if (key === null) {
+      this.currentNode = null;
+      return;
+    }
+    var node = this.getNode(key);
+    if (node) {
+      this.setCurrentNode(node);
+    }
+  };
+
+  return TreeStore;
+}();
+
+/* harmony default export */ var tree_store = (tree_store_TreeStore);
+;
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/tree/src/tree-node.vue?vue&type=template&id=3ba3ef0e&
+var tree_nodevue_type_template_id_3ba3ef0e_render = function() {
+  var this$1 = this
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.node.visible,
+          expression: "node.visible"
+        }
+      ],
+      ref: "node",
+      staticClass: "el-tree-node",
+      class: {
+        "is-expanded": _vm.expanded,
+        "is-current": _vm.node.isCurrent,
+        "is-hidden": !_vm.node.visible,
+        "is-focusable": !_vm.node.disabled,
+        "is-checked": !_vm.node.disabled && _vm.node.checked
+      },
+      attrs: {
+        role: "treeitem",
+        tabindex: "-1",
+        "aria-expanded": _vm.expanded,
+        "aria-disabled": _vm.node.disabled,
+        "aria-checked": _vm.node.checked,
+        draggable: _vm.tree.draggable
+      },
+      on: {
+        click: function($event) {
+          $event.stopPropagation()
+          return _vm.handleClick($event)
+        },
+        contextmenu: function($event) {
+          return this$1.handleContextMenu($event)
+        },
+        dragstart: function($event) {
+          $event.stopPropagation()
+          return _vm.handleDragStart($event)
+        },
+        dragover: function($event) {
+          $event.stopPropagation()
+          return _vm.handleDragOver($event)
+        },
+        dragend: function($event) {
+          $event.stopPropagation()
+          return _vm.handleDragEnd($event)
+        },
+        drop: function($event) {
+          $event.stopPropagation()
+          return _vm.handleDrop($event)
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "el-tree-node__content",
+          style: {
+            "padding-left": (_vm.node.level - 1) * _vm.tree.indent + "px"
+          }
+        },
+        [
+          _c("span", {
+            class: [
+              {
+                "is-leaf": _vm.node.isLeaf,
+                expanded: !_vm.node.isLeaf && _vm.expanded
+              },
+              "el-tree-node__expand-icon",
+              _vm.tree.iconClass ? _vm.tree.iconClass : "el-icon-caret-right"
+            ],
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                return _vm.handleExpandIconClick($event)
+              }
+            }
+          }),
+          _vm.showCheckbox
+            ? _c("el-checkbox", {
+                attrs: {
+                  indeterminate: _vm.node.indeterminate,
+                  disabled: !!_vm.node.disabled
+                },
+                on: { change: _vm.handleCheckChange },
+                nativeOn: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                  }
+                },
+                model: {
+                  value: _vm.node.checked,
+                  callback: function($$v) {
+                    _vm.$set(_vm.node, "checked", $$v)
+                  },
+                  expression: "node.checked"
+                }
+              })
+            : _vm._e(),
+          _vm.node.loading
+            ? _c("span", {
+                staticClass: "el-tree-node__loading-icon el-icon-loading"
+              })
+            : _vm._e(),
+          _c("node-content", { attrs: { node: _vm.node } })
+        ],
+        1
+      ),
+      _c("el-collapse-transition", [
+        !_vm.renderAfterExpand || _vm.childNodeRendered
+          ? _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.expanded,
+                    expression: "expanded"
+                  }
+                ],
+                staticClass: "el-tree-node__children",
+                attrs: { role: "group", "aria-expanded": _vm.expanded }
+              },
+              _vm._l(_vm.node.childNodes, function(child) {
+                return _c("el-tree-node", {
+                  key: _vm.getNodeKey(child),
+                  attrs: {
+                    "render-content": _vm.renderContent,
+                    "render-after-expand": _vm.renderAfterExpand,
+                    "show-checkbox": _vm.showCheckbox,
+                    node: child
+                  },
+                  on: { "node-expand": _vm.handleChildNodeExpand }
+                })
+              }),
+              1
+            )
+          : _vm._e()
+      ])
+    ],
+    1
+  )
+}
+var tree_nodevue_type_template_id_3ba3ef0e_staticRenderFns = []
+tree_nodevue_type_template_id_3ba3ef0e_render._withStripped = true
 
 
-exports.__esModule = true;
+// CONCATENATED MODULE: ./packages/tree/src/tree-node.vue?vue&type=template&id=3ba3ef0e&
 
-var _treeStore = __webpack_require__(331);
+// EXTERNAL MODULE: external "element-ui/lib/transitions/collapse-transition"
+var collapse_transition_ = __webpack_require__(28);
+var collapse_transition_default = /*#__PURE__*/__webpack_require__.n(collapse_transition_);
 
-var _treeStore2 = _interopRequireDefault(_treeStore);
+// EXTERNAL MODULE: external "element-ui/lib/checkbox"
+var checkbox_ = __webpack_require__(17);
+var checkbox_default = /*#__PURE__*/__webpack_require__.n(checkbox_);
 
-var _util = __webpack_require__(36);
+// EXTERNAL MODULE: external "element-ui/lib/mixins/emitter"
+var emitter_ = __webpack_require__(4);
+var emitter_default = /*#__PURE__*/__webpack_require__.n(emitter_);
 
-var _treeNode = __webpack_require__(333);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/tree/src/tree-node.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-var _treeNode2 = _interopRequireDefault(_treeNode);
 
-var _locale = __webpack_require__(12);
 
-var _emitter = __webpack_require__(1);
 
-var _emitter2 = _interopRequireDefault(_emitter);
 
-var _dom = __webpack_require__(2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/* harmony default export */ var tree_nodevue_type_script_lang_js_ = ({
+  name: 'ElTreeNode',
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+  componentName: 'ElTreeNode',
 
-exports.default = {
-  name: 'ElTree',
+  mixins: [emitter_default.a],
 
-  mixins: [_emitter2.default],
+  props: {
+    node: {
+      default: function _default() {
+        return {};
+      }
+    },
+    props: {},
+    renderContent: Function,
+    renderAfterExpand: {
+      type: Boolean,
+      default: true
+    },
+    showCheckbox: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   components: {
-    ElTreeNode: _treeNode2.default
+    ElCollapseTransition: collapse_transition_default.a,
+    ElCheckbox: checkbox_default.a,
+    NodeContent: {
+      props: {
+        node: {
+          required: true
+        }
+      },
+      render: function render(h) {
+        var parent = this.$parent;
+        var tree = parent.tree;
+        var node = this.node;
+        var data = node.data,
+            store = node.store;
+
+        return parent.renderContent ? parent.renderContent.call(parent._renderProxy, h, { _self: tree.$vnode.context, node: node, data: data, store: store }) : tree.$scopedSlots.default ? tree.$scopedSlots.default({ node: node, data: data }) : h(
+          'span',
+          { 'class': 'el-tree-node__label' },
+          [node.label]
+        );
+      }
+    }
+  },
+
+  data: function data() {
+    return {
+      tree: null,
+      expanded: false,
+      childNodeRendered: false,
+      oldChecked: null,
+      oldIndeterminate: null
+    };
+  },
+
+
+  watch: {
+    'node.indeterminate': function nodeIndeterminate(val) {
+      this.handleSelectChange(this.node.checked, val);
+    },
+    'node.checked': function nodeChecked(val) {
+      this.handleSelectChange(val, this.node.indeterminate);
+    },
+    'node.expanded': function nodeExpanded(val) {
+      var _this = this;
+
+      this.$nextTick(function () {
+        return _this.expanded = val;
+      });
+      if (val) {
+        this.childNodeRendered = true;
+      }
+    }
+  },
+
+  methods: {
+    getNodeKey: function getNodeKey(node) {
+      return util_getNodeKey(this.tree.nodeKey, node.data);
+    },
+    handleSelectChange: function handleSelectChange(checked, indeterminate) {
+      if (this.oldChecked !== checked && this.oldIndeterminate !== indeterminate) {
+        this.tree.$emit('check-change', this.node.data, checked, indeterminate);
+      }
+      this.oldChecked = checked;
+      this.indeterminate = indeterminate;
+    },
+    handleClick: function handleClick() {
+      var store = this.tree.store;
+      store.setCurrentNode(this.node);
+      this.tree.$emit('current-change', store.currentNode ? store.currentNode.data : null, store.currentNode);
+      this.tree.currentNode = this;
+      if (this.tree.expandOnClickNode) {
+        this.handleExpandIconClick();
+      }
+      if (this.tree.checkOnClickNode && !this.node.disabled) {
+        this.handleCheckChange(null, {
+          target: { checked: !this.node.checked }
+        });
+      }
+      this.tree.$emit('node-click', this.node.data, this.node, this);
+    },
+    handleContextMenu: function handleContextMenu(event) {
+      if (this.tree._events['node-contextmenu'] && this.tree._events['node-contextmenu'].length > 0) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      this.tree.$emit('node-contextmenu', event, this.node.data, this.node, this);
+    },
+    handleExpandIconClick: function handleExpandIconClick() {
+      if (this.node.isLeaf) return;
+      if (this.expanded) {
+        this.tree.$emit('node-collapse', this.node.data, this.node, this);
+        this.node.collapse();
+      } else {
+        this.node.expand();
+        this.$emit('node-expand', this.node.data, this.node, this);
+      }
+    },
+    handleCheckChange: function handleCheckChange(value, ev) {
+      var _this2 = this;
+
+      this.node.setChecked(ev.target.checked, !this.tree.checkStrictly);
+      this.$nextTick(function () {
+        var store = _this2.tree.store;
+        _this2.tree.$emit('check', _this2.node.data, {
+          checkedNodes: store.getCheckedNodes(),
+          checkedKeys: store.getCheckedKeys(),
+          halfCheckedNodes: store.getHalfCheckedNodes(),
+          halfCheckedKeys: store.getHalfCheckedKeys()
+        });
+      });
+    },
+    handleChildNodeExpand: function handleChildNodeExpand(nodeData, node, instance) {
+      this.broadcast('ElTreeNode', 'tree-node-expand', node);
+      this.tree.$emit('node-expand', nodeData, node, instance);
+    },
+    handleDragStart: function handleDragStart(event) {
+      if (!this.tree.draggable) return;
+      this.tree.$emit('tree-node-drag-start', event, this);
+    },
+    handleDragOver: function handleDragOver(event) {
+      if (!this.tree.draggable) return;
+      this.tree.$emit('tree-node-drag-over', event, this);
+      event.preventDefault();
+    },
+    handleDrop: function handleDrop(event) {
+      event.preventDefault();
+    },
+    handleDragEnd: function handleDragEnd(event) {
+      if (!this.tree.draggable) return;
+      this.tree.$emit('tree-node-drag-end', event, this);
+    }
+  },
+
+  created: function created() {
+    var _this3 = this;
+
+    var parent = this.$parent;
+
+    if (parent.isTree) {
+      this.tree = parent;
+    } else {
+      this.tree = parent.tree;
+    }
+
+    var tree = this.tree;
+    if (!tree) {
+      console.warn('Can not find node\'s tree.');
+    }
+
+    var props = tree.props || {};
+    var childrenKey = props['children'] || 'children';
+
+    this.$watch('node.data.' + childrenKey, function () {
+      _this3.node.updateChildren();
+    });
+
+    if (this.node.expanded) {
+      this.expanded = true;
+      this.childNodeRendered = true;
+    }
+
+    if (this.tree.accordion) {
+      this.$on('tree-node-expand', function (node) {
+        if (_this3.node !== node) {
+          _this3.node.collapse();
+        }
+      });
+    }
+  }
+});
+// CONCATENATED MODULE: ./packages/tree/src/tree-node.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_tree_nodevue_type_script_lang_js_ = (tree_nodevue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./packages/tree/src/tree-node.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_tree_nodevue_type_script_lang_js_,
+  tree_nodevue_type_template_id_3ba3ef0e_render,
+  tree_nodevue_type_template_id_3ba3ef0e_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "packages/tree/src/tree-node.vue"
+/* harmony default export */ var tree_node = (component.exports);
+// EXTERNAL MODULE: external "element-ui/lib/locale"
+var locale_ = __webpack_require__(20);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/dom"
+var dom_ = __webpack_require__(2);
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/tree/src/tree.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+/* harmony default export */ var treevue_type_script_lang_js_ = ({
+  name: 'ElTree',
+
+  mixins: [emitter_default.a],
+
+  components: {
+    ElTreeNode: tree_node
   },
 
   data: function data() {
@@ -1422,7 +1797,7 @@ exports.default = {
     emptyText: {
       type: String,
       default: function _default() {
-        return (0, _locale.t)('el.tree.emptyText');
+        return Object(locale_["t"])('el.tree.emptyText');
       }
     },
     renderAfterExpand: {
@@ -1436,6 +1811,7 @@ exports.default = {
       type: Boolean,
       default: true
     },
+    checkOnClickNode: Boolean,
     checkDescendants: {
       type: Boolean,
       default: false
@@ -1446,6 +1822,7 @@ exports.default = {
     },
     defaultCheckedKeys: Array,
     defaultExpandedKeys: Array,
+    currentNodeKey: [String, Number],
     renderContent: Function,
     showCheckbox: {
       type: Boolean,
@@ -1462,7 +1839,6 @@ exports.default = {
         return {
           children: 'children',
           label: 'label',
-          icon: 'icon',
           disabled: 'disabled'
         };
       }
@@ -1478,7 +1854,8 @@ exports.default = {
     indent: {
       type: Number,
       default: 18
-    }
+    },
+    iconClass: String
   },
 
   computed: {
@@ -1493,12 +1870,19 @@ exports.default = {
 
     treeItemArray: function treeItemArray() {
       return Array.prototype.slice.call(this.treeItems);
+    },
+    isEmpty: function isEmpty() {
+      var childNodes = this.root.childNodes;
+
+      return !childNodes || childNodes.length === 0 || childNodes.every(function (_ref) {
+        var visible = _ref.visible;
+        return !visible;
+      });
     }
   },
 
   watch: {
     defaultCheckedKeys: function defaultCheckedKeys(newVal) {
-      this.store.defaultCheckedKeys = newVal;
       this.store.setDefaultCheckedKey(newVal);
     },
     defaultExpandedKeys: function defaultExpandedKeys(newVal) {
@@ -1524,7 +1908,7 @@ exports.default = {
       this.store.filter(value);
     },
     getNodeKey: function getNodeKey(node) {
-      return (0, _util.getNodeKey)(this.nodeKey, node.data);
+      return util_getNodeKey(this.nodeKey, node.data);
     },
     getNodePath: function getNodePath(data) {
       if (!this.nodeKey) throw new Error('[Tree] nodeKey is required in getNodePath');
@@ -1538,8 +1922,8 @@ exports.default = {
       }
       return path.reverse();
     },
-    getCheckedNodes: function getCheckedNodes(leafOnly) {
-      return this.store.getCheckedNodes(leafOnly);
+    getCheckedNodes: function getCheckedNodes(leafOnly, includeHalfChecked) {
+      return this.store.getCheckedNodes(leafOnly, includeHalfChecked);
     },
     getCheckedKeys: function getCheckedKeys(leafOnly) {
       return this.store.getCheckedKeys(leafOnly);
@@ -1611,16 +1995,16 @@ exports.default = {
       }
       this.treeItems[0] && this.treeItems[0].setAttribute('tabindex', 0);
     },
-    handelKeydown: function handelKeydown(ev) {
+    handleKeydown: function handleKeydown(ev) {
       var currentItem = ev.target;
       if (currentItem.className.indexOf('el-tree-node') === -1) return;
-      ev.preventDefault();
       var keyCode = ev.keyCode;
       this.treeItems = this.$el.querySelectorAll('.is-focusable[role=treeitem]');
       var currentIndex = this.treeItemArray.indexOf(currentItem);
       var nextIndex = void 0;
       if ([38, 40].indexOf(keyCode) > -1) {
         // up、down
+        ev.preventDefault();
         if (keyCode === 38) {
           // up
           nextIndex = currentIndex !== 0 ? currentIndex - 1 : 0;
@@ -1631,11 +2015,13 @@ exports.default = {
       }
       if ([37, 39].indexOf(keyCode) > -1) {
         // left、right 展开
+        ev.preventDefault();
         currentItem.click(); // 选中
       }
       var hasInput = currentItem.querySelector('[type="checkbox"]');
       if ([13, 32].indexOf(keyCode) > -1 && hasInput) {
         // space enter选中checkbox
+        ev.preventDefault();
         hasInput.click();
       }
     }
@@ -1646,7 +2032,7 @@ exports.default = {
 
     this.isTree = true;
 
-    this.store = new _treeStore2.default({
+    this.store = new tree_store({
       key: this.nodeKey,
       data: this.data,
       lazy: this.lazy,
@@ -1683,10 +2069,10 @@ exports.default = {
     });
 
     this.$on('tree-node-drag-over', function (event, treeNode) {
-      var dropNode = (0, _util.findNearestComponent)(event.target, 'ElTreeNode');
+      var dropNode = findNearestComponent(event.target, 'ElTreeNode');
       var oldDropNode = dragState.dropNode;
       if (oldDropNode && oldDropNode !== dropNode) {
-        (0, _dom.removeClass)(oldDropNode.$el, 'is-drop-inner');
+        Object(dom_["removeClass"])(oldDropNode.$el, 'is-drop-inner');
       }
       var draggingNode = dragState.draggingNode;
       if (!draggingNode || !dropNode) return;
@@ -1694,12 +2080,12 @@ exports.default = {
       var dropPrev = true;
       var dropInner = true;
       var dropNext = true;
+      var userAllowDropInner = true;
       if (typeof _this.allowDrop === 'function') {
         dropPrev = _this.allowDrop(draggingNode.node, dropNode.node, 'prev');
-        dropInner = _this.allowDrop(draggingNode.node, dropNode.node, 'inner');
+        userAllowDropInner = dropInner = _this.allowDrop(draggingNode.node, dropNode.node, 'inner');
         dropNext = _this.allowDrop(draggingNode.node, dropNode.node, 'next');
       }
-      dragState.allowDrop = dropInner;
       event.dataTransfer.dropEffect = dropInner ? 'move' : 'none';
       if ((dropPrev || dropInner || dropNext) && oldDropNode !== dropNode) {
         if (oldDropNode) {
@@ -1727,12 +2113,12 @@ exports.default = {
         dropNext = false;
       }
 
-      var targetPosition = dropNode.$el.querySelector('.el-tree-node__expand-icon').getBoundingClientRect();
+      var targetPosition = dropNode.$el.getBoundingClientRect();
       var treePosition = _this.$el.getBoundingClientRect();
 
       var dropType = void 0;
-      var prevPercent = dropPrev ? dropInner ? 0.25 : dropNext ? 0.5 : 1 : -1;
-      var nextPercent = dropNext ? dropInner ? 0.75 : dropPrev ? 0.5 : 0 : 1;
+      var prevPercent = dropPrev ? dropInner ? 0.25 : dropNext ? 0.45 : 1 : -1;
+      var nextPercent = dropNext ? dropInner ? 0.75 : dropPrev ? 0.55 : 0 : 1;
 
       var indicatorTop = -9999;
       var distance = event.clientY - targetPosition.top;
@@ -1746,22 +2132,24 @@ exports.default = {
         dropType = 'none';
       }
 
+      var iconPosition = dropNode.$el.querySelector('.el-tree-node__expand-icon').getBoundingClientRect();
       var dropIndicator = _this.$refs.dropIndicator;
       if (dropType === 'before') {
-        indicatorTop = targetPosition.top - treePosition.top;
+        indicatorTop = iconPosition.top - treePosition.top;
       } else if (dropType === 'after') {
-        indicatorTop = targetPosition.bottom - treePosition.top;
+        indicatorTop = iconPosition.bottom - treePosition.top;
       }
       dropIndicator.style.top = indicatorTop + 'px';
-      dropIndicator.style.left = targetPosition.right - treePosition.left + 'px';
+      dropIndicator.style.left = iconPosition.right - treePosition.left + 'px';
 
       if (dropType === 'inner') {
-        (0, _dom.addClass)(dropNode.$el, 'is-drop-inner');
+        Object(dom_["addClass"])(dropNode.$el, 'is-drop-inner');
       } else {
-        (0, _dom.removeClass)(dropNode.$el, 'is-drop-inner');
+        Object(dom_["removeClass"])(dropNode.$el, 'is-drop-inner');
       }
 
       dragState.showDropIndicator = dropType === 'before' || dropType === 'after';
+      dragState.allowDrop = dragState.showDropIndicator || userAllowDropInner;
       dragState.dropType = dropType;
       _this.$emit('node-drag-over', draggingNode.node, dropNode.node, event);
     });
@@ -1775,18 +2163,22 @@ exports.default = {
       event.dataTransfer.dropEffect = 'move';
 
       if (draggingNode && dropNode) {
-        var data = draggingNode.node.data;
-        if (dropType === 'before') {
-          draggingNode.node.remove();
-          dropNode.node.parent.insertBefore({ data: data }, dropNode.node);
-        } else if (dropType === 'after') {
-          draggingNode.node.remove();
-          dropNode.node.parent.insertAfter({ data: data }, dropNode.node);
-        } else if (dropType === 'inner') {
-          dropNode.node.insertChild({ data: data });
+        var draggingNodeCopy = { data: draggingNode.node.data };
+        if (dropType !== 'none') {
           draggingNode.node.remove();
         }
-        (0, _dom.removeClass)(dropNode.$el, 'is-drop-inner');
+        if (dropType === 'before') {
+          dropNode.node.parent.insertBefore(draggingNodeCopy, dropNode.node);
+        } else if (dropType === 'after') {
+          dropNode.node.parent.insertAfter(draggingNodeCopy, dropNode.node);
+        } else if (dropType === 'inner') {
+          dropNode.node.insertChild(draggingNodeCopy);
+        }
+        if (dropType !== 'none') {
+          _this.store.registerNode(draggingNodeCopy);
+        }
+
+        Object(dom_["removeClass"])(dropNode.$el, 'is-drop-inner');
 
         _this.$emit('node-drag-end', draggingNode.node, dropNode.node, dropType, event);
         if (dropType !== 'none') {
@@ -1805,296 +2197,54 @@ exports.default = {
   },
   mounted: function mounted() {
     this.initTabIndex();
-    this.$el.addEventListener('keydown', this.handelKeydown);
+    this.$el.addEventListener('keydown', this.handleKeydown);
   },
   updated: function updated() {
     this.treeItems = this.$el.querySelectorAll('[role=treeitem]');
     this.checkboxItems = this.$el.querySelectorAll('input[type=checkbox]');
   }
+});
+// CONCATENATED MODULE: ./packages/tree/src/tree.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_treevue_type_script_lang_js_ = (treevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./packages/tree/src/tree.vue
+
+
+
+
+
+/* normalize component */
+
+var tree_component = Object(componentNormalizer["a" /* default */])(
+  src_treevue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var tree_api; }
+tree_component.options.__file = "packages/tree/src/tree.vue"
+/* harmony default export */ var tree = (tree_component.exports);
+// CONCATENATED MODULE: ./packages/tree/index.js
+
+
+/* istanbul ignore next */
+tree.install = function (Vue) {
+  Vue.component(tree.name, tree);
 };
+
+/* harmony default export */ var packages_tree = __webpack_exports__["default"] = (tree);
 
 /***/ }),
 
-/***/ 96:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 9:
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _collapseTransition = __webpack_require__(22);
-
-var _collapseTransition2 = _interopRequireDefault(_collapseTransition);
-
-var _checkbox = __webpack_require__(16);
-
-var _checkbox2 = _interopRequireDefault(_checkbox);
-
-var _emitter = __webpack_require__(1);
-
-var _emitter2 = _interopRequireDefault(_emitter);
-
-var _util = __webpack_require__(36);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  name: 'ElTreeNode',
-
-  componentName: 'ElTreeNode',
-
-  mixins: [_emitter2.default],
-
-  props: {
-    node: {
-      default: function _default() {
-        return {};
-      }
-    },
-    props: {},
-    renderContent: Function,
-    renderAfterExpand: {
-      type: Boolean,
-      default: true
-    }
-  },
-
-  components: {
-    ElCollapseTransition: _collapseTransition2.default,
-    ElCheckbox: _checkbox2.default,
-    NodeContent: {
-      props: {
-        node: {
-          required: true
-        }
-      },
-      render: function render(h) {
-        var parent = this.$parent;
-        var tree = parent.tree;
-        var node = this.node;
-        var data = node.data,
-            store = node.store;
-
-        return parent.renderContent ? parent.renderContent.call(parent._renderProxy, h, { _self: tree.$vnode.context, node: node, data: data, store: store }) : tree.$scopedSlots.default ? tree.$scopedSlots.default({ node: node, data: data }) : h(
-          'span',
-          { 'class': 'el-tree-node__label' },
-          [node.label]
-        );
-      }
-    }
-  },
-
-  data: function data() {
-    return {
-      tree: null,
-      expanded: false,
-      childNodeRendered: false,
-      showCheckbox: false,
-      oldChecked: null,
-      oldIndeterminate: null
-    };
-  },
-
-
-  watch: {
-    'node.indeterminate': function nodeIndeterminate(val) {
-      this.handleSelectChange(this.node.checked, val);
-    },
-    'node.checked': function nodeChecked(val) {
-      this.handleSelectChange(val, this.node.indeterminate);
-    },
-    'node.expanded': function nodeExpanded(val) {
-      var _this = this;
-
-      this.$nextTick(function () {
-        return _this.expanded = val;
-      });
-      if (val) {
-        this.childNodeRendered = true;
-      }
-    }
-  },
-
-  methods: {
-    getNodeKey: function getNodeKey(node) {
-      return (0, _util.getNodeKey)(this.tree.nodeKey, node.data);
-    },
-    handleSelectChange: function handleSelectChange(checked, indeterminate) {
-      if (this.oldChecked !== checked && this.oldIndeterminate !== indeterminate) {
-        this.tree.$emit('check-change', this.node.data, checked, indeterminate);
-      }
-      this.oldChecked = checked;
-      this.indeterminate = indeterminate;
-    },
-    handleClick: function handleClick() {
-      var store = this.tree.store;
-      store.setCurrentNode(this.node);
-      this.tree.$emit('current-change', store.currentNode ? store.currentNode.data : null, store.currentNode);
-      this.tree.currentNode = this;
-      if (this.tree.expandOnClickNode) {
-        this.handleExpandIconClick();
-      }
-      this.tree.$emit('node-click', this.node.data, this.node, this);
-    },
-    handleContextMenu: function handleContextMenu(event) {
-      if (this.tree._events['node-contextmenu'] && this.tree._events['node-contextmenu'].length > 0) {
-        event.stopPropagation();
-        event.preventDefault();
-      }
-      this.tree.$emit('node-contextmenu', event, this.node.data, this.node, this);
-    },
-    handleExpandIconClick: function handleExpandIconClick() {
-      if (this.node.isLeaf) return;
-      if (this.expanded) {
-        this.tree.$emit('node-collapse', this.node.data, this.node, this);
-        this.node.collapse();
-      } else {
-        this.node.expand();
-        this.$emit('node-expand', this.node.data, this.node, this);
-      }
-    },
-    handleCheckChange: function handleCheckChange(value, ev) {
-      var _this2 = this;
-
-      this.node.setChecked(ev.target.checked, !this.tree.checkStrictly);
-      this.$nextTick(function () {
-        var store = _this2.tree.store;
-        _this2.tree.$emit('check', _this2.node.data, {
-          checkedNodes: store.getCheckedNodes(),
-          checkedKeys: store.getCheckedKeys(),
-          halfCheckedNodes: store.getHalfCheckedNodes(),
-          halfCheckedKeys: store.getHalfCheckedKeys()
-        });
-      });
-    },
-    handleChildNodeExpand: function handleChildNodeExpand(nodeData, node, instance) {
-      this.broadcast('ElTreeNode', 'tree-node-expand', node);
-      this.tree.$emit('node-expand', nodeData, node, instance);
-    },
-    handleDragStart: function handleDragStart(event) {
-      this.tree.$emit('tree-node-drag-start', event, this);
-    },
-    handleDragOver: function handleDragOver(event) {
-      this.tree.$emit('tree-node-drag-over', event, this);
-      event.preventDefault();
-    },
-    handleDrop: function handleDrop(event) {
-      event.preventDefault();
-    },
-    handleDragEnd: function handleDragEnd(event) {
-      this.tree.$emit('tree-node-drag-end', event, this);
-    }
-  },
-
-  created: function created() {
-    var _this3 = this;
-
-    var parent = this.$parent;
-
-    if (parent.isTree) {
-      this.tree = parent;
-    } else {
-      this.tree = parent.tree;
-    }
-
-    var tree = this.tree;
-    if (!tree) {
-      console.warn('Can not find node\'s tree.');
-    }
-
-    var props = tree.props || {};
-    var childrenKey = props['children'] || 'children';
-
-    this.$watch('node.data.' + childrenKey, function () {
-      _this3.node.updateChildren();
-    });
-
-    this.showCheckbox = tree.showCheckbox;
-
-    if (this.node.expanded) {
-      this.expanded = true;
-      this.childNodeRendered = true;
-    }
-
-    if (this.tree.accordion) {
-      this.$on('tree-node-expand', function (node) {
-        if (_this3.node !== node) {
-          _this3.node.collapse();
-        }
-      });
-    }
-  }
-};
+module.exports = require("element-ui/lib/utils/merge");
 
 /***/ })
 

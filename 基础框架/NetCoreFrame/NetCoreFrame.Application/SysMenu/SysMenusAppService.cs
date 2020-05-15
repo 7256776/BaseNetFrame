@@ -41,7 +41,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("MenusManager")]
+        [AbpAuthorize]
         public List<MenusOut> GetMenusList()
         {
             List<SysMenus> dataAll= _sysMenusRepository.GetAllList();
@@ -80,7 +80,7 @@ namespace NetCoreFrame.Application
                     }
                 }
             }
-            List<SysMenus> resData = _sysMenusRepository.ConvertMenusByOrderByList(dataAll);
+            List<SysMenus> resData = _sysMenusRepository.ConvertMenusByChildrenList(dataAll);
             return ObjectMapper.Map<List<MenusOut>>(resData);
         }
 
@@ -89,7 +89,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [AbpAuthorize("MenusManager")]
+        [AbpAuthorize]
         public MenusInput GetMenusModel(long id)
         {
             //查询模块以及所包含的授权动作
@@ -102,7 +102,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("MenusManager.SaveMenus")]
+        [AbpAuthorize]
         public  AjaxResponse SaveMenusModel(MenusInput model)
         {
             long resId;
@@ -151,7 +151,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("MenusManager.DelMenus")]
+        [AbpAuthorize]
         public void DelMenusModel(long id)
         {
            var isParent= _sysMenusRepository.GetAll().Where(w => w.ParentID == id);

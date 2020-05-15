@@ -74,13 +74,12 @@
                                                      v-bind:status-icon="true"
                                                      label-suffix=":"
                                                      label-width="100px">
-
                                                 <el-form-item label="通知名称" prop="notificationDisplayName" style="width:32%;">
                                                     <el-input v-model="formData.notificationDisplayName" style="width:100%;" suffix-icon="fa fa-commenting-o fa-fw" clearable v-bind:maxlength="30">
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="类型名称" prop="notificationName" style="width:32%;">
-                                                    <el-input v-model="formData.notificationName" style="width:100%;" suffix-icon="fa fa-commenting fa-fw" clearable v-bind:maxlength="50" >
+                                                    <el-input v-model="formData.notificationName" style="width:100%;" suffix-icon="fa fa-commenting fa-fw" clearable v-bind:maxlength="50">
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="通知类型" prop="notificationType" style="width:31%;">
@@ -90,7 +89,7 @@
                                                     </el-select>
                                                 </el-form-item>
                                                 <el-form-item label="通知描述" prop="notificationDescribe" style="width:97%;">
-                                                    <el-input v-model="formData.notificationDescribe" style="width:100%;" suffix-icon="fa fa-file-code-o fa-fw" clearable v-bind:maxlength="100">
+                                                    <el-input v-model="formData.notificationDescribe" style="width:100%;" suffix-icon="fa fa-file-code-o fa-fw" clearable v-bind:maxlength="100" show-word-limit>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="" prop="" style="width:97%;text-align: right;">
@@ -108,20 +107,33 @@
                                                     <div class="col-md-9 ">
                                                         <el-button-group>
                                                             <el-tooltip content="设置下列被勾选用户订阅的通知" placement="top">
-                                                                <el-button type="primary" icon="fa fa-bell fa-lg" v-on:click="doSubAdd()" plain>&nbsp;&nbsp;订阅通知</el-button>
+                                                                <el-button type="primary"  size="mini" icon="fa fa-bell fa-lg" v-on:click="doSubAdd()" plain>&nbsp;&nbsp;订阅通知</el-button>
                                                             </el-tooltip>
                                                             <el-tooltip content="取消下列被勾选用户订阅的通知" placement="top">
-                                                                <el-button type="primary" icon="fa fa-bell-slash fa-lg" v-on:click="doSubDel()" plain>&nbsp;取消订阅</el-button>
+                                                                <el-button type="primary" size="mini" icon="fa fa-bell-slash fa-lg" v-on:click="doSubDel()" plain>&nbsp;取消订阅</el-button>
                                                             </el-tooltip>
                                                         </el-button-group>
                                                     </div>
                                                     <div class="col-md-3 ">
-                                                        <el-input placeholder="用户账号/名称 筛选" clearable prefix-icon="el-icon-search"  v-model="tableOptions.searchTxt">
+                                                       
+                                                        <el-input placeholder="用户账号/名称 筛选" size="mini" clearable v-model="tableOptions.searchTxt" style="width:300px;" v-on:change="getDataList">
+                                                            <el-button slot="append" icon="el-icon-search" v-on:click="doSearchData"></el-button>
                                                         </el-input>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <el-table v-bind:data="searchGrid"
+                                            <div style="text-align:right;padding-top:3px;">
+                                                <el-pagination background
+                                                               v-on:size-change="handleSizeChange"
+                                                               v-on:current-change="handleCurrentChange"
+                                                               v-bind:current-page="pageOptions.pageIndex"
+                                                               v-bind:page-sizes="[20, 50, 100]"
+                                                               v-bind:page-size="20"
+                                                               v-bind:total="pageOptions.total"
+                                                               layout="total, sizes, prev, pager, next, jumper">
+                                                </el-pagination>
+                                            </div>
+                                            <el-table v-bind:data="tableOptions.tableData"
                                                       ref="dataGrid"
                                                       stripe
                                                       border
@@ -131,7 +143,7 @@
                                                       v-on:selection-change="doRowSelectChange"
                                                       v-on:row-click="doRowclick">
                                                 <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
-                                                <el-table-column prop="imageUrl" label="用户" width="50" >
+                                                <el-table-column prop="imageUrl" label="用户" width="50">
                                                     <template slot-scope="scope">
                                                         <img v-bind:src="formatUserImg(scope.row)" v-bind:alt="scope.row.userCode" style="height:28px;width:28px;" />
                                                     </template>
@@ -154,6 +166,17 @@
                                                     </template>
                                                 </el-table-column>
                                             </el-table>
+                                            <div style="text-align:right;padding-top:3px;">
+                                                <el-pagination background
+                                                               v-on:size-change="handleSizeChange"
+                                                               v-on:current-change="handleCurrentChange"
+                                                               v-bind:current-page="pageOptions.pageIndex"
+                                                               v-bind:page-sizes="[20, 50, 100]"
+                                                               v-bind:page-size="20"
+                                                               v-bind:total="pageOptions.total"
+                                                               layout="total, sizes, prev, pager, next, jumper">
+                                                </el-pagination>
+                                            </div>
                                         </div>
                                         <div class="tab-pane" id="tab_radioSends">
                                             <el-form v-bind:model="formSendData"
@@ -175,7 +198,7 @@
                                                     </el-select>
                                                 </el-form-item>
                                                 <el-form-item label="通知标题" prop="notificationTitle" style="width:70%;">
-                                                    <el-input v-model="formSendData.notificationTitle" suffix-icon="fa fa-commenting-o fa-fw" clearable>
+                                                    <el-input v-model="formSendData.notificationTitle" suffix-icon="fa fa-commenting-o fa-fw" v-bind:maxlength="50" show-word-limit clearable>
                                                         <el-select v-model="formSendData.severity" slot="prepend" placeholder="请选择" style="width:100px;">
                                                             <el-option label="普通" value="0">
                                                                 <span style="float: left;color:#909399;font-size:16pt;" class="el-icon-info"></span>&nbsp;&nbsp;
@@ -197,7 +220,7 @@
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="通知内容" prop="notificationContent" style="width:70%;">
-                                                    <el-input v-model="formSendData.notificationContent" type="textarea" v-bind:autosize="{ minRows: 2, maxRows: 4}" suffix-icon="fa fa-vcard fa-fw" clearable>
+                                                    <el-input v-model="formSendData.notificationContent" type="textarea" v-bind:autosize="{ minRows: 2, maxRows: 4}" v-bind:maxlength="500"  suffix-icon="fa fa-vcard fa-fw" clearable show-word-limit >
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="接收人(默认不选择接收人直接送到所有人)" prop="recipient" style="width:70%;">
@@ -206,10 +229,10 @@
                                                                multiple
                                                                filterable
                                                                style="width:100%;">
-                                                        <el-option v-for="item in tableOptions.tableData"
-                                                                   :key="item.userId"
+                                                        <el-option v-for="item in tableOptions.tableAllData"
+                                                                   :key="item.id"
                                                                    :label="item.userNameCn"
-                                                                   :value="item.userId">
+                                                                   :value="item.id">
                                                         </el-option>
                                                     </el-select>
                                                 </el-form-item>

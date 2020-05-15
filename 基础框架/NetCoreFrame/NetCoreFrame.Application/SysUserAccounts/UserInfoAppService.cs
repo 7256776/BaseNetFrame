@@ -125,10 +125,11 @@ namespace NetCoreFrame.Application
 
         /// <summary>
         /// 查询用户集合
+        /// 分页查询
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("UserInfoManager")]
+        [AbpAuthorize]
         public PagedResultDto<UserOut> GetUserList(RequestParam<UserOut> requestParam)
         {
             //反序列化参数对象
@@ -156,6 +157,28 @@ namespace NetCoreFrame.Application
             {
                 return queue.GetPagingData<UserInfo, UserOut>(requestParam.PagingDto);
             }
+        }
+
+        /// <summary>
+        /// 查询用户集合
+        /// 查询所有
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpAuthorize]
+        public List<UserOut> GetUserList(UserOut model)
+        {
+            //
+            var queue = _userInfoRepository.GetAll();
+            if (model != null && !string.IsNullOrEmpty(model.UserCode))
+            {
+                queue = queue.Where(w =>
+                            w.UserCode.Contains(model.UserCode) ||
+                            w.UserNameCn.Contains(model.UserCode)
+                );
+            }
+            queue = queue.OrderBy(o => o.UserNameCn);
+            return ObjectMapper.Map<List<UserOut>>(queue.ToList());
         }
 
         /// <summary>
@@ -192,7 +215,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("UserInfoManager.SaveUser")]
+        [AbpAuthorize]
         public async Task<AjaxResponse> SaveUserModel(UserInput model)
         { 
             if (model.ID == null)
@@ -252,7 +275,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [RemoteService(false)]
-        [AbpAuthorize("UserInfoManager.DelUser")]
+        [AbpAuthorize]
         public async Task DelUserModel(List<UserInput> model)
         {
             foreach (var item in model)
@@ -423,7 +446,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns>返回重置后的密码</returns>
         [RemoteService(false)]  //取消该函数自动编译成 WebApi 
-        [AbpAuthorize("UserInfoManager.ResetPass")]
+        [AbpAuthorize]
         public async Task<AjaxResponse> ResetUserPass(long id)
         {
             //获取需要更新的数据

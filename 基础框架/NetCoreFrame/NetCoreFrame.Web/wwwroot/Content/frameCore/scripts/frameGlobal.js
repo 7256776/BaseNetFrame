@@ -23,7 +23,7 @@ var globalVue = new Vue({
                     //    return;
                     //}
                     if (details) {
-                        _this.$alert(details, '详细信息', { dangerouslyUseHTMLString: true });
+                        _this.$alert(details, abp.frameCore.localization.getLocalization('details'), { dangerouslyUseHTMLString: true });
                     }
                    
                 }
@@ -32,10 +32,11 @@ var globalVue = new Vue({
         showMessage: function (type, message, details) {
             var _this = this;
             var msg = "";
+            if (message && details) {
+                msg =  "<div style='padding-top:10px;'>" + details + "</div>";
+            }
             if (!message) {
                 message = details;
-            } else {
-                msg =  "<div style='padding-top:10px;'>" + details + "</div>";
             }
             msg = "<strong>" + message + "</strong>" + msg ;
 
@@ -47,8 +48,8 @@ var globalVue = new Vue({
                 type: type
             });
         },
-        showDetails: function (details) {
-            this.$alert(details, '详细信息', { dangerouslyUseHTMLString: true });
+        showDetails: function (details) { 
+            this.$alert(details, abp.frameCore.localization.getLocalization('details'), { dangerouslyUseHTMLString: true });
         }
     }
 });
@@ -176,16 +177,16 @@ var globalVue = new Vue({
     /*******************************************************常规公用函数*********************************************************/
     frameCore.utils = frameCore.utils || {};
 
-/*
- * 电话号码验证 (调用方式 : abp.frameCore.utils.checkChars )
- * 验证规则：仅允许包含 数字 字母大小写
-    * @param str 验证的字符串
-    * @param rule 验证的规则 该参数必须是数组 , 为空为包含全部规则
-    *               参数示例:  ['zh', 'en', 'num']
-    *                  zh = 允许汉字
-    *                  en = 允许字母
-    *                  num = 允许数字
-*/
+    /*
+     * 电话号码验证 (调用方式 : abp.frameCore.utils.checkChars )
+     * 验证规则：仅允许包含 数字 字母大小写
+        * @param str 验证的字符串
+        * @param rule 验证的规则 该参数必须是数组 , 为空为包含全部规则
+        *               参数示例:  ['zh', 'en', 'num']
+        *                  zh = 允许汉字
+        *                  en = 允许字母
+        *                  num = 允许数字
+    */
     frameCore.utils.checkChars = function (str, rule) {
         if (!rule || rule.length==0) {
             rule= ['zh', 'en', 'num'];
@@ -345,7 +346,6 @@ var globalVue = new Vue({
      * dataName=过滤值属性名称
     */
     frameCore.utils.queryRecursive = function (data, dataValue, childName, dataName) {
-
         //
         var queryRef = function (dataList) {
             if (!dataList) {
@@ -563,8 +563,6 @@ var globalVue = new Vue({
         }
     ];
 
-
-
 })();
 
 /*
@@ -573,52 +571,89 @@ var globalVue = new Vue({
 $(function () {
     //根据提示类型获取默认的标题文案
     getNotifyTitleBySeverity = function (type) {
+        var tip = abp.frameCore.localization.getLocalization('Tips');
         switch (type) {
             case "success":
-                return "成功提示";
+                return abp.frameCore.localization.getLocalization('Successful') + tip;
             case "info":
-                return "消息提示";
+                return abp.frameCore.localization.getLocalization('Info') + tip;
             case "warning":
-                return "警告提示";
+                return abp.frameCore.localization.getLocalization('Warning') + tip;
             case "error":
-                return "错误提示";
+                return abp.frameCore.localization.getLocalization('Error') + tip;
             default:
-                return "消息提示";
+                return abp.frameCore.localization.getLocalization('Info') + tip;
         }
+    };
+
+    /*
+    * tipsType.saveSuccess 保存成功
+    * tipsType.editSuccess  修改成功
+    * tipsType.addSuccess   新增成功
+    * tipsType.delSuccess   删除成功
+
+    * tipsType.saveFail         保存失败
+    * tipsType.editFail          修改失败
+    * tipsType.addFail          新增失败
+    * tipsType.delFail           删除失败
+    */
+    tipsType = {
+        saveSuccess: abp.frameCore.localization.getLocalization('Save') + abp.frameCore.localization.getLocalization('Successful'),
+        editSuccess: abp.frameCore.localization.getLocalization('Editor') + abp.frameCore.localization.getLocalization('Successful'),
+        addSuccess: abp.frameCore.localization.getLocalization('Add') + abp.frameCore.localization.getLocalization('Successful'),
+        delSuccess: abp.frameCore.localization.getLocalization('Del') + abp.frameCore.localization.getLocalization('Successful'),
+
+        saveFail: abp.frameCore.localization.getLocalization('Save') + abp.frameCore.localization.getLocalization('Failure'),
+        editFail: abp.frameCore.localization.getLocalization('Editor') + abp.frameCore.localization.getLocalization('Failure'),
+        addFail: abp.frameCore.localization.getLocalization('Add') + abp.frameCore.localization.getLocalization('Failure'),
+        delFail: abp.frameCore.localization.getLocalization('Del') + abp.frameCore.localization.getLocalization('Failure'),
+
     };
 
     /* MESSAGE  页面顶部显示的提示 **************************************************/
     abp.message.info = function (details, message) {
-        return globalVue.showMessage('info', message, details);
+        var detail = abp.frameCore.localization.getLocalization(details)
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showMessage('info', msg, detail);
     };
 
     abp.message.success = function (details, message) {
-        return globalVue.showMessage('success', message, details);
+        var detail = abp.frameCore.localization.getLocalization(details)
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showMessage('success', msg, detail);
     };
 
     abp.message.warn = function (details, message) {
-        return globalVue.showMessage('warning', message, details);
+        var detail = abp.frameCore.localization.getLocalization(details)
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showMessage('warning', msg, detail);
     };
 
     abp.message.error = function (details, message) {
-        return globalVue.showMessage('error', message, details);
+        var detail = abp.frameCore.localization.getLocalization(details)
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showMessage('error', msg, detail);
     };
 
     /* NOTIFICATION  右脚上弹出的消息框*********************************************/
     abp.notify.success = function (message, title, details) {
-        return globalVue.showNotification('success', message, title, details);
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showNotification('success', msg, title, details);
     };
 
     abp.notify.info = function (message, title, details) {
-        globalVue.showNotification('info', message, title, details);
+        var msg = abp.frameCore.localization.getLocalization(message)
+        globalVue.showNotification('info', msg, title, details);
     };
 
     abp.notify.warn = function (message, title, details) {
-        return globalVue.showNotification('warning', message, title, details);
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showNotification('warning', msg, title, details);
     };
 
     abp.notify.error = function (message, title, details) {
-        return globalVue.showNotification('error', message, title, details);
+        var msg = abp.frameCore.localization.getLocalization(message)
+        return globalVue.showNotification('error', msg, title, details);
     };
 
 });

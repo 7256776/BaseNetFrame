@@ -60,7 +60,7 @@
                                     <div class="row ">
                                         <div class="col-md-9 ">
                                             <el-button-group>
-                                                <el-button ref="btnSave" v-IsAuthorized type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveDictAll()">&nbsp;&nbsp;保存全部</el-button>
+                                                <el-button ref="btnSave" v-IsAuthorized type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveDictType()">&nbsp;&nbsp;保存字典类型</el-button>
                                             </el-button-group>
                                         </div>
                                     </div>
@@ -107,16 +107,16 @@
                                                 <div class="row">
                                                     <div class="col-md-9 ">
                                                         <el-button-group>
-                                                            <el-tooltip ref="btnAddCode" v-IsAuthorized content="新增字典编码" placement="top">
+                                                            <el-tooltip ref="btnAddCode"  content="新增字典编码" placement="top">
                                                                 <el-button type="primary" icon="fa fa-plus fa-lg" v-on:click="doSubAdd()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;新增字典编码</el-button>
                                                             </el-tooltip>
-                                                            <el-tooltip ref="btnDelCode" v-IsAuthorized content="删除字典编码" placement="top">
+                                                            <el-tooltip ref="btnDelCode"  content="删除字典编码" placement="top">
                                                                 <el-button type="primary" icon="fa fa-minus fa-lg" v-on:click="doSubDel()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;删除字典编码</el-button>
                                                             </el-tooltip>
                                                         </el-button-group>
                                                     </div>
                                                     <div class="col-md-3 ">
-                                                        <el-input placeholder="字典编码/字典名称 筛选" clearable prefix-icon="el-icon-search" v-model="tableOptions.searchTxt">
+                                                        <el-input placeholder="字典编码/字典名称 筛选" clearable prefix-icon="el-icon-search" v-model="tableOptions.searchTxt" >
                                                         </el-input>
                                                     </div>
                                                 </div>
@@ -131,10 +131,9 @@
                                                       row-key="rowKey"
                                                       v-bind:row-style="fnStyle"
                                                       v-bind:expand-row-keys="expands"
-                                                      v-on:row-click="doRowclick"
                                                       v-on:selection-change="doRowSelectChange"
                                                       v-on:current-change="doRowCurrentChange">
-                                                <el-table-column type="expand">
+                                                <el-table-column type="expand" >
                                                     <template slot-scope="props">
                                                         <div align="center" style="position: absolute;padding:0px 5px 5px 5px;left:100px;top:0px;border:1px solid #cdd0d7;border-top-width:0px;background-color:#DCDFE6;">
                                                             @*<div style="width:100%;text-align:center;">*@

@@ -117,10 +117,13 @@ namespace NetCoreFrame.Core
                     }
                 }
                 #endregion
+                //
+                AddRoleToMenuAction(item.ChildrenMenus, roleID);
             }
             return base.Context.SaveChanges();
         }
 
+        
         /// <summary>
         /// 删除角色授权的菜单以及动作
         /// </summary>

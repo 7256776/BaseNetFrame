@@ -40,7 +40,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("RoleManager")]
+        [AbpAuthorize]
         public List<RoleOut> GetRoleList()
         {
             var data = _sysRolesRepository.GetAll();
@@ -52,7 +52,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [AbpAuthorize("RoleManager")]
+        [AbpAuthorize]
         public RoleOut GetRoleModel(long id)
         {
             var data = _sysRolesRepository.Get(id);
@@ -83,7 +83,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("RoleManager.SaveRole")]
+        [AbpAuthorize]
         public async Task<AjaxResponse> SaveRoleModel(RoleInput model)
         {
             if (model.ID == null)
@@ -112,7 +112,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("RoleManager.DelRole")]
+        [AbpAuthorize]
         public  void DelRoleModel(List<RoleInput> model)
         {
             foreach (var item in model)
@@ -133,7 +133,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("RoleManager.SaveRoleToMenu")]
+        [AbpAuthorize]
         public AjaxResponse SaveRoleToMenu(RoleInput model)
         {
             //删除原有授权
@@ -153,7 +153,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("RoleManager.SaveRoleToUser")]
+        [AbpAuthorize]
         public AjaxResponse SaveRoleToUser(RoleToUser model)
         {
             //删除原有授权

@@ -93,6 +93,7 @@ var component = Vue.component('sys-menus', {
     },
     computed: {
       //计算
+       
     },
     methods: {
         initMenusData: function () {
@@ -230,7 +231,7 @@ var component = Vue.component('sys-menus', {
                             _this.initMenusData();
                             //重载明细Table
                             _this.getFormData(data.id); 
-                            abp.message.success('保存成功');
+                            abp.message.success(tipsType.saveSuccess);
                         }).fail(function (data, res, e) {
                             //debugger;
                         });
@@ -268,7 +269,7 @@ var component = Vue.component('sys-menus', {
                     _this.tableData = [];
                     //重载树菜单
                     _this.initMenusData();
-                    abp.message.success('删除成功');
+                    abp.message.success(tipsType.delSuccess);
                 });
             });
         },

@@ -93,7 +93,7 @@ var component = Vue.component('sys-usersetting', {
                             url: '/SysAccount/SeetingUserInfo',
                             data: JSON.stringify(_this.formData)
                         }).done(function (data, res, e) {
-                            abp.message.success('保存成功');
+                            abp.message.success(tipsType.saveSuccess);
                             _this.userName = _this.formData.userNameCn;
                         });
                         //基本上可以忽略监控fail,abp已经完成了这部分处理
@@ -117,7 +117,7 @@ var component = Vue.component('sys-usersetting', {
                 _this.userAvatars = i;
                 //刷新工具栏的头像
                 abp.event.trigger('frame.userimg.ui.event');
-                abp.message.success("您的头像更换完成!");
+                abp.message.success("OperationComplete");
             });
         },
         doModifyPass: function () {
@@ -130,7 +130,7 @@ var component = Vue.component('sys-usersetting', {
                             url: '/SysLogin/UpdateUserPass',
                             data: JSON.stringify(_this.formPassData)
                         }).done(function (data, res, e) {
-                            abp.message.success('密码修改成功');
+                            abp.message.success(tipsType.editSuccess);
                         });
                         //基本上可以忽略监控fail,abp已经完成了这部分处理
                         //fail(function (res, e) { });

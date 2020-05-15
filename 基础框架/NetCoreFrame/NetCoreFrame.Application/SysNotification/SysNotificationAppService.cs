@@ -79,16 +79,35 @@ namespace NetCoreFrame.Application
         }
 
         /// <summary>
-        /// 获取通知 NotificationName 相关用户订阅的关系
-        /// IsSubscription = true 订阅 
-        /// IsSubscription = false 为订阅
+        ///  获取通知 NotificationName 相关用户订阅的关系
+        ///  查询所有用户
         /// </summary>
         /// <param name="notificationInfo"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
         public async Task<List<SysNotificationSubscriptionInfo>> GetSubscriptionByNameAsync(string notificationName)
         {
             SysNotificationInfo notificationInfo = new SysNotificationInfo() { NotificationName = notificationName };
             return await _sysNotificationInfoRepository.GetSubscriptionByNameAsync(notificationInfo);
+        }
+
+        /// <summary>
+        /// 获取通知 NotificationName 相关用户订阅的关系
+        /// 分页查询
+        /// </summary>
+        /// <param name="requestParam"></param>
+        /// <returns>
+        ///      IsSubscription = true 订阅 
+        ///      IsSubscription = false 为订阅
+        /// </returns>
+        public async Task<PagedResultDto<SysNotificationSubscriptionInfo>> QueryableSubscriptionByNameAsync(RequestParam<SysUserNotificationInfo> requestParam)
+        {                          
+            //获取数据Linq
+            var resultData = await _sysNotificationInfoRepository.QueryableSubscriptionByNameAsync(requestParam.Params);
+            //添加分页对象
+            return resultData.GetPagingData(requestParam.PagingDto);
         }
 
         /// <summary>
@@ -205,7 +224,7 @@ namespace NetCoreFrame.Application
         }
 
         /// <summary>
-        /// 清空消息
+        /// 清空所订阅的 notificationName 通知信息
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="notificationName"></param>

@@ -24,7 +24,7 @@ namespace NetCoreFrame.Application
         /// 获取组织结构
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("OrgManager")]
+        [AbpAuthorize]
         public List<SysOrg> GetSysOrgList()
         {
             var dataAll = _sysOrgRepository.GetAllList();
@@ -37,7 +37,7 @@ namespace NetCoreFrame.Application
         /// 添加一个组织机构节点
         /// </summary>
         /// <param name="model"></param>
-        [AbpAuthorize("OrgManager.SaveSysOrg")]
+        [AbpAuthorize]
         public async Task<AjaxResponse> SaveSysOrgModel(SysOrgInput model)
         {
             Guid? resId;
@@ -90,7 +90,7 @@ namespace NetCoreFrame.Application
         /// 删除一个组织机构节点
         /// </summary>
         /// <param name="id"></param>
-        [AbpAuthorize("OrgManager.DelSysOrg")]
+        [AbpAuthorize]
         public void DelSysOrg(Guid id)
         {
             var childrenList = _sysOrgRepository.GetAllList().Where(p => p.ParentOrgID == id);
@@ -106,7 +106,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [AbpAuthorize("OrgManager")]
+        [AbpAuthorize]
         public SysOrg GetSysOrgModel(Guid id)
         {
             return _sysOrgRepository.Get(id);

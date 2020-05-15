@@ -56,6 +56,18 @@ namespace NetCoreFrame.Web.Controllers
         }
 
         /// <summary>
+        /// 查询用户集合
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public JsonResult GetAllUserList([FromBody]UserOut model)
+        {
+            var data = _userInfoAppService.GetUserList(model);
+            return Json(data);
+        }
+
+        /// <summary>
         /// 获取用户对象
         /// </summary>
         /// <param name="id"></param>

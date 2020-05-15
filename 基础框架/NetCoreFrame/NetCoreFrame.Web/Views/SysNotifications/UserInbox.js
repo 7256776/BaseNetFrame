@@ -376,7 +376,7 @@ var component = Vue.component('sys-userinbox', {
                         data: JSON.stringify(userId)
                     }).done(function (data) {
                         _this.chatData.chatContentList = [];
-                        abp.message.success("消息删除完成!");
+                        abp.message.success(tipsType.delSuccess);
                         //设置聊天读取状态完成
                     });
                 });

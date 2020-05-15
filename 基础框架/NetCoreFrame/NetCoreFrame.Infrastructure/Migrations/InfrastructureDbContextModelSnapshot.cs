@@ -119,7 +119,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("d9aed633-e9ae-40e6-8ad4-4eec083b03b0"),
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 424, DateTimeKind.Local).AddTicks(6967),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(6124),
                             NotificationName = "system",
                             TenantId = 1,
                             UserId = 1L
@@ -127,7 +127,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("15812862-b2d7-45e2-826e-25545057c334"),
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 424, DateTimeKind.Local).AddTicks(7887),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(7023),
                             NotificationName = "system",
                             TenantId = 1,
                             UserId = 2L
@@ -311,6 +311,26 @@ namespace NetCoreFrame.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sys_Dict");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d2804a8d-7e91-48ab-800f-811e7288ebea"),
+                            DictCode = "1",
+                            DictContent = "公司",
+                            DictType = "JGLX",
+                            DictValue = "",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = new Guid("037cccbb-004a-4395-af3d-7d3a097fc097"),
+                            DictCode = "2",
+                            DictContent = "部门",
+                            DictType = "JGLX",
+                            DictValue = "",
+                            IsActive = true
+                        });
                 });
 
             modelBuilder.Entity("NetCoreFrame.Core.SysDictType", b =>
@@ -332,6 +352,15 @@ namespace NetCoreFrame.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sys_DictType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b52b584d-d840-451c-a8e6-c61089c3d6d5"),
+                            DictType = "JGLX",
+                            DictTypeName = "机构类型",
+                            IsActive = true
+                        });
                 });
 
             modelBuilder.Entity("NetCoreFrame.Core.SysMenuAction", b =>
@@ -748,7 +777,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("0bfb0ddd-bb12-4059-87a1-4e0294643ea4"),
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 424, DateTimeKind.Local).AddTicks(3913),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(3403),
                             NotificationDescribe = "提供系统默认提示消息",
                             NotificationDisplayName = "系统通知",
                             NotificationName = "system",
@@ -1095,7 +1124,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 404, DateTimeKind.Local).AddTicks(4031),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 973, DateTimeKind.Local).AddTicks(5121),
                             Description = "动态生成的角色",
                             IsActive = true,
                             RoleName = "admin角色"
@@ -1138,7 +1167,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("ecf6faa6-27d6-4056-bb32-91357b639824"),
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 425, DateTimeKind.Local).AddTicks(40),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(8830),
                             Name = "Abp.Localization.DefaultLanguageName",
                             Value = "zh-Hans"
                         });
@@ -1218,12 +1247,12 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 405, DateTimeKind.Local).AddTicks(6849),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 974, DateTimeKind.Local).AddTicks(371),
                             ImageUrl = "m",
                             IsActive = true,
                             IsAdmin = true,
                             IsDeleted = false,
-                            Password = "AQAAAAEAACcQAAAAEEZj3esmovxvE/P0QOhehC+pTI5kwWgw4lpJIUdTy3aJ/vqmujkGkAtLQTV/p2FCBQ==",
+                            Password = "AQAAAAEAACcQAAAAEL5sDr0lCYaLLFdOBehkFJhMc7kBoBp5MjJTicvHJUpfeP+TSdvKf6qp36kLXR3csA==",
                             Sex = "1",
                             UserCode = "sys",
                             UserNameCn = "管理员"
@@ -1231,12 +1260,12 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 2L,
-                            CreationTime = new DateTime(2020, 1, 15, 15, 55, 21, 415, DateTimeKind.Local).AddTicks(6895),
+                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 982, DateTimeKind.Local).AddTicks(6295),
                             ImageUrl = "2",
                             IsActive = true,
-                            IsAdmin = true,
+                            IsAdmin = false,
                             IsDeleted = false,
-                            Password = "AQAAAAEAACcQAAAAEOKiUruIxawStevooYqGq9J0t9qWPy7GY0lKrgZ5Wu2abaHiE/GtCzu/A/MQmcncTA==",
+                            Password = "AQAAAAEAACcQAAAAEFpQCfynD4qfHuqald/junsZuSF0Z6yFhmR4FqzAI5YVuF00yIbaFo6GYHlaIT2/CA==",
                             Sex = "0",
                             UserCode = "admin",
                             UserNameCn = "管理员"

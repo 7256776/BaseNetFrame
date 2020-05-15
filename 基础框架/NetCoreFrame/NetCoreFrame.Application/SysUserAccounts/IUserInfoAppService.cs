@@ -41,12 +41,19 @@ namespace NetCoreFrame.Application
 
         /// <summary>
         /// 查询用户集合
+        /// 分页查询
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        //PagedResultDto<UserOut> GetUserList(UserQuery model, PagingDto pagingDto);
-        [RemoteService(false)]
         PagedResultDto<UserOut> GetUserList(RequestParam<UserOut> requestParam);
+
+        /// <summary>
+        /// 查询用户集合
+        /// 查询所有
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        List<UserOut> GetUserList(UserOut model);
 
         /// <summary>
         /// 获取用户对象

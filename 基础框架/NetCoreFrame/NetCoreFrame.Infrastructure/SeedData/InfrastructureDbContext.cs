@@ -20,7 +20,7 @@ namespace NetCoreFrame.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-         
+
             #region 菜单
 
             #region 菜单id
@@ -325,7 +325,7 @@ namespace NetCoreFrame.Infrastructure
                     MenuID = menuDictId,
                     ActionDisplayName = "删除类型",
                     ActionName = "btnDelType",
-                    PermissionName = "DictManager.DelDict",
+                    PermissionName = "DictManager.DelDictType",
                     RequiresAuthModel = "3",
                     IsActive = true
                 },
@@ -355,7 +355,7 @@ namespace NetCoreFrame.Infrastructure
                     MenuID = menuDictId,
                     ActionDisplayName = "删除字典编码",
                     ActionName = "btnDelCode",
-                    PermissionName = "DictManager.DeleteDict",
+                    PermissionName = "DictManager.DelDict",
                     RequiresAuthModel = "3",
                     IsActive = true
                 }
@@ -389,7 +389,7 @@ namespace NetCoreFrame.Infrastructure
                        Sex = "0",
                        IsActive = true,
                        IsDeleted = false,
-                       IsAdmin = true,
+                       IsAdmin = false,
                        Password = new PasswordHasher<UserInfo>().HashPassword(null, ConstantConfig.DefaultPassword)
                    }
             );
@@ -481,6 +481,37 @@ namespace NetCoreFrame.Infrastructure
             );
             #endregion
 
+            #region 字典表
+            modelBuilder.Entity<SysDictType>().HasData(
+               new SysDictType
+               {
+                   Id = Guid.Parse("B52B584D-D840-451C-A8E6-C61089C3D6D5"),
+                   DictTypeName = "机构类型",
+                   DictType = "JGLX",
+                   IsActive = true
+               }
+               );
+            modelBuilder.Entity<SysDict>().HasData(
+                 new SysDict
+                 {
+                     Id = Guid.Parse("D2804A8D-7E91-48AB-800F-811E7288EBEA"),
+                     DictCode = "1",
+                     DictContent = "公司",
+                     DictType = "JGLX",
+                     DictValue = "",
+                     IsActive = true
+                 },
+                 new SysDict
+                 {
+                     Id = Guid.Parse("037CCCBB-004A-4395-AF3D-7D3A097FC097"),
+                     DictCode = "2",
+                     DictContent = "部门",
+                     DictType = "JGLX",
+                     DictValue = "",
+                     IsActive = true
+                 }
+             );
+            #endregion
         }
 
     }

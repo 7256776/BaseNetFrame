@@ -27,7 +27,7 @@ namespace NetCoreFrame.Application
         /// 获取字典值数据
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")]
+        [AbpAuthorize]
         public async Task<List<SysDict>> GetSysDictList()
         {
             return await _sysDictRepository.GetAllListAsync();
@@ -37,7 +37,7 @@ namespace NetCoreFrame.Application
         ///  查询字典编码集合
         /// </summary>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")]
+        [AbpAuthorize]
         public List<SysDict> GetSysDictListByDictType(string dictType)
         {
             var listSysDict = _sysDictRepository.GetAll().Where(p=>p.DictType == dictType).OrderBy(t=>t.DictCode).ToList();
@@ -49,7 +49,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="listSysDict"></param>
         /// <returns></returns>
-        [AbpAuthorize("DictManager.SaveDict")]
+        [AbpAuthorize]
         public async Task<AjaxResponse> SaveSysDictModel(List<SysDictInput> listSysDict)
         {
             var validDt = from c in listSysDict group c by c.DictCode into lb where lb.Count() > 1 select new { DictCodeCount = lb.Count() };
@@ -92,7 +92,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AbpAuthorize("DictManager")]
+        [AbpAuthorize]
         public bool CheckDictCode(SysDictInput model)
         {
             var data = _sysDictRepository.FirstOrDefault(p =>
@@ -104,7 +104,7 @@ namespace NetCoreFrame.Application
         /// 删除一个字典编码
         /// </summary>
         /// <param name="listSysDict"></param>
-        [AbpAuthorize("DictManager.DeleteDict")]
+        [AbpAuthorize]
         public async Task<bool> DelSysDict(List<SysDictInput> listSysDict)
         {
             if (!listSysDict.Any()) { return false; }
@@ -122,7 +122,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="dictType"></param>
         /// <returns></returns>
-        [AbpAuthorize("DictManager.DelDict")]
+        [AbpAuthorize]
         public AjaxResponse DeleteSysDictByDictType(string dictType)
         {
             var childrenList = _sysDictRepository.GetAllList().Where(p => p.DictType == dictType).ToList();
