@@ -10,7 +10,7 @@ using NetCoreFrame.Infrastructure;
 namespace NetCoreFrame.Infrastructure.Migrations
 {
     [DbContext(typeof(InfrastructureDbContext))]
-    [Migration("20200513062956_InitDataBase")]
+    [Migration("20200518090649_InitDataBase")]
     partial class InitDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("d9aed633-e9ae-40e6-8ad4-4eec083b03b0"),
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(6124),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(7379),
                             NotificationName = "system",
                             TenantId = 1,
                             UserId = 1L
@@ -129,7 +129,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("15812862-b2d7-45e2-826e-25545057c334"),
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(7023),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(9219),
                             NotificationName = "system",
                             TenantId = 1,
                             UserId = 2L
@@ -526,7 +526,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             IsActive = true,
                             MenuID = 7L,
                             PermissionName = "",
-                            RequiresAuthModel = "2"
+                            RequiresAuthModel = "3"
                         },
                         new
                         {
@@ -536,7 +536,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             IsActive = true,
                             MenuID = 7L,
                             PermissionName = "OrgManager.SaveSysOrg",
-                            RequiresAuthModel = "2"
+                            RequiresAuthModel = "3"
                         },
                         new
                         {
@@ -546,7 +546,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             IsActive = true,
                             MenuID = 7L,
                             PermissionName = "OrgManager.DelSysOrg",
-                            RequiresAuthModel = "2"
+                            RequiresAuthModel = "3"
                         },
                         new
                         {
@@ -565,7 +565,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             ActionName = "btnDelType",
                             IsActive = true,
                             MenuID = 8L,
-                            PermissionName = "DictManager.DelDict",
+                            PermissionName = "DictManager.DelDictType",
                             RequiresAuthModel = "3"
                         },
                         new
@@ -595,7 +595,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             ActionName = "btnDelCode",
                             IsActive = true,
                             MenuID = 8L,
-                            PermissionName = "DictManager.DeleteDict",
+                            PermissionName = "DictManager.DelDict",
                             RequiresAuthModel = "3"
                         });
                 });
@@ -651,7 +651,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             MenuName = "sys-config",
                             OrderBy = 1,
                             PermissionName = "",
-                            RequiresAuthModel = "1",
+                            RequiresAuthModel = "3",
                             Url = ""
                         },
                         new
@@ -729,7 +729,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             OrderBy = 6,
                             ParentID = 1L,
                             PermissionName = "OrgManager",
-                            RequiresAuthModel = "2",
+                            RequiresAuthModel = "3",
                             Url = "/Views/SysOrg/Index"
                         },
                         new
@@ -779,7 +779,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("0bfb0ddd-bb12-4059-87a1-4e0294643ea4"),
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(3403),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(1870),
                             NotificationDescribe = "提供系统默认提示消息",
                             NotificationDisplayName = "系统通知",
                             NotificationName = "system",
@@ -1126,7 +1126,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 973, DateTimeKind.Local).AddTicks(5121),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 292, DateTimeKind.Local).AddTicks(136),
                             Description = "动态生成的角色",
                             IsActive = true,
                             RoleName = "admin角色"
@@ -1169,7 +1169,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("ecf6faa6-27d6-4056-bb32-91357b639824"),
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(8830),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 316, DateTimeKind.Local).AddTicks(2780),
                             Name = "Abp.Localization.DefaultLanguageName",
                             Value = "zh-Hans"
                         });
@@ -1249,12 +1249,12 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 974, DateTimeKind.Local).AddTicks(371),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 293, DateTimeKind.Local).AddTicks(23),
                             ImageUrl = "m",
                             IsActive = true,
                             IsAdmin = true,
                             IsDeleted = false,
-                            Password = "AQAAAAEAACcQAAAAEL5sDr0lCYaLLFdOBehkFJhMc7kBoBp5MjJTicvHJUpfeP+TSdvKf6qp36kLXR3csA==",
+                            Password = "AQAAAAEAACcQAAAAENf06DZPoTohuIRizcAnDck0stwoEySnWKgGMISrovaUJP3TLMuc4K9+jbv4YlqNFw==",
                             Sex = "1",
                             UserCode = "sys",
                             UserNameCn = "管理员"
@@ -1262,12 +1262,12 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 2L,
-                            CreationTime = new DateTime(2020, 5, 13, 14, 29, 55, 982, DateTimeKind.Local).AddTicks(6295),
+                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 305, DateTimeKind.Local).AddTicks(6881),
                             ImageUrl = "2",
                             IsActive = true,
                             IsAdmin = false,
                             IsDeleted = false,
-                            Password = "AQAAAAEAACcQAAAAEFpQCfynD4qfHuqald/junsZuSF0Z6yFhmR4FqzAI5YVuF00yIbaFo6GYHlaIT2/CA==",
+                            Password = "AQAAAAEAACcQAAAAENuiNw98Tn710z065gkh392ny6LVpy/g6XKpY2Ov8zZs78vAfXkWwpsETgEEnWi9ug==",
                             Sex = "0",
                             UserCode = "admin",
                             UserNameCn = "管理员"

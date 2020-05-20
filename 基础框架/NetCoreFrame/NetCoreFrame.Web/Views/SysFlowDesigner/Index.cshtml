@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="designerTools">
+        <el-button-group>
+            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAddEndpoint('S')" ref="btnAdd">开始</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doAddEndpoint('E')" ref="btnEdit">结束</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doAddEndpoint('P')" ref="btnDel">节点</el-button>
+        </el-button-group>
+
+        <el-button-group>
+            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doSaveFlow()" ref="btnAdd">保存</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doLoadFlow()" ref="btnEdit">载入</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doClearFlow()" ref="btnDel">清空</el-button>
+        </el-button-group>
+    </div>
+
+    <div id="sysDesignerContainer" ref="designerContainer" class="designerContainer">
+        <!-- <div id="designerCanvas"> -->
+        <div v-for="(endpoint,i) in endpointList" 
+                class="item-endpoint"
+                v-bind:id="endpoint.uid" 
+                v-bind:class="endpoint.endpointClass" 
+                v-bind:style="endpoint.style"
+                v-bind:endpointType="endpoint.endpointType">
+            <div class="item-endpoint-content">
+                <span class="item-endpoint-label"  v-bind:class="endpoint.labelClass">{{endpoint.endpointText}}</span>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+
+</div>

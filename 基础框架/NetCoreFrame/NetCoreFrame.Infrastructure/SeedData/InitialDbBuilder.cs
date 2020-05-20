@@ -15,6 +15,8 @@ namespace NetCoreFrame.Infrastructure
         ///   执行命令
         ///   1. Add-Migration InitDataBase                init生成的类名称后缀,前缀是日期表示 (如需撤销该操作 Remove-Migration)
         ///   2. Update-Database -Verbose
+        ///   
+        ///  get-help Add-Migration -detailed 查看详细信息
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
@@ -32,6 +34,8 @@ namespace NetCoreFrame.Infrastructure
          
             return new InfrastructureDbContext(builder.Options);
         }
+
+         
 
     }
 }

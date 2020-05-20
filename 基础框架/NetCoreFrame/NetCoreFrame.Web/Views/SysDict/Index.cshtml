@@ -56,11 +56,11 @@
                                     </div>
                                 </div>
 
-                                <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;width:99%">
+                                <div class="frame-btn-tools" style="width:99%">
                                     <div class="row ">
                                         <div class="col-md-9 ">
                                             <el-button-group>
-                                                <el-button ref="btnSave" v-IsAuthorized type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveDictType()">&nbsp;&nbsp;保存字典类型</el-button>
+                                                <el-button size="mini"  ref="btnSave" v-IsAuthorized type="primary" icon="fa fa-save fa-lg" v-on:click="doSaveDictType()">&nbsp;&nbsp;保存字典类型</el-button>
                                             </el-button-group>
                                         </div>
                                     </div>
@@ -103,15 +103,15 @@
                                 <div class="portlet-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active">
-                                            <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
+                                            <div class="frame-btn-tools">
                                                 <div class="row">
                                                     <div class="col-md-9 ">
                                                         <el-button-group>
                                                             <el-tooltip ref="btnAddCode"  content="新增字典编码" placement="top">
-                                                                <el-button type="primary" icon="fa fa-plus fa-lg" v-on:click="doSubAdd()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;新增字典编码</el-button>
+                                                                <el-button size="mini"  type="primary" icon="fa fa-plus fa-lg" v-on:click="doSubAdd()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;新增字典编码</el-button>
                                                             </el-tooltip>
                                                             <el-tooltip ref="btnDelCode"  content="删除字典编码" placement="top">
-                                                                <el-button type="primary" icon="fa fa-minus fa-lg" v-on:click="doSubDel()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;删除字典编码</el-button>
+                                                                <el-button size="mini"  type="primary" icon="fa fa-minus fa-lg" v-on:click="doSubDel()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;删除字典编码</el-button>
                                                             </el-tooltip>
                                                         </el-button-group>
                                                     </div>

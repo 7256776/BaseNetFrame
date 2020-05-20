@@ -16,7 +16,6 @@ namespace NetCoreFrame.Infrastructure
         {
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -45,7 +44,7 @@ namespace NetCoreFrame.Infrastructure
                     MenuDisplayName = "系统设置",
                     MenuName = "sys-config",
                     PermissionName = "",
-                    RequiresAuthModel = "1",
+                    RequiresAuthModel = "3",
                     Url = "",
                     Icon = "fa-list-ol",
                     OrderBy = 1,
@@ -129,7 +128,7 @@ namespace NetCoreFrame.Infrastructure
                     MenuDisplayName = "组织机构",
                     MenuName = "sys-org",
                     PermissionName = "OrgManager",
-                    RequiresAuthModel = "2",
+                    RequiresAuthModel = "3",
                     Url = "/Views/SysOrg/Index",
                     Icon = "fa-university",
                     OrderBy = 6,
@@ -285,7 +284,7 @@ namespace NetCoreFrame.Infrastructure
                     ActionDisplayName = "新增",
                     ActionName = "btnAdd",
                     PermissionName = "",
-                    RequiresAuthModel = "2",
+                    RequiresAuthModel = "3",
                     IsActive = true
                 },
                 new SysMenuAction
@@ -295,7 +294,7 @@ namespace NetCoreFrame.Infrastructure
                     ActionDisplayName = "保存",
                     ActionName = "btnSave",
                     PermissionName = "OrgManager.SaveSysOrg",
-                    RequiresAuthModel = "2",
+                    RequiresAuthModel = "3",
                     IsActive = true
                 },
                 new SysMenuAction
@@ -305,7 +304,7 @@ namespace NetCoreFrame.Infrastructure
                     ActionDisplayName = "删除",
                     ActionName = "btnDel",
                     PermissionName = "OrgManager.DelSysOrg",
-                    RequiresAuthModel = "2",
+                    RequiresAuthModel = "3",
                     IsActive = true
                 },
                 //字典管理
@@ -512,6 +511,7 @@ namespace NetCoreFrame.Infrastructure
                  }
              );
             #endregion
+
         }
 
     }

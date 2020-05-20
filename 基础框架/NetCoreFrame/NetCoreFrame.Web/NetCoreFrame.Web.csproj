@@ -75,6 +75,7 @@
     <None Remove="Views\SysComponents\UserInfoExtens.js" />
     <None Remove="Views\SysComponents\WebTitle.js" />
     <None Remove="Views\SysDict\index.js" />
+    <None Remove="Views\SysFlowDesigner\index.js" />
     <None Remove="Views\SysHome\DesktopPage.js" />
     <None Remove="Views\SysMenus\index.js" />
     <None Remove="Views\SysMenus\SideMenu.js" />
@@ -89,6 +90,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Views\SysFlowDesigner\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\Content\assets\global\img\social\Thumbs.db" />
   </ItemGroup>
 
@@ -222,6 +226,8 @@
     <None Include="wwwroot\Abp\Framework\styles\abp.less" />
     <None Include="wwwroot\Abp\Framework\styles\abp.mixings.css.map" />
     <None Include="wwwroot\Abp\Framework\styles\abp.mixings.less" />
+    <None Include="wwwroot\Content\Lib\jsplumb\js\jsplumb.js" />
+    <None Include="wwwroot\Content\Lib\jsplumb\js\jsplumb.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -330,6 +336,6 @@
     <TypeScriptSourceRoot />
   </PropertyGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

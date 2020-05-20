@@ -403,20 +403,20 @@ namespace NetCoreFrame.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 8L, null, null, "fa-bookmark", true, "字典管理", "sys-dict", 7, 1L, "DictManager", "3", "/Views/SysDict/Index" },
-                    { 1L, null, null, "fa-list-ol", true, "系统设置", "sys-config", 1, null, "", "1", "" },
+                    { 1L, null, null, "fa-list-ol", true, "系统设置", "sys-config", 1, null, "", "3", "" },
                     { 2L, null, null, "fa-list-ol", true, "菜单管理", "sys-menus", 1, 1L, "MenusManager", "3", "/Views/SysMenus/Index" },
                     { 3L, null, null, "fa-users", true, "用户管理", "sys-account", 2, 1L, "UserInfoManager", "3", "/Views/SysAccount/index" },
                     { 4L, null, null, "fa-vcard", true, "角色管理", "sys-roles", 3, 1L, "RoleManager", "3", "/Views/SysRole/Index" },
                     { 5L, null, null, "fa-bullhorn", true, "消息通知", "sys-notifications", 5, 1L, "NotificationsManager", "3", "/Views/SysNotifications/Index" },
                     { 6L, null, null, "fa-book", true, "日志管理", "sys-auditlogs", 7, 1L, "LogManager", "3", "/Views/SysAuditLogs/Index" },
-                    { 7L, null, null, "fa-university", true, "组织机构", "sys-org", 6, 1L, "OrgManager", "2", "/Views/SysOrg/Index" }
+                    { 7L, null, null, "fa-university", true, "组织机构", "sys-org", 6, 1L, "OrgManager", "3", "/Views/SysOrg/Index" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
                 table: "Sys_NotificationInfo",
                 columns: new[] { "Id", "CreationTime", "CreatorUserId", "NotificationDescribe", "NotificationDisplayName", "NotificationName", "NotificationType" },
-                values: new object[] { new Guid("0bfb0ddd-bb12-4059-87a1-4e0294643ea4"), new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(3403), null, "提供系统默认提示消息", "系统通知", "system", "sms" });
+                values: new object[] { new Guid("0bfb0ddd-bb12-4059-87a1-4e0294643ea4"), new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(1870), null, "提供系统默认提示消息", "系统通知", "system", "sms" });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
@@ -424,8 +424,8 @@ namespace NetCoreFrame.Infrastructure.Migrations
                 columns: new[] { "Id", "CreationTime", "CreatorUserId", "EntityId", "EntityTypeAssemblyName", "EntityTypeName", "NotificationName", "TenantId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("d9aed633-e9ae-40e6-8ad4-4eec083b03b0"), new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(6124), null, null, null, null, "system", 1, 1L },
-                    { new Guid("15812862-b2d7-45e2-826e-25545057c334"), new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(7023), null, null, null, null, "system", 1, 2L }
+                    { new Guid("d9aed633-e9ae-40e6-8ad4-4eec083b03b0"), new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(7379), null, null, null, null, "system", 1, 1L },
+                    { new Guid("15812862-b2d7-45e2-826e-25545057c334"), new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(9219), null, null, null, null, "system", 1, 2L }
                 });
 
             migrationBuilder.InsertData(
@@ -468,13 +468,13 @@ namespace NetCoreFrame.Infrastructure.Migrations
                 schema: "dbo",
                 table: "Sys_Roles",
                 columns: new[] { "Id", "CreationTime", "CreatorUserId", "Description", "IsActive", "LastModificationTime", "LastModifierUserId", "RoleName", "TenantId" },
-                values: new object[] { 1L, new DateTime(2020, 5, 13, 14, 29, 55, 973, DateTimeKind.Local).AddTicks(5121), null, "动态生成的角色", true, null, null, "admin角色", null });
+                values: new object[] { 1L, new DateTime(2020, 5, 18, 17, 6, 49, 292, DateTimeKind.Local).AddTicks(136), null, "动态生成的角色", true, null, null, "admin角色", null });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
                 table: "Sys_Settings",
                 columns: new[] { "Id", "CreationTime", "CreatorUserId", "LastModificationTime", "LastModifierUserId", "Name", "TenantId", "UserId", "Value" },
-                values: new object[] { new Guid("ecf6faa6-27d6-4056-bb32-91357b639824"), new DateTime(2020, 5, 13, 14, 29, 55, 989, DateTimeKind.Local).AddTicks(8830), null, null, null, "Abp.Localization.DefaultLanguageName", null, null, "zh-Hans" });
+                values: new object[] { new Guid("ecf6faa6-27d6-4056-bb32-91357b639824"), new DateTime(2020, 5, 18, 17, 6, 49, 316, DateTimeKind.Local).AddTicks(2780), null, null, null, "Abp.Localization.DefaultLanguageName", null, null, "zh-Hans" });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
@@ -482,8 +482,8 @@ namespace NetCoreFrame.Infrastructure.Migrations
                 columns: new[] { "Id", "CreationTime", "CreatorUserId", "DeleterUserId", "DeletionTime", "Description", "EmailAddress", "ImageUrl", "IsActive", "IsAdmin", "IsDeleted", "LastLoginTime", "LastModificationTime", "LastModifierUserId", "OrgCode", "Password", "PhoneNumber", "Sex", "TenantId", "UserCode", "UserNameCn" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2020, 5, 13, 14, 29, 55, 974, DateTimeKind.Local).AddTicks(371), null, null, null, null, null, "m", true, true, false, null, null, null, null, "AQAAAAEAACcQAAAAEL5sDr0lCYaLLFdOBehkFJhMc7kBoBp5MjJTicvHJUpfeP+TSdvKf6qp36kLXR3csA==", null, "1", null, "sys", "管理员" },
-                    { 2L, new DateTime(2020, 5, 13, 14, 29, 55, 982, DateTimeKind.Local).AddTicks(6295), null, null, null, null, null, "2", true, false, false, null, null, null, null, "AQAAAAEAACcQAAAAEFpQCfynD4qfHuqald/junsZuSF0Z6yFhmR4FqzAI5YVuF00yIbaFo6GYHlaIT2/CA==", null, "0", null, "admin", "管理员" }
+                    { 1L, new DateTime(2020, 5, 18, 17, 6, 49, 293, DateTimeKind.Local).AddTicks(23), null, null, null, null, null, "m", true, true, false, null, null, null, null, "AQAAAAEAACcQAAAAENf06DZPoTohuIRizcAnDck0stwoEySnWKgGMISrovaUJP3TLMuc4K9+jbv4YlqNFw==", null, "1", null, "sys", "管理员" },
+                    { 2L, new DateTime(2020, 5, 18, 17, 6, 49, 305, DateTimeKind.Local).AddTicks(6881), null, null, null, null, null, "2", true, false, false, null, null, null, null, "AQAAAAEAACcQAAAAENuiNw98Tn710z065gkh392ny6LVpy/g6XKpY2Ov8zZs78vAfXkWwpsETgEEnWi9ug==", null, "0", null, "admin", "管理员" }
                 });
 
             migrationBuilder.InsertData(
@@ -495,13 +495,13 @@ namespace NetCoreFrame.Infrastructure.Migrations
                     { 1L, "新增", "btnAdd", null, true, 2L, "", "3" },
                     { 19L, "新增字典编码", "btnAddCode", null, true, 8L, "", "3" },
                     { 18L, "保存", "btnSave", null, true, 8L, "DictManager.SaveDict", "3" },
-                    { 17L, "删除类型", "btnDelType", null, true, 8L, "DictManager.DelDict", "3" },
+                    { 17L, "删除类型", "btnDelType", null, true, 8L, "DictManager.DelDictType", "3" },
                     { 16L, "新增类型", "btnAddType", null, true, 8L, "", "3" },
-                    { 15L, "删除", "btnDel", null, true, 7L, "OrgManager.DelSysOrg", "2" },
-                    { 14L, "保存", "btnSave", null, true, 7L, "OrgManager.SaveSysOrg", "2" },
-                    { 13L, "新增", "btnAdd", null, true, 7L, "", "2" },
+                    { 15L, "删除", "btnDel", null, true, 7L, "OrgManager.DelSysOrg", "3" },
+                    { 14L, "保存", "btnSave", null, true, 7L, "OrgManager.SaveSysOrg", "3" },
+                    { 13L, "新增", "btnAdd", null, true, 7L, "", "3" },
                     { 12L, "用户授权", "btnUser", null, true, 4L, "RoleManager.SaveRoleToUser", "3" },
-                    { 20L, "删除字典编码", "btnDelCode", null, true, 8L, "DictManager.DeleteDict", "3" },
+                    { 20L, "删除字典编码", "btnDelCode", null, true, 8L, "DictManager.DelDict", "3" },
                     { 11L, "模块授权", "btnMenu", null, true, 4L, "RoleManager.SaveRoleToMenu", "3" },
                     { 9L, "编辑", "BtnEdit", null, true, 4L, "RoleManager.SaveRole", "3" },
                     { 8L, "新增", "btnAdd", null, true, 4L, "RoleManager.SaveRole", "3" },

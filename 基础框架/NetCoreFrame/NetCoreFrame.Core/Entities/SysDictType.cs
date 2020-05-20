@@ -8,7 +8,7 @@ namespace NetCoreFrame.Core
     //Sys_DictType
     [Table("SYS_DICTTYPE")]
     public class SysDictType: Entity<Guid>
-    {
+    { 
         /// <summary>
         /// 字典类型(通常是字母编码)
         /// </summary>	 
@@ -16,7 +16,7 @@ namespace NetCoreFrame.Core
         [Required(ErrorMessage = "请输入字典类型")]
         [StringLength(50)]
         public string DictType { get; set; }
-
+         
         /// <summary>
         /// 字典类型名称
         /// </summary>	 
@@ -31,6 +31,7 @@ namespace NetCoreFrame.Core
         [Column("ISACTIVE")]
         [Required]
         public bool IsActive { get; set; } = true;
+
 
     }
 }

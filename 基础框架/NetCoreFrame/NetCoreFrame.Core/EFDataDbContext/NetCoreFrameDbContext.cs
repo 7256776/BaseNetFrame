@@ -231,8 +231,6 @@ namespace NetCoreFrame.Core
             #endregion
 
             #endregion
-
-
             base.OnModelCreating(modelBuilder);
         }
 

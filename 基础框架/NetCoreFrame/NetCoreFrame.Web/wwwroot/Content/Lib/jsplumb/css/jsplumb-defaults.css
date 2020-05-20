@@ -1,0 +1,148 @@
+/*
+    设计器工具栏样式
+*/
+.designerTools {
+    /*position: absolute;*/
+    padding: 3px 0px 3px 3px;
+    margin-bottom: 2px;
+    border: 1px solid #DCDFE6;
+}
+
+/*
+    设计器容器样式
+*/
+.designerContainer {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 240px);
+    border: 1px solid gray;
+    background-image: url(../img/bg.png);
+    background-repeat: repeat;
+    OVERFLOW: auto;
+}
+
+/*
+    设计器 .............
+*/
+/* #designerCanvas { */
+    /* position:absolute; */
+    /* margin: 5px; */
+    /* top: 55px; */
+    /* width: 100%; */
+    /* height: 100%; */
+/* } */
+
+/*
+    设计器 .............
+*/
+/* .dv-container {
+    position: relative;
+    overflow: auto;
+    width: 99%;
+    height: 100%;
+} */
+
+/*
+    连接器
+*/
+.item-endpoint {
+    position: absolute;
+    height: 60px;
+    width: 120px;
+    border:1px solid #339933;
+    background: #339933;
+    border-radius:0.5em; 
+
+    text-align:center;
+    
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    /* 阴影效果 */
+    box-shadow: 2px 2px 19px #aaa;  
+    -o-box-shadow: 2px 2px 19px #aaa;
+    -webkit-box-shadow: 2px 2px 19px #aaa;
+    -moz-box-shadow: 2px 2px 19px #aaa;
+    -moz-border-radius:0.5em;
+    /* 过度效果 */
+    -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+    -moz-transition: -moz-box-shadow 0.25s ease-in;
+    -o-transition: -o-box-shadow 0.25s ease-in;
+    transition: box-shadow 0.25s ease-in;
+}
+
+/*
+    连接器 鼠标悬停样式
+*/
+    .item-endpoint:hover {
+        border: 1px solid #123456;
+        box-shadow: 2px 2px 19px #444;
+        -o-box-shadow: 2px 2px 19px #444;
+        -webkit-box-shadow: 2px 2px 19px #444;
+        -moz-box-shadow: 2px 2px 19px #fff;
+        opacity: 0.9;
+    }
+
+/*
+    连接器 开始节点
+*/
+.item-endpoint-start {
+    display:inline-block;
+    margin-right:5px;
+    border-radius:50px;     /* 圆形边缘弧度 */
+    width:60px;            
+    height:60px;           
+    background-color: #3399CC;
+}
+ 
+/*
+    连接器 开始节点
+*/
+.item-endpoint-end {
+    display:inline-block;
+    margin-right:5px;
+    border-radius:50px;     /* 圆形边缘弧度 */
+    width:60px;            
+    height:60px;           
+    background-color: #FF6666;
+}
+
+/*
+    连接器 内容区
+*/
+.item-endpoint-content {
+    height: 100%;
+    width: 100%; 
+    text-align: center;
+    vertical-align: middle;
+    cursor:crosshair;
+    /* border: 1px red solid; */
+}
+
+/*
+    连接器 文本标签
+*/
+.item-endpoint-label {
+    position: relative;
+    cursor: pointer;
+    height: 20px;
+    width: 80px;
+    text-align: center;
+    top: 20px;
+    font: 13px 微软雅黑;
+    padding: 0px;
+    color: #fff;
+    display: block;
+    white-space: nowrap;
+    display: inline-block;      /*将span当做块级元素对待*/
+    overflow: hidden;           /*超出宽度部分隐藏*/
+    /*border: 1px red solid;*/
+    /* z-index: 1000; */
+}
+
+/*
+    连接器 圆形节点文本标签
+*/
+.item-endpoint-dot-label {
+    width: 30px ;
+}

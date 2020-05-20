@@ -32,6 +32,13 @@
 }
 
 /***********************************基础布局样式**************************************/
+/*按钮工具栏区域样式*/
+.frame-btn-tools {
+    padding: 3px 0px 3px 3px;
+    margin-bottom: 2px;
+    border: 1px solid #DCDFE6;
+}
+
 /*扩展内容区域样式*/
 .page-content-ext {
     background-color: #ffffff;
