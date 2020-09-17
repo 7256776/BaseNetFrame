@@ -2,7 +2,9 @@
  * 依赖 vue.js
 *  依赖 jquery.js
  * */
-
+//
+Vue.config.productionTip = false
+ 
 //设置jquery支持IE9的跨域
 jQuery.support.cors = true
 
@@ -166,7 +168,7 @@ var initFrame = function (Vue, options) {
             //console.log('componentUpdated=所在组件的 VNode 及其孩子的 VNode 全部更新时调用')
         },
         unbind: function (el, binding, vnode, oldVnode) {
-            //console.log('unbind=只调用一次，指令与元素解绑时调用。');
+            //console.log('unbind=只调用一次，指令在元素解绑时调用。');
         }
     });
 
@@ -178,32 +180,55 @@ var initFrame = function (Vue, options) {
         }).responseText;
     };
 
-
     /**
      * @param {any} pageOption : {
      *      name : '模板标签名称',
      *      path : '模板js地址(不包含.js后缀)',
      *      displayName : '模板显示名称'
+     *      params:'参数对象'
      * }
      */
     Vue.prototype.pageRouter = function (pageOption) {
-        if (!pageOption.name || !pageOption.path) {
+        var _this = this;
+
+        if (!pageOption.name) {
             return;
         }
-        var _this = this;
-        pageOption.name = pageOption.name.trim();
-        var rou = [{
-            path: pageOption.path,
-            name: pageOption.name,
-            component: function (resolve, reject) {
-                _this.pageLoad(pageOption.name, pageOption.path).then(resolve, reject);
+        //判断路由是否已经存在
+        var isRoutes = this.$router.app.$data.routesList.filter(function (item, index) {
+            if (pageOption.name.trim() == item.name) {
+                return true;
             }
-            //meta: { menuData: menusSub },
-            //beforeEnter: _this.doBeforeEnter
-        }]
-        //注册路由
-        this.$router.addRoutes(rou);
-        
+        });
+        //路由不存在就add
+        if (!isRoutes || isRoutes.length <= 0) {
+            if (!pageOption.path) {
+                return;
+            }
+            var route =
+            {
+                path: pageOption.path,
+                name: pageOption.name.trim(),
+                component: function (resolve, reject) {
+                    _this.pageLoad(pageOption.name, pageOption.path).then(resolve, reject);
+                }
+                //meta: { menuData: menusSub },
+                //beforeEnter: _this.doBeforeEnter
+            }
+
+            //注册到自定义的路由集合
+            this.$router.app.$data.routesList.push(route);
+            //注册到vue路由集合
+            var routes = [];
+            routes.push(route)
+            //注册路由
+            this.$router.addRoutes(routes);
+        } else {
+            pageOption.name = pageOption.name || isRoutes[0].name;
+            pageOption.path = pageOption.path || isRoutes[0].path;
+            pageOption.displayName = pageOption.displayName || isRoutes[0].displayName;
+        }
+
         //页面跳转
         this.$router.push({
             //通过URL传递参数,刷新后如果该路由已经注册的情况参数不会丢失 例: www.xxx.com?id=参数 
@@ -214,7 +239,7 @@ var initFrame = function (Vue, options) {
             //params: pageOption.params
         });
 
-        //
+        //设置导航工具栏
         if (pageOption.displayName && this.$parent) {
             if (!this.$parent.$data)
                 return;
@@ -239,7 +264,7 @@ var initFrame = function (Vue, options) {
         //
         return new Promise(function (resolve, reject) {
             if (!path) {
-                //reject('您还冒配置路由地址呀');
+                reject('请检查模块配置的路由地址.');
                 return;
             }
             var script = document.createElement('script');
@@ -280,17 +305,97 @@ var initFrame = function (Vue, options) {
         return applicationPath + "AbpLocalization/ChangeCulture?cultureName=" + name + "&returnUrl=" + requestPath;
     };
 
-    //注册组件this共有函数或属性
+    //注册组件this共有函数或属性 暂留预设
     Vue.prototype.getServiceUrl = function (url) {
-
         return url;
     }
+
 
 }
 
 //应用初始化
 Vue.use(initFrame)
 
+//简单的状态管理对象
+var frameStore = Vue.observable({
+    screenHeight: 0,
+    screenWidth: 0
+});
+
+//混入全局对象(待改造)
+Vue.mixin({
+    created: function () {
+       
+    },
+      //混入公用数据
+     data: function () {
+         return {
+             /*
+              *  统一表单样式
+              *  formWinCol2    ┓
+              *  formWinCol3    ┣ 设置表单的列数 分别 2-4列
+              *  formWinCol4    ┛
+              *  
+              *  formFormItem1  ┓
+              *  formFormItem2  ┣   设置表单元素的宽度,结合表单列数适配
+              *  formFormItem3  ┣   数字 1-4表示所占用的列数
+              *  formFormItem4  ┛
+              */
+             formWinCol2: '675px',                                  
+             formWinCol3: '985px',
+             formWinCol4: '1300px',
+             formFormItem1: { width: '200px' },
+             formFormItem2: { width: '513px' },
+             formFormItem3: { width: '825px' },
+             formFormItem4: { width: '1140px' },
+         }
+    },
+    computed: {
+        frameWidthStyle: function () {
+            return function (size) {
+                var n = this.frameWidth(size);
+                return { width: n, overflow: 'auto' };
+            }
+        },
+        frameHeightStyle: function () {
+            return function (size) {
+                var n = this.frameHeight(size) ;
+                return { height: n, overflow: 'auto' };
+            }
+        },
+        frameWidth: function () {
+            return function (size) {
+                return this._sysWinSize(frameStore.screenWidth, size) + 'px';
+            }
+        },
+        frameHeight: function () {
+            return function (size) {
+                return this._sysWinSize(frameStore.screenHeight, size) - 200 + 'px';
+            }
+        }
+    },
+    methods: {
+        _sysWinSize: function (num, size) {
+            if (!size) {
+                return num;
+            }
+            size = size.toUpperCase();
+              if(size == 'L') {
+                return num * 0.8;
+            }
+            else if (size == 'M') {
+                return num * 0.6;
+            }
+            else if (size == 'S') {
+                return num * 0.4;
+            } else {
+                return num;
+            }
+        },
+
+    }
+
+})
  
 
 

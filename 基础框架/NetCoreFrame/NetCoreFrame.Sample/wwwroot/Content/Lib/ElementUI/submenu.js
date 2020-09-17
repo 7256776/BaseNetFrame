@@ -37,12 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,48 +80,43 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 175);
+/******/ 	return __webpack_require__(__webpack_require__.s = 122);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
-// IMPORTANT: Do NOT use ES2015 features in this file.
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier /* server only */
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
 
   // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
     options._compiled = true
   }
 
@@ -112,7 +127,7 @@ module.exports = function normalizeComponent (
 
   // scopedId
   if (scopeId) {
-    options._scopeId = scopeId
+    options._scopeId = 'data-v-' + scopeId
   }
 
   var hook
@@ -140,34 +155,32 @@ module.exports = function normalizeComponent (
     // never gets called
     options._ssrRegister = hook
   } else if (injectStyles) {
-    hook = injectStyles
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
   }
 
   if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
+    if (options.functional) {
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
       // register for functioal component in vue file
+      var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
-        return existing(h, context)
+        return originalRender(h, context)
       }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
     }
   }
 
   return {
-    esModule: esModule,
     exports: scriptExports,
     options: options
   }
@@ -176,163 +189,33 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/mixins/emitter");
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(176);
-
-
-/***/ }),
-
-/***/ 176:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _submenu = __webpack_require__(177);
-
-var _submenu2 = _interopRequireDefault(_submenu);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* istanbul ignore next */
-_submenu2.default.install = function (Vue) {
-  Vue.component(_submenu2.default.name, _submenu2.default);
-};
-
-exports.default = _submenu2.default;
-
-/***/ }),
-
-/***/ 177:
+/***/ 122:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_submenu_vue__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_submenu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_submenu_vue__);
-/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_submenu_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_submenu_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-var normalizeComponent = __webpack_require__(0)
-/* script */
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: external "element-ui/lib/transitions/collapse-transition"
+var collapse_transition_ = __webpack_require__(28);
+var collapse_transition_default = /*#__PURE__*/__webpack_require__.n(collapse_transition_);
+
+// EXTERNAL MODULE: ./packages/menu/src/menu-mixin.js
+var menu_mixin = __webpack_require__(35);
+
+// EXTERNAL MODULE: external "element-ui/lib/mixins/emitter"
+var emitter_ = __webpack_require__(4);
+var emitter_default = /*#__PURE__*/__webpack_require__.n(emitter_);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/vue-popper"
+var vue_popper_ = __webpack_require__(5);
+var vue_popper_default = /*#__PURE__*/__webpack_require__.n(vue_popper_);
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/menu/src/submenu.vue?vue&type=script&lang=js&
 
 
-/* template */
-var __vue_template__ = null
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_submenu_vue___default.a,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
-/***/ }),
 
-/***/ 22:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/transitions/collapse-transition");
-
-/***/ }),
-
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = {
-  inject: ['rootMenu'],
-  computed: {
-    indexPath: function indexPath() {
-      var path = [this.index];
-      var parent = this.$parent;
-      while (parent.$options.componentName !== 'ElMenu') {
-        if (parent.index) {
-          path.unshift(parent.index);
-        }
-        parent = parent.$parent;
-      }
-      return path;
-    },
-    parentMenu: function parentMenu() {
-      var parent = this.$parent;
-      while (parent && ['ElMenu', 'ElSubmenu'].indexOf(parent.$options.componentName) === -1) {
-        parent = parent.$parent;
-      }
-      return parent;
-    },
-    paddingStyle: function paddingStyle() {
-      if (this.rootMenu.mode !== 'vertical') return {};
-
-      var padding = 20;
-      var parent = this.$parent;
-
-      if (this.rootMenu.collapse) {
-        padding = 20;
-      } else {
-        while (parent && parent.$options.componentName !== 'ElMenu') {
-          if (parent.$options.componentName === 'ElSubmenu') {
-            padding += 20;
-          }
-          parent = parent.$parent;
-        }
-      }
-      return { paddingLeft: padding + 'px' };
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 56:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _collapseTransition = __webpack_require__(22);
-
-var _collapseTransition2 = _interopRequireDefault(_collapseTransition);
-
-var _menuMixin = __webpack_require__(37);
-
-var _menuMixin2 = _interopRequireDefault(_menuMixin);
-
-var _emitter = __webpack_require__(1);
-
-var _emitter2 = _interopRequireDefault(_emitter);
-
-var _vuePopper = __webpack_require__(7);
-
-var _vuePopper2 = _interopRequireDefault(_vuePopper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var poperMixins = {
   props: {
@@ -340,24 +223,24 @@ var poperMixins = {
       type: [Boolean, String],
       default: false
     },
-    offset: _vuePopper2.default.props.offset,
-    boundariesPadding: _vuePopper2.default.props.boundariesPadding,
-    popperOptions: _vuePopper2.default.props.popperOptions
+    offset: vue_popper_default.a.props.offset,
+    boundariesPadding: vue_popper_default.a.props.boundariesPadding,
+    popperOptions: vue_popper_default.a.props.popperOptions
   },
-  data: _vuePopper2.default.data,
-  methods: _vuePopper2.default.methods,
-  beforeDestroy: _vuePopper2.default.beforeDestroy,
-  deactivated: _vuePopper2.default.deactivated
+  data: vue_popper_default.a.data,
+  methods: vue_popper_default.a.methods,
+  beforeDestroy: vue_popper_default.a.beforeDestroy,
+  deactivated: vue_popper_default.a.deactivated
 };
 
-exports.default = {
+/* harmony default export */ var submenuvue_type_script_lang_js_ = ({
   name: 'ElSubmenu',
 
   componentName: 'ElSubmenu',
 
-  mixins: [_menuMixin2.default, _emitter2.default, poperMixins],
+  mixins: [menu_mixin["a" /* default */], emitter_default.a, poperMixins],
 
-  components: { ElCollapseTransition: _collapseTransition2.default },
+  components: { ElCollapseTransition: collapse_transition_default.a },
 
   props: {
     index: {
@@ -503,9 +386,15 @@ exports.default = {
       }
       this.dispatch('ElMenu', 'submenu-click', this);
     },
-    handleMouseenter: function handleMouseenter() {
+    handleMouseenter: function handleMouseenter(event) {
       var _this2 = this;
 
+      var showTimeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.showTimeout;
+
+
+      if (!('ActiveXObject' in window) && event.type === 'focus' && !event.relatedTarget) {
+        return;
+      }
       var rootMenu = this.rootMenu,
           disabled = this.disabled;
 
@@ -516,7 +405,7 @@ exports.default = {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function () {
         _this2.rootMenu.openMenu(_this2.index, _this2.indexPath);
-      }, this.showTimeout);
+      }, showTimeout);
     },
     handleMouseleave: function handleMouseleave() {
       var _this3 = this;
@@ -554,8 +443,6 @@ exports.default = {
   created: function created() {
     var _this4 = this;
 
-    this.parentMenu.addSubmenu(this);
-    this.rootMenu.addSubmenu(this);
     this.$on('toggle-collapse', this.handleCollapseToggle);
     this.$on('mouse-enter-child', function () {
       _this4.mouseInChild = true;
@@ -567,6 +454,8 @@ exports.default = {
     });
   },
   mounted: function mounted() {
+    this.parentMenu.addSubmenu(this);
+    this.rootMenu.addSubmenu(this);
     this.initPopper();
   },
   beforeDestroy: function beforeDestroy() {
@@ -574,6 +463,8 @@ exports.default = {
     this.rootMenu.removeSubmenu(this);
   },
   render: function render(h) {
+    var _this5 = this;
+
     var active = this.active,
         opened = this.opened,
         paddingStyle = this.paddingStyle,
@@ -605,9 +496,13 @@ exports.default = {
 
           'class': ['el-menu--' + mode, popperClass],
           on: {
-            'mouseenter': this.handleMouseenter,
+            'mouseenter': function mouseenter($event) {
+              return _this5.handleMouseenter($event, 100);
+            },
             'mouseleave': this.handleMouseleave,
-            'focus': this.handleMouseenter
+            'focus': function focus($event) {
+              return _this5.handleMouseenter($event, 100);
+            }
           }
         },
         [h(
@@ -623,25 +518,21 @@ exports.default = {
       )]
     );
 
-    var inlineMenu = h(
-      'el-collapse-transition',
-      null,
-      [h(
-        'ul',
-        {
-          attrs: {
-            role: 'menu'
-          },
-          'class': 'el-menu el-menu--inline',
-          directives: [{
-            name: 'show',
-            value: opened
-          }],
+    var inlineMenu = h('el-collapse-transition', [h(
+      'ul',
+      {
+        attrs: {
+          role: 'menu'
+        },
+        'class': 'el-menu el-menu--inline',
+        directives: [{
+          name: 'show',
+          value: opened
+        }],
 
-          style: { backgroundColor: rootMenu.backgroundColor || '' } },
-        [$slots.default]
-      )]
-    );
+        style: { backgroundColor: rootMenu.backgroundColor || '' } },
+      [$slots.default]
+    )]);
 
     var submenuTitleIcon = rootMenu.mode === 'horizontal' && isFirstLevel || rootMenu.mode === 'vertical' && !rootMenu.collapse ? 'el-icon-arrow-down' : 'el-icon-arrow-right';
 
@@ -681,11 +572,110 @@ exports.default = {
       ), this.isMenuPopup ? popupMenu : inlineMenu]
     );
   }
+});
+// CONCATENATED MODULE: ./packages/menu/src/submenu.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_submenuvue_type_script_lang_js_ = (submenuvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./packages/menu/src/submenu.vue
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_submenuvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "packages/menu/src/submenu.vue"
+/* harmony default export */ var submenu = (component.exports);
+// CONCATENATED MODULE: ./packages/submenu/index.js
+
+
+/* istanbul ignore next */
+submenu.install = function (Vue) {
+  Vue.component(submenu.name, submenu);
 };
+
+/* harmony default export */ var packages_submenu = __webpack_exports__["default"] = (submenu);
 
 /***/ }),
 
-/***/ 7:
+/***/ 28:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/transitions/collapse-transition");
+
+/***/ }),
+
+/***/ 35:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  inject: ['rootMenu'],
+  computed: {
+    indexPath: function indexPath() {
+      var path = [this.index];
+      var parent = this.$parent;
+      while (parent.$options.componentName !== 'ElMenu') {
+        if (parent.index) {
+          path.unshift(parent.index);
+        }
+        parent = parent.$parent;
+      }
+      return path;
+    },
+    parentMenu: function parentMenu() {
+      var parent = this.$parent;
+      while (parent && ['ElMenu', 'ElSubmenu'].indexOf(parent.$options.componentName) === -1) {
+        parent = parent.$parent;
+      }
+      return parent;
+    },
+    paddingStyle: function paddingStyle() {
+      if (this.rootMenu.mode !== 'vertical') return {};
+
+      var padding = 20;
+      var parent = this.$parent;
+
+      if (this.rootMenu.collapse) {
+        padding = 20;
+      } else {
+        while (parent && parent.$options.componentName !== 'ElMenu') {
+          if (parent.$options.componentName === 'ElSubmenu') {
+            padding += 20;
+          }
+          parent = parent.$parent;
+        }
+      }
+      return { paddingLeft: padding + 'px' };
+    }
+  }
+});
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/mixins/emitter");
+
+/***/ }),
+
+/***/ 5:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/utils/vue-popper");

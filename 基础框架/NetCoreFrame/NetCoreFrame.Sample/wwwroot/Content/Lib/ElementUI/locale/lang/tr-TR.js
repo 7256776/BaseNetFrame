@@ -70,11 +70,12 @@ exports.default = {
     cascader: {
       noMatch: 'Eşleşen veri bulunamadı',
       loading: 'Yükleniyor',
-      placeholder: 'Seç'
+      placeholder: 'Seç',
+      noData: 'Veri yok'
     },
     pagination: {
       goto: 'Git',
-      pagesize: '/page',
+      pagesize: '/sayfa',
       total: 'Toplam {total}',
       pageClassifier: ''
     },
@@ -107,6 +108,12 @@ exports.default = {
       filterPlaceholder: 'Anahtar kelimeleri gir',
       noCheckedFormat: '{total} adet',
       hasCheckedFormat: '{checked}/{total} seçildi'
+    },
+    image: {
+      error: 'FAILED' // to be translated
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
     }
   }
 };

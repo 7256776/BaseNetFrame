@@ -70,7 +70,8 @@ exports.default = {
     cascader: {
       noMatch: 'ไม่พบข้อมูลที่ตรงกัน',
       loading: 'กำลังโหลด',
-      placeholder: 'เลือก'
+      placeholder: 'เลือก',
+      noData: 'ไม่พบข้อมูล'
     },
     pagination: {
       goto: 'ไปที่',
@@ -107,6 +108,12 @@ exports.default = {
       filterPlaceholder: 'Enter keyword', // to be translated
       noCheckedFormat: '{total} items', // to be translated
       hasCheckedFormat: '{checked}/{total} checked' // to be translated
+    },
+    image: {
+      error: 'FAILED' // to be translated
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
     }
   }
 };

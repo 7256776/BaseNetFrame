@@ -151,7 +151,7 @@ var QuickSidebar = function () {
         App.addResizeHandler(initSettingsSlimScroll); // reinitialize on window resize
     };
 
-    // 处理发送聊天消息的tab
+    // 刷新发送聊天消息的tab
     var refreshQuickSidebarChat = function () {
         var wrapper = $('.page-quick-sidebar-wrapper');
         var wrapperChat = wrapper.find('.page-quick-sidebar-chat');
@@ -215,12 +215,14 @@ var QuickSidebar = function () {
         });
     };
 
-
+    /*
+     * 注释的函数属于扩展函数暂不使用
+     */
     return {
         //刷新注册聊天窗体事件注册
         refresh: function () {
             refreshQuickSidebarChat();
-            handleQuickSidebarToggler();        // 扩展菜单切换开关
+            //handleQuickSidebarToggler();        // 扩展菜单切换开关(已经通过页面进行处理不在此注册)
         },
 
         //处理滚动条位置
@@ -230,7 +232,7 @@ var QuickSidebar = function () {
 
         init: function () {
             //layout handlers
-            handleQuickSidebarToggler();        // 扩展菜单切换开关
+            //handleQuickSidebarToggler();        // 扩展菜单切换开关
             //handleQuickSidebarChat();            // 处理发送聊天消息的tab
             //handleQuickSidebarAlerts();           // 处理提醒信息的tab
             //handleQuickSidebarSettings();       // 处理设置窗体的tab

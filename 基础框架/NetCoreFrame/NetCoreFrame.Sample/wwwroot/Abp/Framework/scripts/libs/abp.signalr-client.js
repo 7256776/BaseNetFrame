@@ -1,6 +1,5 @@
 ﻿var abp = abp || {};
 (function () {
-
     // 检查是否定义
     if (!signalR) {
         return;
@@ -35,7 +34,7 @@
 
         // 注册获得通知事件
         connection.on('getNotification', function (notification) {
-            abp.log.debug('触发Signalr事件!' + JSON.stringify(notification));
+            abp.log.debug('注册 abp.notifications.received 事件!');
             abp.event.trigger('abp.notifications.received', notification);
         });
     }

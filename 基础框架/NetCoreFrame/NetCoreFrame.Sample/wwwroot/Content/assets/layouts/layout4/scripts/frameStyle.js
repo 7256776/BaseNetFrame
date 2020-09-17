@@ -222,7 +222,7 @@ var frameStyle = function () {
             frameSideLayout.frameColor = $('#hdFrameColor').val();
 
             Cookies.set('FrameSideLayout', frameSideLayout, { expires: 365 });
-        }
+        };
 
         // 设置主题颜色
         var setColor = function (color) {
@@ -232,14 +232,12 @@ var frameStyle = function () {
             $('#hdFrameColor').val(color);
 
             //设置logo的颜色
-            if (color == "light") {
+            if (color == "drak") {
                 $(".frame-logo-page").removeClass("frame-logo-light").addClass("frame-logo-drak");
-                $(".frame-logo-title").removeClass("frame-logo-title-light").addClass("frame-logo-title-drak");
-
+                $(".frame-logo-title").removeClass("frame-logo-title-drak").addClass("frame-logo-title-light");
             } else {
                 $(".frame-logo-page").removeClass("frame-logo-drak").addClass("frame-logo-light");
-                $(".frame-logo-title").removeClass("frame-logo-title-drak").addClass("frame-logo-title-light");
-                 
+                $(".frame-logo-title").removeClass("frame-logo-title-light").addClass("frame-logo-title-drak");
             }
             //
             var lis = $(".theme-color");
@@ -361,7 +359,7 @@ var frameStyle = function () {
                 $('.page-header-top-dropdown-style-option', panel).val(frameSideLayout.headerTopDropdownStyle);
             }
             //主题圆角或直角的div风格
-            if (frameSideLayout.headerTopDropdownStyle) {
+            if (frameSideLayout.layoutStyleOption) {
                 setThemeStyle(frameSideLayout.layoutStyleOption);
             }
             //主题颜色风格

@@ -37,12 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,48 +80,43 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 291);
+/******/ 	return __webpack_require__(__webpack_require__.s = 75);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
-// IMPORTANT: Do NOT use ES2015 features in this file.
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier /* server only */
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
 
   // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
     options._compiled = true
   }
 
@@ -112,7 +127,7 @@ module.exports = function normalizeComponent (
 
   // scopedId
   if (scopeId) {
-    options._scopeId = scopeId
+    options._scopeId = 'data-v-' + scopeId
   }
 
   var hook
@@ -140,34 +155,32 @@ module.exports = function normalizeComponent (
     // never gets called
     options._ssrRegister = hook
   } else if (injectStyles) {
-    hook = injectStyles
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
   }
 
   if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
+    if (options.functional) {
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
       // register for functioal component in vue file
+      var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
-        return existing(h, context)
+        return originalRender(h, context)
       }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
     }
   }
 
   return {
-    esModule: esModule,
     exports: scriptExports,
     options: options
   }
@@ -176,21 +189,21 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 12:
+/***/ 10:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/locale");
+module.exports = require("element-ui/lib/input");
 
 /***/ }),
 
-/***/ 13:
+/***/ 16:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/utils/popup");
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/button");
@@ -204,391 +217,371 @@ module.exports = require("element-ui/lib/utils/dom");
 
 /***/ }),
 
-/***/ 21:
+/***/ 20:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/locale");
+
+/***/ }),
+
+/***/ 23:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/utils/vdom");
 
 /***/ }),
 
-/***/ 291:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(292);
-
-
-/***/ }),
-
-/***/ 292:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _main = __webpack_require__(293);
-
-var _main2 = _interopRequireDefault(_main);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _main2.default;
-
-/***/ }),
-
-/***/ 293:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.MessageBox = undefined;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _vue = __webpack_require__(4);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _main = __webpack_require__(294);
-
-var _main2 = _interopRequireDefault(_main);
-
-var _merge = __webpack_require__(9);
-
-var _merge2 = _interopRequireDefault(_merge);
-
-var _vdom = __webpack_require__(21);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var defaults = {
-  title: null,
-  message: '',
-  type: '',
-  showInput: false,
-  showClose: true,
-  modalFade: true,
-  lockScroll: true,
-  closeOnClickModal: true,
-  closeOnPressEscape: true,
-  closeOnHashChange: true,
-  inputValue: null,
-  inputPlaceholder: '',
-  inputType: 'text',
-  inputPattern: null,
-  inputValidator: null,
-  inputErrorMessage: '',
-  showConfirmButton: true,
-  showCancelButton: false,
-  confirmButtonPosition: 'right',
-  confirmButtonHighlight: false,
-  cancelButtonHighlight: false,
-  confirmButtonText: '',
-  cancelButtonText: '',
-  confirmButtonClass: '',
-  cancelButtonClass: '',
-  customClass: '',
-  beforeClose: null,
-  dangerouslyUseHTMLString: false,
-  center: false,
-  roundButton: false
-};
-
-var MessageBoxConstructor = _vue2.default.extend(_main2.default);
-
-var currentMsg = void 0,
-    instance = void 0;
-var msgQueue = [];
-
-var defaultCallback = function defaultCallback(action) {
-  if (currentMsg) {
-    var callback = currentMsg.callback;
-    if (typeof callback === 'function') {
-      if (instance.showInput) {
-        callback(instance.inputValue, action);
-      } else {
-        callback(action);
-      }
-    }
-    if (currentMsg.resolve) {
-      if (action === 'confirm') {
-        if (instance.showInput) {
-          currentMsg.resolve({ value: instance.inputValue, action: action });
-        } else {
-          currentMsg.resolve(action);
-        }
-      } else if (action === 'cancel' && currentMsg.reject) {
-        currentMsg.reject(action);
-      }
-    }
-  }
-};
-
-var initInstance = function initInstance() {
-  instance = new MessageBoxConstructor({
-    el: document.createElement('div')
-  });
-
-  instance.callback = defaultCallback;
-};
-
-var showNextMsg = function showNextMsg() {
-  if (!instance) {
-    initInstance();
-  }
-  instance.action = '';
-
-  if (!instance.visible || instance.closeTimer) {
-    if (msgQueue.length > 0) {
-      currentMsg = msgQueue.shift();
-
-      var options = currentMsg.options;
-      for (var prop in options) {
-        if (options.hasOwnProperty(prop)) {
-          instance[prop] = options[prop];
-        }
-      }
-      if (options.callback === undefined) {
-        instance.callback = defaultCallback;
-      }
-
-      var oldCb = instance.callback;
-      instance.callback = function (action, instance) {
-        oldCb(action, instance);
-        showNextMsg();
-      };
-      if ((0, _vdom.isVNode)(instance.message)) {
-        instance.$slots.default = [instance.message];
-        instance.message = null;
-      } else {
-        delete instance.$slots.default;
-      }
-      ['modal', 'showClose', 'closeOnClickModal', 'closeOnPressEscape', 'closeOnHashChange'].forEach(function (prop) {
-        if (instance[prop] === undefined) {
-          instance[prop] = true;
-        }
-      });
-      document.body.appendChild(instance.$el);
-
-      _vue2.default.nextTick(function () {
-        instance.visible = true;
-      });
-    }
-  }
-};
-
-var MessageBox = function MessageBox(options, callback) {
-  if (_vue2.default.prototype.$isServer) return;
-  if (typeof options === 'string' || (0, _vdom.isVNode)(options)) {
-    options = {
-      message: options
-    };
-    if (typeof arguments[1] === 'string') {
-      options.title = arguments[1];
-    }
-  } else if (options.callback && !callback) {
-    callback = options.callback;
-  }
-
-  if (typeof Promise !== 'undefined') {
-    return new Promise(function (resolve, reject) {
-      // eslint-disable-line
-      msgQueue.push({
-        options: (0, _merge2.default)({}, defaults, MessageBox.defaults, options),
-        callback: callback,
-        resolve: resolve,
-        reject: reject
-      });
-
-      showNextMsg();
-    });
-  } else {
-    msgQueue.push({
-      options: (0, _merge2.default)({}, defaults, MessageBox.defaults, options),
-      callback: callback
-    });
-
-    showNextMsg();
-  }
-};
-
-MessageBox.setDefaults = function (defaults) {
-  MessageBox.defaults = defaults;
-};
-
-MessageBox.alert = function (message, title, options) {
-  if ((typeof title === 'undefined' ? 'undefined' : _typeof(title)) === 'object') {
-    options = title;
-    title = '';
-  } else if (title === undefined) {
-    title = '';
-  }
-  return MessageBox((0, _merge2.default)({
-    title: title,
-    message: message,
-    $type: 'alert',
-    closeOnPressEscape: false,
-    closeOnClickModal: false
-  }, options));
-};
-
-MessageBox.confirm = function (message, title, options) {
-  if ((typeof title === 'undefined' ? 'undefined' : _typeof(title)) === 'object') {
-    options = title;
-    title = '';
-  } else if (title === undefined) {
-    title = '';
-  }
-  return MessageBox((0, _merge2.default)({
-    title: title,
-    message: message,
-    $type: 'confirm',
-    showCancelButton: true
-  }, options));
-};
-
-MessageBox.prompt = function (message, title, options) {
-  if ((typeof title === 'undefined' ? 'undefined' : _typeof(title)) === 'object') {
-    options = title;
-    title = '';
-  } else if (title === undefined) {
-    title = '';
-  }
-  return MessageBox((0, _merge2.default)({
-    title: title,
-    message: message,
-    showCancelButton: true,
-    showInput: true,
-    $type: 'prompt'
-  }, options));
-};
-
-MessageBox.close = function () {
-  instance.doClose();
-  instance.visible = false;
-  msgQueue = [];
-  currentMsg = null;
-};
-
-exports.default = MessageBox;
-exports.MessageBox = MessageBox;
-
-/***/ }),
-
-/***/ 294:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__);
-/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_98438ec2_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__ = __webpack_require__(296);
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_98438ec2_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ 295:
+/***/ 47:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/utils/aria-dialog");
 
 /***/ }),
 
-/***/ 296:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"msgbox-fade"}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.visible),expression:"visible"}],staticClass:"el-message-box__wrapper",attrs:{"tabindex":"-1","role":"dialog","aria-modal":"true","aria-label":_vm.title || 'dialog'},on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.handleWrapperClick($event)}}},[_c('div',{staticClass:"el-message-box",class:[_vm.customClass, _vm.center && 'el-message-box--center']},[(_vm.title !== null)?_c('div',{staticClass:"el-message-box__header"},[_c('div',{staticClass:"el-message-box__title"},[(_vm.typeClass && _vm.center)?_c('div',{class:['el-message-box__status', _vm.typeClass]}):_vm._e(),_c('span',[_vm._v(_vm._s(_vm.title))])]),(_vm.showClose)?_c('button',{staticClass:"el-message-box__headerbtn",attrs:{"type":"button","aria-label":"Close"},on:{"click":function($event){_vm.handleAction('cancel')},"keydown":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key)){ return null; }_vm.handleAction('cancel')}}},[_c('i',{staticClass:"el-message-box__close el-icon-close"})]):_vm._e()]):_vm._e(),_c('div',{staticClass:"el-message-box__content"},[(_vm.typeClass && !_vm.center && _vm.message !== '')?_c('div',{class:['el-message-box__status', _vm.typeClass]}):_vm._e(),(_vm.message !== '')?_c('div',{staticClass:"el-message-box__message"},[_vm._t("default",[(!_vm.dangerouslyUseHTMLString)?_c('p',[_vm._v(_vm._s(_vm.message))]):_c('p',{domProps:{"innerHTML":_vm._s(_vm.message)}})])],2):_vm._e(),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showInput),expression:"showInput"}],staticClass:"el-message-box__input"},[_c('el-input',{ref:"input",attrs:{"type":_vm.inputType,"placeholder":_vm.inputPlaceholder},nativeOn:{"keydown":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key)){ return null; }_vm.handleInputEnter($event)}},model:{value:(_vm.inputValue),callback:function ($$v) {_vm.inputValue=$$v},expression:"inputValue"}}),_c('div',{staticClass:"el-message-box__errormsg",style:({ visibility: !!_vm.editorErrorMessage ? 'visible' : 'hidden' })},[_vm._v(_vm._s(_vm.editorErrorMessage))])],1)]),_c('div',{staticClass:"el-message-box__btns"},[(_vm.showCancelButton)?_c('el-button',{class:[ _vm.cancelButtonClasses ],attrs:{"loading":_vm.cancelButtonLoading,"round":_vm.roundButton,"size":"small"},on:{"keydown":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key)){ return null; }_vm.handleAction('cancel')}},nativeOn:{"click":function($event){_vm.handleAction('cancel')}}},[_vm._v("\n          "+_vm._s(_vm.cancelButtonText || _vm.t('el.messagebox.cancel'))+"\n        ")]):_vm._e(),_c('el-button',{directives:[{name:"show",rawName:"v-show",value:(_vm.showConfirmButton),expression:"showConfirmButton"}],ref:"confirm",class:[ _vm.confirmButtonClasses ],attrs:{"loading":_vm.confirmButtonLoading,"round":_vm.roundButton,"size":"small"},on:{"keydown":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key)){ return null; }_vm.handleAction('confirm')}},nativeOn:{"click":function($event){_vm.handleAction('confirm')}}},[_vm._v("\n          "+_vm._s(_vm.confirmButtonText || _vm.t('el.messagebox.confirm'))+"\n        ")])],1)])])])}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
-
-/***/ 4:
-/***/ (function(module, exports) {
-
-module.exports = require("vue");
-
-/***/ }),
-
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/mixins/locale");
 
 /***/ }),
 
-/***/ 6:
+/***/ 7:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/input");
+module.exports = require("vue");
 
 /***/ }),
 
-/***/ 85:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 75:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: external "vue"
+var external_vue_ = __webpack_require__(7);
+var external_vue_default = /*#__PURE__*/__webpack_require__.n(external_vue_);
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/message-box/src/main.vue?vue&type=template&id=6b29b012&
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "msgbox-fade" } }, [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.visible,
+            expression: "visible"
+          }
+        ],
+        staticClass: "el-message-box__wrapper",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-modal": "true",
+          "aria-label": _vm.title || "dialog"
+        },
+        on: {
+          click: function($event) {
+            if ($event.target !== $event.currentTarget) {
+              return null
+            }
+            return _vm.handleWrapperClick($event)
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "el-message-box",
+            class: [_vm.customClass, _vm.center && "el-message-box--center"]
+          },
+          [
+            _vm.title !== null
+              ? _c("div", { staticClass: "el-message-box__header" }, [
+                  _c("div", { staticClass: "el-message-box__title" }, [
+                    _vm.icon && _vm.center
+                      ? _c("div", {
+                          class: ["el-message-box__status", _vm.icon]
+                        })
+                      : _vm._e(),
+                    _c("span", [_vm._v(_vm._s(_vm.title))])
+                  ]),
+                  _vm.showClose
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "el-message-box__headerbtn",
+                          attrs: { type: "button", "aria-label": "Close" },
+                          on: {
+                            click: function($event) {
+                              _vm.handleAction(
+                                _vm.distinguishCancelAndClose
+                                  ? "close"
+                                  : "cancel"
+                              )
+                            },
+                            keydown: function($event) {
+                              if (
+                                !("button" in $event) &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              _vm.handleAction(
+                                _vm.distinguishCancelAndClose
+                                  ? "close"
+                                  : "cancel"
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "el-message-box__close el-icon-close"
+                          })
+                        ]
+                      )
+                    : _vm._e()
+                ])
+              : _vm._e(),
+            _c("div", { staticClass: "el-message-box__content" }, [
+              _vm.icon && !_vm.center && _vm.message !== ""
+                ? _c("div", { class: ["el-message-box__status", _vm.icon] })
+                : _vm._e(),
+              _vm.message !== ""
+                ? _c(
+                    "div",
+                    { staticClass: "el-message-box__message" },
+                    [
+                      _vm._t("default", [
+                        !_vm.dangerouslyUseHTMLString
+                          ? _c("p", [_vm._v(_vm._s(_vm.message))])
+                          : _c("p", {
+                              domProps: { innerHTML: _vm._s(_vm.message) }
+                            })
+                      ])
+                    ],
+                    2
+                  )
+                : _vm._e(),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.showInput,
+                      expression: "showInput"
+                    }
+                  ],
+                  staticClass: "el-message-box__input"
+                },
+                [
+                  _c("el-input", {
+                    ref: "input",
+                    attrs: {
+                      type: _vm.inputType,
+                      placeholder: _vm.inputPlaceholder
+                    },
+                    nativeOn: {
+                      keydown: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleInputEnter($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.inputValue,
+                      callback: function($$v) {
+                        _vm.inputValue = $$v
+                      },
+                      expression: "inputValue"
+                    }
+                  }),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "el-message-box__errormsg",
+                      style: {
+                        visibility: !!_vm.editorErrorMessage
+                          ? "visible"
+                          : "hidden"
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.editorErrorMessage))]
+                  )
+                ],
+                1
+              )
+            ]),
+            _c(
+              "div",
+              { staticClass: "el-message-box__btns" },
+              [
+                _vm.showCancelButton
+                  ? _c(
+                      "el-button",
+                      {
+                        class: [_vm.cancelButtonClasses],
+                        attrs: {
+                          loading: _vm.cancelButtonLoading,
+                          round: _vm.roundButton,
+                          size: "small"
+                        },
+                        on: {
+                          keydown: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k(
+                                $event.keyCode,
+                                "enter",
+                                13,
+                                $event.key,
+                                "Enter"
+                              )
+                            ) {
+                              return null
+                            }
+                            _vm.handleAction("cancel")
+                          }
+                        },
+                        nativeOn: {
+                          click: function($event) {
+                            _vm.handleAction("cancel")
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(
+                              _vm.cancelButtonText ||
+                                _vm.t("el.messagebox.cancel")
+                            ) +
+                            "\n        "
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _c(
+                  "el-button",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.showConfirmButton,
+                        expression: "showConfirmButton"
+                      }
+                    ],
+                    ref: "confirm",
+                    class: [_vm.confirmButtonClasses],
+                    attrs: {
+                      loading: _vm.confirmButtonLoading,
+                      round: _vm.roundButton,
+                      size: "small"
+                    },
+                    on: {
+                      keydown: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        _vm.handleAction("confirm")
+                      }
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.handleAction("confirm")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(
+                          _vm.confirmButtonText ||
+                            _vm.t("el.messagebox.confirm")
+                        ) +
+                        "\n        "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
 
 
-exports.__esModule = true;
+// CONCATENATED MODULE: ./packages/message-box/src/main.vue?vue&type=template&id=6b29b012&
 
-var _popup = __webpack_require__(13);
+// EXTERNAL MODULE: external "element-ui/lib/utils/popup"
+var popup_ = __webpack_require__(16);
+var popup_default = /*#__PURE__*/__webpack_require__.n(popup_);
 
-var _popup2 = _interopRequireDefault(_popup);
+// EXTERNAL MODULE: external "element-ui/lib/mixins/locale"
+var locale_ = __webpack_require__(6);
+var locale_default = /*#__PURE__*/__webpack_require__.n(locale_);
 
-var _locale = __webpack_require__(5);
+// EXTERNAL MODULE: external "element-ui/lib/input"
+var input_ = __webpack_require__(10);
+var input_default = /*#__PURE__*/__webpack_require__.n(input_);
 
-var _locale2 = _interopRequireDefault(_locale);
+// EXTERNAL MODULE: external "element-ui/lib/button"
+var button_ = __webpack_require__(18);
+var button_default = /*#__PURE__*/__webpack_require__.n(button_);
 
-var _input = __webpack_require__(6);
+// EXTERNAL MODULE: external "element-ui/lib/utils/dom"
+var dom_ = __webpack_require__(2);
 
-var _input2 = _interopRequireDefault(_input);
+// EXTERNAL MODULE: external "element-ui/lib/locale"
+var lib_locale_ = __webpack_require__(20);
 
-var _button = __webpack_require__(15);
+// EXTERNAL MODULE: external "element-ui/lib/utils/aria-dialog"
+var aria_dialog_ = __webpack_require__(47);
+var aria_dialog_default = /*#__PURE__*/__webpack_require__.n(aria_dialog_);
 
-var _button2 = _interopRequireDefault(_button);
-
-var _dom = __webpack_require__(2);
-
-var _locale3 = __webpack_require__(12);
-
-var _ariaDialog = __webpack_require__(295);
-
-var _ariaDialog2 = _interopRequireDefault(_ariaDialog);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var messageBox = void 0; //
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/message-box/src/main.vue?vue&type=script&lang=js&
+//
 //
 //
 //
@@ -667,6 +660,15 @@ var messageBox = void 0; //
 //
 //
 
+
+
+
+
+
+
+
+
+var messageBox = void 0;
 var typeMap = {
   success: 'success',
   info: 'info',
@@ -674,8 +676,8 @@ var typeMap = {
   error: 'error'
 };
 
-exports.default = {
-  mixins: [_popup2.default, _locale2.default],
+/* harmony default export */ var mainvue_type_script_lang_js_ = ({
+  mixins: [popup_default.a, locale_default.a],
 
   props: {
     modal: {
@@ -708,13 +710,16 @@ exports.default = {
   },
 
   components: {
-    ElInput: _input2.default,
-    ElButton: _button2.default
+    ElInput: input_default.a,
+    ElButton: button_default.a
   },
 
   computed: {
-    typeClass: function typeClass() {
-      return this.type && typeMap[this.type] ? 'el-icon-' + typeMap[this.type] : '';
+    icon: function icon() {
+      var type = this.type,
+          iconClass = this.iconClass;
+
+      return iconClass || (type && typeMap[type] ? 'el-icon-' + typeMap[type] : '');
     },
     confirmButtonClasses: function confirmButtonClasses() {
       return 'el-button--primary ' + this.confirmButtonClass;
@@ -745,27 +750,17 @@ exports.default = {
       this.onClose && this.onClose();
       messageBox.closeDialog(); // 解绑
       if (this.lockScroll) {
-        setTimeout(function () {
-          if (_this2.modal && _this2.bodyOverflow !== 'hidden') {
-            document.body.style.overflow = _this2.bodyOverflow;
-            document.body.style.paddingRight = _this2.bodyPaddingRight;
-          }
-          _this2.bodyOverflow = null;
-          _this2.bodyPaddingRight = null;
-        }, 200);
+        setTimeout(this.restoreBodyStyle, 200);
       }
       this.opened = false;
-
-      if (!this.transition) {
-        this.doAfterClose();
-      }
+      this.doAfterClose();
       setTimeout(function () {
         if (_this2.action) _this2.callback(_this2.action, _this2);
       });
     },
     handleWrapperClick: function handleWrapperClick() {
       if (this.closeOnClickModal) {
-        this.handleAction('cancel');
+        this.handleAction(this.distinguishCancelAndClose ? 'close' : 'cancel');
       }
     },
     handleInputEnter: function handleInputEnter() {
@@ -789,33 +784,33 @@ exports.default = {
       if (this.$type === 'prompt') {
         var inputPattern = this.inputPattern;
         if (inputPattern && !inputPattern.test(this.inputValue || '')) {
-          this.editorErrorMessage = this.inputErrorMessage || (0, _locale3.t)('el.messagebox.error');
-          (0, _dom.addClass)(this.getInputElement(), 'invalid');
+          this.editorErrorMessage = this.inputErrorMessage || Object(lib_locale_["t"])('el.messagebox.error');
+          Object(dom_["addClass"])(this.getInputElement(), 'invalid');
           return false;
         }
         var inputValidator = this.inputValidator;
         if (typeof inputValidator === 'function') {
           var validateResult = inputValidator(this.inputValue);
           if (validateResult === false) {
-            this.editorErrorMessage = this.inputErrorMessage || (0, _locale3.t)('el.messagebox.error');
-            (0, _dom.addClass)(this.getInputElement(), 'invalid');
+            this.editorErrorMessage = this.inputErrorMessage || Object(lib_locale_["t"])('el.messagebox.error');
+            Object(dom_["addClass"])(this.getInputElement(), 'invalid');
             return false;
           }
           if (typeof validateResult === 'string') {
             this.editorErrorMessage = validateResult;
-            (0, _dom.addClass)(this.getInputElement(), 'invalid');
+            Object(dom_["addClass"])(this.getInputElement(), 'invalid');
             return false;
           }
         }
       }
       this.editorErrorMessage = '';
-      (0, _dom.removeClass)(this.getInputElement(), 'invalid');
+      Object(dom_["removeClass"])(this.getInputElement(), 'invalid');
       return true;
     },
-    getFistFocus: function getFistFocus() {
-      var $btns = this.$el.querySelector('.el-message-box__btns .el-button');
-      var $title = this.$el.querySelector('.el-message-box__btns .el-message-box__title');
-      return $btns && $btns[0] || $title;
+    getFirstFocus: function getFirstFocus() {
+      var btn = this.$el.querySelector('.el-message-box__btns .el-button');
+      var title = this.$el.querySelector('.el-message-box__btns .el-message-box__title');
+      return btn || title;
     },
     getInputElement: function getInputElement() {
       var inputRefs = this.$refs.input.$refs;
@@ -848,7 +843,7 @@ exports.default = {
           });
         }
         this.focusAfterClosed = document.activeElement;
-        messageBox = new _ariaDialog2.default(this.$el, this.focusAfterClosed, this.getFistFocus());
+        messageBox = new aria_dialog_default.a(this.$el, this.focusAfterClosed, this.getFirstFocus());
       }
 
       // prompt
@@ -861,15 +856,19 @@ exports.default = {
         }, 500);
       } else {
         this.editorErrorMessage = '';
-        (0, _dom.removeClass)(this.getInputElement(), 'invalid');
+        Object(dom_["removeClass"])(this.getInputElement(), 'invalid');
       }
     }
   },
 
   mounted: function mounted() {
-    if (this.closeOnHashChange) {
-      window.addEventListener('hashchange', this.close);
-    }
+    var _this5 = this;
+
+    this.$nextTick(function () {
+      if (_this5.closeOnHashChange) {
+        window.addEventListener('hashchange', _this5.close);
+      }
+    });
   },
   beforeDestroy: function beforeDestroy() {
     if (this.closeOnHashChange) {
@@ -885,6 +884,7 @@ exports.default = {
       title: undefined,
       message: '',
       type: '',
+      iconClass: '',
       customClass: '',
       showInput: false,
       inputValue: null,
@@ -907,10 +907,270 @@ exports.default = {
       callback: null,
       dangerouslyUseHTMLString: false,
       focusAfterClosed: null,
-      isOnComposition: false
+      isOnComposition: false,
+      distinguishCancelAndClose: false
     };
   }
+});
+// CONCATENATED MODULE: ./packages/message-box/src/main.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_mainvue_type_script_lang_js_ = (mainvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./packages/message-box/src/main.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_mainvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "packages/message-box/src/main.vue"
+/* harmony default export */ var main = (component.exports);
+// EXTERNAL MODULE: external "element-ui/lib/utils/merge"
+var merge_ = __webpack_require__(9);
+var merge_default = /*#__PURE__*/__webpack_require__.n(merge_);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/vdom"
+var vdom_ = __webpack_require__(23);
+
+// CONCATENATED MODULE: ./packages/message-box/src/main.js
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var defaults = {
+  title: null,
+  message: '',
+  type: '',
+  iconClass: '',
+  showInput: false,
+  showClose: true,
+  modalFade: true,
+  lockScroll: true,
+  closeOnClickModal: true,
+  closeOnPressEscape: true,
+  closeOnHashChange: true,
+  inputValue: null,
+  inputPlaceholder: '',
+  inputType: 'text',
+  inputPattern: null,
+  inputValidator: null,
+  inputErrorMessage: '',
+  showConfirmButton: true,
+  showCancelButton: false,
+  confirmButtonPosition: 'right',
+  confirmButtonHighlight: false,
+  cancelButtonHighlight: false,
+  confirmButtonText: '',
+  cancelButtonText: '',
+  confirmButtonClass: '',
+  cancelButtonClass: '',
+  customClass: '',
+  beforeClose: null,
+  dangerouslyUseHTMLString: false,
+  center: false,
+  roundButton: false,
+  distinguishCancelAndClose: false
 };
+
+
+
+
+
+
+var MessageBoxConstructor = external_vue_default.a.extend(main);
+
+var currentMsg = void 0,
+    instance = void 0;
+var msgQueue = [];
+
+var defaultCallback = function defaultCallback(action) {
+  if (currentMsg) {
+    var callback = currentMsg.callback;
+    if (typeof callback === 'function') {
+      if (instance.showInput) {
+        callback(instance.inputValue, action);
+      } else {
+        callback(action);
+      }
+    }
+    if (currentMsg.resolve) {
+      if (action === 'confirm') {
+        if (instance.showInput) {
+          currentMsg.resolve({ value: instance.inputValue, action: action });
+        } else {
+          currentMsg.resolve(action);
+        }
+      } else if (currentMsg.reject && (action === 'cancel' || action === 'close')) {
+        currentMsg.reject(action);
+      }
+    }
+  }
+};
+
+var initInstance = function initInstance() {
+  instance = new MessageBoxConstructor({
+    el: document.createElement('div')
+  });
+
+  instance.callback = defaultCallback;
+};
+
+var main_showNextMsg = function showNextMsg() {
+  if (!instance) {
+    initInstance();
+  }
+  instance.action = '';
+
+  if (!instance.visible || instance.closeTimer) {
+    if (msgQueue.length > 0) {
+      currentMsg = msgQueue.shift();
+
+      var options = currentMsg.options;
+      for (var prop in options) {
+        if (options.hasOwnProperty(prop)) {
+          instance[prop] = options[prop];
+        }
+      }
+      if (options.callback === undefined) {
+        instance.callback = defaultCallback;
+      }
+
+      var oldCb = instance.callback;
+      instance.callback = function (action, instance) {
+        oldCb(action, instance);
+        showNextMsg();
+      };
+      if (Object(vdom_["isVNode"])(instance.message)) {
+        instance.$slots.default = [instance.message];
+        instance.message = null;
+      } else {
+        delete instance.$slots.default;
+      }
+      ['modal', 'showClose', 'closeOnClickModal', 'closeOnPressEscape', 'closeOnHashChange'].forEach(function (prop) {
+        if (instance[prop] === undefined) {
+          instance[prop] = true;
+        }
+      });
+      document.body.appendChild(instance.$el);
+
+      external_vue_default.a.nextTick(function () {
+        instance.visible = true;
+      });
+    }
+  }
+};
+
+var main_MessageBox = function MessageBox(options, callback) {
+  if (external_vue_default.a.prototype.$isServer) return;
+  if (typeof options === 'string' || Object(vdom_["isVNode"])(options)) {
+    options = {
+      message: options
+    };
+    if (typeof arguments[1] === 'string') {
+      options.title = arguments[1];
+    }
+  } else if (options.callback && !callback) {
+    callback = options.callback;
+  }
+
+  if (typeof Promise !== 'undefined') {
+    return new Promise(function (resolve, reject) {
+      // eslint-disable-line
+      msgQueue.push({
+        options: merge_default()({}, defaults, MessageBox.defaults, options),
+        callback: callback,
+        resolve: resolve,
+        reject: reject
+      });
+
+      main_showNextMsg();
+    });
+  } else {
+    msgQueue.push({
+      options: merge_default()({}, defaults, MessageBox.defaults, options),
+      callback: callback
+    });
+
+    main_showNextMsg();
+  }
+};
+
+main_MessageBox.setDefaults = function (defaults) {
+  main_MessageBox.defaults = defaults;
+};
+
+main_MessageBox.alert = function (message, title, options) {
+  if ((typeof title === 'undefined' ? 'undefined' : _typeof(title)) === 'object') {
+    options = title;
+    title = '';
+  } else if (title === undefined) {
+    title = '';
+  }
+  return main_MessageBox(merge_default()({
+    title: title,
+    message: message,
+    $type: 'alert',
+    closeOnPressEscape: false,
+    closeOnClickModal: false
+  }, options));
+};
+
+main_MessageBox.confirm = function (message, title, options) {
+  if ((typeof title === 'undefined' ? 'undefined' : _typeof(title)) === 'object') {
+    options = title;
+    title = '';
+  } else if (title === undefined) {
+    title = '';
+  }
+  return main_MessageBox(merge_default()({
+    title: title,
+    message: message,
+    $type: 'confirm',
+    showCancelButton: true
+  }, options));
+};
+
+main_MessageBox.prompt = function (message, title, options) {
+  if ((typeof title === 'undefined' ? 'undefined' : _typeof(title)) === 'object') {
+    options = title;
+    title = '';
+  } else if (title === undefined) {
+    title = '';
+  }
+  return main_MessageBox(merge_default()({
+    title: title,
+    message: message,
+    showCancelButton: true,
+    showInput: true,
+    $type: 'prompt'
+  }, options));
+};
+
+main_MessageBox.close = function () {
+  instance.doClose();
+  instance.visible = false;
+  msgQueue = [];
+  currentMsg = null;
+};
+
+/* harmony default export */ var src_main = (main_MessageBox);
+
+// CONCATENATED MODULE: ./packages/message-box/index.js
+
+/* harmony default export */ var message_box = __webpack_exports__["default"] = (src_main);
 
 /***/ }),
 

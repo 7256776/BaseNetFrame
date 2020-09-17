@@ -240,7 +240,7 @@ var Layout = function () {
                 ($('.page-container').outerHeight() - $('.page-content').outerHeight()) -
                 $('.page-prefooter').outerHeight() - 
                 $('.page-footer').outerHeight();
-           
+
             $('.page-content').css('min-height', height);
         }
     };

@@ -19,14 +19,30 @@
 /* 设置ElUI穿梭Grid的宽度样式*/
 .frame-transfer-panel .el-transfer-panel {
     width: 38%;
+    /*min-width:270px;*/
+    /*height:100%;*/
+}
+/* 设置ElUI穿梭Grid的高度样式*/
+.frame-transfer-panel .el-transfer-panel__body {
+    height: 400px;
+}
+/* 设置ElUI穿梭Grid的高度样式*/
+.frame-transfer-panel .el-transfer-panel__list.is-filterable {
+    height: 355px;
 }
 
 /***********************************基础布局样式**************************************/
+/*按钮工具栏区域样式*/
+.frame-btn-tools {
+    padding: 3px 0px 3px 3px;
+    margin-bottom: 2px;
+    border: 1px solid #DCDFE6;
+}
+
 /*扩展内容区域样式*/
 .page-content-ext {
     background-color: #ffffff;
     border-left: 1px solid #DCDFE6;
-    border-radius: 0 !important
 }
 
 /*扩展底部区域样式*/
@@ -34,9 +50,8 @@
     background-color: #ffffff;
     border-left: 1px solid #DCDFE6;
     border-radius: 0 !important;
-    padding: 10px 20px 15px 20px;
     width: calc(100% - 275px);
-} 
+}
 
 /*替换layout3样式*/
 .page-header .page-header-top .page-logo {
