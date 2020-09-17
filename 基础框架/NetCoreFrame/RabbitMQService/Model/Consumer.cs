@@ -46,8 +46,8 @@ namespace RabbitMQService
 
                 //声明一个队列
                 channel.QueueDeclare(
-                  queue: queueName,      //消息队列名称
-                  durable: false,                       //是否缓存
+                  queue: queueName,             //消息队列名称
+                  durable: false,                       //是否缓存,持久化
                   exclusive: false,
                   autoDelete: false,
                   arguments: null
@@ -74,12 +74,13 @@ namespace RabbitMQService
             if (isSleep)
             {
                 //等待,模拟实现能者多劳,
-                Thread.Sleep(3000);
+                Thread.Sleep(5000);
             }
 
             var message = Encoding.UTF8.GetString(ea.Body);
-            //确认一条或多条已传递的消息
+            //确认一条或多条已传递的消息, 通过 channel.BasicQos(0, 1, false)的设置数量来确定Rabbit是否发送消息
             channel.BasicAck(ea.DeliveryTag, false);
+
             //
             Console.WriteLine(queueName + "接收到消息:" + message);
         }

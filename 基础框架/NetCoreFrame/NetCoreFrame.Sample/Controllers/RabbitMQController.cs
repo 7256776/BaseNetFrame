@@ -56,7 +56,7 @@ namespace NetCoreFrame.Sample.Controllers
         }
 
         /// <summary>
-        /// 路由模式
+        /// 直接交换模式(Direct)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -93,6 +93,27 @@ namespace NetCoreFrame.Sample.Controllers
         }
 
 
+        //private readonly Producer producer;
+
+        //public Task<JsonResult> GetMessage()
+        //{
+        //    Producer.dbList.Sort((a, b) =>
+        //    {
+        //        if (b.MsgDate > a.MsgDate)
+        //            return 1;
+        //        else
+        //        {
+        //            return -1;
+        //        }
+        //    });
+        //    return Task.FromResult(Json(Producer.dbList));
+        //}
+
+        //public Task<JsonResult> ClearMessage()
+        //{
+        //    Producer.dbList.Clear();
+        //    return Task.FromResult(Json(Producer.dbList));
+        //}
 
 
 

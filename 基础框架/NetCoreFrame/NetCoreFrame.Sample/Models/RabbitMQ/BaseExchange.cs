@@ -62,12 +62,61 @@ namespace NetCoreFrame.Sample
             {
                 //消息内容
                 byte[] body = Encoding.UTF8.GetBytes(mesg);
+
+                channel.BasicAcks += Channel_BasicAcks;
+                channel.BasicNacks += Channel_BasicNacks;
+                channel.BasicRecoverOk += Channel_BasicRecoverOk;
+                channel.BasicReturn += Channel_BasicReturn;
+                channel.CallbackException += Channel_CallbackException;
+                channel.FlowControl += Channel_FlowControl;
+                channel.ModelShutdown += Channel_ModelShutdown;
+
                 //发送消息  routingKey设置接受队列的QueueName
                 channel.BasicPublish(exchange: "", routingKey: dto.QueueName, basicProperties: null, body: body);
+
+
             }
         }
 
+        private void Channel_ModelShutdown(object sender, ShutdownEventArgs e)
+        {
 
+        }
 
+        private void Channel_FlowControl(object sender, FlowControlEventArgs e)
+        {
+
+        }
+
+        private void Channel_CallbackException(object sender, CallbackExceptionEventArgs e)
+        {
+
+        }
+
+        private void Channel_BasicReturn(object sender, BasicReturnEventArgs e)
+        {
+
+        }
+
+        private void Channel_BasicRecoverOk(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Channel_BasicNacks(object sender, BasicNackEventArgs e)
+        {
+
+        }
+
+        private void Channel_BasicAcks(object sender, BasicAckEventArgs e)
+        {
+
+        }
     }
+
+
+
+
+
+
 }

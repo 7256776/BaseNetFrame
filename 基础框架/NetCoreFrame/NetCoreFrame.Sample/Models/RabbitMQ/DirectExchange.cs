@@ -50,6 +50,10 @@ namespace NetCoreFrame.Sample
             }
         }
 
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="dto"></param>
         public void SendMQ(SendMessageDto dto)
         {
             string mesg = "来自队列(" + dto.QueueName + ")" + dto.Message;
@@ -57,6 +61,11 @@ namespace NetCoreFrame.Sample
             //创建连接会话对象
             using (IModel channel = connection.CreateModel())
             {
+                channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+                //队列持久化
+                //IBasicProperties properties = channel.CreateBasicProperties();
+                //properties.Persistent = true;
+
                 //消息内容
                 byte[] body = Encoding.UTF8.GetBytes(mesg);
                 //发送消息  routingKey设置接受队列的QueueName

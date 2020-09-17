@@ -35,7 +35,6 @@ var component = Vue.component('rabbitmq', {
             });
         },
         doSubmitDirect: function () {
-            //初始加载数据
             var _this = this;
             //
             abp.ajax({
@@ -62,54 +61,19 @@ var component = Vue.component('rabbitmq', {
             });
 
         },
-        doSubmitTopic1: function () {
-            //初始加载数据
+        doSubmitTopic: function () {
+            //发送到匹配队列
             var _this = this;
             //
             abp.ajax({
                 url: '/RabbitMQ/SendTopicMessage',
-                data: JSON.stringify(this.formData),
+                data: JSON.stringify(_this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
                 console.log();
                 abp.message.success('Topic模式发送成功了.');
             });
         },
-        doSubmitTopic2: function () {
-            //初始加载数据
-            var _this = this;
-            //
-            abp.ajax({
-                url: '/RabbitMQ/SendTopicMessage',
-                data: JSON.stringify(this.formData),
-                type: 'POST'
-            }).done(function (data, res, e) {
-                console.log();
-                abp.message.success('Topic模式发送成功了.');
-            });
-        },
-
-
-
-        doGetMesg: function () {
-            var _this = this;
-            abp.ajax({
-                url: '/RabbitMQ/GetMessage',
-                type: 'POST'
-            }).done(function (data, res, e) {
-                _this.mesgList = data;
-            });
-
-        },
-        doClearMessage: function () {
-            var _this = this;
-            abp.ajax({
-                url: '/RabbitMQ/ClearMessage',
-                type: 'POST'
-            }).done(function (data, res, e) {
-                _this.mesgList = data;
-            });
-
-        },
+        
     }
 });

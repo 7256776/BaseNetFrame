@@ -50,13 +50,13 @@ namespace RabbitMQService
                 //定义一个 Direct 类型交换机
                 channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, false, false, null);
                 //定义队列
-                queueName = queueName + Guid.NewGuid().ToString();
+                queueName = queueName + DateTime.Now.Ticks.ToString();
                 channel.QueueDeclare(queueName, false, false, false, null);
             }
         }
 
         /// <summary>
-        /// 
+        /// 接收消息
         /// </summary>
         /// <param name="ch"></param>
         /// <param name="ea"></param>
@@ -69,6 +69,10 @@ namespace RabbitMQService
             Console.WriteLine(queueName + "接收到消息:" + message);
         }
 
+        /// <summary>
+        /// 绑定路由名称到消息队列
+        /// </summary>
+        /// <param name="routingKey"></param>
         public void QueueBind(string routingKey)
         {
             //将队列绑定到交换机

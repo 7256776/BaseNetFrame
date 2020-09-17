@@ -6,21 +6,31 @@
     <el-radio-group v-model="formData.queueName">
         <el-radio-button label="QueueA"></el-radio-button>
         <el-radio-button label="QueueB"></el-radio-button>
-        <el-radio-button label="QueueC.C"></el-radio-button>
+        <el-radio-button label="QueueC"></el-radio-button>
+        <el-radio-button label="QueueD.D"></el-radio-button>
+        <el-radio-button label="QueueD.D.E"></el-radio-button>
         <el-radio-button label="QueueD.D.E.F"></el-radio-button>
     </el-radio-group>
     <el-input type="textarea" v-bind:rows="2" v-model="formData.message">
     </el-input>
+    <p>注: 如多个交换机 (Exchange)都注册了(queueName),消息将轮循发送，适用下列各个模式。</p>
+
+    <hr />
+    <p>基本发送示例: </p>
     <el-button type="primary" v-on:click="doSubmit()">基本发送示例</el-button>
-    <el-button type="primary" v-on:click="doSubmitDirect()">路由模式(Direct)</el-button>
+    <hr />
+    <p>直接交换模式(Direct) : 生产者和消费者，具有相同的交换机名称（Exchange）,消息发送到注册的 (routingKey)</p>
+    <el-button type="primary" v-on:click="doSubmitDirect()">直接交换模式(Direct) </el-button>
+
+    <hr />
+    <p>订阅模式(Fanout): 生成这和消费者, 具有相同的交换机名称 (Exchange), 消息发送到该交换机上所有注册的 (queueName)， 类似广播。</p>
     <el-button type="primary" v-on:click="doSubmitFanout()">订阅模式(Fanout)</el-button>
 
-    <el-button type="primary" v-on:click="doSubmitTopic1()">发送到匹配队列</el-button>
-    <el-button type="primary" v-on:click="doSubmitTopic2()">发送到匹配队列</el-button>
-
-
-    <el-button type="primary" v-on:click="doGetMesg()">刷新</el-button>
-    <el-button type="primary" v-on:click="doClearMessage()">清除</el-button>
+    <hr />
+    <p>匹配模式(Topic): 接受方注册的队列包含通配符 (#  匹配0-n个字符语句) (* 匹配一个字符语句)</p>
+    <p> 注册队列 QueueD.#  可以匹配 QueueD.D, QueueD.D.E, QueueD.D.E.F</p>
+    <p> 注册队列 QueueD.*  可以匹配 QueueD.D</p>
+    <el-button type="primary" v-on:click="doSubmitTopic()">匹配模式(Topic)</el-button>
 
     <div class="row">
         <p v-for="item in mesgList">
@@ -30,4 +40,3 @@
         </p>
     </div>
 </div>
-

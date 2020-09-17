@@ -50,13 +50,13 @@ namespace RabbitMQService
                 //定义一个 Topic 类型交换机
                 channel.ExchangeDeclare(exchangeName, ExchangeType.Topic, false, false, null);
                 //定义队列
-                queueName = queueName + Guid.NewGuid().ToString();
+                queueName = queueName + DateTime.Now.Ticks.ToString();
                 channel.QueueDeclare(queueName, false, false, false, null);
             }
         }
 
         /// <summary>
-        /// 
+        /// 发送消息
         /// </summary>
         /// <param name="ch"></param>
         /// <param name="ea"></param>
@@ -70,7 +70,7 @@ namespace RabbitMQService
         }
 
         /// <summary>
-        /// 
+        /// 绑定路由到消息队列
         /// </summary>
         /// <param name="routingKey"></param>
         public void QueueBind(string routingKey)
@@ -83,11 +83,11 @@ namespace RabbitMQService
             EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             //执行发送消息
             consumer.Received += ReceivedMQ;
+           
             //启动消费者 设置为手动应答消息
             channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
         }
 
-
-
+       
     }
 }

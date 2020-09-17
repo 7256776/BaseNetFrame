@@ -43,6 +43,7 @@ namespace RabbitMQService
                 connection = factory.CreateConnection();
                 //创建通道
                 channel = connection.CreateModel();
+
                 //定义一个 Fanout 类型交换机
                 channel.ExchangeDeclare(exchangeName, ExchangeType.Fanout, false, false, null);
                 //定义队列

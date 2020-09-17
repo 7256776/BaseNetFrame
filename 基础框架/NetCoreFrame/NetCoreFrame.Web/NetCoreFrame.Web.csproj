@@ -49,9 +49,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\Error.cshtml" />
+    <Content Remove="Views\Shared\_LayoutNone.cshtml" />
+    <Content Remove="Views\Shared\_LayoutSide.cshtml" />
+    <Content Remove="Views\Shared\_LayoutTop.cshtml" />
     <Content Remove="Views\SysAccount\Demo.cshtml" />
+    <Content Remove="Views\SysAccount\Index.cshtml" />
     <Content Remove="Views\SysAccount\Login.cshtml" />
     <Content Remove="Views\SampleMvc\Index.cshtml" />
+    <Content Remove="Views\SysAccount\UserSettings.cshtml" />
+    <Content Remove="Views\SysAuditLogs\Index.cshtml" />
+    <Content Remove="Views\SysComponents\HeadToolButton.cshtml" />
+    <Content Remove="Views\SysComponents\QuickSidebar.cshtml" />
+    <Content Remove="Views\SysComponents\SearchDropdown.cshtml" />
+    <Content Remove="Views\SysComponents\SearchForm.cshtml" />
+    <Content Remove="Views\SysComponents\SearchPage.cshtml" />
+    <Content Remove="Views\SysComponents\TopToolsMenu.cshtml" />
+    <Content Remove="Views\SysComponents\UserInfoExtens.cshtml" />
+    <Content Remove="Views\SysDict\Index.cshtml" />
+    <Content Remove="Views\SysFlowDesigner\Index.cshtml" />
+    <Content Remove="Views\SysHome\DesktopPage.cshtml" />
+    <Content Remove="Views\SysHome\Index.cshtml" />
+    <Content Remove="Views\SysLogin\Login.cshtml" />
+    <Content Remove="Views\SysMenus\Index.cshtml" />
+    <Content Remove="Views\SysMenus\SideMenu.cshtml" />
+    <Content Remove="Views\SysMenus\TopMenu.cshtml" />
+    <Content Remove="Views\SysNotifications\Index.cshtml" />
+    <Content Remove="Views\SysNotifications\UserInbox.cshtml" />
+    <Content Remove="Views\SysOrg\Index.cshtml" />
+    <Content Remove="Views\SysRole\Index.cshtml" />
     <Content Remove="Views\_ViewImports.cshtml" />
     <Content Remove="Views\_ViewStart.cshtml" />
     <Content Remove="wwwroot\swagger\ui\index.html" />
@@ -90,9 +116,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Views\SysFlowDesigner\index.js">
+    <EmbeddedResource Include="Views\SysFlowDesigner\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="wwwroot\Content\assets\global\img\social\Thumbs.db" />
   </ItemGroup>
 
@@ -100,82 +126,158 @@
     <Content Include="Localization\XmlSource\FrameLocalization-en.xml" />
     <Content Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
     <Content Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
-    <Content Include="Views\SysAccount\index.js">
+    <EmbeddedResource Include="Views\SysAccount\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysAccount\UserSettings.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAccount\UserSettings.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysAuditLogs\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAuditLogs\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\InitPage.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\InitPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\HeadToolButton.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\HeadToolButton.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\jsonFormat.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\jsonFormat.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\QuickSidebar.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\QuickSidebar.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\SearchDropdown.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\SearchDropdown.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\SearchForm.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\SearchForm.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\SearchPage.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\SearchPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\TopToolsMenu.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\TopToolsMenu.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\UserInfoExtens.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\UserInfoExtens.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysComponents\WebTitle.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\WebTitle.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysDict\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysDict\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysHome\DesktopPage.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysHome\DesktopPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysMenus\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysMenus\SideMenu.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\SideMenu.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysMenus\SideMenuSub.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\SideMenuSub.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysMenus\TopMenu.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\TopMenu.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysMenus\TopMenusFullSub.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\TopMenusFullSub.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysMenus\TopMenusSub.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\TopMenusSub.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysNotifications\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysNotifications\UserInbox.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\UserInbox.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysOrg\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysOrg\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysRole\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysRole\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SampleMvc\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\Error.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\_LayoutNone.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\_LayoutSide.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shared\_LayoutTop.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAccount\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAccount\UserSettings.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAuditLogs\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\HeadToolButton.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\QuickSidebar.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\SearchDropdown.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\SearchForm.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\SearchPage.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\TopToolsMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\UserInfoExtens.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysDict\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysFlowDesigner\Index.cshtml" />
+    <EmbeddedResource Include="Views\SysHome\DesktopPage.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysHome\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysLogin\Login.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\SideMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysMenus\TopMenu.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\UserInbox.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysOrg\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysRole\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\_ViewImports.cshtml">
@@ -240,84 +342,6 @@
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\abp.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Shared\Error.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Shared\_LayoutNone.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Shared\_LayoutSide.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\Shared\_LayoutTop.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysAccount\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysAccount\UserSettings.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysAuditLogs\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\HeadToolButton.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\QuickSidebar.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\SearchDropdown.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\SearchForm.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\SearchPage.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\TopToolsMenu.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysComponents\UserInfoExtens.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysDict\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysHome\DesktopPage.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysHome\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysLogin\Login.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysMenus\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysMenus\SideMenu.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysMenus\TopMenu.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysNotifications\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysNotifications\UserInbox.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysOrg\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysRole\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
