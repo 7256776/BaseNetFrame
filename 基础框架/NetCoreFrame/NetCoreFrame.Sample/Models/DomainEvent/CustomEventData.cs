@@ -49,7 +49,7 @@ namespace NetCoreFrame.Sample
     ///         注销
     ///         IEventBus.Unregister<CustomEventData>(activityWriter.HandleEvent);
     /// </summary>
-    public class CustomEventHandler : IEventHandler<CustomEventData>//, ITransientDependency
+    public class CustomEventHandler : IEventHandler<CustomEventData>
     {
         /// <summary>
         /// 默认注入的实现

@@ -1,0 +1,2 @@
+﻿右键程序集属性 --- 生成事件 (设置如下命令每次生成时进行js文件拷贝)
+xcopy "$(SolutionDir)\NetCoreFrame.Web\wwwroot" "$(ProjectDir)\wwwroot" /e /h /y /Q

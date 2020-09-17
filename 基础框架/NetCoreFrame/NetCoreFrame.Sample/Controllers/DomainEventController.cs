@@ -37,6 +37,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public Task<JsonResult> DoEventAsync([FromBody]CacheParam param)
         {
+            //通过事件驱动的实体对象确定所调用的事件驱动
             EventDataDto dto = new EventDataDto { EventDataName = "1:创建对象" + "  2:输入值=" + param.KeyName };
             //触发事件
             _eventBus.TriggerAsync(this, dto);
