@@ -11,20 +11,23 @@
     "字典管理": "字典管理",
     "Login": "登录",
     "IsPersistent": "记住",
-    "IsRepeat": "您输入的 {0} 重复,请重新输入",
-    "AtLeastOneOfThesePermissionsMustBeGranted": "你没有权限",
-    "ValidationError": "您请求的数据无效!",
-    "InternalServerError": "您的请求发生错误,请刷新页面重试!",
-    "ValidationNarrativeTitle": "在验证过程中检测到以下错误!",
+    "IsRepeat": "您输入的 {0} 重复,请重新输入。",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "您没有权限",
+    "ValidationError": "您请求的数据无效。",
+    "InternalServerError": "您的请求发生错误,请刷新页面重试。",
+    "ValidationNarrativeTitle": "在验证过程中检测到以下错误。",
 
-    "DefaultError": "发生一个错误!",
-    "DefaultErrorDetail": "服务端发生错误,请刷新页面重试!",
-    "DefaultError401": "您没有授权!",
-    "DefaultErrorDetail401": "您应该认证(登录)来执行该操作",
-    "DefaultError403": "您未被授权!",
-    "DefaultErrorDetail403": "您未被授权执行该操作.",
-    "DefaultError404": "未找到资源!",
+    "DefaultError": "发生一个错误。",
+    "DefaultErrorDetail": "服务端发生错误,请刷新页面重试。",
+    "DefaultError401": "您没有授权。",
+    "DefaultErrorDetail401": "您应该认证(登录)来执行该操作。",
+    "DefaultError403": "您未被授权。",
+    "DefaultErrorDetail403": "您未被授权执行该操作。",
+    "DefaultError404": "未找到资源。",
     "DefaultErrorDetail404": "服务器上找不到请求的资源.",
+
+    "IsSelect": "请选择一条的数据。",
+    "verifyData": "您输入的信息有误请核对。",
 
     "Tips": "Tips",
     "Info": "消息",
@@ -38,8 +41,21 @@
     "Editor": "修改",
     "Add": "新增",
     "Del": "删除",
-    "Successful": "成功",
-    "Failure": "失败"
+    "Success": "成功",
+    "Failure": "失败",
+
+    "InvalidUserNameOrEmailAddress": "账号或邮箱地址无效",
+    "InvalidPassword": "密码无效",
+    "UserIsNotActive": "用户未激活",
+    "InvalidTenancyName": "租户无效",
+    "TenantIsNotActive": "租户未激活",
+    "UserEmailIsNotConfirmed": "邮箱验证未通过",
+    "UnknownExternalLogin": "未授权外部登录",
+    "LockedOut": "已锁定",
+    "UserPhoneNumberIsNotConfirmed": "电话号码未验证",
+    "AuthenticationRegistrationFailure": "身份验证注册失败",
+    "UnacquiredInformation": "未获取任何信息"
+
   }
 }
 

@@ -26,6 +26,9 @@
     "DefaultError404": "Resource not found!",
     "DefaultErrorDetail404": "The resource requested could not found on the server.",
 
+    "IsSelect": "Please select a data item.",
+    "verifyData": "Please check the wrong information you entered.",
+
     "Tips": "Tips ",
     "Info": "Info ",
     "Warning": "Warning ",
@@ -33,11 +36,26 @@
     "Details": "Details",
     "OperationComplete": "Operation complete",
     "SendSuccess": "Send success",
+
     "Save": "Save ",
     "Editor": "Modify ",
     "Add": "Added ",
     "Del": "Delete ",
-    "Successful": "Success ",
-    "Failure": "Failure"
+    "Success": "Success ",
+    "Failure": "Failure",
+
+    "InvalidUserNameOrEmailAddress": "Invalid User Name Or Email Address",
+    "InvalidPassword": "Invalid Password",
+    "UserIsNotActive": "User Is Not Active",
+    "InvalidTenancyName": "Invalid Tenancy Name",
+    "TenantIsNotActive": "TenantIs Not Active",
+    "UserEmailIsNotConfirmed": "User EmailIs Not Confirmed",
+    "UnknownExternalLogin": "Unknown External Login",
+    "LockedOut": "Locked Out",
+    "UserPhoneNumberIsNotConfirmed": "User Phone NumberIs Not Confirmed",
+    "AuthenticationRegistrationFailure": "Authentication Registration Failure",
+    "UnacquiredInformation": "UnacquiredInformation"
+
+
   }
 }
