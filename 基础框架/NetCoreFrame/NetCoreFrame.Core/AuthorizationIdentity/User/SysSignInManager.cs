@@ -119,12 +119,13 @@ namespace NetCoreFrame.Core
             //验证用户信息 
             if (userModel == null)
             {
-                return new SysLoginResult<TUser>(LoginResultType.InvalidUserNameOrEmailAddress, userModel);
+                throw new UserFriendlyException(nameof(LoginResultType.UserIsNotActive), " 未获取到该" + model.UserCode + "的用户信息。");
+                //return new SysLoginResult<TUser>(LoginResultType.InvalidUserNameOrEmailAddress, userModel);
             }
             if (!userModel.IsActive)
             {
                 //未激活的用户不做登录
-                throw new UserFriendlyException(nameof(LoginResultType.UserIsNotActive), "用户未激活!");
+                throw new UserFriendlyException(nameof(LoginResultType.UserIsNotActive));
                 //return new SysLoginResult<TUser>(LoginResultType.UserIsNotActive, userModel);
             }
 
@@ -133,7 +134,7 @@ namespace NetCoreFrame.Core
             var verificationResult = _sysUserInfoManager.PasswordHasher.VerifyHashedPassword(model, userModel.Password, model.Password);
             if (verificationResult == PasswordVerificationResult.Failed)
             {
-                throw new UserFriendlyException(nameof(LoginResultType.InvalidPassword), "用户密码无效!");
+                throw new UserFriendlyException(nameof(LoginResultType.InvalidPassword));
                 //return new SysLoginResult<TUser>(LoginResultType.InvalidPassword);
             }
             #region 扩展验证 暂未使用

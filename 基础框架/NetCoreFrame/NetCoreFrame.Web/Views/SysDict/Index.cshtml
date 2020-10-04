@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-md-12" style="padding-left:0px;padding-right:5px;">
         <div class="todo-ui">
-            <div class="todo-sidebar" style="margin-right:5px;border:1px solid #DCDFE6;">
+            <div class="todo-sidebar" style="margin-right:5px;border:0px solid #DCDFE6;">
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="portlet-body todo-project-list-content" style="min-height:300px;">
-                        <div class="todo-project-list" >
+                        <div class="todo-project-list">
                             <ul class="nav nav-stacked">
                                 <li v-for="item in sysDictData" v-bind:class="item.id==formData.id ? 'active' : ''">
                                     <a v-on:click="doSysDictTypeClick(item.id)">

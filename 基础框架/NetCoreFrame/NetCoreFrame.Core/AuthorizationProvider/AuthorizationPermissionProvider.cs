@@ -77,7 +77,7 @@ namespace NetCoreFrame.Core
         /// <param name="dict"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public   bool IsRepeatAndAdd( Dictionary<string, string> dict, string value)
+        private bool IsRepeatAndAdd(Dictionary<string, string> dict, string value)
         {
             if (dict.ContainsKey(value))
             {
@@ -88,6 +88,4 @@ namespace NetCoreFrame.Core
         }
 
     }
-
-
 }

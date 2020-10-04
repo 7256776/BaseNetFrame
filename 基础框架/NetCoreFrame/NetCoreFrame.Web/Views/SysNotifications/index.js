@@ -124,7 +124,7 @@ var component = Vue.component('sys-notifications', {
                     data: JSON.stringify(_this.formData),
                     type: 'POST'
                 }).done(function (data, res, e) {
-                    //
+                    _this.getNotificationsDataList();
                     _this.tipSuccess('del');
                 });
             });

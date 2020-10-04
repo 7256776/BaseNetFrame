@@ -30,8 +30,11 @@ namespace NetCoreFrame.Sample
                 {
                     UserName = "test",//用户名
                     Password = "test",//密码
-                    HostName = "127.0.0.1"//rabbitmq ip
+                    HostName = "127.0.0.1",//rabbitmq ip
+                    //Port = 5672,
+                    //VirtualHost = "/",
                 };
+
                 try
                 {
                     //创建连接
@@ -63,13 +66,13 @@ namespace NetCoreFrame.Sample
                 //消息内容
                 byte[] body = Encoding.UTF8.GetBytes(mesg);
 
-                channel.BasicAcks += Channel_BasicAcks;
-                channel.BasicNacks += Channel_BasicNacks;
-                channel.BasicRecoverOk += Channel_BasicRecoverOk;
-                channel.BasicReturn += Channel_BasicReturn;
-                channel.CallbackException += Channel_CallbackException;
-                channel.FlowControl += Channel_FlowControl;
-                channel.ModelShutdown += Channel_ModelShutdown;
+                //channel.BasicAcks += Channel_BasicAcks;
+                //channel.BasicNacks += Channel_BasicNacks;
+                //channel.BasicRecoverOk += Channel_BasicRecoverOk;
+                //channel.BasicReturn += Channel_BasicReturn;
+                //channel.CallbackException += Channel_CallbackException;
+                //channel.FlowControl += Channel_FlowControl;
+                //channel.ModelShutdown += Channel_ModelShutdown;
 
                 //发送消息  routingKey设置接受队列的QueueName
                 channel.BasicPublish(exchange: "", routingKey: dto.QueueName, basicProperties: null, body: body);

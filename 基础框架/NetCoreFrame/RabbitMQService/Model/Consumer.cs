@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 namespace RabbitMQService
 {
     /*
+        交互器  => 多个队列
+        队列     => 多个路由
+    */
+    /*
      * 创建消息(消费端)处理消息的的服务
      * 每个队列有单独的名称,也可以同名称
      * 消息发送方会集合消息队列名称进行推送消息
@@ -36,7 +40,7 @@ namespace RabbitMQService
                 {
                     UserName = "test",//用户名
                     Password = "test",//密码
-                    HostName = RabbitmqIp
+                    HostName = RabbitmqIp 
                 };
 
                 //创建连接
@@ -52,6 +56,8 @@ namespace RabbitMQService
                   autoDelete: false,
                   arguments: null
                 );
+
+                //交换机与队列的定义可以是服务端也可以是消费方, 还可以通过RabbitMQ后台管理页面进行添加
 
                 //告诉Rabbit每次只能向消费者发送一条信息,再消费者未确认之前,不再向他发送信息
                 channel.BasicQos(0, 1, false);

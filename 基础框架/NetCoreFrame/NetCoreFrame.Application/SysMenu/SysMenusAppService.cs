@@ -1,6 +1,7 @@
 ﻿using Abp.Auditing;
 using Abp.Authorization;
 using Abp.AutoMapper;
+using Abp.Domain.Uow;
 using Abp.UI;
 using Abp.Web.Models;
 using NetCoreFrame.Core;
@@ -17,6 +18,7 @@ namespace NetCoreFrame.Application
         private readonly ISysMenusRepository _sysMenusRepository;
         private readonly ISysMenuActionRepository _sysMenuActionRepository;
         private readonly ICacheManagerExtens _cacheManagerExtens;
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         private readonly NavigationMenusExt _navigationMenusExt;
 
@@ -25,13 +27,15 @@ namespace NetCoreFrame.Application
             ISysMenusRepository sysMenusRepository,
             ISysMenuActionRepository sysMenuActionRepository,
             ICacheManagerExtens cacheManagerExtens,
-             NavigationMenusExt navigationMenusExt
+            IUnitOfWorkManager unitOfWorkManager,
+            NavigationMenusExt navigationMenusExt
         )
         {
             _sysMenusRepository = sysMenusRepository;
             _sysMenuActionRepository = sysMenuActionRepository;
             _cacheManagerExtens = cacheManagerExtens;
             _navigationMenusExt = navigationMenusExt;
+            _unitOfWorkManager = unitOfWorkManager;
         }
 
 
@@ -154,17 +158,21 @@ namespace NetCoreFrame.Application
         [AbpAuthorize]
         public void DelMenusModel(long id)
         {
-           var isParent= _sysMenusRepository.GetAll().Where(w => w.ParentID == id);
+            var isParent = _sysMenusRepository.GetAll().Where(w => w.ParentID == id);
             if (isParent.Any())
             {
                 throw new UserFriendlyException("删除菜单失败","请先删除当前菜单的子菜单!");
             }
-            //
+            //删除模块明细
             _sysMenuActionRepository.DelMenusAction(id);
-            //
+            //删除模块
             _sysMenusRepository.Delete(id);
+            //提交操作后在进行缓存刷新
+            _unitOfWorkManager.Current.SaveChanges();
             //清除模块缓存
             _cacheManagerExtens.RemoveMenuActionPermissionCache();
+            //重置初始菜单以及授权
+            _navigationMenusExt.UpNavigationMenusProvider();
 
         }
 

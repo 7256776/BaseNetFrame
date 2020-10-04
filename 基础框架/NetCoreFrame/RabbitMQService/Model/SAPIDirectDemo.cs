@@ -13,30 +13,22 @@ namespace RabbitMQService
      * 创建消息(消费端)处理消息的的服务
      * 每个队列有单独的名称,也可以同名称
      * 消息发送方会集合消息队列名称进行推送消息
-     * 
-     * 一个队列通常对应一个消费者
-     * A 路由对应 A队列       A队列,会轮询收到来自 A或B路由的消息
-     * B 路由对应 A队列       A队列,会轮询收到来自 A或B路由的消息
-     * C 路由对应 B队列       B队列,会收到来自 C路由的消息
-     * 
-     * B,C 路由对应 A队列     A,B队列,会同时到来自 B或C路由的消息
-     * B,C 路由对应 B队列     A,B队列, 会同时到来自 B或C路由的消息
      */
-    public class ConsumerDirectExchange
+    public class SAPIDirectDemo
     {
         public string RabbitmqIp = "127.0.0.1";
         public ConnectionFactory factory;
         public IConnection connection;
         public IModel channel;
-        public string exchangeName = "DirectExchange";
-        public string queueName= "QueueRouting"; 
+        public string exchangeName = "sapi_event_bus";      //DirectExchange
+        public string queueName= "sapi_event_bus";    //QueueRouting
         //public string routingKey;
 
         /// <summary>
         /// queue队列只是载体承载消息的执行
         /// routing是规则,把queue与交换机与路由规则绑定即可实现分发,分发是通过交换器处理的
         /// </summary>
-        public ConsumerDirectExchange()
+        public SAPIDirectDemo()
         {
             //this.queueName = queueName;
             //this.routingKey = queueName;
@@ -46,20 +38,23 @@ namespace RabbitMQService
                 //创建连接工厂
                 factory = new ConnectionFactory
                 {
-                    UserName = "test",//用户名
-                    Password = "test",//密码
-                    HostName = RabbitmqIp
+                    UserName = "sj_zz_dev_mx",//用户名
+                    Password = "sj_zz_dev_mx",//密码test
+                    HostName = "127.0.0.1",//rabbitmq ip
+                    Port = 5672,
+                    VirtualHost = "/",
                 };
 
                 //创建连接
                 connection = factory.CreateConnection();
                 //创建通道
                 channel = connection.CreateModel();
+
+                //交换机与队列的定义可以是服务端也可以是消费方, 还可以通过RabbitMQ后台管理页面进行添加
                 //定义一个 Direct 类型交换机
-                channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, false, false, null);
-                ////定义队列
-                //queueName = queueName + DateTime.Now.Ticks.ToString();
-                channel.QueueDeclare(queueName, false, false, false, null);
+                //channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, false, false, null);
+                //定义队列
+                //channel.QueueDeclare(queueName, false, false, false, null);
             }
         }
 
@@ -74,7 +69,7 @@ namespace RabbitMQService
             //确认一条或多条已传递的消息
             channel.BasicAck(ea.DeliveryTag, false);
             //
-            Console.WriteLine(queueName + "接收到消息:" + message);
+            Console.WriteLine("来自队列:" + queueName + "; 消息:" + message);
         }
 
         /// <summary>
@@ -82,7 +77,7 @@ namespace RabbitMQService
         /// </summary>
         /// <param name="routingKey"></param>
         public void QueueBind(string routingKey)
-        { 
+        {
             //将队列绑定到交换机
             channel.QueueBind(queue: queueName, exchange: exchangeName, routingKey: routingKey);
             //告诉Rabbit每次只能向消费者发送一条信息,再消费者未确认之前,不再向他发送信息

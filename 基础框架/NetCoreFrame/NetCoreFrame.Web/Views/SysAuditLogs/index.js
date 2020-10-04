@@ -119,12 +119,16 @@ var component = Vue.component('sys-auditlogs', {
             this.getDataList(); 
         }, 
         doSetDate: function (v) {
+            if (!v) {
+                this.tableOptions.tableFiltersData[0].dateRange = '';
+                return;
+            }
             this.tableOptions.tableFiltersData[0].dateRange =
                 abp.frameCore.format.formatDate(v[0], "yyyy-MM-dd")
                 + "--" +
                 abp.frameCore.format.formatDate(v[1], "yyyy-MM-dd");
             this.doSearchLog();
-        }, 
+        },
         doClear: function (v) {
             this.tableOptions.tableFiltersData[0].userName = "";
             this.tableOptions.tableFiltersData[0].serviceName = "";

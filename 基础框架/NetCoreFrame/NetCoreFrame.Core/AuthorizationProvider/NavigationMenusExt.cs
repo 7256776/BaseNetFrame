@@ -35,13 +35,16 @@ namespace NetCoreFrame.Core
         /// 
         /// </summary>
         /// <param name="model"></param>
-        public void UpNavigationMenusProvider(SysMenus model)
+        public void UpNavigationMenusProvider(SysMenus model = null)
         {
             #region 更新全局模块列表(主要解决运行时模块列表没有更新的情况)
             _navigationManager.MainMenu.Items.Clear();
             _navigationMenusProvider.CreateMenuItemDefinition(_navigationManager.MainMenu);
             #endregion
-
+            //新增,编辑 更新基础模块的同时添加新加的授权信息
+            //删除 此处为null直接更新原有菜单信息
+            if (model == null)
+                return;
             #region  更新全局授权列表(主要解决运行时授权列表没有更新的情况)
             //添加授权模块
             Permission currentPermission = _permissionManager.GetPermissionOrNull(model.PermissionName.ToLower());
@@ -57,7 +60,7 @@ namespace NetCoreFrame.Core
                 {
                     currentPermission.CreateChildPermission(action.PermissionName.ToLower(), action.ActionDisplayName.ToLocalizable());
                 }
-            } 
+            }
 
             #endregion
         }

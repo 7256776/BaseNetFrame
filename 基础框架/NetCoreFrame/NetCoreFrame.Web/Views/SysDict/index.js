@@ -135,7 +135,7 @@
                 if (!currentRow) {
                     return;
                 }
-                if (oldCurrentRow && oldCurrentRow.editState == "modify") {
+                if (oldCurrentRow && (oldCurrentRow.editState == "modify" || oldCurrentRow.editState == "add")) {
                     //
                     _this.setExpands(oldCurrentRow);
                     this.$confirm(
@@ -152,6 +152,7 @@
                       });
                 } else {
                     this.setExpands(currentRow);
+                    //this.doCancel();
                 }
                 //
                 if (oldCurrentRow) {
@@ -266,6 +267,9 @@
                 //验证
                 if (!row.dictCode || !row.dictContent) {
                     this.tipShow('warn', '请设置字典编码或字典名称');
+                    row.isActive = true;
+                    row.showState = true;
+                    this.$refs.dataGrid.setCurrentRow(row);
                     return;
                 }
                 sysDictInput.push(row);
@@ -296,7 +300,8 @@
                 this.tableOptions.tableData[index].showState = false;
                 this.tableOptions.tableData[index].editState = '';
                 //取消后如果编码或名称没有填写就移除掉该行
-                if (!row.dictCode && !row.dictContent) {
+                //if (!row.dictCode && !row.dictContent) {
+                if (!row.id) {
                     this.tableOptions.tableData.splice(index, 1)
                 }
                 this.expands = [];

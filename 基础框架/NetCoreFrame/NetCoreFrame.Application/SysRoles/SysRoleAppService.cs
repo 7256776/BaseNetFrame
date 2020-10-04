@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Abp.UI;
 
 namespace NetCoreFrame.Application
 {
@@ -86,6 +87,11 @@ namespace NetCoreFrame.Application
         [AbpAuthorize]
         public async Task<AjaxResponse> SaveRoleModel(RoleInput model)
         {
+            var isRepeat = _sysRolesRepository.GetAllList(w => w.RoleName == model.RoleName && w.Id != model.ID).Any();
+            if (isRepeat)
+            {
+                throw new UserFriendlyException("角色名称重复", "您设置的角色名称" + model.RoleName + "重复!");
+            }
             if (model.ID == null)
             {
                 SysRoles modelInput = ObjectMapper.Map<SysRoles>(model);

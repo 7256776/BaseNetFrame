@@ -58,7 +58,6 @@
     <Content Remove="Views\SysAccount\Login.cshtml" />
     <Content Remove="Views\SampleMvc\Index.cshtml" />
     <Content Remove="Views\SysAccount\UserSettings.cshtml" />
-    <Content Remove="Views\SysAuditLogs\Index.cshtml" />
     <Content Remove="Views\SysComponents\HeadToolButton.cshtml" />
     <Content Remove="Views\SysComponents\QuickSidebar.cshtml" />
     <Content Remove="Views\SysComponents\SearchDropdown.cshtml" />
@@ -66,7 +65,6 @@
     <Content Remove="Views\SysComponents\SearchPage.cshtml" />
     <Content Remove="Views\SysComponents\TopToolsMenu.cshtml" />
     <Content Remove="Views\SysComponents\UserInfoExtens.cshtml" />
-    <Content Remove="Views\SysDict\Index.cshtml" />
     <Content Remove="Views\SysFlowDesigner\Index.cshtml" />
     <Content Remove="Views\SysHome\DesktopPage.cshtml" />
     <Content Remove="Views\SysHome\Index.cshtml" />
@@ -132,9 +130,9 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysAuditLogs\index.js">
+    <Content Include="Views\SysAuditLogs\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Views\SysComponents\InitPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -165,9 +163,9 @@
     <EmbeddedResource Include="Views\SysComponents\WebTitle.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysDict\index.js">
+    <Content Include="Views\SysDict\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Views\SysHome\DesktopPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -193,6 +191,12 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysNotifications\UserInbox.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\UserInbox.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysOrg\index.js">
@@ -222,9 +226,6 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysAuditLogs\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysComponents\HeadToolButton.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -246,9 +247,6 @@
     <EmbeddedResource Include="Views\SysComponents\UserInfoExtens.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysDict\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysFlowDesigner\Index.cshtml" />
     <EmbeddedResource Include="Views\SysHome\DesktopPage.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -266,12 +264,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysMenus\TopMenu.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysNotifications\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysNotifications\UserInbox.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysOrg\Index.cshtml">
@@ -342,6 +334,15 @@
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\abp.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\SysAuditLogs\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\SysDict\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
