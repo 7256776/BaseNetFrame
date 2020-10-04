@@ -124,7 +124,7 @@ var component = Vue.component('sys-quicksidebar', {
             //
             this.$refs["txtSms"].focus();
             if (!this.charSend.chatDetailed) {
-                abp.message.warn('您还未输入消息!');
+                this.tipShow('warn', '您还未输入消息');
                 return;
             }
             abp.ajax({
@@ -138,7 +138,7 @@ var component = Vue.component('sys-quicksidebar', {
                     _this.charSend.chatDetailed = "";
                 }
             }).fail(function (data) {
-                abp.message.error('您的消息未发送,请刷新页面或重新登录!');
+                _this.tipShow('error', '您的消息未发送,请刷新页面或重新登录');
             });
         },
         updateChatState: function (userId) {
@@ -169,8 +169,8 @@ var component = Vue.component('sys-quicksidebar', {
                 });
                 //判断是否属于初始加载
                 if (isInit!==true) {
-                    abp.message.success("刷新在线用户列表完成");
-                }
+                    _this.tipShow('success', '您的消息未发送,刷新在线用户列表完成');
+                } 
              
             });
         },

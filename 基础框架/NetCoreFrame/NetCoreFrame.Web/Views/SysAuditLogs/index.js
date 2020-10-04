@@ -109,7 +109,7 @@ var component = Vue.component('sys-auditlogs', {
                     url: '/SysAuditLogs/DelAuditLog',
                 }).done(function (data, res, e) {
                     //
-                    abp.message.success('OperationComplete');
+                    _this.tipShow('success', 'OperationComplete');
                     _this.getDataList();
                 });
             });

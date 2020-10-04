@@ -162,7 +162,7 @@ var component = Vue.component('sys-userinbox', {
                 });
             })
             if (idList.length == 0) {
-                abp.message.warn('请选择需设置的通知消息!');
+                _this.tipShow('warn', '请选择需设置的通知消息。');
                 return;
             }
             this.tableOptions.gridLoading = true;
@@ -210,7 +210,7 @@ var component = Vue.component('sys-userinbox', {
                 idList.push(item.id);
             });
             if (idList.length==0) {
-                abp.message.warn('请选择需删除的通知消息!');
+                this.tipShow('warn', '请选择需删除的通知消息。');
                 return;
             }
             this.$confirm('确定删除消息?',
@@ -252,7 +252,7 @@ var component = Vue.component('sys-userinbox', {
                     notificationName: notificationName
                 });
             } else {
-                abp.message.error("未获取到用户信息,请重新登录");
+                this.tipShow('error', '未获取到用户信息,请重新登录');
                 return;
             }
             abp.ajax({
@@ -271,7 +271,7 @@ var component = Vue.component('sys-userinbox', {
                     notificationName: notificationName
                 });
             } else {
-                abp.message.error("未获取到用户信息,请重新登录");
+                this.tipShow('error', '未获取到用户信息,请重新登录');
                 return;
             }
             abp.ajax({
@@ -376,8 +376,7 @@ var component = Vue.component('sys-userinbox', {
                         data: JSON.stringify(userId)
                     }).done(function (data) {
                         _this.chatData.chatContentList = [];
-                        abp.message.success(tipsType.delSuccess);
-                        //设置聊天读取状态完成
+                        _this.tipSuccess('del');
                     });
                 });
         },
@@ -388,7 +387,7 @@ var component = Vue.component('sys-userinbox', {
             this.$refs["txtSms"].focus();
             if (!this.charSend.chatDetailed) {
                 _this.btnLoad = false;
-                abp.message.warn('您还未输入消息!');
+                _this.tipShow('warn', '您还未输入消息。');
                 return;
             }
             abp.ajax({
@@ -409,7 +408,7 @@ var component = Vue.component('sys-userinbox', {
                 }
             }).fail(function (data) {
                 _this.btnLoad = false;
-                abp.message.error('您的消息未发送,请刷新页面或重新登录!');
+                this.tipShow('error', '您的消息未发送，请刷新页面或重新登录。');
             });
         },
         handleChatSizeChange: function (val) {

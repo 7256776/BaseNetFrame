@@ -152,7 +152,7 @@ var component = Vue.component('sys-account', {
             //
             this.activeName = "userInfo";
             if (!this.tableOptions.selectRow.id) {
-                abp.message.warn('请选择一行数据');
+                this.tipSuccess('error','IsSelect');
                 return;
             }
             this.pageOptions.formDialog = true;
@@ -207,13 +207,13 @@ var component = Vue.component('sys-account', {
                              */
                             _this.pageOptions.formDialog = false;
                             _this.getUserList();
-                            abp.message.success(tipsType.saveSuccess);
+                            _this.tipSuccess('save');
                         });
                         //基本上可以忽略监控fail,abp已经完成了这部分处理
                         //fail(function (res, e) { });
 
                     } else {
-                        abp.message.error('您输入的信息有误请核对!');
+                        _this.tipShow('warn', 'verifyData');
                         return false;
                     }
                 }
@@ -223,7 +223,7 @@ var component = Vue.component('sys-account', {
             var _this = this;
 
             if (this.tableOptions.selectRows.length === 0) {
-                abp.message.warn('请选择一行数据');
+                this.tipSuccess('error', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除所选择的用户?', '提示', {
@@ -236,8 +236,7 @@ var component = Vue.component('sys-account', {
                     data: JSON.stringify(_this.tableOptions.selectRows),
                     type: 'POST'
                 }).done(function (data, res, e) {
-                    //
-                    abp.message.success(tipsType.delSuccess);
+                    _this.tipSuccess('save');
                     _this.getUserList();
                 });
             });
@@ -245,7 +244,7 @@ var component = Vue.component('sys-account', {
         doResetPass: function () {
             var _this = this;
             if (!this.tableOptions.selectRow.id) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('IsSelect!');
                 return;
             }
             this.$confirm('确定重置所选择用户的密码?', '提示', { type: 'warning' })
@@ -254,7 +253,7 @@ var component = Vue.component('sys-account', {
                         url: '/SysAccount/ResetUserPass',
                         data: JSON.stringify(_this.tableOptions.selectRow.id)
                     }).done(function (data, res, e) {
-                        abp.message.success('密码重置成功,新密码' + data);
+                        _this.tipShow('密码重置成功,新密码' + data);
                     });
                     //基本上可以忽略监控fail,abp已经完成了这部分处理
                     //fail(function (res, e) { });

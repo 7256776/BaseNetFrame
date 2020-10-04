@@ -10,8 +10,10 @@ Vue.use(ELEMENT, { size: 'small' })
 var globalVue = new Vue({
     methods: {
         showNotification: function (type, message, title, details) {
+            //本地化处理
+            message = abp.frameCore.localization.getLocalization(message)
+
             var _this = this;
-          
             title = title || getNotifyTitleBySeverity(type)
 
             this.$notify({
@@ -30,6 +32,10 @@ var globalVue = new Vue({
             });
         },
         showMessage: function (type, message, details) {
+            //本地化处理
+            details = abp.frameCore.localization.getLocalization(details)
+            message = abp.frameCore.localization.getLocalization(message)
+
             var _this = this;
             var msg = "";
             if (message && details) {
@@ -171,7 +177,18 @@ var globalVue = new Vue({
     frameCore.localization.localizationName = "FrameLocalization";
     //获取框架本地化语言(调用方式 : abp.frameCore.localization.getLocalization )
     frameCore.localization.getLocalization = function (key) {
-        return abp.localization.localize(key, frameCore.localization.localizationName);
+        //获取本地化资源
+        var localizationData = abp.localization.values[frameCore.localization.localizationName];
+        //默认本地资源值
+        var localizationValue = key;
+        //处理大小写忽略的方式获取本地化值
+        for (let item in localizationData) {
+            if (key && item.toLowerCase() == key.toLowerCase()) {
+                localizationValue = localizationData[item];
+                return localizationValue;
+            }
+        } 
+        return localizationValue;
     };
 
     /*******************************************************常规公用函数*********************************************************/
@@ -586,74 +603,38 @@ $(function () {
         }
     };
 
-    /*
-    * tipsType.saveSuccess 保存成功
-    * tipsType.editSuccess  修改成功
-    * tipsType.addSuccess   新增成功
-    * tipsType.delSuccess   删除成功
-
-    * tipsType.saveFail         保存失败
-    * tipsType.editFail          修改失败
-    * tipsType.addFail          新增失败
-    * tipsType.delFail           删除失败
-    */
-    tipsType = {
-        saveSuccess: abp.frameCore.localization.getLocalization('Save') + abp.frameCore.localization.getLocalization('Successful'),
-        editSuccess: abp.frameCore.localization.getLocalization('Editor') + abp.frameCore.localization.getLocalization('Successful'),
-        addSuccess: abp.frameCore.localization.getLocalization('Add') + abp.frameCore.localization.getLocalization('Successful'),
-        delSuccess: abp.frameCore.localization.getLocalization('Del') + abp.frameCore.localization.getLocalization('Successful'),
-
-        saveFail: abp.frameCore.localization.getLocalization('Save') + abp.frameCore.localization.getLocalization('Failure'),
-        editFail: abp.frameCore.localization.getLocalization('Editor') + abp.frameCore.localization.getLocalization('Failure'),
-        addFail: abp.frameCore.localization.getLocalization('Add') + abp.frameCore.localization.getLocalization('Failure'),
-        delFail: abp.frameCore.localization.getLocalization('Del') + abp.frameCore.localization.getLocalization('Failure'),
-
-    };
-
     /* MESSAGE  页面顶部显示的提示 **************************************************/
     abp.message.info = function (details, message) {
-        var detail = abp.frameCore.localization.getLocalization(details)
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showMessage('info', msg, detail);
+        return globalVue.showMessage('info', message, details);
     };
 
     abp.message.success = function (details, message) {
-        var detail = abp.frameCore.localization.getLocalization(details)
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showMessage('success', msg, detail);
+        return globalVue.showMessage('success', message, details);
     };
 
     abp.message.warn = function (details, message) {
-        var detail = abp.frameCore.localization.getLocalization(details)
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showMessage('warning', msg, detail);
+        return globalVue.showMessage('warning', message, details);
     };
 
     abp.message.error = function (details, message) {
-        var detail = abp.frameCore.localization.getLocalization(details)
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showMessage('error', msg, detail);
+        return globalVue.showMessage('error', message, details);
     };
 
     /* NOTIFICATION  右脚上弹出的消息框*********************************************/
     abp.notify.success = function (message, title, details) {
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showNotification('success', msg, title, details);
+        return globalVue.showNotification('success', message, title, details);
     };
 
     abp.notify.info = function (message, title, details) {
-        var msg = abp.frameCore.localization.getLocalization(message)
-        globalVue.showNotification('info', msg, title, details);
+        globalVue.showNotification('info', message, title, details);
     };
 
     abp.notify.warn = function (message, title, details) {
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showNotification('warning', msg, title, details);
+        return globalVue.showNotification('warning', message, title, details);
     };
 
     abp.notify.error = function (message, title, details) {
-        var msg = abp.frameCore.localization.getLocalization(message)
-        return globalVue.showNotification('error', msg, title, details);
+        return globalVue.showNotification('error', message, title, details);
     };
 
 });
@@ -893,7 +874,6 @@ var serviceConnection = serviceConnection || {};
 //        }
 //        //设置请求头
 //        this.setRequestHeader("authorization", "bearer " + token);
-
 //        return send.call(this, data);
 //    };
 //})(XMLHttpRequest.prototype.send);

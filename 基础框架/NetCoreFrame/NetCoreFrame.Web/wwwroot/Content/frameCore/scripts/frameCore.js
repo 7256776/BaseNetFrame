@@ -316,7 +316,14 @@ var initFrame = function (Vue, options) {
 //应用初始化
 Vue.use(initFrame)
 
-//简单的状态管理对象
+//
+/*
+*   简单的状态管理对象
+*   screenHeight 当Dom高度    ┓   
+*                                              ┣   初始值通过framePageStart.js 的 winResize              
+*   screenWidth  当Dom宽度    ┛
+*       
+*/
 var frameStore = Vue.observable({
     screenHeight: 0,
     screenWidth: 0
@@ -380,7 +387,7 @@ Vue.mixin({
                 return num;
             }
             size = size.toUpperCase();
-              if(size == 'L') {
+            if (size == 'L') {
                 return num * 0.8;
             }
             else if (size == 'M') {
@@ -392,6 +399,116 @@ Vue.mixin({
                 return num;
             }
         },
+        _operationType: function (type) {
+            type = type.toUpperCase();
+            switch (type) {
+                case 'SAVE':
+                    return abp.frameCore.localization.getLocalization('Save');
+                case 'Edit':
+                    return abp.frameCore.localization.getLocalization('Editor');
+                case 'ADD':
+                    return abp.frameCore.localization.getLocalization('Add');
+                case 'DEL':
+                    return abp.frameCore.localization.getLocalization('Del');
+                default:
+                    return "";
+            }
+        },
+        _tipBase: function (type, details, message) {
+            type = type.toUpperCase();
+            switch (type) {
+                case 'INFO':
+                    return abp.message.info(details, message);
+                case 'SUCCESS':
+                    return abp.message.success(details, message);
+                case 'WARN':
+                    return abp.message.warn(details, message);
+                case 'ERROR':
+                    return abp.message.error(details, message);
+                default:
+                    return abp.message.info(details, message);
+            }
+        },
+        tipSuccess: function (type, details) {
+            /*
+             *  type        操作类型 save, edit, add, del
+             *  details     消息详细
+             */
+            var successful = abp.frameCore.localization.getLocalization('Success');
+            var message = this._operationType(type) + successful;
+            abp.message.success(details, message);
+        },
+        tipFail: function (type, details) {
+            /*
+            *  type        操作类型 save, edit, add, del
+            *  details     消息详细
+            */
+            var failure = abp.frameCore.localization.getLocalization('Failure');
+            var message = this._operationType(type) + failure;
+            abp.message.success(details, message);
+        },
+        tipShowFormat: function () {
+            /*  调用带参数本地化
+            *  tipLocalizat('本地化的key值')                                                   一个参数:  本地化对应的key值, 默认是info类型tip
+            *  tipLocalizat('info','本地化的key值')                                           二个参数:  消息类型(info,success,warn,error), 本地化对应的key值
+            *  tipLocalizat('info','本地化的key值','支持格式化 { 0 } 的参数')       三个参数:  消息类型, 本地化对应的key值, 格式化 { 0 } 的参数列表可多个
+            */
+            //参数集合
+            var arg = arguments.length;
+            var type = 'info';
+            var localization = '';
+            //获取消息参数
+            type = arg > 1 ? arguments[0] : '';
+            //获取消息提示
+            localization = arg == 1 ? arguments[0] : '';
+            localization = arg >= 2 ? arguments[1] : localization;
+            //获取本地化提示消息
+            var message = abp.frameCore.localization.getLocalization(localization);
+            for (var i = 0; i < arguments.length - 2; i++) {
+                var reg = new RegExp("\\{" + i + "\\}", "gm");
+                message = message.replace(reg, arguments[i + 2]);
+            }
+            this._tipBase(type, message, '');
+        },
+        tipShow: function () {
+            /*  调用提示消息(默认本地化转换)
+             *  tipShow('提示消息')                                     一个参数:  提示消息,默认是info类型tip
+             *  tipShow('info','提示消息')                             二个参数:  消息类型(info,success,warn,error), 提示消息
+             *  tipShow('info','提示消息','提示消息详情')       三个参数:  消息类型, 提示消息, 提示消息详情
+             */
+            //参数集合
+            var arg = arguments.length;
+            //
+            var type = 'info';
+            var message = '';
+            var details = '';
+            //获取消息参数
+            type = arg > 1 ? arguments[0] : '';
+            //获取消息提示
+            message = arg == 1 ? arguments[0] : '';
+            message = arg >= 2 ? arguments[1] : message;
+            //获取消息提示详情
+            details = arg == 3 ? arguments[2] : '';
+            //默认进行本地化转换
+            this._tipBase(type, message, details);
+        },
+
+        /*
+            _this.tipSuccess('save');
+            _this.tipSuccess('edit');
+            _this.tipSuccess('add');
+            _this.tipSuccess('del');
+
+            this.tipFail('save');
+            this.tipFail('edit');
+            this.tipFail('add');
+            this.tipFail('del');
+
+            this.tipShow('warn','IsSelect');
+            this.tipShow('success','IsSelect');
+            this.tipShow('error','IsSelect');
+
+        */
 
     }
 

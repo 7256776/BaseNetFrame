@@ -104,7 +104,7 @@ var component = Vue.component('sys-org', {
             if (isAs) {
                 //只有选择了当前节点下级节点才给出提示
                 if (v.length > (delIndex + 1)) {
-                    abp.message.warn('无法使用当前机构下级机构，作为该机构的上级机构。');
+                    _this.tipShow('warn','无法使用当前机构下级机构，作为该机构的上级机构。');
                 }
                 v.splice(delIndex, v.length);
                 return;
@@ -130,7 +130,7 @@ var component = Vue.component('sys-org', {
                             _this.formData.id = data.id; 
                             //重载树菜单
                             _this.initMenusData();
-                            abp.message.success(tipsType.saveSuccess);
+                            _this.tipSuccess('save');
                         });
                     }
                 }
@@ -140,14 +140,14 @@ var component = Vue.component('sys-org', {
             var _this = this;
             //验证是否选择了节点
             if (!this.formData.id) {
-                abp.message.warn('请选择组织机构4');
+                this.tipShow('warn', '请选择组织机构');
                 return;
             }
 
             //验证删除的节点
             var currentNode = this.$refs["treeData"].getCurrentNode();
             if (currentNode.childrenSysOrg.length > 0) {
-                abp.message.warn('请先移除该机构的子节点机构');
+                this.tipShow('warn', '请先移除该机构的子节点机构');
                 return;
             }
             //提交删除
@@ -163,7 +163,7 @@ var component = Vue.component('sys-org', {
                     _this.pageOptions.selectedParent = [];
                     //重载树菜单
                     _this.initMenusData();
-                    abp.message.success(tipsType.delSuccess);
+                    _this.tipSuccess('del');
                 });
             });
         },

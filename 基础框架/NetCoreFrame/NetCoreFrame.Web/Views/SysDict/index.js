@@ -63,7 +63,7 @@
             doDelDictType: function () {
                 var _this = this;
                 if (!this.formData.id) {
-                    abp.message.warn('请选择字典类型!');
+                    this.tipShow('warn', '请选择字典类型');
                     return;
                 }
                 this.$confirm('确定删除 ' + this.formData.dictTypeName + '?', '提示', { type: 'warning' })
@@ -74,7 +74,7 @@
                             type: 'POST'
                         }).done(function (data, res, e) {
                             //
-                            abp.message.success(tipsType.delSuccess);
+                            _this.tipSuccess('del');
                             _this.getSysDictTypeDataList();
                             _this.$nextTick(function () {
                                 _this.$refs["formSysDictData"].resetFields();
@@ -185,7 +185,7 @@
                         }
                     });
                     if (validData.length > 0) {
-                        abp.message.warn('请设置字典编码或字典名称！');
+                        this.tipShow('warn','请设置字典编码或字典名称');
                         return;
                     }
                     //获取需要保存的字典编码对象
@@ -211,9 +211,9 @@
                                 _this.getDataList();
                                 //_this.pageOptions.isDictType = true;
                                 //_this.pageOptions.tableEditState = false;
-                                abp.message.success(tipsType.saveSuccess);
+                                _this.tipSuccess('del');
                             } else {
-                                abp.message.error(tipsType.saveFail);
+                                _this.tipFail('del');
                             }
                         });
                     }
@@ -239,7 +239,7 @@
             doSubDel: function () {
                 var _this = this;
                 if (_this.tableOptions.selectRows.length < 1) {
-                    abp.message.warn('请选择要删除的字典编码!');
+                    this.tipShow('warn', '请选择要删除的字典编码');
                     return;
                 }
                 this.$confirm(
@@ -254,7 +254,7 @@
                             type: 'POST'
                         }).done(function (data, res, e) {
                             _this.getDataList();
-                            abp.message.success(tipsType.delSuccess);
+                            _this.tipSuccess('del');
                         });
                     });
             },
@@ -265,12 +265,12 @@
                 var sysDictInput = [];
                 //验证
                 if (!row.dictCode || !row.dictContent) {
-                    abp.message.warn('请设置字典编码或字典名称！');
+                    this.tipShow('warn', '请设置字典编码或字典名称');
                     return;
                 }
                 sysDictInput.push(row);
                 if (row.editState !== "add" && row.editState !== "modify") {
-                    abp.message.warn('数据没有发生更改');
+                    this.tipShow('warn', '数据没有发生更改');
                     return;
                 }
                 abp.ajax({
@@ -284,7 +284,7 @@
                     _this.tableOptions.tableDataBak[index] = JSON.parse(JSON.stringify(row));
                     _this.expands = [];
                     _this.$refs.dataGrid.setCurrentRow(null);
-                    abp.message.success(tipsType.saveSuccess);
+                    _this.tipSuccess('save');
                 });
 
             },
@@ -319,7 +319,7 @@
                 }
                 var rule = ['en', 'num'];
                 if (!abp.frameCore.utils.checkChars(row.dictCode, rule)) {
-                    abp.message.warn('字典编码仅限数字或字母,请重新设置！');
+                    this.tipShow('warn', '字典编码仅限数字或字母');
                     //移除过滤掉特殊字符
                     row.dictCode = abp.frameCore.format.stringReplace(row.dictCode);
                     return;

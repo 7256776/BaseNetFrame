@@ -95,9 +95,9 @@ var component = Vue.component('sys-notifications', {
                                 _this.formData.id = data;
                                 _this.getNotificationsDataList();
                                 _this.getDataList();
-                                abp.message.success(tipsType.saveSuccess);
+                                _this.tipSuccess('save');
                             } else {
-                                abp.message.error(tipsType.saveFail);
+                                _this.tipSuccess('del');
                             }
                         })
                     } else {
@@ -113,7 +113,7 @@ var component = Vue.component('sys-notifications', {
             var _this = this;
 
             if (!this.formData.id) {
-                abp.message.warn('请选择通知类型!');
+                this.tipShow('warn', '请选择通知类型。');
                 return;
             }
             this.$confirm('确定删除?', '提示', {
@@ -125,8 +125,7 @@ var component = Vue.component('sys-notifications', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     //
-                    abp.message.success(tipsType.delSuccess);
-                    _this.getNotificationsDataList();
+                    _this.tipSuccess('del');
                 });
             });
           
@@ -253,11 +252,11 @@ var component = Vue.component('sys-notifications', {
                             url: '/SysNotifications/NotificationsSend',
                             data: JSON.stringify(_this.formSendData)
                         }).done(function (data, res, e) {
-                            abp.message.success('SendSuccess');
+                            _this.tipShow('success', 'SendSuccess');
                             //触发消息提示UI (可以考虑不触发,收到消息signalR进行调用订阅信息获取)
                             //abp.event.trigger('frame.received.ui.event');
                         }).fail(function (data, res, e) {
-                            abp.message.error(data.message);
+                            _this.tipShow('error', data.message);
                         });
                     } else {
                         return false;

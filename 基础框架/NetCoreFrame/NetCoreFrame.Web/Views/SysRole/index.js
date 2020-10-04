@@ -92,12 +92,11 @@ var component = Vue.component('sys-roles', {
                 //type: 'POST'
             }).done(function (data) {
                 _this.tableOptions.tableData = data;
-                //abp.message.success('created new person with id = ' + data.personId);
             });
         },
         doAddRoleMenu: function () {
             if (this.tableOptions.selectRows.length === 0) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('error', 'IsSelect');
                 return;
             }
             this.pageOptions.menuDialog = true;
@@ -119,7 +118,7 @@ var component = Vue.component('sys-roles', {
         },
         doUserMenu: function () {
             if (this.tableOptions.selectRows.length === 0) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('error', 'IsSelect');
                 return;
             }
             this.pageOptions.userDialog = true;
@@ -227,7 +226,7 @@ var component = Vue.component('sys-roles', {
                 type: 'POST'
             }).done(function (data, res, e) {
                 _this.pageOptions.userDialog = false;
-                abp.message.success('OperationComplete');
+                _this.tipSuccess('save');
             }).fail(function (res, e) {
                 //console.log(res)
             });
@@ -242,9 +241,8 @@ var component = Vue.component('sys-roles', {
                 data: JSON.stringify(_this.tableOptions.selectRow),
                 type: 'POST'
             }).done(function (data, res, e) {
-               
                 _this.pageOptions.menuDialog = false;
-                abp.message.success('OperationComplete');
+                _this.tipSuccess('save');
             }).fail(function (res, e) {
                 //console.log(res)
             });
@@ -258,7 +256,7 @@ var component = Vue.component('sys-roles', {
         },
         doEdit: function () {
             if (!this.tableOptions.selectRow.id) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('error', 'IsSelect');
                 return;
             }
             var _this = this;
@@ -287,7 +285,7 @@ var component = Vue.component('sys-roles', {
                         }).done(function (data, res, e) {
                             _this.getDataList();
                             _this.pageOptions.formDialog = false
-                            abp.message.success(tipsType.saveSuccess);
+                            _this.tipSuccess('save');
                             _this.$refs.dataGrid.clearSelection();
                         }).fail(function (res, e) {
                             //console.log(res)
@@ -301,7 +299,7 @@ var component = Vue.component('sys-roles', {
         doDelForm: function () {
             var _this = this;
             if (this.tableOptions.selectRows.length == 0) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('error', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除?', '提示', {
@@ -314,8 +312,7 @@ var component = Vue.component('sys-roles', {
                     data: JSON.stringify(_this.tableOptions.selectRows),
                     type: 'POST'
                 }).done(function (data, res, e) {
-                    //
-                    abp.message.success(tipsType.delSuccess);
+                    _this.tipSuccess('del');
                     _this.getDataList();
                 });
             });

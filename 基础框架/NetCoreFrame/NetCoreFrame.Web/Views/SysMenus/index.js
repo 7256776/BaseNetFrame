@@ -230,8 +230,8 @@ var component = Vue.component('sys-menus', {
                             //重载树菜单
                             _this.initMenusData();
                             //重载明细Table
-                            _this.getFormData(data.id); 
-                            abp.message.success(tipsType.saveSuccess);
+                            _this.getFormData(data.id);
+                            _this.tipSuccess('save');
                         }).fail(function (data, res, e) {
                             //debugger;
                         });
@@ -244,13 +244,13 @@ var component = Vue.component('sys-menus', {
             var _this = this;
             //验证是否选择了节点
             if (!this.formData.id) {
-                abp.message.warn('请选择模块节点');
+                this.tipShow('error', '请选择模块节点');
                 return;
             }
             //验证删除的节点
             var currentNode = this.$refs["treeData"].getCurrentNode();
             if (currentNode.childrenMenus.length > 0) {
-                abp.message.warn('请先移除该模块的子模块节点');
+                this.tipShow('warn', '请先移除该模块的子模块节点');
                 return;
             }
             //提交删除
@@ -269,7 +269,7 @@ var component = Vue.component('sys-menus', {
                     _this.tableData = [];
                     //重载树菜单
                     _this.initMenusData();
-                    abp.message.success(tipsType.delSuccess);
+                    _this.tipSuccess('del');
                 });
             });
         },
@@ -283,7 +283,7 @@ var component = Vue.component('sys-menus', {
         },
         doSubEdit: function () {
             if (this.pageOptions.selectRows.length == 0) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('error', 'IsSelect');
                 return;
             }
             var _this = this;
@@ -328,7 +328,7 @@ var component = Vue.component('sys-menus', {
         doSubDel: function () {
             var _this = this;
             if (this.pageOptions.selectRows.length === 0) {
-                abp.message.warn('请选择一行数据');
+                this.tipShow('error', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除?', '提示', {
