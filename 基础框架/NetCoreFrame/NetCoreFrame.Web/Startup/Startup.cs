@@ -120,6 +120,17 @@ namespace NetCoreFrame.Web
                 routes.MapHub<AbpCommonHub>("/signalr");
             });
             //app.UseCookiePolicy();
+
+            /*
+                设置静态资源文件读取目录
+                1. 设置Views目录下的 视图, 脚本为"嵌入式资源", 可注释如下配置信息
+                2. 设置Views目录下的 视图, 脚本为"内容",需要使用如下配置.
+                注1:发布的时候需要保证发布的原目录有Views文件夹
+                注2:可以通过修改程序集文件"MvcRazorCompileOnPublish"发布是否产生Views文件夹
+                        <PropertyGroup>
+                            <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+                        </PropertyGroup>
+             */
             //读取Views文件夹下的js和css 
             app.UseStaticFiles(new StaticFileOptions()
             {

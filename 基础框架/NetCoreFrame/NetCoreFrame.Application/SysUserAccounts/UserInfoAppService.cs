@@ -166,7 +166,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public List<UserOut> GetUserList(UserOut model)
+        public List<UserOut> GetAllUserList(UserOut model)
         {
             //
             var queue = _userInfoRepository.GetAll();

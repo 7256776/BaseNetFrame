@@ -63,7 +63,7 @@ namespace NetCoreFrame.Web.Controllers
         [AbpMvcAuthorize]
         public JsonResult GetAllUserList([FromBody]UserOut model)
         {
-            var data = _userInfoAppService.GetUserList(model);
+            var data = _userInfoAppService.GetAllUserList(model);
             return Json(data);
         }
 

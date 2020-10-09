@@ -53,7 +53,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        List<UserOut> GetUserList(UserOut model);
+        List<UserOut> GetAllUserList(UserOut model);
 
         /// <summary>
         /// 获取用户对象

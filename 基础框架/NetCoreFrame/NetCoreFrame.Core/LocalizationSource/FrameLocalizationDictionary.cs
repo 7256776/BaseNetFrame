@@ -50,5 +50,12 @@ namespace NetCoreFrame.Core
             //此处获取如果为空时候的语言转义
             return new LocalizedString("","", CultureInfo);
         }
+
+        public IReadOnlyList<LocalizedString> GetStringsOrNull(List<string> names)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

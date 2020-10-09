@@ -49,6 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\SampleMvc\Index.cshtml" />
     <Content Remove="Views\Shared\Error.cshtml" />
     <Content Remove="Views\Shared\_LayoutNone.cshtml" />
     <Content Remove="Views\Shared\_LayoutSide.cshtml" />
@@ -56,8 +57,8 @@
     <Content Remove="Views\SysAccount\Demo.cshtml" />
     <Content Remove="Views\SysAccount\Index.cshtml" />
     <Content Remove="Views\SysAccount\Login.cshtml" />
-    <Content Remove="Views\SampleMvc\Index.cshtml" />
     <Content Remove="Views\SysAccount\UserSettings.cshtml" />
+    <Content Remove="Views\SysAuditLogs\Index.cshtml" />
     <Content Remove="Views\SysComponents\HeadToolButton.cshtml" />
     <Content Remove="Views\SysComponents\QuickSidebar.cshtml" />
     <Content Remove="Views\SysComponents\SearchDropdown.cshtml" />
@@ -65,6 +66,7 @@
     <Content Remove="Views\SysComponents\SearchPage.cshtml" />
     <Content Remove="Views\SysComponents\TopToolsMenu.cshtml" />
     <Content Remove="Views\SysComponents\UserInfoExtens.cshtml" />
+    <Content Remove="Views\SysDict\Index.cshtml" />
     <Content Remove="Views\SysFlowDesigner\Index.cshtml" />
     <Content Remove="Views\SysHome\DesktopPage.cshtml" />
     <Content Remove="Views\SysHome\Index.cshtml" />
@@ -114,6 +116,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Views\SampleMvc\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAuditLogs\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysDict\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysFlowDesigner\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -130,9 +141,9 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Views\SysAuditLogs\index.js">
+    <EmbeddedResource Include="Views\SysAuditLogs\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysComponents\InitPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -163,9 +174,9 @@
     <EmbeddedResource Include="Views\SysComponents\WebTitle.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Views\SysDict\index.js">
+    <EmbeddedResource Include="Views\SysDict\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysHome\DesktopPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -202,10 +213,10 @@
     <EmbeddedResource Include="Views\SysOrg\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysRole\index.js">
+    <EmbeddedResource Include="Views\SysRole\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SampleMvc\Index.cshtml">
+    <EmbeddedResource Include="Views\SysRole\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\Error.cshtml">
@@ -269,9 +280,6 @@
     <EmbeddedResource Include="Views\SysOrg\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysRole\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\_ViewImports.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -282,8 +290,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.11.0" />
-    <PackageReference Include="Abp.Castle.Log4Net" Version="4.11.0" />
+    <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.19.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="4.19.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
@@ -292,7 +300,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
@@ -336,14 +344,7 @@
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Views\SysAuditLogs\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\SysDict\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
