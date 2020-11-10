@@ -2,6 +2,7 @@
 using Abp.Runtime.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreFrame.Application;
@@ -28,8 +29,6 @@ namespace NetCoreFrame.WebApi.Controllers
         private readonly IAccounExtens _accounExtens;
         private readonly AuthConfigurerModel _authConfigurerModel;
 
-        private readonly IConfiguration _configuration;
-
         public TokenAuthController(
             IUserInfoAppService userInfoAppService,
             IAccounExtens accounExtens,
@@ -40,8 +39,6 @@ namespace NetCoreFrame.WebApi.Controllers
             _userInfoAppService = userInfoAppService;
             _accounExtens = accounExtens;
             _authConfigurerModel = options.Value;
-
-            _configuration = configuration;
         }
 
         /// <summary>
@@ -71,11 +68,7 @@ namespace NetCoreFrame.WebApi.Controllers
                 UserCode = model.UserNameOrEmailAddress,
                 Password = model.Password
             });
-
-            //
-            string refreshToken = GetEncrpyedRefreshToken("模拟生产刷新token");
-            _refreshTokens.TryAdd(result.User.UserCode, refreshToken);
-
+              
             //创建token
             return CreateAccessTokenModel(result.Identity.Claims.ToList());
         }
@@ -116,7 +109,7 @@ namespace NetCoreFrame.WebApi.Controllers
             if (string.IsNullOrWhiteSpace(token))
                 return new AuthenticateResultModel("未获取到授权token", false);
             //解码刷新token
-            string refreshTokens = SimpleStringCipher.Instance.Decrypt(token, ConstantConfig.DefaultPassPhrase);
+            string refreshTokens = Decrypt(token);
 
             #region 复制原有的票据信息
             var claimsName = data.Claims.First(c => c.Type == ClaimTypes.Name);
@@ -146,6 +139,7 @@ namespace NetCoreFrame.WebApi.Controllers
             return CreateAccessTokenModel(claims);
         }
 
+        #region 
         /// <summary>
         /// 返回token对象
         /// </summary>
@@ -157,7 +151,7 @@ namespace NetCoreFrame.WebApi.Controllers
             var claimsId = claims.First(c => c.Type == ClaimTypes.NameIdentifier);
 
             //刷新token 此处可以添加个人信息
-            string refreshToken = GetEncrpyedRefreshToken("模拟生产刷新token");
+            string refreshToken = Encrypt("模拟生产刷新token");
             _refreshTokens.TryAdd(claimsName.Value, refreshToken);
 
             //创建token
@@ -166,11 +160,11 @@ namespace NetCoreFrame.WebApi.Controllers
             return new AuthenticateResultModel
             {
                 AccessToken = accessToken,
-                EncryptedAccessToken = GetEncrpyedAccessToken(accessToken),
+                EncryptedAccessToken = this.Encrypt(accessToken),
                 EncryptedRefreshToken = refreshToken,
                 ExpireInSeconds = _authConfigurerModel.JwtBearer.Expires * 60 * 60,
                 ExpireInDate = DateTime.Now.AddHours(_authConfigurerModel.JwtBearer.Expires),
-                UserId = claimsId.Value
+                UserId = claimsId.Value,
             };
         }
 
@@ -189,19 +183,19 @@ namespace NetCoreFrame.WebApi.Controllers
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             //设置授权信息
             var jwtSecurityToken = new JwtSecurityToken(
-                issuer: _authConfigurerModel.JwtBearer.Issuer,
-                audience: _authConfigurerModel.JwtBearer.Audience,
-                claims: claims,
-                notBefore: now,
-                expires: now.AddHours(expires),
-                signingCredentials: signingCredentials
+                issuer: _authConfigurerModel.JwtBearer.Issuer,                      //颁发机构名称
+                audience: _authConfigurerModel.JwtBearer.Audience,            //颁发给谁
+                claims: claims,                                                                        //授权身份标签集合
+                notBefore: now,                                                                     //发布
+                expires: now.AddHours(expires),                                            //授权到期日期
+                signingCredentials: signingCredentials                                   //
             );
 
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         }
 
         /// <summary>
-        /// 设置授权扩展信息 
+        /// 设置Jwt相关的授权扩展信息 
         /// ClaimsIdentity identity
         /// </summary>
         /// <param name="identity"></param>
@@ -209,8 +203,12 @@ namespace NetCoreFrame.WebApi.Controllers
         private List<Claim> CreateJwtClaims(List<Claim> claims)
         {
             var nameIdClaim = claims.First(c => c.Type == ClaimTypes.NameIdentifier);
-
-            // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
+            /*
+             * 身份认证添加标签 
+             *  Sub = 用户ID
+             *  jti = 授权身份认证唯一ID
+             *  lat = 授权日期
+             */
             claims.AddRange(new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, nameIdClaim.Value),
@@ -223,25 +221,25 @@ namespace NetCoreFrame.WebApi.Controllers
         }
 
         /// <summary>
-        ///  加密访问令牌
-        ///  理论上是给get请求使用或其他情况使用
+        /// 加密
         /// </summary>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        private string GetEncrpyedAccessToken(string accessToken)
+        private string Encrypt(string accessToken)
         {
             return SimpleStringCipher.Instance.Encrypt(accessToken, ConstantConfig.DefaultPassPhrase);
         }
 
         /// <summary>
-        /// 
+        /// 解密
         /// </summary>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        private string GetEncrpyedRefreshToken(string accessToken)
+        private string Decrypt(string accessToken)
         {
-            return SimpleStringCipher.Instance.Encrypt(accessToken, ConstantConfig.DefaultPassPhrase);
+            return SimpleStringCipher.Instance.Decrypt(accessToken, ConstantConfig.DefaultPassPhrase);
         }
+        #endregion
 
     }
 

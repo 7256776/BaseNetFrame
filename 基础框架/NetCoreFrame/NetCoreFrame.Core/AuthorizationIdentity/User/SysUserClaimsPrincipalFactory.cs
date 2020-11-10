@@ -52,6 +52,7 @@ namespace NetCoreFrame.Core
             #region 授权凭证添加自定义的属性
 
             principal.Identities.First().AddClaims(new[]{
+                                                new Claim("UserId", user.Id.ToString()),                    //用户主键ID
                                                 new Claim("UserNameCn", user.UserNameCn),       //用户名称
                                                 new Claim("UserCode", user.UserCode),                  //用户账号
                                                 new Claim("IsAdmin", user.IsAdmin.ToString())        //是否超级管理员

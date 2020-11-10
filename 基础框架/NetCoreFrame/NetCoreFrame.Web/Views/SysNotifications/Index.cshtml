@@ -9,7 +9,7 @@
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
-                            <span class="caption-subject font-green-sharp bold uppercase ">通知分类 </span>
+                            <span class="caption-subject font-green-sharp bold uppercase " style="cursor: pointer;">通知分类</span>
                             <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">新增通知分类</span>
                         </div>
                         <div class="actions">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="todo-content" style="border:1px solid #DCDFE6;">
+            <div class="todo-content" style="border:0px solid #DCDFE6;">
                 <div class="profile-content">
                     <div class="row">
                         <div class="col-md-12">
@@ -104,7 +104,7 @@
                                             <hr />
                                             <div style="padding:5px;margin-bottom:2px; border:1px solid #DCDFE6;">
                                                 <div class="row">
-                                                    <div class="col-md-9 ">
+                                                    <div class="col-md-6 ">
                                                         <el-button-group>
                                                             <el-tooltip content="设置下列被勾选用户订阅的通知" placement="top">
                                                                 <el-button type="primary"  size="mini" icon="fa fa-bell fa-lg" v-on:click="doSubAdd()" plain>&nbsp;&nbsp;订阅通知</el-button>
@@ -114,9 +114,9 @@
                                                             </el-tooltip>
                                                         </el-button-group>
                                                     </div>
-                                                    <div class="col-md-3 ">
+                                                    <div class="col-md-6 " style="text-align:right;">
                                                        
-                                                        <el-input placeholder="用户账号/名称 筛选" size="mini" clearable v-model="tableOptions.searchTxt" style="width:300px;" v-on:change="getDataList">
+                                                        <el-input placeholder="用户账号/名称 筛选" size="mini" clearable v-model="tableOptions.searchTxt"  v-on:change="getDataList">
                                                             <el-button slot="append" icon="el-icon-search" v-on:click="doSearchData"></el-button>
                                                         </el-input>
                                                     </div>

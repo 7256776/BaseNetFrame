@@ -18,6 +18,11 @@ namespace NetCoreFrame.WebApi
         /// 
         /// </summary>
         public JwtBearerModel JwtBearer { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AuthenticationWay { get; set; }
     }
 
     public class JwtBearerModel

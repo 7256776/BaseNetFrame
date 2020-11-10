@@ -2,6 +2,9 @@ using System;
 
 namespace NetCoreFrame.WebApi
 {
+    /// <summary>
+    /// 授权验证数据返回对象
+    /// </summary>
     public class AuthenticateResultModel
     {
         public AuthenticateResultModel()

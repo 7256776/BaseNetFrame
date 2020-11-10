@@ -47,6 +47,13 @@ namespace NetCoreFrame.Core
         public virtual DbSet<SysAuditLog> SysAuditLogs { set; get; }
         #endregion
 
+        #region Api服务授权
+        public virtual DbSet<SysApiResource> SysApiResources { set; get; }
+        public virtual DbSet<SysApiClient> SysApiClients { set; get; }
+        public virtual DbSet<SysApiAccount> SysApiAccounts { set; get; }
+        public virtual DbSet<SysApiResourceToClient> SysApiResourceToClients { set; get; }
+        public virtual DbSet<SysApiClienToAccount> SysApiClienToAccounts { set; get; }
+        #endregion
 
         public NetCoreFrameDbContext(DbContextOptions<NetCoreFrameDbContext> options)
          : base(options)
@@ -227,6 +234,36 @@ namespace NetCoreFrame.Core
             SysChatRecordContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
             SysChatRecordContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
             SysChatRecordContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
+
+            #endregion
+
+            #region Api服务授权
+            var SysApiResourceContext = modelBuilder.Entity<SysApiResource>().ToTable(ToDBAttributeCase("Sys_ApiResource"));
+            SysApiResourceContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
+            SysApiResourceContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            SysApiResourceContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
+            SysApiResourceContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
+            SysApiResourceContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
+
+            var SysApiClientContext = modelBuilder.Entity<SysApiClient>().ToTable(ToDBAttributeCase("Sys_ApiClient"));
+            SysApiClientContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
+            SysApiClientContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            SysApiClientContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
+            SysApiClientContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
+            SysApiClientContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
+
+            var SysApiAccountContext = modelBuilder.Entity<SysApiAccount>().ToTable(ToDBAttributeCase("Sys_ApiAccount"));
+            SysApiAccountContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
+            SysApiAccountContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            SysApiAccountContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
+            SysApiAccountContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
+            SysApiAccountContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
+
+            var SysApiResourceToClientContext = modelBuilder.Entity<SysApiResourceToClient>().ToTable(ToDBAttributeCase("Sys_ApiResourceToClient"));
+            SysApiResourceToClientContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
+
+            var SysApiClienToAccountContext = modelBuilder.Entity<SysApiClienToAccount>().ToTable(ToDBAttributeCase("Sys_ApiClienToAccount"));
+            SysApiClienToAccountContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
 
             #endregion
 

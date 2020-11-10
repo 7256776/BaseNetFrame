@@ -97,7 +97,7 @@
                     </el-table-column>
                     <el-table-column prop="executionTime" label="执行时间" width="220" show-overflow-tooltip>
                         <template slot-scope="scope">
-                            <span>{{abp.frameCore.format.formatDate (scope.row.executionTime,'yyyy-MM-dd hh:mm:ss')}}</span>
+                            <span>{{scope.row.executionTime}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="methodName" label="方法名称" width="250" show-overflow-tooltip></el-table-column>

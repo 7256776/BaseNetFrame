@@ -4,6 +4,133 @@
 
 <div id="WebApiApp">
     <el-tabs v-model="activeTabName" type="card">
+        <el-tab-pane label="IdentityServer4" name="IdentityServer4">
+            <el-form v-bind:model="IdentityServerFormData"
+                     ref="formOAuth"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="120px">
+                <el-form-item label="授权ClientId" prop="userCode" style="width:48%">
+                    <el-input v-model="IdentityServerFormData.clientId" style="width:280px;" suffix-icon="fa fa-id-badge">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="授权Secret" prop="password" style="width:48%">
+                    <el-input v-model="IdentityServerFormData.clientSecret" style="width:280px;;" clearable suffix-icon="fa fa-id-card-o">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="用户Username" prop="userCode" style="width:48%">
+                    <el-input v-model="IdentityServerFormData.userCode" style="width:280px;" suffix-icon="fa fa-id-badge">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="用户Password" prop="password" style="width:48%">
+                    <el-input v-model="IdentityServerFormData.password" style="width:280px;;" clearable suffix-icon="fa fa-id-card-o">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="api服务地址" prop="apiUrl" style="width:100%">
+                    <el-input v-model="IdentityServerFormData.apiUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
+                        <el-select v-model="IdentityServerFormData.grantTypes" slot="prepend" placeholder="请选择" style="width:130px;">
+                            <el-option label="password" value="password">
+                            </el-option>
+                            <el-option label="client_credentials" value="client_credentials">
+                            </el-option>
+                            <el-option label="demo_validation" value="demo_validation">
+                            </el-option>
+                        </el-select>
+                        <template slot="append">
+                            <el-button type="primary" v-on:click="doIdentityServerToken()">获取ToKen</el-button>
+                            <el-button>|</el-button>
+                            <el-button v-on:click="doRefreshToken()">刷新ToKen</el-button>
+                        </template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="授权ToKen" prop="token">
+                    <el-input type="textarea" v-model="IdentityServerFormData.token" style="width:725px;" :autosize="{ minRows: 5}">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="刷新resToken" prop="resToken">
+                    <el-input type="textarea" v-model="IdentityServerFormData.resToken" style="width:725px;" :autosize="{ minRows: 2}">
+                    </el-input>
+                </el-form-item>
+                @*<el-form-item label="反伪造ToKen" prop="forgeToKen">
+            <el-input type="textarea" v-model="IdentityServerFormData.forgeToKen" style="width:725px;" :autosize="{ minRows: 1}" placeholder="反伪造forgeToKen(这货似乎没意义)">
+            </el-input>
+        </el-form-item>*@
+                <el-form-item label="api服务名称" prop="apiActionUrl" style="width:100%">
+                    <el-input v-model="IdentityServerFormData.apiActionUrl" style="width:725px;" clearable suffix-icon="fa fa-envelope-o ">
+                        <el-select v-model="IdentityServerFormData.actionType" slot="prepend" placeholder="请选择" style="width:130px;">
+                            <el-option label="GET" value="GET"></el-option>
+                            <el-option label="POST" value="POST"></el-option>
+                        </el-select>
+                        <template slot="append">
+                            <el-button type="primary" v-on:click="doOAuthAction()">获取服务返回结果</el-button>
+                        </template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="参数" prop="parameterData">
+                    <el-input type="textarea" v-model="IdentityServerFormData.parameterData" style="width:725px;" :autosize="{ minRows: 1}" placeholder="参数">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="返回值" prop="returnData">
+                    <el-input type="textarea" v-model="IdentityServerFormData.returnData" style="width:725px" :autosize="{ minRows: 5}" clearable>
+                    </el-input>
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="JwtToken" name="JwtToken">
+            <el-form v-bind:model="abpFormData"
+                     ref="formAbp"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="120px">
+                <el-form-item label="用户账号" prop="userCode" style="width:48%">
+                    <el-input v-model="abpFormData.userCode" style="width:280px;" suffix-icon="fa fa-id-badge">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="用户密码" prop="password" style="width:48%">
+                    <el-input v-model="abpFormData.password" style="width:280px;;" clearable suffix-icon="fa fa-id-card-o">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="api服务地址" prop="apiUrl" style="width:100%">
+                    <el-input v-model="abpFormData.apiUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
+                        <template slot="append">
+                            <el-button type="primary" v-on:click="doJwtToken()">获取ToKen</el-button>
+                            <el-button type="primary" v-on:click="doRefreshJwtToken()">获取RefreshToKen</el-button>
+                        </template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="授权ToKen" prop="token">
+                    <el-input type="textarea" v-model="abpFormData.token" style="width:725px;" v-bind:autosize="{ minRows: 3}">
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="刷新ToKen" prop="encryptedRefreshToken">
+                    <el-input type="textarea" v-model="abpFormData.encryptedRefreshToken" style="width:725px;" v-bind:autosize="{ maxRows: 2}">
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="授权有效期" prop="expireInDate">
+                    <el-input v-model="abpFormData.expireInDate" style="width:280px;" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="api服务名称" prop="apiActionUrl" style="width:100%">
+                    <el-input v-model="abpFormData.apiActionUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
+                        <template slot="append">
+                            <el-button type="primary" v-on:click="doAbpAction()">获取服务返回结果</el-button>
+                        </template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="返回值" prop="returnData">
+                    <el-input type="textarea" v-model="abpFormData.returnData" style="width:725px" :autosize="{ minRows: 5}" clearable>
+                    </el-input>
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+
         <el-tab-pane label="webApiTest" name="webApiTest">
             <el-form v-bind:model="webApiFormData"
                      ref="formWebApi"
@@ -32,135 +159,12 @@
                         </template>
                     </el-input>
                 </el-form-item>
-
                 <el-form-item label="返回值" prop="returnData">
                     <el-input type="textarea" v-model="webApiFormData.returnData" style="width:725px" :autosize="{ minRows: 5}" clearable>
                     </el-input>
                 </el-form-item>
-
             </el-form>
         </el-tab-pane>
-        <el-tab-pane label="JwtToken" name="JwtToken">
-            <el-form v-bind:model="abpFormData"
-                     ref="formAbp"
-                     label-position="left"
-                     v-bind:inline="true"
-                     v-bind:status-icon="true"
-                     size="medium"
-                     label-suffix=":"
-                     label-width="120px">
-
-                <el-form-item label="用户账号" prop="userCode" style="width:48%">
-                    <el-input v-model="abpFormData.userCode" style="width:280px;" suffix-icon="fa fa-id-badge">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="用户密码" prop="password" style="width:48%">
-                    <el-input v-model="abpFormData.password" style="width:280px;;" clearable suffix-icon="fa fa-id-card-o">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="api服务地址" prop="apiUrl" style="width:100%">
-                    <el-input v-model="abpFormData.apiUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
-                        <template slot="append">
-                            <el-button type="primary" v-on:click="doJwtToken()">获取ToKen</el-button>
-
-                            <el-button type="primary" v-on:click="doRefreshJwtToken()">获取RefreshToKen</el-button>
-                        </template>
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="授权ToKen" prop="token">
-                    <el-input type="textarea" v-model="abpFormData.token" style="width:725px;" v-bind:autosize="{ minRows: 3}">
-                    </el-input>
-                </el-form-item>
-
-
-                <el-form-item label="刷新ToKen" prop="encryptedRefreshToken">
-                    <el-input type="textarea" v-model="abpFormData.encryptedRefreshToken" style="width:725px;" v-bind:autosize="{ maxRows: 2}">
-                    </el-input>
-                </el-form-item>
-             
-                <el-form-item label="授权有效期" prop="expireInDate">
-                    <el-input v-model="abpFormData.expireInDate" style="width:280px;" clearable></el-input>
-                </el-form-item>
-
-                <el-form-item label="api服务名称" prop="apiActionUrl" style="width:100%">
-                    <el-input v-model="abpFormData.apiActionUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
-                        <template slot="append">
-                            <el-button type="primary" v-on:click="doAbpAction()">获取服务返回结果</el-button>
-                        </template>
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="返回值" prop="returnData">
-                    <el-input type="textarea" v-model="abpFormData.returnData" style="width:725px" :autosize="{ minRows: 5}" clearable>
-                    </el-input>
-                </el-form-item>
-
-            </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="OAuth2.0" name="OAuth">
-            <el-form v-bind:model="oAuthFormData"
-                     ref="formOAuth"
-                     label-position="left"
-                     v-bind:inline="true"
-                     v-bind:status-icon="true"
-                     size="medium"
-                     label-suffix=":"
-                     label-width="120px">
-
-                <el-form-item label="用户账号" prop="userCode" style="width:48%">
-                    <el-input v-model="oAuthFormData.userCode" style="width:280px;" suffix-icon="fa fa-id-badge">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="用户密码" prop="password" style="width:48%">
-                    <el-input v-model="oAuthFormData.password" style="width:280px;;" clearable suffix-icon="fa fa-id-card-o">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="api服务地址" prop="apiUrl" style="width:100%">
-                    <el-input v-model="oAuthFormData.apiUrl" style="width:725px;;" clearable suffix-icon="fa fa-envelope-o ">
-                        <template slot="append">
-                            <el-button type="primary" v-on:click="doOAuthToken()">获取ToKen/ForgeToKen</el-button>
-                            <el-button>|</el-button>
-                            <el-button v-on:click="doRefreshToken()">刷新ToKen/ForgeToKen</el-button>
-                        </template>
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="授权ToKen" prop="token">
-                    <el-input type="textarea" v-model="oAuthFormData.token" style="width:725px;" :autosize="{ minRows: 5}">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="刷新resToken" prop="resToken">
-                    <el-input type="textarea" v-model="oAuthFormData.resToken" style="width:725px;" :autosize="{ minRows: 2}">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="反伪造ToKen" prop="forgeToKen">
-                    <el-input type="textarea" v-model="oAuthFormData.forgeToKen" style="width:725px;" :autosize="{ minRows: 1}" placeholder="反伪造forgeToKen(这货似乎没意义)">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="api服务名称" prop="apiActionUrl" style="width:100%">
-                    <el-input v-model="oAuthFormData.apiActionUrl" style="width:725px;" clearable suffix-icon="fa fa-envelope-o ">
-                        <template slot="append">
-                            <el-button type="primary" v-on:click="doOAuthAction()">获取服务返回结果</el-button>
-                        </template>
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="返回值" prop="returnData">
-                    <el-input type="textarea" v-model="oAuthFormData.returnData" style="width:725px" :autosize="{ minRows: 5}" clearable>
-                    </el-input>
-                </el-form-item>
-
-            </el-form>
-        </el-tab-pane>
-        
     </el-tabs>
 
 </div>

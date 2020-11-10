@@ -160,6 +160,12 @@ namespace NetCoreFrame.Application
             return builder;
         }
 
+        /// <summary>
+        /// 注入服务授权验证
+        /// </summary>
+        /// <typeparam name="TPermissionChecker"></typeparam>
+        /// <param name="builder"></param>
+        /// <returns></returns>
         public static NetCoreFrameIdentityBuilder AddPermissionChecker<TPermissionChecker>(this NetCoreFrameIdentityBuilder builder)
         where TPermissionChecker : class
         {

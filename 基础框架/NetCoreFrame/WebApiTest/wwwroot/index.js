@@ -2,7 +2,7 @@
     el: '#WebApiApp',
     data: function () {
         return {
-            activeTabName: 'webApiTest',
+            activeTabName: 'IdentityServer4',
             temp: {
                 url: 'http://192.168.1.140:3010',
                 url1: 'http://localhost:2018/'
@@ -15,20 +15,24 @@
                 encryptedAccessToken: '',
                 expireInDate: '',
                 forgeToKen: '',
-                apiUrl: 'http://localhost:18377/api/TokenAuth/AuthenticateAuth',
-                apiRefreshUrl: 'http://localhost:18377/api/TokenAuth/RefreshJwtToken',
-                apiActionUrl: 'http://localhost:18377/api/services/frame/sysMenus/GetMenusList',
+                apiUrl: 'http://localhost:18377',
+                apiActionUrl: 'http://localhost:18377/api/services/frame/SysDictExtension/GetDictType',
                 returnData: ''
             },
-            oAuthFormData: {
-                userCode: 'admin',
-                password: '888888',
+            IdentityServerFormData: {
+                clientId: 'clientAll',
+                clientSecret: 'secretAll',
+                userCode: 'zjf',
+                password: 'zjfpass', 
                 token: '',
                 resToken: '',
                 forgeToKen: '',
-                apiUrl: 'http://192.168.1.128:3010/',
-                apiActionUrl: '/api/services/frame/sysMenus/GetMenusList',
-                returnData: ''
+                apiUrl: 'http://localhost:18377',
+                apiActionUrl: 'http://localhost:11726/api/Demo/GetData',
+                parameterData: '',
+                returnData: '',
+                grantTypes: 'password',
+                actionType: 'POST'
             },
             webApiFormData: {
                 userCode: 'admin',
@@ -57,8 +61,7 @@
 
             //由于是基于abp方式获取token因此需要传递防伪照token
             $.ajax({
-                //url: _this.abpFormData.apiUrl + "/api/Account/Authenticate",
-                url: _this.abpFormData.apiUrl,
+                url: _this.abpFormData.apiUrl + "/api/TokenAuth/AuthenticateAuth",
                 type: "POST",
                 data: JSON.stringify(formData),
                 contentType: 'application/json',
@@ -85,8 +88,8 @@
         //请求服务获取数据(Abp方案)
         doAbpAction: function () {
             var _this = this;
-            $.ajax({
-                //url: _this.abpFormData.apiUrl + _this.abpFormData.apiActionUrl,
+             
+            $.ajax({ 
                 url: _this.abpFormData.apiActionUrl,
                 type: "POST",
                 headers: {
@@ -109,8 +112,7 @@
         doRefreshJwtToken: function () {
             var _this = this;
             $.ajax({
-                //url: _this.abpFormData.apiUrl + _this.abpFormData.apiActionUrl,
-                url: _this.abpFormData.apiRefreshUrl,
+                url: _this.abpFormData.apiUrl  + "/api/TokenAuth/RefreshJwtToken",
                 type: "POST",
                 headers: {
                     "Authorization": "Bearer " + _this.abpFormData.token,
@@ -140,99 +142,111 @@
                 }
             });//
         },
-        //获取Token(欧哦服方案)
-        doOAuthToken: function () {
+
+        //获取Token(Identity4方案)
+        doIdentityServerToken: function () {
             var _this = this;
             //
-            this.doForgeToKen(_this.oAuthFormData);
             //采用PassWord的方式,必须组合成url形式的参数集合
-            var requestData = "grant_type=password&username=" + this.oAuthFormData.userCode + "&password=" + this.oAuthFormData.password;
-           
+            //var requestData = "grant_type=password&username=" + this.oAuthFormData.userCode + "&password=" + this.oAuthFormData.password;
+            var requestData = {
+                client_id: this.IdentityServerFormData.clientId,
+                client_secret: this.IdentityServerFormData.clientSecret,
+                grant_type: this.IdentityServerFormData.grantTypes,     //password  client_credentials  
+                username: this.IdentityServerFormData.userCode,
+                password: this.IdentityServerFormData.password,
+            };
             $.ajax({
-                url: _this.oAuthFormData.apiUrl + "/oauth/token",
+                url: _this.IdentityServerFormData.apiUrl + "/connect/token" + "?grant_type=client_credentials",
                 type: "POST",
+                //contentType: 'application/json',
                 data: requestData,
-                //dataType: "json",
-                contentType: 'application/json',
-                headers: {
-                    //把用户组账号与key进行Base64_Encode编译后进行传输
-                    "Authorization": "Basic " + _this.base64Encode(_this.oAuthFormData.userCode + ":" + _this.oAuthFormData.password)
-                },
-
                 complete: function (e, status) {
+                    //
+                    _this.IdentityServerFormData.returnData = e.statusText
+                    _this.IdentityServerFormData.returnData += '\r\n' + e.responseText
+                    //
                     if (e.status !== 200) {
-                        _this.oAuthFormData.returnData = e.statusText
-                        _this.oAuthFormData.returnData += '\r\n' + e.responseText
                         return;
                     }
                     //保存安全令牌(token)
-                    _this.oAuthFormData.token = e.responseJSON.access_token;
+                    _this.IdentityServerFormData.token = e.responseJSON.access_token;
                     //保存获取的刷新key
-                    _this.oAuthFormData.resToken = e.responseJSON.refresh_token;
+                    _this.IdentityServerFormData.resToken = e.responseJSON.refresh_token;
+                    //e.responseJSON.expires_in
+                    //e.responseJSON.token_type
+                    //e.responseJSON.scope
                 }
             });
         },
-        //请求服务(欧哦服方案)
+        //请求服务(Identity4方案)
         doOAuthAction: function () {
-            var _this = this; 
+            var _this = this;
+           
             $.ajax({
-                url: _this.oAuthFormData.apiUrl + _this.oAuthFormData.apiActionUrl,
-                type: "POST",
+                url: _this.IdentityServerFormData.apiActionUrl,
+                type: _this.IdentityServerFormData.actionType,
                 headers: {
-                    "Authorization": "Bearer " + _this.oAuthFormData.token,
-                    "X-XSRF-TOKEN": + _this.oAuthFormData.forgeToKen
+                    //"X-XSRF-TOKEN": + _this.IdentityServerFormData.forgeToKen,
+                    //"Access-Control-Allow-Origin": "*",
+                    "Authorization": "Bearer " + _this.IdentityServerFormData.token
                 },
                 //dataType: "json",
                 contentType: 'application/json',
+                data: JSON.stringify(_this.IdentityServerFormData.parameterData),
                 complete: function (e, state) {
                     if (e.status !== 200) {
-                        _this.oAuthFormData.returnData = e.statusText;
-                        _this.oAuthFormData.returnData += '\r\n' + e.responseText;
+                        _this.IdentityServerFormData.returnData = e.statusText;
+                        _this.IdentityServerFormData.returnData += '\r\n' + e.responseText;
                         return;
                     }
-                    _this.oAuthFormData.returnData = JSON.stringify(e.responseJSON);
+                    _this.IdentityServerFormData.returnData = JSON.stringify(e.responseJSON);
                 }
             });//
         },
-        //刷新token(欧哦服方案)
+        //刷新token(Identity4方案)
         doRefreshToken: function () {
             var _this = this;
             //刷新ToKen
             $.ajax({
-                url: _this.oAuthFormData.apiUrl + "/oauth/token",
+                url: _this.IdentityServerFormData.apiUrl + "/connect/token",
                 type: "post",
-                data: { "grant_type": "refresh_token", refresh_token: _this.oAuthFormData.resToken },
+                data: {
+                    client_id: _this.IdentityServerFormData.clientId,
+                    client_secret: _this.IdentityServerFormData.clientSecret,
+                    grant_type: "refresh_token",
+                    refresh_token: _this.IdentityServerFormData.resToken
+                },
                 dataType: "json",
                 //刷新安全令牌通常不需要传递用户账号与密码
                 //headers: {
                 //    "Authorization": "Basic " + _this.base64Encode(_this.oAuthFormData.userCode + ":" + _this.oAuthFormData.password)
                 //},
                 complete: function (e, status) {
+                    //
+                    _this.IdentityServerFormData.returnData = e.statusText
+                    _this.IdentityServerFormData.returnData += '\r\n' + e.responseText
+                    //
                     if (e.status !== 200) {
-                        _this.oAuthFormData.returnData = e.statusText
-                        _this.oAuthFormData.returnData += '\r\n' + e.responseText
                         return;
                     }
                     //保存安全令牌(token)
-                    _this.oAuthFormData.token = e.responseJSON.access_token;
+                    _this.IdentityServerFormData.token = e.responseJSON.access_token;
                     //保存获取的刷新key
-                    _this.oAuthFormData.resToken = e.responseJSON.refresh_token;
+                    _this.IdentityServerFormData.resToken = e.responseJSON.refresh_token;
                 }
             });
         },
+
         //简单测试webapi(不包含验证)
         doWebApiAction: function () {
             var _this = this;
 
             $.ajax({
-                url: this.webApiFormData.apiActionUrl,
+                url: this.webApiFormData.apiActionUrl ,
                 type: this.webApiFormData.actionType,
-                //headers: {
-                //    "Authorization": "Bearer " + _this.abpFormData.token,
-                //    "X-XSRF-TOKEN": _this.abpFormData.forgeToKen
-                //},
-                //dataType: "json",
                 //contentType: 'application/json',
+                //data: data,
                 complete: function (e, state) {
                     if (e.status !== 200) {
                         _this.webApiFormData.returnData = e.statusText;

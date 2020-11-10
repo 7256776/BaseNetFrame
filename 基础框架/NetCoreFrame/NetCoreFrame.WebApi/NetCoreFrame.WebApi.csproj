@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\OidcBearer\ApiRefreshTokenProvider.cs" />
+    <Compile Remove="Models\OidcBearer\OAuthOptions.cs" />
+    <Compile Remove="Models\OidcBearer\WebApiServerOAuthProvider.cs" />
     <Compile Remove="Program.cs" />
     <Compile Remove="Startup.cs" />
-    <Compile Remove="Startup\NetCoreFrameIdentityBuilderExtensions.cs" />
+    <Compile Remove="App_Start\NetCoreFrameIdentityBuilderExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +20,14 @@
     <Content Remove="wwwroot\Abp\Framework\scripts\libs\abp.jquery.d.ts" />
     <Content Remove="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
     <Content Remove="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Models\IdentityServer4\扩展备注.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Models\IdentityServer4\扩展备注.md" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,9 @@ namespace NetCoreFrame.Core
         public static readonly string ConfigurationKey;
         public static readonly ConcurrentDictionary<string, IConfigurationRoot> ConfigurationCache;
 
+        /// <summary>
+        /// 初始配置文件全局变量key值并添加到线程集合
+        /// </summary>
         static AppConfigurations()
         {
             ConfigurationKey = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")+"#APPSETTING";
@@ -33,7 +36,7 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
-        /// Development string path, string environmentName = null, 
+        /// 获取指定环境变量的配置信息
         /// </summary>
         /// <param name="path"></param>
         /// <param name="environmentName"></param>
@@ -50,6 +53,13 @@ namespace NetCoreFrame.Core
             );
         }
 
+        /// <summary>
+        /// 创建配置信息
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="environmentName"></param>
+        /// <param name="addUserSecrets"></param>
+        /// <returns></returns>
         private static IConfigurationRoot BuildConfiguration(string path, string environmentName = null, bool addUserSecrets = false)
         {
             //设置配置文件路径

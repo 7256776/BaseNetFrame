@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.UI;
+using Abp.Application.Services;
 
 namespace NetCoreFrame.Application
 {
+    [RemoteService(true)]
     [AbpAuthorize]
     [Audited] 
     public class SysRoleAppService : NetCoreFrameApplicationBase, ISysRoleAppService

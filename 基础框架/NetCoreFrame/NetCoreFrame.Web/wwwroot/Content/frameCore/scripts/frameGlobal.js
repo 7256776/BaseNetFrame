@@ -73,6 +73,7 @@ var globalVue = new Vue({
     /*
     * 设置命名空间的对象(调用方式 : abp.frameCore.format.formatDate )
     * 格式化日期
+    * 输入格式必须是 dateValue = 2020-11-07T22:10:33
     * yyyy=年 MM=月 dd=日 hh=小时 mm=分 ss=秒
     */
     frameCore.format.formatDate = function (dateValue, formatStr) {

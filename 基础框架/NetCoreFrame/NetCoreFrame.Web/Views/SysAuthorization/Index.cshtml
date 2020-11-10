@@ -1,0 +1,434 @@
+﻿@{
+    Layout = null;
+}
+<div class="profile">
+    <div class="tabbable-line tabbable-full-width">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tabApiResource" data-toggle="tab" v-on:click="doNav('Resource')">资源授权</a>
+            </li>
+            <li>
+                <a href="#tabClient" data-toggle="tab" v-on:click="doNav('Client')">授权客户维护</a>
+            </li>
+            <li> 
+                <a href="#tabAccount" data-toggle="tab" v-on:click="doNav('Account')">授权账号维护</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top:5px;">
+            <!--授权资源-->
+            <div class="tab-pane active" id="tabApiResource">
+                <div class="row profile-account">
+                    <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
+                        <div class="portlet light bordered">
+                            <div class="portlet-title tabbable-line">
+                                <div class="caption caption-md">
+                                    <i class="icon-globe theme-font hide"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">资源列表</span>
+                                </div>
+                                <div class="actions">
+                                    <el-button-group>
+                                        <el-button type="primary" size="mini" icon="fa fa-file-text-o fa-lg" v-on:click="doResourceAdd">新增</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-save fa-lg" v-on:click="doResourceEdit()">编辑</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doResourceDel">删除</el-button>
+                                    </el-button-group>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                    <li v-for="item in resourceOptions.tableData" v-bind:class="item.id==resourceOptions.apiResourceCurrentId ? 'active' : ''">
+                                        <a data-toggle="tab" v-on:click="getApiResource(item.id)">
+                                            <el-tooltip  effect="light" content="启用" placement="left">
+                                                <i class="fa fa-cloud" v-if="item.isActive" style="color:#00ff21;"></i>
+                                            </el-tooltip>
+                                            <el-tooltip  effect="light" content="禁用" placement="left">
+                                                <i class="fa fa-ban" v-if="!item.isActive" style="color:#ff0000;"></i>
+                                            </el-tooltip>
+                                            {{item.resourceName}} - {{item.resourceDisplayName}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-9" style="padding-left:5px;padding-right:5px;">
+                        <div class="portlet light bordered">
+                            <div class="portlet-title tabbable-line">
+                                <div class="caption caption-md">
+                                    <i class="icon-globe theme-font hide"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">资源相关客户</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        @*可扩展批量添加*@
+                                        @*<div class="row">
+                                    <div class="col-md-6 " style="padding-bottom:5px;">
+                                      <el-button-group>
+                                        <el-button type="primary" size="mini" icon="fa fa-bell fa-lg" plain>&nbsp;&nbsp;关联客户</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-bell-slash fa-lg" plain>&nbsp;移除客户</el-button>
+                                    </el-button-group>
+                                    </div>
+                                            <div class="col-md-6" style="text-align:right;">
+                                                <el-input placeholder="客户名称 筛选" size="mini" clearable v-model="clientTableOptions.searchTxt" style="width:300px;" v-on:change="getClientData">
+                                                    <el-button slot="append" icon="el-icon-search" v-on:click="getClientData"></el-button>
+                                                </el-input>
+                                            </div>
+                                        </div>*@
+                                        <el-table v-bind:data="clientTableOptions.clientTableData"
+                                                  ref="clientSubDataGrid"
+                                                  stripe
+                                                  border
+                                                  highlight-current-row
+                                                  tooltip-effect="light"
+                                                  style="width: 100%;height:100%;"
+                                                  v-on:expand-change="doRowExpandChange">
+                                            <el-table-column v-bind:fixed="true" type="expand">
+                                                <template slot-scope="scope">
+
+                                                    <el-table v-bind:data="scope.row.sysApiAccountList"
+                                                              ref="clientSubDataGrid"
+                                                              stripe
+                                                              border
+                                                              highlight-current-row
+                                                              tooltip-effect="light"
+                                                              style="width: 100%;height:100%;"
+                                                              v-on:expand-change="doRowExpandChange">
+                                                        <el-table-column prop="userName" label="账号名称" align="center" width="200"></el-table-column>
+                                                        <el-table-column label="启用状态" width="100px" align="center">
+                                                            <template slot-scope="scopeSub">
+                                                                <el-tag v-bind:type="scopeSub.row.isActive ? 'success' : 'danger'">{{ scopeSub.row.isActive ? '启动' : '禁用' }}</el-tag>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column prop="description" label="描述"></el-table-column>
+                                                    </el-table>
+
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="clientId" label="客户ID" align="center" width="200"></el-table-column>
+                                            <el-table-column prop="accessTokenLifetime" label="授权token" align="center" width="100">
+                                            </el-table-column>
+                                            <el-table-column prop="allowOfflineAccess" label="刷新token" align="center" width="100">
+                                                <template slot-scope="scope">
+                                                    <el-tag v-bind:type="scope.row.allowOfflineAccess ? 'success' : 'danger'">{{ scope.row.allowOfflineAccess ? '启动' : '禁用' }}</el-tag>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120"></el-table-column>
+                                            <el-table-column label="启用状态" width="100px" align="center">
+                                                <template slot-scope="scope">
+                                                    <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="description" label="描述"></el-table-column>
+                                        </el-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--授权客户-->
+            <div class="tab-pane" id="tabClient">
+                <div class="row">
+                    <div class="frame-btn-tools">
+                        <div class="row" style="margin-right:0px;">
+                            <div class="col-md-7 col-sm-7" style="text-align:left;">
+                                <el-button-group>
+                                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doClientAdd()" ref="btnClientAdd" v-IsAuthorized>新增</el-button>
+                                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doClientEdit()" ref="btnClientEdit" v-IsAuthorized>编辑</el-button>
+                                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doClientDel()" ref="btnClientDel" v-IsAuthorized>删除</el-button>
+                                </el-button-group>
+                            </div>
+                            <div class="col-md-5 col-sm-5" style="text-align:right;">
+                                <el-input placeholder="客户名称 查询" v-model="clientOptions.searchTxt" size="mini" style="width:300px;" clearable v-on:change="getClientDataAll">
+                                    <el-button slot="append" icon="el-icon-search" v-on:click="getClientDataAll"></el-button>
+                                </el-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding:5px;border:1px solid #DCDFE6;">
+                        <el-table v-bind:data="clientTableOptions.tableData"
+                                  ref="clientDataGrid"
+                                  stripe
+                                  border
+                                  highlight-current-row
+                                  tooltip-effect="light"
+                                  style="width: 100%;height:100%;"
+                                  v-on:selection-change="doRowSelectChange"
+                                  v-on:row-click="doRowclick">
+                            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                            <el-table-column prop="clientId" label="客户ID" align="center" width="200"></el-table-column>
+                            <el-table-column prop="clientSecrets" label="客户秘钥" align="center" width="200"></el-table-column>
+                            <el-table-column prop="accessTokenLifetime" label="授权token" align="center" width="100">
+                            </el-table-column>
+                            <el-table-column prop="allowOfflineAccess" label="刷新token" align="center" width="100">
+                                <template slot-scope="scope">
+                                    <el-tag v-bind:type="scope.row.allowOfflineAccess ? 'success' : 'danger'">{{ scope.row.allowOfflineAccess ? '启动' : '禁用' }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120"></el-table-column> 
+                            <el-table-column label="启用状态" width="100px" align="center">
+                                <template slot-scope="scope">
+                                    <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="description" label="描述"></el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+            </div>
+
+            <!--授权账号-->
+            <div class="tab-pane" id="tabAccount">
+                <div class="row profile-account">
+                    <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
+                        <div class="portlet light bordered">
+                            <div class="portlet-title tabbable-line">
+                                <div class="caption caption-md">
+                                    <i class="icon-globe theme-font hide"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">授权账号列表</span>
+                                </div>
+                                <div class="actions">
+                                    <el-button-group>
+                                        <el-button type="primary" size="mini" icon="fa fa-file-text-o fa-lg" v-on:click="doAccountAdd">新增</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-save fa-lg" v-on:click="doAccountEdit()">编辑</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doAccountDel">删除</el-button>
+                                    </el-button-group>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                    <li v-for="item in accountTableOptions.tableData" v-bind:class="item.id==accountOptions.accountCurrentId ? 'active' : ''">
+                                        <a data-toggle="tab" v-on:click="getAccount(item.id)">
+                                            <el-tooltip effect="light" content="启用" placement="left">
+                                                <i class="fa fa-user" v-if="item.isActive" style="color:#00ff21;"></i>
+                                            </el-tooltip>
+                                            <el-tooltip effect="light" content="禁用" placement="left">
+                                                <i class="fa fa-user-times" v-if="!item.isActive" style="color:#ff0000;"></i>
+                                            </el-tooltip>
+                                            {{item.userName}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9" style="padding-left:5px;padding-right:5px;">
+                        <div class="portlet light bordered">
+                            <div class="portlet-title tabbable-line">
+                                <div class="caption caption-md">
+                                    <i class="icon-globe theme-font hide"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">授权服务</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        <el-table v-bind:data="permissionTableOptions.tableData"
+                                                  ref="permissionDataGrid"
+                                                  stripe
+                                                  border
+                                                  highlight-current-row
+                                                  tooltip-effect="light"
+                                                  style="width: 100%">
+                                            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                                            <el-table-column prop="userCode" label="服务授权名称"></el-table-column>
+                                        </el-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <el-dialog title="资源基础信息"
+               v-bind:visible.sync="resourceOptions.formDialog"
+               v-bind:width="formWinCol2">
+        <div>
+            <el-form v-bind:model="resourceFormData"
+                     v-bind:rules="formRules"
+                     ref="formResourceData"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+                <el-form-item label="资源名称" prop="resourceName">
+                    <el-input v-model="resourceFormData.resourceName" v-bind:style="formFormItem2" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="资源别名" prop="resourceDisplayName">
+                    <el-input v-model="resourceFormData.resourceDisplayName" v-bind:style="formFormItem2" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="描述" prop="description">
+                    <el-input type="textarea" v-model="resourceFormData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="500" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="启用状态" prop="isActive">
+                    <el-select v-model="resourceFormData.isActive"
+                               default-first-option
+                               v-bind:style="formFormItem2"
+                               placeholder="请选择">
+                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="禁用" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="resourceOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doResourceSave()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog title="客户基础信息"
+               v-bind:visible.sync="clientOptions.formDialog"
+               v-bind:width="formWinCol2">
+        <div>
+            <el-form v-bind:model="clientFormData"
+                     v-bind:rules="formRules"
+                     ref="formClientData"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+                <el-form-item label="客户ID" prop="clientId">
+                    <el-input v-model="clientFormData.clientId" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="客户秘钥" prop="clientSecrets">
+                    <el-input v-model="clientFormData.clientSecrets" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="授权token" prop="accessTokenLifetime">
+                    <el-input v-model="clientFormData.accessTokenLifetime" v-bind:style="formFormItem1" clearable show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="启用状态" prop="isActive">
+                    <el-select v-model="clientFormData.isActive"
+                               default-first-option
+                               v-bind:style="formFormItem1"
+                               placeholder="请选择">
+                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="禁用" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="刷新token" prop="allowOfflineAccess">
+                    <el-select v-model="clientFormData.allowOfflineAccess"
+                               default-first-option
+                               clearable
+                               v-bind:style="formFormItem1"
+                               placeholder="请选择">
+                        <el-option label="启用RefreshToken" v-bind:value="true"></el-option>
+                        <el-option label="禁用RefreshToken" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="刷新token有效期" prop="slidingRefreshTokenLifetime">
+                    <el-input v-model="clientFormData.slidingRefreshTokenLifetime" v-bind:style="formFormItem1" clearable>
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="关联资源" prop="apiResourceId">
+                    <el-select v-model="clientFormData.apiResourceId"
+                               default-first-option
+                               clearable
+                               v-bind:style="formFormItem2"
+                               placeholder="请选择">
+                        <el-option v-for="item in resourceOptions.tableFormData" v-bind:label="item.resourceName" v-bind:value="item.id" v-bind:key="item.id">
+                            <span style="float: left"> {{item.resourceDisplayName}}</span>
+                            <span style="float: right; color: #8492a6; font-size: 13px">({{item.resourceName}})</span>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="描述" prop="description">
+                    <el-input type="textarea" v-model="clientFormData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="500" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="clientOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doSaveClientForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog title="账号基础信息"
+               v-bind:visible.sync="accountOptions.formDialog"
+               v-bind:width="formWinCol2">
+        <div>
+            <el-form v-bind:model="accountFormData"
+                     v-bind:rules="formRules"
+                     ref="formAccountData"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+                <el-form-item label="账号名称" prop="userName">
+                    <el-input v-model="accountFormData.userName" v-bind:style="formFormItem2" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="账号密码" prop="password">
+                    <el-input v-model="accountFormData.password" v-bind:style="formFormItem2" show-password clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="关联客户" prop="apiClientId">
+                    <el-select v-model="accountFormData.apiClientId"
+                               default-first-option
+                               clearable
+                               v-bind:style="formFormItem2"
+                               placeholder="请选择">
+                        <el-option v-for="item in clientTableOptions.tableFormData" v-bind:label="item.clientId" v-bind:value="item.id" v-bind:key="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="描述" prop="description">
+                    <el-input type="textarea" v-model="accountFormData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="500" show-word-limit>
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="启用状态" prop="isActive">
+                    <el-select v-model="accountFormData.isActive"
+                               default-first-option
+                               v-bind:style="formFormItem2"
+                               placeholder="请选择">
+                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="禁用" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="accountOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doSaveAccountForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
+
+
+</div>
