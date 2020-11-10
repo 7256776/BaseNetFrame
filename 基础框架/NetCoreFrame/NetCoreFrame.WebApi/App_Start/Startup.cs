@@ -1,5 +1,4 @@
 ﻿using Abp.AspNetCore;
-using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Extensions;
 using Castle.Facilities.Logging;
@@ -8,25 +7,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
-using Microsoft.AspNetCore.Rewrite;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using NetCoreFrame.Application;
 using NetCoreFrame.Core;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 
-namespace NetCoreFrame.Web
+namespace NetCoreFrame.WebApi
 {
     public class Startup
     {
@@ -35,10 +29,8 @@ namespace NetCoreFrame.Web
 
         protected readonly IConfigurationRoot _appConfiguration;
 
-        protected StartupOptionModel startupOptionModel = new StartupOptionModel();
-
         /// <summary>
-        /// 
+        /// 启动类构造
         /// </summary>
         /// <param name="env"></param>
         public Startup(IHostingEnvironment hostingEnvironment)
@@ -52,11 +44,11 @@ namespace NetCoreFrame.Web
                 hostingEnvironment.EnvironmentName,
                 hostingEnvironment.IsDevelopment());
 
-            //提供有关当前环境和平台的信息和操作方法
             //Environment
         }
 
         /// <summary>
+        /// 运行时调用。使用此方法将服务添加到容器中
         /// 这货就是冒充 Global.asax 其他程序引用后需要重写并且调用 BuildConfigureServices构建基本配置
         /// </summary>
         /// <param name="services"></param>
@@ -64,9 +56,8 @@ namespace NetCoreFrame.Web
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
             BuildConfigureServices(services);
-
             // 配置Abp和依赖注入 
-            return services.AddAbp<NetCoreFrameWebModule>(
+            return services.AddAbp<NetCoreFrameWebApiModule>(
                options => options.IocManager.IocContainer.AddFacility<LoggingFacility>(
                    f => f.UseAbpLog4Net().WithConfig("log4net.config")
                )
@@ -74,7 +65,7 @@ namespace NetCoreFrame.Web
         }
 
         /// <summary>
-        /// 
+        /// 运行时调用。使用此方法配置HTTP请求管道
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
@@ -83,18 +74,12 @@ namespace NetCoreFrame.Web
         {
             //加载session中间件在 UseMvc 之前调用
             app.UseSession();
-            //自定义http跳转https重定向的中间件
-            app.UseRewriter(new RewriteOptions().AddRedirectForwardedHttpToHttps());
-            //Https 重定向中间件
-            //app.UseHttpsRedirection();
-
             //配置Abp中间件 初始化ABP框架
             app.UseAbp(options =>
             {
                 //禁用请求本地化自动添加
                 options.UseAbpRequestLocalization = false;
             });
-
             //配置跨域访问中间件(必须使用 services.AddCors() 设置筛选规则) **方案二
             app.UseCors(_defaultCorsPolicyName);
 
@@ -107,44 +92,13 @@ namespace NetCoreFrame.Web
             {
                 app.UseExceptionHandler("/SysError");
             }
-
             //静态文件服务中间件(默认文件夹wwwroot)
             app.UseStaticFiles();
-            //授权验证中间件
-            app.UseAuthentication();
+            //自定义验证Jwt中间件  或 Oidc授权验证
+            app.UseAuthTokenMiddleware(_appConfiguration);
+
             //abp本地化中间件
             app.UseAbpRequestLocalization();
-            //SignalR中间件
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<AbpCommonHub>("/signalr");
-            });
-            //app.UseCookiePolicy();
-
-            /*
-                设置静态资源文件读取目录
-                1. 设置Views目录下的 视图, 脚本为"嵌入式资源", 可注释如下配置信息
-                2. 设置Views目录下的 视图, 脚本为"内容",需要使用如下配置.
-                注1:发布的时候需要保证发布的原目录有Views文件夹
-                注2:可以通过修改程序集文件"MvcRazorCompileOnPublish"发布是否产生Views文件夹
-                        <PropertyGroup>
-                            <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
-                        </PropertyGroup>
-             */
-            //读取Views文件夹下的js和css 
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Views")),
-                RequestPath = new PathString("/Views"),
-                ContentTypeProvider = new FileExtensionContentTypeProvider
-                (
-                    new Dictionary<string, string>(
-                        StringComparer.OrdinalIgnoreCase){
-                        { ".js", "application/javascript" },
-                        { ".css", "text/css" }
-                    }
-                )
-            });
             //启用嵌入资源
             app.UseEmbeddedFiles();
             //注册路由
@@ -156,10 +110,8 @@ namespace NetCoreFrame.Web
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=SysHome}/{action=index}/{id?}");
+                    template: "{controller=Home}/{action=index}/{id?}");
             });
-
-            #region Swagger
             // Swagger服务中间件 URL: /swagger
             app.UseSwagger();
             // swagger-ui 资源中间件能够支持 (HTML, JS, CSS etc.)
@@ -167,11 +119,9 @@ namespace NetCoreFrame.Web
             {
                 options.SwaggerEndpoint(_appConfiguration["App:ServerRootAddress"] + "/swagger/v1/swagger.json", "AuthScaffold API V1");
                 options.IndexStream = () => Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("NetCoreFrame.Web.wwwroot.swagger.ui.index.html");
+                    .GetManifestResourceStream("NetCoreFrame.WebApi.wwwroot.swagger.ui.index.html");
             });
-            #endregion
         }
-
 
         #region 构建启动服务配置
         public virtual void BuildConfigureServices(IServiceCollection services)
@@ -182,17 +132,17 @@ namespace NetCoreFrame.Web
                 {
                     //设置跨域筛选器(必须使用 services.AddCors() 设置筛选规则) **方案一 (两种方案选其一)
                     options.Filters.Add(new CorsAuthorizationFilterFactory(_defaultCorsPolicyName));
-                    //设置 自动验证防伪造令牌属性
-                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 }
             );
 
+            #region json
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 //设置默认获取本地时区
                 options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
             });
+            #endregion
 
             //注册HttpClient 对象
             services.AddHttpClient();
@@ -201,26 +151,6 @@ namespace NetCoreFrame.Web
             //Session 保存到内存
             //services.AddDistributedMemoryCache();
             services.AddSession();
-            #endregion
-
-            #region cookies授权
-            /* CookieAuthenticationDefaults.AuthenticationScheme
-             * CookieAuthenticationDefaults.AuthenticationScheme 是特定Cookie认证方案的值。处理多个Cookie验证实例，并且需要限制对一个实例的授权时用。 
-             */
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                //当用户尝试访问资源但尚未认证时，这是请求重定向的相对路径
-                options.LoginPath = new PathString(startupOptionModel.LoginPath);
-                //当用户尝试访问资源但没有通过任何授权策略时，这是请求会重定向的相对路径资源
-                options.AccessDeniedPath = new PathString(startupOptionModel.LoginPath);
-            });
-            #endregion
-
-            #region 注册EfDBContext,或者在启动类注册
-            //services.AddAbpDbContext<NetCoreFrameDbContext>(options =>
-            //{
-            //    options.DbContextOptions.UseSqlServer(options.ConnectionString);
-            //});
             #endregion
 
             #region 注入用户授权
@@ -234,12 +164,8 @@ namespace NetCoreFrame.Web
                 .AddDefaultTokenProviders();
             #endregion
 
-            //注册自定义的配置文件并绑定对象
-            services.Configure<CustomWebResource>(_appConfiguration.GetSection("CustomWebResource"));
-            //注册资源文件管理类
-            services.AddScoped<IWebResourceManager, WebResourceManager>();
-
-            services.AddSignalR();
+            //设置Jwt授权 或 Oidc授权验证
+            services.AddBearerAuthentication(_appConfiguration);
 
             #region  设置跨域访问的规则
             services.AddCors(options => options.AddPolicy(_defaultCorsPolicyName,
@@ -279,7 +205,6 @@ namespace NetCoreFrame.Web
 
         }
         #endregion
-    
 
     }
 

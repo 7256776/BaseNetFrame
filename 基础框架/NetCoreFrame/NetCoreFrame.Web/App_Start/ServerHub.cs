@@ -11,7 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace NetCoreFrame.Web
 {
-
+    /// <summary>
+    /// signalr 示例demo
+    /// </summary>
     public class ServerHub : Hub
     {
         public async Task SendMessage(string user, string message)
