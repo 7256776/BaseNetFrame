@@ -136,7 +136,18 @@ var component = Vue.component('sys-authorization', {
             //验证通过执行 
             callback();
         },
-
+         
+        doRowExpandChange: function (row, expanded, e) {
+            var isRow = expanded.some(function (item, index) {
+                if (row.id == item.id) {
+                    return true;
+                }
+            });
+            if (!isRow) {
+                return;
+            }
+            this.getAccountByClient(row);
+        },
         getApiResourceDataList: function () {
             var _this = this;
             abp.ajax({
@@ -153,12 +164,12 @@ var component = Vue.component('sys-authorization', {
                 _this.resourceOptions.apiResourceCurrentId = null;
                 if (data.length > 0) {
                     _this.resourceOptions.apiResourceCurrentId = data[0].id;
-                    _this.getApiResource(_this.resourceOptions.apiResourceCurrentId);
+                    _this.getClientByResource(_this.resourceOptions.apiResourceCurrentId);
                 }
                 _this.resourceOptions.tableData = data; 
             });
         },
-        getApiResource: function (id) {
+        getClientByResource: function (id) {
             var _this = this;
             this.resourceOptions.apiResourceCurrentId = id;
             abp.ajax({
@@ -168,21 +179,15 @@ var component = Vue.component('sys-authorization', {
                 _this.clientTableOptions.clientTableData = data;
             });
         },
-        doRowExpandChange: function (row, expanded, e) {
-            var isRow = expanded.some(function (item, index) {
-                if (row.id == item.id) {
-                    return true;
-                }
-            });
-            if (!isRow) {
-                return;
-            }
+        getAccountByClient: function (row) {
             var _this = this;
             abp.ajax({
                 url: '/SysAuthorization/GetApiAccountByClient',
                 data: JSON.stringify(row.id)
             }).done(function (data, res, e) {
-                row.sysApiAccountList = data;
+              
+                    row.sysApiAccountList = data;
+             
             });
         },
         doResourceAdd: function () {
@@ -419,6 +424,56 @@ var component = Vue.component('sys-authorization', {
                  });
              });
         },
+
+        doResourceToClientDel: function (row) {
+            var _this = this;
+            var data = {
+                apiResourceId: this.resourceOptions.apiResourceCurrentId,
+                apiClientId: row.id
+            };
+          
+            this.$confirm('确定移除关联?', '提示', {
+                type: 'warning',
+                callback: function (action, instance) {
+                    if (action == 'cancel') {
+                        return;
+                    }
+                    abp.ajax({
+                        url: '/SysAuthorization/DelResourceToClient',
+                        data: JSON.stringify(data)
+                    }).done(function (data, res, e) {
+                        _this.tipSuccess('del');
+                        _this.getClientByResource(_this.resourceOptions.apiResourceCurrentId);
+                    })
+                }
+            });
+        },
+        doClienToAccountDel: function (row, prow) {
+            var _this = this;
+            var data = {
+                apiAccountId: row.id,
+                apiClientId: prow.id
+            };
+          
+            this.$confirm('确定移除关联?', '提示', {
+                type: 'warning',
+                callback: function (action, instance) {
+                    if (action == 'cancel') {
+                        return;
+                    }
+                    abp.ajax({
+                        url: '/SysAuthorization/DelClienToAccount',
+                        data: JSON.stringify(data)
+                    }).done(function (data, res, e) {
+                        _this.tipSuccess('del');
+                        _this.getAccountByClient(prow);
+                    })
+                }
+            });
+        },
+
+
+
 
     }
 });

@@ -268,10 +268,65 @@ namespace NetCoreFrame.Web.Controllers
             return Json(data);
         }
 
+        /// <summary>
+        /// 查询客户相关的账号
+        /// </summary>
+        /// <param name="apiClientId">客户主键ID</param>
+        /// <returns></returns>
         [AbpMvcAuthorize]
         public async Task<JsonResult> GetApiAccountByClient([FromBody]string apiClientId)
         {
             var data = await _sysApiClienToAccountAppService.GetApiAccountByClient(apiClientId);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 删除资源相关的客户(批量)
+        /// </summary>
+        /// <param name="apiResourceId">资源主键ID</param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> DelMultiResourceToClient([FromBody]List<SysApiResourceToClientInput> ilist)
+        {
+            var data = await _sysApiResourceToClientAppService.DelResourceToClient(ilist);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 删除资源相关的客户
+        /// </summary>
+        /// <param name="apiResourceId">资源主键ID</param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> DelResourceToClient([FromBody]SysApiResourceToClientInput model)
+        {
+            List<SysApiResourceToClientInput> list = new List<SysApiResourceToClientInput>();
+            list.Add(model);
+            var data = await _sysApiResourceToClientAppService.DelResourceToClient(list);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 删除客户相关的账号(批量)
+        /// </summary>
+        /// <param name="list">客户To账号对象</param>
+        /// <returns></returns>
+        public async Task<JsonResult> DelMultiClienToAccount([FromBody]List<SysApiClienToAccountInput> list)
+        {
+            var data = await _sysApiClienToAccountAppService.DelClienToAccount(list);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 删除客户相关的账号
+        /// </summary>
+        /// <param name="list">客户To账号对象</param>
+        /// <returns></returns>
+        public async Task<JsonResult> DelClienToAccount([FromBody]SysApiClienToAccountInput model)
+        {
+            List<SysApiClienToAccountInput> list = new List<SysApiClienToAccountInput>();
+            list.Add(model);
+            var data = await _sysApiClienToAccountAppService.DelClienToAccount(list);
             return Json(data);
         }
         #endregion

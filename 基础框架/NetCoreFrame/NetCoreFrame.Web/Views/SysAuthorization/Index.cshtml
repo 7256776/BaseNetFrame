@@ -36,7 +36,7 @@
                             <div class="portlet-body">
                                 <ul class="ver-inline-menu tabbable margin-bottom-10">
                                     <li v-for="item in resourceOptions.tableData" v-bind:class="item.id==resourceOptions.apiResourceCurrentId ? 'active' : ''">
-                                        <a data-toggle="tab" v-on:click="getApiResource(item.id)">
+                                        <a data-toggle="tab" v-on:click="getClientByResource(item.id)">
                                             <el-tooltip  effect="light" content="启用" placement="left">
                                                 <i class="fa fa-cloud" v-if="item.isActive" style="color:#00ff21;"></i>
                                             </el-tooltip>
@@ -61,20 +61,22 @@
                             <div class="portlet-body">
                                 <div class="tab-content">
                                     <div class="tab-pane active">
-                                        @*可扩展批量添加*@
-                                        @*<div class="row">
-                                    <div class="col-md-6 " style="padding-bottom:5px;">
-                                      <el-button-group>
-                                        <el-button type="primary" size="mini" icon="fa fa-bell fa-lg" plain>&nbsp;&nbsp;关联客户</el-button>
-                                        <el-button type="primary" size="mini" icon="fa fa-bell-slash fa-lg" plain>&nbsp;移除客户</el-button>
-                                    </el-button-group>
-                                    </div>
-                                            <div class="col-md-6" style="text-align:right;">
-                                                <el-input placeholder="客户名称 筛选" size="mini" clearable v-model="clientTableOptions.searchTxt" style="width:300px;" v-on:change="getClientData">
-                                                    <el-button slot="append" icon="el-icon-search" v-on:click="getClientData"></el-button>
-                                                </el-input>
+                                        <!--可扩展批量添加-->
+                                        <!--
+                                            <div class="row">
+                                                <div class="col-md-6 " style="padding-bottom:5px;">
+                                                  <el-button-group>
+                                                    <el-button type="primary" size="mini" icon="fa fa-bell fa-lg" plain>&nbsp;&nbsp;关联客户</el-button>
+                                                    <el-button type="primary" size="mini" icon="fa fa-bell-slash fa-lg" plain>&nbsp;移除客户</el-button>
+                                                </el-button-group>
+                                                </div>
+                                                <div class="col-md-6" style="text-align:right;">
+                                                    <el-input placeholder="客户名称 筛选" size="mini" clearable v-model="clientTableOptions.searchTxt" style="width:300px;" v-on:change="getClientData">
+                                                        <el-button slot="append" icon="el-icon-search" v-on:click="getClientData"></el-button>
+                                                    </el-input>
+                                                </div>
                                             </div>
-                                        </div>*@
+                                        -->
                                         <el-table v-bind:data="clientTableOptions.clientTableData"
                                                   ref="clientSubDataGrid"
                                                   stripe
@@ -92,8 +94,7 @@
                                                               border
                                                               highlight-current-row
                                                               tooltip-effect="light"
-                                                              style="width: 100%;height:100%;"
-                                                              v-on:expand-change="doRowExpandChange">
+                                                              style="width: 100%;height:100%;">
                                                         <el-table-column prop="userName" label="账号名称" align="center" width="200"></el-table-column>
                                                         <el-table-column label="启用状态" width="100px" align="center">
                                                             <template slot-scope="scopeSub">
@@ -101,6 +102,11 @@
                                                             </template>
                                                         </el-table-column>
                                                         <el-table-column prop="description" label="描述"></el-table-column>
+                                                        <el-table-column label="操作" width="100px" align="center">
+                                                            <template slot-scope="scopeSub">
+                                                                <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doClienToAccountDel(scopeSub.row,scope.row)"></el-button>
+                                                            </template>
+                                                        </el-table-column>
                                                     </el-table>
 
                                                 </template>
@@ -120,6 +126,11 @@
                                                 </template>
                                             </el-table-column>
                                             <el-table-column prop="description" label="描述"></el-table-column>
+                                            <el-table-column label="操作" width="100px" align="center">
+                                                <template slot-scope="scopeSub">
+                                                    <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doResourceToClientDel(scopeSub.row)"></el-button>
+                                                </template>
+                                            </el-table-column>
                                         </el-table>
                                     </div>
                                 </div>
@@ -158,8 +169,35 @@
                                   tooltip-effect="light"
                                   style="width: 100%;height:100%;"
                                   v-on:selection-change="doRowSelectChange"
-                                  v-on:row-click="doRowclick">
+                                  v-on:row-click="doRowclick"
+                                  v-on:expand-change="doRowExpandChange">
                             <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                            <el-table-column v-bind:fixed="true" type="expand">
+                                <template slot-scope="scope">
+
+                                    <el-table v-bind:data="scope.row.sysApiAccountList"
+                                              ref="clientSubDataGrid"
+                                              stripe
+                                              border
+                                              highlight-current-row
+                                              tooltip-effect="light"
+                                              style="width: 100%;height:100%;">
+                                        <el-table-column prop="userName" label="账号名称" align="center" width="200"></el-table-column>
+                                        <el-table-column label="启用状态" width="100px" align="center">
+                                            <template slot-scope="scopeSub">
+                                                <el-tag v-bind:type="scopeSub.row.isActive ? 'success' : 'danger'">{{ scopeSub.row.isActive ? '启动' : '禁用' }}</el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="description" label="描述"></el-table-column>
+                                        <el-table-column label="操作" width="100px" align="center">
+                                            <template slot-scope="scopeSub">
+                                                <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doClienToAccountDel(scopeSub.row,scope.row)"></el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+
+                                </template>
+                            </el-table-column>
                             <el-table-column prop="clientId" label="客户ID" align="center" width="200"></el-table-column>
                             <el-table-column prop="clientSecrets" label="客户秘钥" align="center" width="200"></el-table-column>
                             <el-table-column prop="accessTokenLifetime" label="授权token" align="center" width="100">
@@ -169,7 +207,7 @@
                                     <el-tag v-bind:type="scope.row.allowOfflineAccess ? 'success' : 'danger'">{{ scope.row.allowOfflineAccess ? '启动' : '禁用' }}</el-tag>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120"></el-table-column> 
+                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120"></el-table-column>
                             <el-table-column label="启用状态" width="100px" align="center">
                                 <template slot-scope="scope">
                                     <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
@@ -314,10 +352,6 @@
                     <el-input v-model="clientFormData.clientSecrets" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="授权token" prop="accessTokenLifetime">
-                    <el-input v-model="clientFormData.accessTokenLifetime" v-bind:style="formFormItem1" clearable show-word-limit>
-                    </el-input>
-                </el-form-item>
                 <el-form-item label="启用状态" prop="isActive">
                     <el-select v-model="clientFormData.isActive"
                                default-first-option
@@ -327,17 +361,21 @@
                         <el-option label="禁用" v-bind:value="false"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="刷新token" prop="allowOfflineAccess">
+                <el-form-item label="授权Token有效期  (小时)" prop="accessTokenLifetime" v-FormLine>
+                    <el-input v-model="clientFormData.accessTokenLifetime" v-bind:style="formFormItem1" clearable show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="刷新Token" prop="allowOfflineAccess">
                     <el-select v-model="clientFormData.allowOfflineAccess"
                                default-first-option
                                clearable
                                v-bind:style="formFormItem1"
                                placeholder="请选择">
-                        <el-option label="启用RefreshToken" v-bind:value="true"></el-option>
-                        <el-option label="禁用RefreshToken" v-bind:value="false"></el-option>
+                        <el-option label="启用刷新RefreshToken" v-bind:value="true"></el-option>
+                        <el-option label="禁用刷新RefreshToken" v-bind:value="false"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="刷新token有效期" prop="slidingRefreshTokenLifetime">
+                <el-form-item label="刷新Token有效期  (小时)" prop="slidingRefreshTokenLifetime" v-FormLine>
                     <el-input v-model="clientFormData.slidingRefreshTokenLifetime" v-bind:style="formFormItem1" clearable>
                     </el-input>
                 </el-form-item>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NetCoreFrame.Application;
 using NetCoreFrame.Core;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NetCoreFrame.Web.Controllers
@@ -132,6 +133,6 @@ namespace NetCoreFrame.Web.Controllers
             var ajaxResponse = _sysRoleManager.SaveRoleToUser(model);
             return Json(ajaxResponse);
         }
-
+        
     }
 }
