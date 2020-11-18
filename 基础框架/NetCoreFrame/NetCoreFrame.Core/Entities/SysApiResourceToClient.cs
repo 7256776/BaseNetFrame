@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NetCoreFrame.Core
 {
     /// <summary>
-    /// Api授权客户对象
+    /// Api资源授权客户对象
     /// </summary>
     [Table("Sys_ApiResourceToClient")]
     public class SysApiResourceToClient : Entity<Guid>
@@ -19,18 +19,17 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
-        /// 服务主键
+        /// 资源ID主键
         /// </summary>
         [Column("APIRESOURCEID")]
         public virtual Guid ApiResourceId { get; set; }
 
         /// <summary>
-        /// 服务客户主键
+        /// 授权客户ID主键
         /// </summary>		
         [Column("APICLIENTID")]
         public virtual Guid ApiClientId { get; set; }
 
-
-
+         
     }
 }

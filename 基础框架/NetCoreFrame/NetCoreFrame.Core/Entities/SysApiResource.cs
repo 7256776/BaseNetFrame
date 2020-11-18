@@ -55,11 +55,7 @@ namespace NetCoreFrame.Core
         [Required]
         public virtual bool IsActive { get; set; } = true;
 
-        /// <summary>
-        /// 服务相关客户对象集合
-        /// </summary>
-        [NotMapped]
-        public virtual List<SysApiClient> SysApiClientList { get; set; }
+       
 
     }
 }

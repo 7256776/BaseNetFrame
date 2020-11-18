@@ -37,22 +37,22 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 指定用户信息
         /// </summary>
-        public const string USER_INFO = "USER_INFO";
+        private const string USER_INFO = "USER_INFO";
 
         /// <summary>
         /// 指定角色的授权
         /// </summary>
-        public const string ROLE_PERMISSION = "ROLE_PERMISSION";
+        private const string ROLE_PERMISSION = "ROLE_PERMISSION";
 
         /// <summary>
         /// 所有模块以及动作请求的授权信息
         /// </summary>
-        public const string ALL_PERMISSION = "ALL_PERMISSION";
+        private const string ALL_PERMISSION = "ALL_PERMISSION";
 
         /// <summary>
         /// 所有通知类型 
         /// </summary>
-        public const string ALL_NOTIFICATION = "ALL_NOTIFICATION";
+        private const string ALL_NOTIFICATION = "ALL_NOTIFICATION";
 
         #region 指定角色的授权
 

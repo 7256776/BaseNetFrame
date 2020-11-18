@@ -19,19 +19,21 @@ namespace NetCoreFrame.Core
         }
 
         /// <summary>
-        /// 服务客户主键
+        /// 授权账号ID主键
         /// </summary>
         [Column("APIACCOUNTID")]
         public virtual Guid ApiAccountId { get; set; }
 
         /// <summary>
-        /// 服务账号主键
+        /// 授权客户ID主键
         /// </summary>		
         [Column("APICLIENTID")]
         public virtual Guid ApiClientId { get; set; }
 
         /// <summary>
-        /// 描述
+        /// 账号来源(用于扩展)
+        /// 1=来自系统账号管理
+        /// 2=来自服务授权账号管理
         /// </summary>	
         [Column("ACCOUNTSOURCE")]
         [StringLength(10)]
