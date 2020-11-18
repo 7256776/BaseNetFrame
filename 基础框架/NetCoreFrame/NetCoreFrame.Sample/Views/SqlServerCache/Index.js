@@ -26,7 +26,7 @@ var component = Vue.component('sqlservercache', {
             var _this = this;
             //
             abp.ajax({
-                url: '/SqlServerCache/SetTime',
+                url: '/SqlServerCache/SetString',
                 data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {
@@ -38,7 +38,7 @@ var component = Vue.component('sqlservercache', {
             var _this = this;
             //
             abp.ajax({
-                url: '/SqlServerCache/GetTime',
+                url: '/SqlServerCache/GetString',
                 data: JSON.stringify(this.formData),
                 type: 'POST'
             }).done(function (data, res, e) {

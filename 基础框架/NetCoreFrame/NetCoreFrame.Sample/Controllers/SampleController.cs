@@ -179,7 +179,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public JsonResult SaveFormSqlModel([FromBody]dynamic model)
         {
-            var data =  _dataModelAppService.SaveFormSqlModel(model);
+            var data = _dataModelAppService.SaveFormSqlModel(model);
             return Json(data);
         }
 
@@ -189,10 +189,13 @@ namespace NetCoreFrame.Sample.Controllers
         /// <returns></returns>
         public JsonResult GetTempTableSqlDto([FromBody]string tableName)
         {
-            var data = _dataModelAppService.GetTempTableSqlDto(  tableName);
+            var data = _dataModelAppService.GetTempTableSqlDto(tableName);
             return Json(data);
         }
 
         #endregion
+
+        
+
     }
 }

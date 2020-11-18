@@ -34,10 +34,13 @@ namespace NetCoreFrame.Sample.Controllers
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<ActionResult<string>> SetTime([FromBody]CacheParam param)
+        public  Task<ActionResult<string>> SetString([FromBody]CacheParam param)
         {
-            await _distributedCache.SetStringAsync(param.KeyName, param.Message);
-            return "";
+            //设置绝对有效期
+            DistributedCacheEntryOptions op = new DistributedCacheEntryOptions();
+            op.SetAbsoluteExpiration(new TimeSpan(0, 0, 10));
+            _distributedCache.SetStringAsync(param.KeyName, param.Message, op);
+            return Task.FromResult<ActionResult<string>>("");
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace NetCoreFrame.Sample.Controllers
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<ActionResult<string>> GetTime([FromBody]CacheParam param)
+        public async Task<ActionResult<string>> GetString([FromBody]CacheParam param)
         {
             var result = await _distributedCache.GetStringAsync(param.KeyName);
             return param.KeyName + ":" + result;

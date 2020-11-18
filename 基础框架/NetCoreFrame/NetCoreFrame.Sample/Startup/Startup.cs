@@ -39,23 +39,23 @@ namespace NetCoreFrame.Sample
         {
             base.BuildConfigureServices(services);
 
-            //Redis缓存SqlServerCache
-            //services.AddDistributedRedisCache(options =>
-            //{
-            //    options.InstanceName = "TestDb";
-            //    options.Configuration = _appConfiguration.GetConnectionString("RedisConnectionString");       //localhost
-            //});
-
-            //数据库缓存SqlServerCache
-            services.AddDistributedSqlServerCache(options =>
+            //Redis缓存 实现 SqlServerCacheController
+            services.AddDistributedRedisCache(options =>
             {
-                options.SystemClock = new LocalSystemClock();                                                    //本地时间
-                options.ConnectionString = _appConfiguration.GetConnectionString("Default");    //数据库连接
-                options.SchemaName = "dbo";                                                                              //数据库对象名称
-                options.TableName = "AspNetCoreCache";                                                            //数据库存缓存的对象
-                options.DefaultSlidingExpiration = TimeSpan.FromSeconds(10);                             //10秒钟过期
-                options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);                        //刷新间隔
+                options.InstanceName = "TestDb";
+                options.Configuration = _appConfiguration.GetConnectionString("RedisConnectionString");       //localhost
             });
+
+            //数据库缓存 实现 SqlServerCacheController
+            //services.AddDistributedSqlServerCache(options =>
+            //{
+            //    options.SystemClock = new LocalSystemClock();                                                    //本地时间
+            //    options.ConnectionString = _appConfiguration.GetConnectionString("Default");    //数据库连接
+            //    options.SchemaName = "dbo";                                                                              //数据库对象名称
+            //    options.TableName = "AspNetCoreCache";                                                            //数据库存缓存的对象
+            //    options.DefaultSlidingExpiration = TimeSpan.FromSeconds(10);                             //10秒钟过期
+            //    options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);                        //刷新间隔
+            //});
 
             //添加验证码配置
             services.Configure<GeetestOptions>(_appConfiguration.GetSection("GeetestOptions"));
