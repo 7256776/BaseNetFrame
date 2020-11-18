@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using IdentityServer4.Stores;
+using NetCoreFrame.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,23 @@ namespace NetCoreFrame.WebApi
     /// </summary>
     public class ResourceStore : IResourceStore
     {
+
+        private ISysIdentityServerCacheAppService _sysIdentityServerCacheAppService;
+
+        public ResourceStore(ISysIdentityServerCacheAppService sysIdentityServerCacheAppService)
+        {
+            _sysIdentityServerCacheAppService = sysIdentityServerCacheAppService;
+        }
+
+        /// <summary>
+        /// 查询资源对象
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Task<ApiResource> FindApiResourceAsync(string name)
         {
-            IEnumerable<ApiResource> identityResourceList = GetApiResource();
-
-            var data = identityResourceList.Where(w => name.Contains(w.Name));
-
+            var apiResourceList = _sysIdentityServerCacheAppService.GetResourcesCache();
+            var data = apiResourceList.Where(w => name.Contains(w.Name));
             if (data.Any())
             {
                 return Task.FromResult(data.ToList()[0]);
@@ -27,16 +39,14 @@ namespace NetCoreFrame.WebApi
         }
 
         /// <summary>
-        /// 查询作用域资源
+        /// 查询资源集合
         /// </summary>
         /// <param name="scopeNames">请求用户所包含的AllowedScopes</param>
         /// <returns></returns>
         public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            IEnumerable<ApiResource> identityResourceList = GetApiResource();
-
-            var data = identityResourceList.Where(w => scopeNames.Contains(w.Name));
-
+            var apiResourceList = _sysIdentityServerCacheAppService.GetResourcesCache();
+            var data = apiResourceList.Where(w => scopeNames.Contains(w.Name));
             return Task.FromResult(data);
         }
 
@@ -47,28 +57,24 @@ namespace NetCoreFrame.WebApi
         /// <returns></returns>
         public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            IEnumerable<IdentityResource> identityResourceList = GetIdentityResources();
-
-            var data = identityResourceList.Where(w => scopeNames.Contains(w.Name));
-
+            IEnumerable<IdentityResource> identityResourceList = this.GetIdentityResources();
+            //
             return Task.FromResult(identityResourceList);
         }
 
         /// <summary>
-        /// 资源服务器请求资源的初次
+        /// 访问资源服务器初次会调用该服务获取相关资源列表
         /// 获取全部资源
         /// </summary>
         /// <returns></returns>
         public Task<Resources> GetAllResourcesAsync()
         {
+            var apiResourceList = _sysIdentityServerCacheAppService.GetResourcesCache();
             Resources Resources = new Resources();
-
-            List<ApiResource> apiResourceList = GetApiResource();
             foreach (var item in apiResourceList)
             {
                 Resources.ApiResources.Add(item);
             }
-
             return Task.FromResult(Resources);
         }
 
@@ -82,24 +88,21 @@ namespace NetCoreFrame.WebApi
         private List<ApiResource> GetApiResource()
         {
             List<ApiResource> apiResourceList = new List<ApiResource>();
-
             apiResourceList.Add(new ApiResource("ResourceApi", "Default (all) API"));
-
             apiResourceList.Add(new ApiResource("FrameApi", "Default (all) API"));
-
             return apiResourceList;
         }
 
         /// <summary>
-        /// 
+        /// 获取身份验证资源
         /// </summary>
         /// <returns></returns>
-        private static IEnumerable<IdentityResource> GetIdentityResources()
+        private IEnumerable<IdentityResource> GetIdentityResources()
         {
             var customProfile = new IdentityResource(
-              name: "Custom.Identity",
-              displayName: "Custom Identity",
-              claimTypes: new[] { "MyName", "MyEmail" });
+              name: "Frame.Identity",
+              displayName: "框架自定义的身份资源标签",
+              claimTypes: new[] { "FrameName", "FrameEmail" });
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),

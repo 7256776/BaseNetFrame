@@ -1,6 +1,7 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
+using NetCoreFrame.Application;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +14,21 @@ namespace NetCoreFrame.WebApi
     /// </summary>
     public class ClientStore : IClientStore
     {
+        private ISysIdentityServerCacheAppService _sysIdentityServerCacheAppService;
+
+        public ClientStore(ISysIdentityServerCacheAppService sysIdentityServerCacheAppService)
+        {
+            _sysIdentityServerCacheAppService = sysIdentityServerCacheAppService;
+        }
+
+        /// <summary>
+        /// 实现接口获取客户ID
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
         public Task<Client> FindClientByIdAsync(string clientId)
         {
-            List<Client> clients = GetClients();
+            List<Client> clients = _sysIdentityServerCacheAppService.GetClientCache();
 
             var queryClients = clients.Where(w => w.ClientId == clientId);
 
@@ -26,13 +39,15 @@ namespace NetCoreFrame.WebApi
             return Task.FromResult<Client>(null);
         }
 
+         
+
         #region 测试数据源
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        private List<Client> GetClients()
+        private List<Client> GetTestClients()
         {
             List<Client> clients = new List<Client>();
             //
@@ -45,7 +60,6 @@ namespace NetCoreFrame.WebApi
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 AllowedScopes = new[] { "ResourceApi" },                                //StandardScopes.OfflineAccess,//如果要获取refresh_tokens ,必须在scopes中加上OfflineAccess
                 AllowOfflineAccess = true                                                       //产生刷新令牌
-
             });
             //
             clients.Add(new Client()
@@ -65,12 +79,12 @@ namespace NetCoreFrame.WebApi
                     new Secret()
                     {
                         Value = "secretAll",
-                        Type = IdentityServerConstants.SecretTypes.SharedSecret         //设置加密方式 解密验证在 ISecretValidator 实现
+                        Type = IdentityServerConstants.SecretTypes.SharedSecret         //设置秘钥类型 可以在 ISecretValidator 实现具体解密方式
                     },
                     new Secret()
                     {
                         Value = "secretAll1",
-                        Type = IdentityServerConstants.SecretTypes.SharedSecret         //设置加密方式 解密验证在 ISecretValidator 实现
+                        Type = IdentityServerConstants.SecretTypes.SharedSecret         //设置秘钥类型 解密验证在 ISecretValidator 实现
                     },
                 },
                 //设置token有效时间
@@ -82,7 +96,6 @@ namespace NetCoreFrame.WebApi
                 //设置RefreshToken有效时间以及有效方式 相对时间,该方式根据每次RefreshToken获取的时间作为有效期参照
                 SlidingRefreshTokenLifetime = 90,
                 RefreshTokenExpiration = TokenExpiration.Sliding,
-
 
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                 AllowOfflineAccess = true,
@@ -106,7 +119,6 @@ namespace NetCoreFrame.WebApi
 
             return clients;
         }
-
 
         #endregion
 

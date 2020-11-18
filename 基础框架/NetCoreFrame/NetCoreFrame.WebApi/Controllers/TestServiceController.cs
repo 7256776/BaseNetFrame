@@ -1,4 +1,5 @@
 ﻿using Abp.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -21,10 +22,16 @@ namespace NetCoreFrame.WebApi.Controllers
     [ApiController]
     public class TestServiceController : NetCoreFrameWebApiControllerBase
     {
+        [HttpPost]
+        [Authorize]
+        public JsonResult ResultPostData()
+        {
+            return Json("这是Post返回数据");
+        }
 
         [HttpPost]
         [AbpMvcAuthorize("PermissionName.ResultPostData")]
-        public JsonResult ResultPostData()
+        public JsonResult ResultPermissionPostData()
         {
             return Json("这是Post返回数据");
         }

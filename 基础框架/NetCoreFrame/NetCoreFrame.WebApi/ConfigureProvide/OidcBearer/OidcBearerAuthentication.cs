@@ -32,7 +32,7 @@ namespace NetCoreFrame.WebApi
                 //配置资源服务器授权信息
                 authenticationBuilder.AddJwtBearer(options =>
                 {
-                    options.Authority = "http://192.168.1.93:2020/IdentityServer4";
+                    options.Authority = "http://localhost:18377/";
                     options.RequireHttpsMetadata = false;
                     options.Audience = "ResourceApi";
                     //options.MetadataAddress = "http://localhost:18377/.well-known/openid-configuration";

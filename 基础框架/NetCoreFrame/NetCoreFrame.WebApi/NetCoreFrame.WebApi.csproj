@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\OidcBearer\ApiRefreshTokenProvider.cs" />
-    <Compile Remove="Models\OidcBearer\OAuthOptions.cs" />
-    <Compile Remove="Models\OidcBearer\WebApiServerOAuthProvider.cs" />
+    <Compile Remove="ConfigureProvide\OidcBearer\ApiRefreshTokenProvider.cs" />
+    <Compile Remove="ConfigureProvide\OidcBearer\OAuthOptions.cs" />
+    <Compile Remove="ConfigureProvide\OidcBearer\WebApiServerOAuthProvider.cs" />
     <Compile Remove="Program.cs" />
     <Compile Remove="Startup.cs" />
     <Compile Remove="App_Start\NetCoreFrameIdentityBuilderExtensions.cs" />
@@ -23,11 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Models\IdentityServer4\扩展备注.md" />
+    <None Remove="ConfigureProvide\IdentityServer4\扩展备注.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Models\IdentityServer4\扩展备注.md" />
+    <Compile Include="ConfigureProvide\IdentityServer4\扩展备注.md" />
   </ItemGroup>
 
   <ItemGroup>

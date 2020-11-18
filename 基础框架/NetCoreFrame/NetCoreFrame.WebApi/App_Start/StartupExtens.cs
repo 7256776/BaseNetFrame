@@ -56,7 +56,8 @@ namespace NetCoreFrame.WebApi
                     .AddExtensionGrantValidator<FrameExtensionGrantValidator>()
                     .AddResourceOwnerValidator<FrameResourceOwnerPasswordValidator>();
 
-                services.AddTransient<IPersistedGrantStore, FramePersistedGrantStore>();
+                //可扩展 实现授权信息的持久化处理, 默认实现内存方式(InMemoryPersistedGrantStore).
+                //services.AddTransient<IPersistedGrantStore, FramePersistedGrantStore>();
 
                 #endregion
 
