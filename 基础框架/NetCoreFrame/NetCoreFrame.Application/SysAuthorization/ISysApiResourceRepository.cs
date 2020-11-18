@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using NetCoreFrame.Application;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,14 +14,14 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<List<SysApiResource>> GetSysApiResourceList(SysApiResourceData model);
+        Task<List<SysApiResourceData>> GetSysApiResourceList(SysApiResourceData model);
 
         /// <summary>
         /// 获取授权资源
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<SysApiResource> GetSysApiResource(string id);
+        Task<SysApiResourceData> GetSysApiResource(string id);
 
         /// <summary>
         /// 保存授权资源

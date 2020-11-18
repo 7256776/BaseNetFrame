@@ -18,9 +18,14 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="apiResourceId">资源主键ID</param>
         /// <returns></returns>
-        Task<List<SysApiClient>> GetApiClientByResource(string apiResourceId);
+        Task<List<SysApiClientData>> GetApiClientByResource(string apiResourceId);
 
-
+        /// <summary>
+        /// 删除资源相关的客户
+        /// </summary>
+        /// <param name="list">资源To客户对象</param>
+        /// <returns></returns>
+        Task<bool> DelResourceToClient(List<SysApiResourceToClientInput> list);
 
     }
 }

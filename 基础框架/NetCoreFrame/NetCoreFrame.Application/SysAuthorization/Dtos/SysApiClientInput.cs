@@ -1,18 +1,20 @@
 ﻿using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
+using Abp.Runtime.Validation;
+using NetCoreFrame.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NetCoreFrame.Core
+namespace NetCoreFrame.Application
 {
     /// <summary>
     /// Api授权客户对象
     /// </summary>
     [AutoMap(typeof(SysApiClient))]
-    public class SysApiClientInput 
+    public class SysApiClientInput : ICustomValidate
     {
         public SysApiClientInput()
         {
@@ -28,7 +30,7 @@ namespace NetCoreFrame.Core
         /// 资源服务名称
         /// </summary>
         [Required(ErrorMessage = "请输入客户ID")]
-        [StringLength(100,ErrorMessage = "客户ID长度超过100") ]
+        [StringLength(100, ErrorMessage = "客户ID长度超过100")]
         public virtual string ClientId { get; set; }
 
         /// <summary>
@@ -58,18 +60,18 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 是否产生刷新token
         /// </summary>		
-        [Required(ErrorMessage = "请设置是否产生刷新")]
+        [Required(ErrorMessage = "请设置是否产生刷新Token")]
         public virtual bool AllowOfflineAccess { get; set; } = true;
-
-        /// <summary>
-        /// 刷新token有效期 单位秒
-        /// </summary>		
-        public virtual int? AccessTokenLifetime { get; set; } = 0;
 
         /// <summary>
         /// 授权token有效期 单位秒
         /// </summary>		
-        [Required(ErrorMessage = "请设置授权token有效期")]
+        public virtual int? AccessTokenLifetime { get; set; } = 0;
+
+        /// <summary>
+        /// 刷新token有效期 单位秒
+        /// </summary>		
+        //[Required(ErrorMessage = "请设置授权Token有效期")] 
         public virtual int? SlidingRefreshTokenLifetime { get; set; } = 0;
 
         /// <summary>
@@ -77,7 +79,20 @@ namespace NetCoreFrame.Core
         /// </summary>		
         [Required]
         public virtual bool IsActive { get; set; } = true;
-         
-         
+
+        /// <summary>
+        /// 添加自定义验证
+        /// </summary>
+        /// <param name="context"></param>
+        public void AddValidationErrors(CustomValidationContext context)
+        {
+            if (this.AllowOfflineAccess && (this.SlidingRefreshTokenLifetime == null || this.SlidingRefreshTokenLifetime <= 0))
+            {
+                string error = "启用刷新RefreshToken时，请设置授权Token有效期 (小时)。";
+                context.Results.Add(new ValidationResult(error));
+            }
+        }
+
+
     }
 }

@@ -1,12 +1,13 @@
 ﻿using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
+using NetCoreFrame.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NetCoreFrame.Core
+namespace NetCoreFrame.Application
 {
     /// <summary>
  	/// Api授权资源对象
@@ -47,7 +48,11 @@ namespace NetCoreFrame.Core
         /// 是否激活
         /// </summary>		
         public virtual bool? IsActive { get; set; }
-         
-         
+
+        /// <summary>
+        /// 资源相关客户对象集合
+        /// </summary>
+        public virtual List<SysApiClient> SysApiClientList { get; set; }
+
     }
 }

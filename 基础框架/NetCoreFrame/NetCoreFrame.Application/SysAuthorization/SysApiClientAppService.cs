@@ -14,14 +14,20 @@ namespace NetCoreFrame.Core
     {
         private readonly ISysApiClientRepository _sysApiClientRepository;
         private readonly ISysApiResourceToClientRepository _sysApiResourceToClientRepository;
+        private readonly ISysApiClienToAccountRepository _sysApiClienToAccountRepository;
+        private readonly ISysIdentityServerCacheAppService _sysIdentityServerCacheAppService;
 
         public SysApiClientAppService(
             ISysApiClientRepository sysApiClientRepository,
-            ISysApiResourceToClientRepository sysApiResourceToClientRepository
+            ISysApiResourceToClientRepository sysApiResourceToClientRepository,
+            ISysApiClienToAccountRepository sysApiClienToAccountRepository,
+            ISysIdentityServerCacheAppService sysIdentityServerCacheAppService
         )
         {
             _sysApiClientRepository = sysApiClientRepository;
             _sysApiResourceToClientRepository = sysApiResourceToClientRepository;
+            _sysApiClienToAccountRepository = sysApiClienToAccountRepository;
+            _sysIdentityServerCacheAppService = sysIdentityServerCacheAppService;
         }
 
         /// <summary>
@@ -29,7 +35,7 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Task<List<SysApiClient>> GetSysApiClientList(SysApiClientData model)
+        public Task<List<SysApiClientData>> GetSysApiClientList(SysApiClientData model)
         {
             var queryable = _sysApiClientRepository.GetAll();
             if (!string.IsNullOrEmpty(model.ClientId))
@@ -40,7 +46,9 @@ namespace NetCoreFrame.Core
             {
                 queryable = queryable.Where(w => w.IsActive == model.IsActive);
             }
-            return Task.FromResult(queryable.ToList());
+
+            List<SysApiClientData> result = ObjectMapper.Map<List<SysApiClientData>>(queryable.ToList());
+            return Task.FromResult(result);
         }
 
         /// <summary>
@@ -97,6 +105,9 @@ namespace NetCoreFrame.Core
             {
                 _sysApiResourceToClientRepository.Insert(new SysApiResourceToClient() { ApiClientId = id, ApiResourceId = Guid.Parse(model.ApiResourceId) });
             }
+            //移除缓存
+            _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();
+            _sysIdentityServerCacheAppService.RemoveClientCache();
             return true;
         }
 
@@ -106,6 +117,15 @@ namespace NetCoreFrame.Core
         /// <param name="ids"></param>
         public Task<bool> DelSysApiClient(List<string> ids)
         {
+            #region 验证关联的账号
+            List<Guid> gids = ObjectMapper.Map<List<Guid>>(ids);
+            var resultData = _sysApiClienToAccountRepository.GetAllList(w => gids.Contains(w.ApiClientId));
+            if (resultData.Any())
+            {
+                throw new UserFriendlyException("授权客户删除", "请先移除相关账号再删除授权客户。");
+            }
+            #endregion
+            #region
             foreach (var id in ids)
             {
                 if (string.IsNullOrEmpty(id))
@@ -117,6 +137,10 @@ namespace NetCoreFrame.Core
                 //注: 可扩展一对多
                 _sysApiResourceToClientRepository.Delete(w => w.ApiClientId == Guid.Parse(id));
             }
+            #endregion
+            //移除缓存
+            _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();
+            _sysIdentityServerCacheAppService.RemoveClientCache();
             return Task.FromResult(true);
         }
 

@@ -17,12 +17,19 @@ namespace NetCoreFrame.Core
     public class SysApiResourceAppService : NetCoreFrameApplicationBase, ISysApiResourceAppService
     {
         private readonly ISysApiResourceRepository _sysApiResourceRepository;
+        private readonly ISysApiResourceToClientRepository _sysApiResourceToClientRepository;
+        private readonly ISysIdentityServerCacheAppService _sysIdentityServerCacheAppService;
+
 
         public SysApiResourceAppService(
-            ISysApiResourceRepository sysApiResourceRepository
+            ISysApiResourceToClientRepository sysApiResourceToClientRepository,
+            ISysApiResourceRepository sysApiResourceRepository,
+            ISysIdentityServerCacheAppService sysIdentityServerCacheAppService
         )
         {
+            _sysApiResourceToClientRepository = sysApiResourceToClientRepository;
             _sysApiResourceRepository = sysApiResourceRepository;
+            _sysIdentityServerCacheAppService = sysIdentityServerCacheAppService;
         }
 
         /// <summary>
@@ -30,7 +37,7 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Task<List<SysApiResource>> GetSysApiResourceList(SysApiResourceData model)
+        public Task<List<SysApiResourceData>> GetSysApiResourceList(SysApiResourceData model)
         {
             var queryable = _sysApiResourceRepository.GetAll();
             if (!string.IsNullOrEmpty(model.ResourceName))
@@ -41,7 +48,8 @@ namespace NetCoreFrame.Core
             {
                 queryable = queryable.Where(w => w.IsActive == model.IsActive);
             }
-            return Task.FromResult(queryable.ToList());
+            List<SysApiResourceData> list = ObjectMapper.Map<List<SysApiResourceData>>(queryable.ToList());
+            return Task.FromResult(list);
         }
 
         /// <summary>
@@ -49,14 +57,15 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<SysApiResource> GetSysApiResource(string id)
-        { 
+        public Task<SysApiResourceData> GetSysApiResource(string id)
+        {
             if (string.IsNullOrEmpty(id))
             {
-                return Task.FromResult<SysApiResource>(null);
+                return Task.FromResult<SysApiResourceData>(null);
             }
             var model = _sysApiResourceRepository.Get(Guid.Parse(id));
-            return Task.FromResult(model);
+            SysApiResourceData m = ObjectMapper.Map<SysApiResourceData>(model);
+            return Task.FromResult(m);
         }
 
         /// <summary>
@@ -82,6 +91,10 @@ namespace NetCoreFrame.Core
                 SysApiResource m = ObjectMapper.Map(model, data);
                 _sysApiResourceRepository.UpdateAsync(m);
             }
+            //移除缓存
+            _sysIdentityServerCacheAppService.RemoveResourcesCache();
+            _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();
+            _sysIdentityServerCacheAppService.RemoveClientCache();
             return Task.FromResult(true);
         }
 
@@ -91,6 +104,15 @@ namespace NetCoreFrame.Core
         /// <param name="ids"></param>
         public Task<bool> DelSysApiResource(List<string> ids)
         {
+            #region 验证关联的客户
+            List<Guid> gids = ObjectMapper.Map<List<Guid>>(ids);
+            var resultData = _sysApiResourceToClientRepository.GetAllList(w => gids.Contains(w.ApiResourceId));
+            if (resultData.Any())
+            {
+                throw new UserFriendlyException("授权资源删除", "请先移除相关客户再删除授权资源。");
+            }
+            #endregion
+            #region 
             foreach (var id in ids)
             {
                 if (string.IsNullOrEmpty(id))
@@ -99,6 +121,11 @@ namespace NetCoreFrame.Core
                 }
                 _sysApiResourceRepository.Delete(Guid.Parse(id));
             }
+            #endregion
+            //移除缓存
+            _sysIdentityServerCacheAppService.RemoveResourcesCache();
+            _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();
+            _sysIdentityServerCacheAppService.RemoveClientCache();
             return Task.FromResult(true);
         }
 

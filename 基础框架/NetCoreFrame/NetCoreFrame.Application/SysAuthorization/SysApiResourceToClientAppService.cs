@@ -12,7 +12,7 @@ using Abp.UI;
 namespace NetCoreFrame.Core
 {
     /// <summary> 
-    /// 授权账号
+    /// 资源授权的客户
     /// </summary>
     public class SysApiResourceToClientAppService : NetCoreFrameApplicationBase, ISysApiResourceToClientAppService
     {
@@ -30,14 +30,34 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="apiResourceId">资源主键ID</param>
         /// <returns></returns>
-        public Task<List<SysApiClient>> GetApiClientByResource(string apiResourceId)
+        public Task<List<SysApiClientData>> GetApiClientByResource(string apiResourceId)
         {
             if (string.IsNullOrEmpty(apiResourceId))
             {
-                return Task.FromResult<List<SysApiClient>>(null);
+                return Task.FromResult<List<SysApiClientData>>(null);
             }
             var queryable = _sysApiResourceToClientRepository.GetApiClientByResource(Guid.Parse(apiResourceId));
-            return Task.FromResult(queryable.ToList());
+            List<SysApiClientData> result = ObjectMapper.Map<List<SysApiClientData>>(queryable.ToList());
+            return Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// 删除资源相关的客户
+        /// </summary>
+        /// <param name="list">资源To客户对象</param>
+        /// <returns></returns>
+        public Task<bool> DelResourceToClient(List<SysApiResourceToClientInput> list)
+        {
+            if (list==null || !list.Any())
+            {
+                throw new UserFriendlyException("授权客户删除", "请选择资源相关的授权客户。");
+            }
+            foreach (var item in list)
+            {
+                _sysApiResourceToClientRepository.Delete(w => w.ApiResourceId == item.ApiResourceId && w.ApiClientId == item.ApiClientId);
+            }
+            return Task.FromResult(true);
+
         }
 
 

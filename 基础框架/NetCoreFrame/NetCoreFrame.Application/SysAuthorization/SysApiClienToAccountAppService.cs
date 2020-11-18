@@ -30,16 +30,35 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="apiClientId">资源主键ID</param>
         /// <returns></returns>
-        public Task<List<SysApiAccount>> GetApiAccountByClient(string apiClientId)
+        public Task<List<SysApiAccountData>> GetApiAccountByClient(string apiClientId)
         {
             if (string.IsNullOrEmpty(apiClientId))
             {
-                return Task.FromResult<List<SysApiAccount>>(null);
+                return Task.FromResult<List<SysApiAccountData>>(null);
             }
             var queryable = _sysApiClienToAccountRepository.GetApiAccountByClient(Guid.Parse(apiClientId));
-            return Task.FromResult(queryable.ToList());
+            List<SysApiAccountData> m = ObjectMapper.Map<List<SysApiAccountData>>(queryable.ToList());
+            return Task.FromResult(m);
         }
 
+        /// <summary>
+        /// 删除客户相关的账号
+        /// </summary>
+        /// <param name="list">客户To账号对象</param>
+        /// <returns></returns>
+        public Task<bool> DelClienToAccount(List<SysApiClienToAccountInput> list)
+        {
+            if (list == null || !list.Any())
+            {
+                throw new UserFriendlyException("授权账号删除", "请选择客户相关的授权账号。");
+            }
+            foreach (var item in list)
+            {
+                _sysApiClienToAccountRepository.Delete(w => w.ApiAccountId == item.ApiAccountId && w.ApiClientId == item.ApiClientId);
+            }
+            return Task.FromResult(true);
+
+        }
 
 
 

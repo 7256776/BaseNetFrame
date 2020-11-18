@@ -18,15 +18,18 @@ namespace NetCoreFrame.Core
     {
         private readonly ISysApiAccountRepository _sysApiAccountRepository;
         private readonly ISysApiClienToAccountRepository _sysApiClienToAccountRepository;
-
+        private readonly ISysIdentityServerCacheAppService _sysIdentityServerCacheAppService;
+        
 
         public SysApiAccountAppService(
             ISysApiAccountRepository sysApiAccountRepository,
-            ISysApiClienToAccountRepository sysApiClienToAccountRepository
+            ISysApiClienToAccountRepository sysApiClienToAccountRepository,
+            ISysIdentityServerCacheAppService sysIdentityServerCacheAppService
         )
         {
             _sysApiAccountRepository = sysApiAccountRepository;
             _sysApiClienToAccountRepository = sysApiClienToAccountRepository;
+            _sysIdentityServerCacheAppService = sysIdentityServerCacheAppService;
         }
 
         /// <summary>
@@ -98,6 +101,8 @@ namespace NetCoreFrame.Core
             {
                 _sysApiClienToAccountRepository.Insert(new SysApiClienToAccount() { ApiAccountId = id, ApiClientId = Guid.Parse(model.ApiClientId) });
             }
+            //移除缓存
+            _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();
             return true;
         }
 
@@ -118,6 +123,8 @@ namespace NetCoreFrame.Core
                 //注: 可扩展一对多
                 _sysApiClienToAccountRepository.Delete(w => w.ApiClientId == Guid.Parse(id));
             }
+            //移除缓存
+            _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();
             return Task.FromResult(true);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using NetCoreFrame.Application;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace NetCoreFrame.Core
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<List<SysApiClient>> GetSysApiClientList(SysApiClientData model);
+        Task<List<SysApiClientData>> GetSysApiClientList(SysApiClientData model);
 
         /// <summary>
         /// 获取授权客户

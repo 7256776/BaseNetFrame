@@ -6,6 +6,7 @@ using Abp.Domain.Repositories;
 using NetCoreFrame.Core;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NetCoreFrame.Application
 {
@@ -31,7 +32,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        public PagedResultDto<SysAuditList> GetAuditLogList(RequestParam<dynamic> requestParam)
+        public  PagedResultDto<SysAuditList> GetAuditLogList(RequestParam<dynamic> requestParam)
         {
             var model = requestParam.ToEntityObject<SysAuditInput>();
 

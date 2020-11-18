@@ -16,11 +16,16 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 查询客户相关的账号
         /// </summary>
-        /// <param name="apiClientId">资源主键ID</param>
+        /// <param name="apiClientId">客户主键ID</param>
         /// <returns></returns>
-        Task<List<SysApiAccount>> GetApiAccountByClient(string apiClientId);
+        Task<List<SysApiAccountData>> GetApiAccountByClient(string apiClientId);
 
-
+        /// <summary>
+        /// 删除客户相关的账号
+        /// </summary>
+        /// <param name="list">客户To账号对象</param>
+        /// <returns></returns>
+        Task<bool> DelClienToAccount(List<SysApiClienToAccountInput> list);
 
     }
 }
