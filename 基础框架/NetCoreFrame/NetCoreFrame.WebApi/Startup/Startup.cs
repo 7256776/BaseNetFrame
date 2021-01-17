@@ -41,7 +41,7 @@ namespace NetCoreFrame.WebApi
         /// <param name="env"></param>
         public Startup(IHostingEnvironment hostingEnvironment)
         {
-            //设置项目wwwroot物理路径   (这种写法很丑需改善)
+            //设置项目wwwroot物理路径   (这种写法很丑需改善), 可以考虑Environment对象
             ConstantConfig.WebWWWrootPath = hostingEnvironment.WebRootPath + "\\";
             //设置项目根目录物理路径
             ConstantConfig.WebContentRootPath = hostingEnvironment.ContentRootPath + "\\";
@@ -50,7 +50,6 @@ namespace NetCoreFrame.WebApi
                 hostingEnvironment.EnvironmentName,
                 hostingEnvironment.IsDevelopment());
 
-            //Environment
         }
 
         /// <summary>

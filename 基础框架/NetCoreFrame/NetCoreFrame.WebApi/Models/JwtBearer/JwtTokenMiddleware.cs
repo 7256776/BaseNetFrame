@@ -20,12 +20,12 @@ namespace NetCoreFrame.WebApi
             {
                 #region 
                 /*
+                 * //伪代码 示例
                  获取头信息里面的token
                  if (ctx.Request.Headers.ContainsKey("Authorization"))
                  {
                   var tokenBearer = ctx.Request.Headers["Authorization"];
                   string token = tokenBearer.ToString().Split(' ')[1];
-                  //伪代码 
                   var jwtHandler = new JwtSecurityTokenHandler();
                   //获取token信息对象
                   jwtHandler.ReadJwtToken();
