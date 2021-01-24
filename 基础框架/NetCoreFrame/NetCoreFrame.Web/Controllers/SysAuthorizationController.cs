@@ -258,7 +258,7 @@ namespace NetCoreFrame.Web.Controllers
         #region 授权 服务 客户 账号 关系
 
         /// <summary>
-        /// 删除授权资源
+        /// 查询资源相关客户
         /// </summary>
         /// <param name="ids"></param>
         [AbpMvcAuthorize]

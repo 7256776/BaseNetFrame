@@ -43,7 +43,7 @@ namespace NetCoreFrame.Web
         /// <param name="env"></param>
         public Startup(IHostingEnvironment hostingEnvironment)
         {
-            //注: Environment对象 提供了当前环境和平台的信息和操作方法
+            //注: 可使用 Environment对象 提供了当前环境和平台的信息和操作方法
             //设置项目wwwroot物理路径   (这种写法很丑需改善)
             ConstantConfig.WebWWWrootPath = hostingEnvironment.WebRootPath + "\\";
             //设置项目根目录物理路径
@@ -206,7 +206,7 @@ namespace NetCoreFrame.Web
             #endregion
 
             #region cookies授权
-            /* CookieAuthenticationDefaults.AuthenticationScheme
+            /* 
              * CookieAuthenticationDefaults.AuthenticationScheme 是特定Cookie认证方案的值。处理多个Cookie验证实例，并且需要限制对一个实例的授权时用。 
              */
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -218,7 +218,7 @@ namespace NetCoreFrame.Web
             });
             #endregion
 
-            #region 注册EfDBContext,或者在启动类注册
+            #region 注册EFDBContext,或者在启动类注册
             //services.AddAbpDbContext<NetCoreFrameDbContext>(options =>
             //{
             //    options.DbContextOptions.UseSqlServer(options.ConnectionString);

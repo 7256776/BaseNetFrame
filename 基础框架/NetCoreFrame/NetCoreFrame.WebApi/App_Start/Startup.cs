@@ -35,7 +35,7 @@ namespace NetCoreFrame.WebApi
         /// <param name="env"></param>
         public Startup(IHostingEnvironment hostingEnvironment)
         {
-            //设置项目wwwroot物理路径   (这种写法很丑需改善)
+            //设置项目wwwroot物理路径  
             ConstantConfig.WebWWWrootPath = hostingEnvironment.WebRootPath + "\\";
             //设置项目根目录物理路径
             ConstantConfig.WebContentRootPath = hostingEnvironment.ContentRootPath + "\\";
@@ -94,7 +94,7 @@ namespace NetCoreFrame.WebApi
             }
             //静态文件服务中间件(默认文件夹wwwroot)
             app.UseStaticFiles();
-            //自定义验证Jwt中间件  或 Oidc授权验证
+            //自定义验证Jwt中间件  或 OIDC授权验证
             app.UseAuthTokenMiddleware(_appConfiguration);
 
             //abp本地化中间件

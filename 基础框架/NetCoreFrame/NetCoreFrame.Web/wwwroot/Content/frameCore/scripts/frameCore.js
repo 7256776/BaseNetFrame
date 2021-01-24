@@ -124,7 +124,6 @@ var initFrame = function (Vue, options) {
             //console.log('bind=只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作。')
             var actionName = vnode.data.ref;
             var menuName = vueApp.$route.name
-
             //如果未设置模块或授权ref的忽略权限判断
             if (!actionName || !menuName) {
                 return
@@ -361,9 +360,9 @@ Vue.use(initFrame)
 //
 /*
 *   简单的状态管理对象
-*   screenHeight 当Dom高度    ┓   
+*   screenHeight 当Dom高度     ┓   
 *                                              ┣   初始值通过framePageStart.js 的 winResize              
-*   screenWidth  当Dom宽度    ┛
+*   screenWidth  当Dom宽度     ┛
 *       
 */
 var frameStore = Vue.observable({

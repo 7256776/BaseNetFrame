@@ -27,9 +27,9 @@
                                 </div>
                                 <div class="actions">
                                     <el-button-group>
-                                        <el-button type="primary" size="mini" icon="fa fa-file-text-o fa-lg" v-on:click="doResourceAdd">新增</el-button>
-                                        <el-button type="primary" size="mini" icon="fa fa-save fa-lg" v-on:click="doResourceEdit()">编辑</el-button>
-                                        <el-button type="primary" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doResourceDel">删除</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-file-text-o fa-lg" v-on:click="doResourceAdd" ref="btnResourceAdd" >新增</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-save fa-lg" v-on:click="doResourceEdit()" ref="btnResourceEdit" >编辑</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doResourceDel" ref="btnResourceDel" >删除</el-button>
                                     </el-button-group>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                                         <el-table-column prop="description" label="描述"></el-table-column>
                                                         <el-table-column label="操作" width="100px" align="center">
                                                             <template slot-scope="scopeSub">
-                                                                <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doClienToAccountDel(scopeSub.row,scope.row)"></el-button>
+                                                                <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg"   ref="btnClienToAccountDel" v-on:click="doClienToAccountDel(scopeSub.row,scope.row)"></el-button>
                                                             </template>
                                                         </el-table-column>
                                                     </el-table>
@@ -112,14 +112,21 @@
                                                 </template>
                                             </el-table-column>
                                             <el-table-column prop="clientId" label="客户ID" align="center" width="200"></el-table-column>
-                                            <el-table-column prop="accessTokenLifetime" label="授权token" align="center" width="100">
+                                            <el-table-column prop="accessTokenLifetime" label="授权token有效期" align="center" width="120">
+                                                <template slot-scope="scope">
+                                                    {{ scope.row.accessTokenLifetime}}/小时
+                                                </template>
                                             </el-table-column>
                                             <el-table-column prop="allowOfflineAccess" label="刷新token" align="center" width="100">
                                                 <template slot-scope="scope">
                                                     <el-tag v-bind:type="scope.row.allowOfflineAccess ? 'success' : 'danger'">{{ scope.row.allowOfflineAccess ? '启动' : '禁用' }}</el-tag>
                                                 </template>
                                             </el-table-column>
-                                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120"></el-table-column>
+                                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120">
+                                                <template slot-scope="scope">
+                                                    {{ scope.row.slidingRefreshTokenLifetime}}/小时
+                                                </template>
+                                            </el-table-column>
                                             <el-table-column label="启用状态" width="100px" align="center">
                                                 <template slot-scope="scope">
                                                     <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
@@ -128,7 +135,7 @@
                                             <el-table-column prop="description" label="描述"></el-table-column>
                                             <el-table-column label="操作" width="100px" align="center">
                                                 <template slot-scope="scopeSub">
-                                                    <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doResourceToClientDel(scopeSub.row)"></el-button>
+                                                    <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg"  ref="btnResourceToClienDel" v-on:click="doResourceToClientDel(scopeSub.row)"></el-button>
                                                 </template>
                                             </el-table-column>
                                         </el-table>
@@ -147,9 +154,9 @@
                         <div class="row" style="margin-right:0px;">
                             <div class="col-md-7 col-sm-7" style="text-align:left;">
                                 <el-button-group>
-                                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doClientAdd()" ref="btnClientAdd" v-IsAuthorized>新增</el-button>
-                                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doClientEdit()" ref="btnClientEdit" v-IsAuthorized>编辑</el-button>
-                                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doClientDel()" ref="btnClientDel" v-IsAuthorized>删除</el-button>
+                                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doClientAdd()" ref="btnClientAdd" >新增</el-button>
+                                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doClientEdit()" ref="btnClientEdit" >编辑</el-button>
+                                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doClientDel()" ref="btnClientDel" >删除</el-button>
                                 </el-button-group>
                             </div>
                             <div class="col-md-5 col-sm-5" style="text-align:right;">
@@ -191,7 +198,7 @@
                                         <el-table-column prop="description" label="描述"></el-table-column>
                                         <el-table-column label="操作" width="100px" align="center">
                                             <template slot-scope="scopeSub">
-                                                <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doClienToAccountDel(scopeSub.row,scope.row)"></el-button>
+                                                <el-button type="danger" size="mini" icon="fa fa-trash-o fa-lg"   ref="btnClienToAccountDel" v-on:click="doClienToAccountDel(scopeSub.row,scope.row)"></el-button>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -200,14 +207,21 @@
                             </el-table-column>
                             <el-table-column prop="clientId" label="客户ID" align="center" width="200"></el-table-column>
                             <el-table-column prop="clientSecrets" label="客户秘钥" align="center" width="200"></el-table-column>
-                            <el-table-column prop="accessTokenLifetime" label="授权token" align="center" width="100">
+                            <el-table-column prop="accessTokenLifetime" label="授权token有效期" align="center" width="120">
+                                <template slot-scope="scope">
+                                    {{ scope.row.accessTokenLifetime}}/小时
+                                </template>
                             </el-table-column>
                             <el-table-column prop="allowOfflineAccess" label="刷新token" align="center" width="100">
                                 <template slot-scope="scope">
                                     <el-tag v-bind:type="scope.row.allowOfflineAccess ? 'success' : 'danger'">{{ scope.row.allowOfflineAccess ? '启动' : '禁用' }}</el-tag>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120"></el-table-column>
+                            <el-table-column prop="slidingRefreshTokenLifetime" label="刷新token有效期" align="center" width="120">
+                                <template slot-scope="scope">
+                                    {{ scope.row.slidingRefreshTokenLifetime}}/小时
+                                </template>
+                            </el-table-column>
                             <el-table-column label="启用状态" width="100px" align="center">
                                 <template slot-scope="scope">
                                     <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
@@ -231,9 +245,9 @@
                                 </div>
                                 <div class="actions">
                                     <el-button-group>
-                                        <el-button type="primary" size="mini" icon="fa fa-file-text-o fa-lg" v-on:click="doAccountAdd">新增</el-button>
-                                        <el-button type="primary" size="mini" icon="fa fa-save fa-lg" v-on:click="doAccountEdit()">编辑</el-button>
-                                        <el-button type="primary" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doAccountDel">删除</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-file-text-o fa-lg" v-on:click="doAccountAdd" ref="btnAccountAdd" >新增</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-save fa-lg" v-on:click="doAccountEdit()" ref="btnAccountEdit" >编辑</el-button>
+                                        <el-button type="primary" size="mini" icon="fa fa-trash-o fa-lg" v-on:click="doAccountDel" ref="btnAccountDel" >删除</el-button>
                                     </el-button-group>
                                 </div>
                             </div>
@@ -259,7 +273,7 @@
                             <div class="portlet-title tabbable-line">
                                 <div class="caption caption-md">
                                     <i class="icon-globe theme-font hide"></i>
-                                    <span class="caption-subject font-blue-madison bold uppercase">授权服务</span>
+                                    <span class="caption-subject font-blue-madison bold uppercase">授权服务(待扩展,设置该账号可以访问的服务)</span>
                                 </div>
                             </div>
                             <div class="portlet-body">

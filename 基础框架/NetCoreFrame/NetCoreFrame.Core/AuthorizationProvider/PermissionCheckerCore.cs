@@ -60,7 +60,7 @@ namespace NetCoreFrame.Core
             bool isGranted = Task.FromResult(_userInfoManager.IsGrantedAsync(permissionName)).Result.Result;
             if (!isGranted)
             {
-                AuthorizationException(permissionName);
+                //AuthorizationException(permissionName);
             }
             return isGranted;
         }
@@ -76,7 +76,7 @@ namespace NetCoreFrame.Core
             bool isGranted = await _userInfoManager.IsGrantedAsync(user, permissionName);
             if (!isGranted)
             {
-                AuthorizationException(permissionName);
+                //AuthorizationException(permissionName);
             }
             return isGranted;
         }
@@ -86,7 +86,7 @@ namespace NetCoreFrame.Core
             bool isGranted = Task.FromResult(_userInfoManager.IsGrantedAsync(user, permissionName)).Result.Result;
             if (!isGranted)
             {
-               AuthorizationException(permissionName);
+               //AuthorizationException(permissionName);
             }
             return isGranted;
         }

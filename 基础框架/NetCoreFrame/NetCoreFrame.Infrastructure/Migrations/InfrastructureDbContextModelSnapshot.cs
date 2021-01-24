@@ -119,7 +119,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("d9aed633-e9ae-40e6-8ad4-4eec083b03b0"),
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(7379),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 343, DateTimeKind.Local).AddTicks(7854),
                             NotificationName = "system",
                             TenantId = 1,
                             UserId = 1L
@@ -127,7 +127,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("15812862-b2d7-45e2-826e-25545057c334"),
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(9219),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 343, DateTimeKind.Local).AddTicks(8800),
                             NotificationName = "system",
                             TenantId = 1,
                             UserId = 2L
@@ -206,6 +206,163 @@ namespace NetCoreFrame.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sys_NotificationsToUser");
+                });
+
+            modelBuilder.Entity("NetCoreFrame.Core.SysApiAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnName("CreatorUserId");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("ExtensionData")
+                        .HasMaxLength(4000);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnName("LastModifierUserId");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sys_ApiAccount");
+                });
+
+            modelBuilder.Entity("NetCoreFrame.Core.SysApiClienToAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<string>("AccountSource")
+                        .HasMaxLength(10);
+
+                    b.Property<Guid>("ApiAccountId");
+
+                    b.Property<Guid>("ApiClientId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sys_ApiClienToAccount");
+                });
+
+            modelBuilder.Entity("NetCoreFrame.Core.SysApiClient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<int?>("AccessTokenLifetime")
+                        .IsRequired();
+
+                    b.Property<bool>("AllowOfflineAccess");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("ClientSecrets")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnName("CreatorUserId");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("ExtensionData")
+                        .HasMaxLength(4000);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnName("LastModifierUserId");
+
+                    b.Property<int?>("SlidingRefreshTokenLifetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sys_ApiClient");
+                });
+
+            modelBuilder.Entity("NetCoreFrame.Core.SysApiResource", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnName("CreatorUserId");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("ExtensionData")
+                        .HasMaxLength(4000);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnName("LastModifierUserId");
+
+                    b.Property<string>("ResourceDisplayName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("ResourceName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sys_ApiResource");
+                });
+
+            modelBuilder.Entity("NetCoreFrame.Core.SysApiResourceToClient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("ApiClientId");
+
+                    b.Property<Guid>("ApiResourceId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sys_ApiResourceToClient");
                 });
 
             modelBuilder.Entity("NetCoreFrame.Core.SysAuditLog", b =>
@@ -742,6 +899,19 @@ namespace NetCoreFrame.Infrastructure.Migrations
                             PermissionName = "DictManager",
                             RequiresAuthModel = "3",
                             Url = "/Views/SysDict/Index"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Icon = "fa-windows",
+                            IsActive = true,
+                            MenuDisplayName = "OIDC授权",
+                            MenuName = "sys-dict",
+                            OrderBy = 9,
+                            ParentID = 1L,
+                            PermissionName = "AuthorizationManager",
+                            RequiresAuthModel = "3",
+                            Url = "/Views/SysAuthorization/Index"
                         });
                 });
 
@@ -777,7 +947,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("0bfb0ddd-bb12-4059-87a1-4e0294643ea4"),
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 315, DateTimeKind.Local).AddTicks(1870),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 343, DateTimeKind.Local).AddTicks(4931),
                             NotificationDescribe = "提供系统默认提示消息",
                             NotificationDisplayName = "系统通知",
                             NotificationName = "system",
@@ -1124,7 +1294,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 292, DateTimeKind.Local).AddTicks(136),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 337, DateTimeKind.Local).AddTicks(3110),
                             Description = "动态生成的角色",
                             IsActive = true,
                             RoleName = "admin角色"
@@ -1167,7 +1337,7 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("ecf6faa6-27d6-4056-bb32-91357b639824"),
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 316, DateTimeKind.Local).AddTicks(2780),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 344, DateTimeKind.Local).AddTicks(642),
                             Name = "Abp.Localization.DefaultLanguageName",
                             Value = "zh-Hans"
                         });
@@ -1247,12 +1417,12 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 293, DateTimeKind.Local).AddTicks(23),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 337, DateTimeKind.Local).AddTicks(8046),
                             ImageUrl = "m",
                             IsActive = true,
                             IsAdmin = true,
                             IsDeleted = false,
-                            Password = "AQAAAAEAACcQAAAAENf06DZPoTohuIRizcAnDck0stwoEySnWKgGMISrovaUJP3TLMuc4K9+jbv4YlqNFw==",
+                            Password = "AQAAAAEAACcQAAAAEC2/1iZ/II4T9HQ73yQl7yggIQswcjNOmeYeW+zs9UUbOmn95JcD0uk418ahV+CYcw==",
                             Sex = "1",
                             UserCode = "sys",
                             UserNameCn = "管理员"
@@ -1260,12 +1430,12 @@ namespace NetCoreFrame.Infrastructure.Migrations
                         new
                         {
                             Id = 2L,
-                            CreationTime = new DateTime(2020, 5, 18, 17, 6, 49, 305, DateTimeKind.Local).AddTicks(6881),
+                            CreationTime = new DateTime(2021, 1, 23, 17, 26, 35, 341, DateTimeKind.Local).AddTicks(7073),
                             ImageUrl = "2",
                             IsActive = true,
                             IsAdmin = false,
                             IsDeleted = false,
-                            Password = "AQAAAAEAACcQAAAAENuiNw98Tn710z065gkh392ny6LVpy/g6XKpY2Ov8zZs78vAfXkWwpsETgEEnWi9ug==",
+                            Password = "AQAAAAEAACcQAAAAEFs/CiqW8zekvHDwB3wZaDLS/cCSJB4DzMKqy+XNe3/qp+pn8zZLLGPCIXWj8IaViA==",
                             Sex = "0",
                             UserCode = "admin",
                             UserNameCn = "管理员"

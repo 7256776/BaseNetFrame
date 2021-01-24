@@ -53,6 +53,8 @@ namespace NetCoreFrame.Web.Controllers
         public JsonResult MenuList()
         {
             //这货是异步的必须采用该方案获取返回值
+            //建议优化通过数据库获取授权情况
+            //此处获取模块会触发重写的授权验证, 由于授权验证针对异常消息做了本地化处理会导致此处异常.
             UserMenu MainMenu = AsyncHelper.RunSync(() => _userNavigationManager.GetMenuAsync("MainMenu", new UserIdentifier(null, AbpSession.UserId.Value)));
             return Json(MainMenu);
         }

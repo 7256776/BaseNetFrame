@@ -17,6 +17,10 @@
     <Compile Remove="20181215154453_20180329001.cs" />
     <Compile Remove="Class1.cs" />
     <Compile Remove="Migrations\20200103023709_init.cs" />
+    <Compile Remove="Migrations\20200518090649_InitDataBase.cs" />
+    <Compile Remove="Migrations\20200518090649_InitDataBase.Designer.cs" />
+    <Compile Remove="Migrations\20210117024722_InitDataBase.cs" />
+    <Compile Remove="Migrations\20210117024722_InitDataBase.Designer.cs" />
     <Compile Remove="Migrations\Configuration.cs" />
     <Compile Remove="Migrations\InitDataBase.cs" />
     <Compile Remove="SeedData\DefaultFrameDB.cs" />

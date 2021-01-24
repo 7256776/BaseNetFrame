@@ -12,7 +12,7 @@
     "Login": "登录",
     "IsPersistent": "记住",
     "IsRepeat": "您输入的 {0} 重复,请重新输入。",
-    "AtLeastOneOfThesePermissionsMustBeGranted": "您没有权限",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "没有授予所需的权限。至少必须授予其中一种权限：{0}",
     "ValidationError": "您请求的数据无效。",
     "InternalServerError": "您的请求发生错误,请刷新页面重试。",
     "ValidationNarrativeTitle": "在验证过程中检测到以下错误。",

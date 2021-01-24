@@ -83,7 +83,6 @@ var component = Vue.component('sys-authorization', {
                 formDialog: false,
             },
 
-
             accountFormData: {
                 id: null,
                 userName: null,

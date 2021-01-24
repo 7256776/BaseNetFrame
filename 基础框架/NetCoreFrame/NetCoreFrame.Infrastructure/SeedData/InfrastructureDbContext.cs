@@ -32,6 +32,7 @@ namespace NetCoreFrame.Infrastructure
             int menuAuditlogsId = 6;
             int menuOrgId = 7;
             int menuDictId = 8;
+            int menuAuthorization = 9;
             #endregion
 
             #region 菜单
@@ -146,6 +147,20 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysDict/Index",
                     Icon = "fa-bookmark",
                     OrderBy = 7,
+                    IsActive = true
+                },
+                //OIDC授权
+                new SysMenus
+                {
+                    Id = menuAuthorization,
+                    ParentID = menuSysId,
+                    MenuDisplayName = "OIDC授权",
+                    MenuName = "sys-dict",
+                    PermissionName = "AuthorizationManager",
+                    RequiresAuthModel = "3",
+                    Url = "/Views/SysAuthorization/Index",
+                    Icon = "fa-windows",
+                    OrderBy = 9,
                     IsActive = true
                 }
             );
@@ -358,6 +373,7 @@ namespace NetCoreFrame.Infrastructure
                     RequiresAuthModel = "3",
                     IsActive = true
                 }
+              
              );
             #endregion
 
