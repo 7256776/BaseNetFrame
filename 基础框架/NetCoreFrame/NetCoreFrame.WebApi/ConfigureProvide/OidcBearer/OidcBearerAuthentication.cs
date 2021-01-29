@@ -11,11 +11,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace NetCoreFrame.WebApi
 {
-     
 
+    /// <summary>
+    /// 主要适用于资源服务器端的配置信息
+    /// </summary>
     public static class OidcBearerAuthentication
     {
         /// <summary>
+        /// 特别注意: 
         /// 配置 IdentityServer4 授权验证
         /// 主要适用于资源服务器端的配置信息
         /// </summary>
@@ -25,34 +28,31 @@ namespace NetCoreFrame.WebApi
         {
             //配置基本的资源服务器授权对象
             var authenticationBuilder = services.AddAuthentication(schema);
-            //
-            bool isEnabled = bool.Parse(configuration["Authentication:JwtBearer:IsEnabled"]);
-            if (isEnabled)
-            {
-                //配置资源服务器授权信息
-                authenticationBuilder.AddJwtBearer(options =>
+            //配置资源服务器授权信息
+            authenticationBuilder.AddJwtBearer(options =>
                 {
-                    options.Authority = "http://localhost:18377/";
-                    options.RequireHttpsMetadata = false;
-                    options.Audience = "ResourceApi";
+                    options.Authority = "http://localhost:18377/";          //设置授权服务器的地址, 主要是通过配置获取并设置
+                    options.RequireHttpsMetadata = false;                     //设置授权服务器是否使用https
+                    options.Audience = "ResourceApi";                           //设置对应授权服务器所使用的资源名称
+
                     //options.MetadataAddress = "http://localhost:18377/.well-known/openid-configuration";
+                    //options.Configuration = new   Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration();
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ClockSkew = TimeSpan.FromSeconds(0)         //授权token有效时间偏移值(单位秒)
-                        //ValidateAudience = true                               //是否验证授权 接受方
+                        ClockSkew = TimeSpan.FromSeconds(0)               //授权token有效时间偏移值(单位秒)
+                        //ValidateAudience = true                                     //是否验证授权 用于资源服务器
                     };
 
-                    //options.Events=new JwtBearerEvents
+                    //获取授权相关事件
+                    //options.Events = new JwtBearerEvents
                     //{
-                    //    OnAuthenticationFailed= OnAuthenticationFailed,
-                    //    OnChallenge =  OnChallenge,
+                    //    OnAuthenticationFailed = OnAuthenticationFailed,
+                    //    OnChallenge = OnChallenge,
                     //    OnTokenValidated = OnTokenValidated,
                     //    OnMessageReceived = QueryStringTokenResolver
                     //};
-
                 });
-            }
         }
 
         public static Task OnTokenValidated(TokenValidatedContext context)
@@ -100,8 +100,8 @@ namespace NetCoreFrame.WebApi
             {
                 options.ClientId = "oauth.code";
                 options.ClientSecret = "secret";
-                options.AuthorizationEndpoint = "https://oidc.faasx.com/connect/authorize";
-                options.TokenEndpoint = "https://oidc.faasx.com/connect/token";
+                options.AuthorizationEndpoint = "http://localhost:18377/";
+                options.TokenEndpoint = "http://localhost:18377/connect/token";
                 options.CallbackPath = "/signin-oauth";
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");

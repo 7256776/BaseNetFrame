@@ -1,0 +1,37 @@
+﻿@model IdentityServer.LoginInputModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="login-page">
+    <div class="page-header">
+        <h1>登录</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form asp-route="Login">
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        <fieldset>
+                         
+                            <div class="form-group">
+                                <label>账号</label>
+                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                                <label>密码</label>
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                                <label>
+                                    <input asp-for="RememberLogin">
+                                    <strong>记住登录状态</strong>
+                                </label>
+                                <button class="btn btn-primary" name="button" value="login">登录</button>
+                            </div>
+                            <div class="form-group">
+                                <p>返回地址</p>
+                                <p>@Model.ReturnUrl</p>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

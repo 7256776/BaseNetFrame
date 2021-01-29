@@ -1,0 +1,11 @@
+﻿开发注意事项
+
+1. IdentityServer4授权在目前WebApi 即是服务授权端也是资源服务端, 如果只是资源服务端需要设置(OidcBearerAuthentication)  
+2. 自定义授权验证具体实现(FrameExtensionGrantValidator), 使用该授权必须还要设置(Client)对象的(AllowedGrantTypes)属性
+3. IdentityServer4单点登录需要需要注释  资源服务器的设置 "services.AddOidcBearerAuthentication(configuration, scheme)" 
+
+待验证
+需改造授权客户端关联的账号信息与系统默认账号表关联
+
+
+

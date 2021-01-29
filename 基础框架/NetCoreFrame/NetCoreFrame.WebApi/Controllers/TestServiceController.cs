@@ -30,6 +30,13 @@ namespace NetCoreFrame.WebApi.Controllers
         }
 
         [HttpPost]
+        [AbpMvcAuthorize]
+        public JsonResult ResultPostDataA()
+        {
+            return Json("这是Post返回数据A");
+        }
+
+        [HttpPost]
         [AbpMvcAuthorize("PermissionName.ResultPostData")]
         public JsonResult ResultPermissionPostData()
         {

@@ -28,7 +28,7 @@
                 resToken: '',
                 forgeToKen: '',
                 apiUrl: 'http://localhost:18377',
-                apiActionUrl: 'http://localhost:11726/api/Demo/GetData',
+                apiActionUrl: 'http://localhost:18377/api/TestService/ResultPostData',
                 parameterData: '',
                 returnData: '',
                 grantTypes: 'password',
@@ -157,7 +157,7 @@
                 password: this.IdentityServerFormData.password,
             };
             $.ajax({
-                url: _this.IdentityServerFormData.apiUrl + "/connect/token" + "?grant_type=client_credentials",
+                url: _this.IdentityServerFormData.apiUrl + "/connect/token",// + "?grant_type=demo_validation",
                 type: "POST",
                 //contentType: 'application/json',
                 data: requestData,

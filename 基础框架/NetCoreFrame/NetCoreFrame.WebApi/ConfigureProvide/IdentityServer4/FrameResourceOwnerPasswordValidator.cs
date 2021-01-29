@@ -17,6 +17,7 @@ namespace NetCoreFrame.WebApi
     /// </summary>
     public class FrameResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
+
         private ISysIdentityServerCacheAppService _sysIdentityServerCacheAppService;
 
         protected SignInManager _sysSignInManager { get; }
@@ -34,7 +35,7 @@ namespace NetCoreFrame.WebApi
         /// <param name="context"></param>
         /// <returns></returns>
         [UnitOfWork]
-        public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+        public  Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             //
             if (context.Request == null || context.Request.Secret == null || context.Request.Secret.Credential == null || string.IsNullOrEmpty(context.Request.Secret.Credential.ToString()) || string.IsNullOrEmpty(context.Request.Secret.Id.ToString()))
@@ -46,7 +47,7 @@ namespace NetCoreFrame.WebApi
             if (string.IsNullOrEmpty(context.UserName) || string.IsNullOrEmpty(context.Password))
             {
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidClient, "请提供授权账号与密码");
-                return Task.CompletedTask;
+               return  Task.CompletedTask;
             }
             //获取账号信息
             List<SysApiClienToAccountData> sysApiClienToAccountData = _sysIdentityServerCacheAppService.GetClientAndAccountCache();
@@ -59,13 +60,21 @@ namespace NetCoreFrame.WebApi
             string clientSecrets = context.Request.Secret.Credential.ToString();
             string clientId = context.Request.Secret.Id.ToString();
             var sysApiClienToAccount = result.ToList()[0];
+
             if (sysApiClienToAccount.Password == context.Password && sysApiClienToAccount.ClientId == clientId && sysApiClienToAccount.ClientSecrets == clientSecrets)
             {
+                var identity = new ClaimsIdentity();
+                identity.AddClaims(new[]{
+                                                new Claim("UserName", context.UserName),                   
+                                                new Claim("ClientSecrets", clientSecrets),      
+                                                new Claim("ClientId", clientId) 
+                                                });
+
                 context.Result = new GrantValidationResult(
-                      subject: sysApiClienToAccount.UserName,                               //用户唯一标识 ,用户id
-                      authenticationMethod: context.Request.GrantType,                 //描述授权类型的认证方法 
-                      authTime: DateTime.Now,                                                        // 授权时间
-                      claims: new Claim[] { }                                                              //授权凭证
+                      subject: "123456789",//context.UserName,                                    //用户唯一标识 ,用户id 用户表是int因此此处需要采用int类型
+                      authenticationMethod: context.Request.GrantType,                      //描述授权类型的认证方法 
+                      authTime: DateTime.Now,                                                               // 授权时间
+                      claims: identity.Claims
                   );
             }
             else

@@ -46,7 +46,8 @@ namespace NetCoreFrame.WebApi
         public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
             var apiResourceList = _sysIdentityServerCacheAppService.GetResourcesCache();
-            var data = apiResourceList.Where(w => scopeNames.Contains(w.Name));
+            //var data = apiResourceList.Where(w => w.Scopes.Where(s=> scopeNames.Contains(s.Name)).Any());
+            var data = apiResourceList.Select(s => s);
             return Task.FromResult(data);
         }
 
@@ -110,7 +111,7 @@ namespace NetCoreFrame.WebApi
                 new IdentityResources.Email(),
                 new IdentityResources.Phone(),
                 new IdentityResources.Address(),
-               customProfile
+               customProfile,
             };
         }
 

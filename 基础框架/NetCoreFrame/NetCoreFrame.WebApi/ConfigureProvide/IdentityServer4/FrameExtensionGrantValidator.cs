@@ -42,8 +42,8 @@ namespace NetCoreFrame.WebApi
             if (resLoginUser != null)
             {
                 context.Result = new GrantValidationResult(
-                        subject: resLoginUser.User.Id.ToString(),                                   //用户唯一标识 ,用户id
-                        authenticationMethod: context.Request.GrantType,                 //描述自定义授权类型的认证方法 
+                        subject: resLoginUser.User.Id.ToString(),                                   //用户唯一标识 ,用户id 用户表是int因此此处需要采用int类型
+                        authenticationMethod: context.Request.GrantType,                //描述自定义授权类型的认证方法 
                         authTime: DateTime.Now,                                                         // 授权时间
                         claims: resLoginUser.Identity.Claims                                         //授权凭证
                     );

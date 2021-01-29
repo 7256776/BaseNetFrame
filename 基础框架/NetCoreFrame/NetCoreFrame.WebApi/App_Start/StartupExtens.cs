@@ -1,9 +1,12 @@
 ﻿using IdentityServer4.Stores;
+using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreFrame.Core;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace NetCoreFrame.WebApi
 {
@@ -30,6 +33,9 @@ namespace NetCoreFrame.WebApi
                 app.UseJwtTokenMiddleware(configuration, schema);
                 app.UseAuthentication();
             }
+
+
+
         }
 
         /// <summary>
@@ -47,8 +53,15 @@ namespace NetCoreFrame.WebApi
             {
                 #region 在IdentityServer4 授权验证端需要加载的注入, 资源服务器可以忽略
 
+              
                 services
-                    .AddIdentityServer()
+                    .AddIdentityServer(option =>
+                    {
+                        //设置单点登录的默认授权&注销地址
+                        option.UserInteraction.LoginUrl = "/SSO/Login";
+                        option.UserInteraction.LogoutUrl = "/SSO/Logout";
+
+                    })
                     .AddDeveloperSigningCredential()
                     .AddResourceStore<ResourceStore>()
                     .AddClientStore<ClientStore>()
@@ -60,7 +73,7 @@ namespace NetCoreFrame.WebApi
                 //services.AddTransient<IPersistedGrantStore, FramePersistedGrantStore>();
 
                 #endregion
-
+                //单点登录需要注释资源服务器注册
                 services.AddOidcBearerAuthentication(configuration, scheme);
             }
             else if (authorizationWay == "JWT")

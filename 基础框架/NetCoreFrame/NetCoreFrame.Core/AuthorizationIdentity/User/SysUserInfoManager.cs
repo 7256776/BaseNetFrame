@@ -241,7 +241,11 @@ namespace NetCoreFrame.Core
             return null;
         }
 
+        public override Task<TUser> FindByIdAsync(string userId)
+        {
 
+            return null;
+        }
 
 
     }

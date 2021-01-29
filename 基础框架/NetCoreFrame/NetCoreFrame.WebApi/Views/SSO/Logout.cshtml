@@ -1,0 +1,40 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IdentityServer.LogoutInputModel
+
+<div class="logout-page">
+    <div class="page-header">
+        <h1>注销页面</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <form asp-action="Logout">
+                <div>
+                    <span id="timer" style="font-weight:800;color:red"></span>
+                    <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">返回登录站点</a>
+                    <span>@Model.ClientName</span>
+                </div>
+                <p style="font-weight:800;">LogoutId:</p>
+                <p>@Model.LogoutId</p>
+                <p style="font-weight:800;">注销客户端IFrame:</p>
+                @*<iframe width="410" height="20" src="@Model.SignOutIframeUrl"></iframe>*@
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    //window.addEventListener("load", function () { });
+    var maxtime = 10;
+    function CountDown() {
+        if (maxtime >= 0) {
+            document.all["timer"].innerHTML = maxtime;
+            --maxtime;
+        } else {
+            clearInterval(timer);
+            var a = document.querySelector("a.PostLogoutRedirectUri");
+            if (a) {
+                window.location = a.href;
+            }
+        }
+    }
+    timer = setInterval("CountDown()", 1000);
+</script>

@@ -117,6 +117,26 @@ namespace NetCoreFrame.WebApi
                 AllowedScopes = { "ResourceApi" }
             });
 
+            //单点登录配置
+            //Client client = new Client
+            //{
+            //    ClientId = "clientAll",  //这个client id 跟 MfcImplicit 里面的配置要一致 clientAll
+            //    ClientName = "sso implicit clinet",
+            //    AllowedGrantTypes = GrantTypes.Implicit,
+
+            //    RedirectUris = { "http://localhost:44077/signin-oidc", "http://localhost:4838/signin-oidc" },
+            //    PostLogoutRedirectUris = { "http://localhost:44077/signout-callback-oidc", "http://localhost:4838/signout-callback-oidc" },
+
+            //    RequireConsent = false,
+            //    AllowedScopes = new List<string>
+            //        {
+            //            IdentityServerConstants.StandardScopes.OpenId,
+            //            IdentityServerConstants.StandardScopes.Profile,
+            //            IdentityServerConstants.StandardScopes.Email,
+            //            "ResourceApi"
+            //        }
+            //};
+           
             return clients;
         }
 

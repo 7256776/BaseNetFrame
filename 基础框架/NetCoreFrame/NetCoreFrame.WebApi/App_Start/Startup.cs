@@ -94,7 +94,8 @@ namespace NetCoreFrame.WebApi
             }
             //静态文件服务中间件(默认文件夹wwwroot)
             app.UseStaticFiles();
-            //自定义验证Jwt中间件  或 OIDC授权验证
+
+            //服务端授权中间件 (Jwt或OIDC)
             app.UseAuthTokenMiddleware(_appConfiguration);
 
             //abp本地化中间件
@@ -164,7 +165,7 @@ namespace NetCoreFrame.WebApi
                 .AddDefaultTokenProviders();
             #endregion
 
-            //设置Jwt授权 或 Oidc授权验证
+            //授权中间件 (Jwt或OIDC)
             services.AddBearerAuthentication(_appConfiguration);
 
             #region  设置跨域访问的规则
