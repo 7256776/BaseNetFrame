@@ -107,11 +107,11 @@
                                                 <div class="row">
                                                     <div class="col-md-9 ">
                                                         <el-button-group>
-                                                            <el-tooltip ref="btnAddCode"  content="新增字典编码" placement="top">
-                                                                <el-button size="mini"  type="primary" icon="fa fa-plus fa-lg" v-on:click="doSubAdd()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;新增字典编码</el-button>
+                                                            <el-tooltip   content="新增字典编码" placement="top">
+                                                                <el-button size="mini"  type="primary" icon="fa fa-plus fa-lg" v-on:click="doSubAdd()" v-bind:disabled="pageOptions.tableEditState" ref="btnAddCode" v-IsAuthorized plain>&nbsp;&nbsp;新增字典编码</el-button>
                                                             </el-tooltip>
-                                                            <el-tooltip ref="btnDelCode"  content="删除字典编码" placement="top">
-                                                                <el-button size="mini"  type="primary" icon="fa fa-minus fa-lg" v-on:click="doSubDel()" v-bind:disabled="pageOptions.tableEditState" plain>&nbsp;&nbsp;删除字典编码</el-button>
+                                                            <el-tooltip   content="删除字典编码" placement="top">
+                                                                <el-button size="mini"  type="primary" icon="fa fa-minus fa-lg" v-on:click="doSubDel()" v-bind:disabled="pageOptions.tableEditState" ref="btnDelCode" v-IsAuthorized plain>&nbsp;&nbsp;删除字典编码</el-button>
                                                             </el-tooltip>
                                                         </el-button-group>
                                                     </div>
@@ -138,9 +138,9 @@
                                                         <div align="center" style="position: absolute;padding:0px 5px 5px 5px;left:100px;top:0px;border:1px solid #cdd0d7;border-top-width:0px;background-color:#DCDFE6;">
                                                             @*<div style="width:100%;text-align:center;">*@
                                                             <el-button-group>
-                                                                <el-button type="primary" v-on:click="doSaveRow()">&nbsp;保存&nbsp;</el-button>
+                                                                <el-button type="primary" ref="btnSaveDict" v-IsAuthorized v-on:click="doSaveRow()">&nbsp;保存&nbsp;</el-button>
                                                             </el-button-group>
-                                                            <el-button-group>
+                                                            <el-button-group> 
                                                                 <el-button type="info" v-on:click="doCancel()">&nbsp;取消&nbsp;</el-button>
                                                             </el-button-group>
                                                             @*</div>*@

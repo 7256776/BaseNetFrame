@@ -179,8 +179,7 @@ var initFrame = function (Vue, options) {
             type: 'POST'
         }).done(function (data, res, e) {
             Vue.prototype.GlobalAuthorizedEntity = data;
-
-
+             
             //设置头像默认路径
             Vue.prototype.GlobalAuthorizedEntity.DefaultImgUrl = '/Content/frameCore/img/avatars/';
 

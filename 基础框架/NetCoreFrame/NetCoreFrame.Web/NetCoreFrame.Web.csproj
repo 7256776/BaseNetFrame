@@ -45,7 +45,7 @@
     <Compile Remove="Models\ErrorViewModel.cs" />
     <Compile Remove="Models\JObjectModelBinder.cs" />
     <Compile Remove="Models\MvcConfiguration.cs" />
-    <Compile Remove="App_Start\Startup - 复制.cs" />
+    <Compile Remove="Controllers\App_Start\Startup - 复制.cs" />
   </ItemGroup>
 
   <ItemGroup>

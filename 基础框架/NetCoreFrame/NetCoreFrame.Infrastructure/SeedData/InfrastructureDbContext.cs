@@ -347,9 +347,9 @@ namespace NetCoreFrame.Infrastructure
                 {
                     Id = 18,
                     MenuID = menuDictId,
-                    ActionDisplayName = "保存",
+                    ActionDisplayName = "保存字典类型",
                     ActionName = "btnSave",
-                    PermissionName = "DictManager.SaveDict",
+                    PermissionName = "DictManager.SaveDictType",
                     RequiresAuthModel = "3",
                     IsActive = true
                 },
@@ -372,8 +372,18 @@ namespace NetCoreFrame.Infrastructure
                     PermissionName = "DictManager.DelDict",
                     RequiresAuthModel = "3",
                     IsActive = true
-                }
-              
+                },
+                new SysMenuAction
+                {
+                     Id = 21,
+                     MenuID = menuDictId,
+                     ActionDisplayName = "保存字典编码",
+                     ActionName = "btnSaveDict",
+                     PermissionName = "DictManager.SaveDict",
+                     RequiresAuthModel = "3",
+                     IsActive = true
+                } 
+
              );
             #endregion
 

@@ -28,31 +28,35 @@ namespace NetCoreFrame.WebApi
         {
             //配置基本的资源服务器授权对象
             var authenticationBuilder = services.AddAuthentication(schema);
+
             //配置资源服务器授权信息
             authenticationBuilder.AddJwtBearer(options =>
+            {
+                options.Authority = "http://localhost:18377/";          //设置授权服务器的地址, 主要是通过配置获取并设置
+                options.RequireHttpsMetadata = false;                     //设置授权服务器是否使用https
+                options.Audience = "ResourceApi";                           //设置对应授权服务器所使用的资源名称
+
+                //options.MetadataAddress = "http://localhost:18377/.well-known/openid-configuration";
+                //options.Configuration = new   Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration();
+
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.Authority = "http://localhost:18377/";          //设置授权服务器的地址, 主要是通过配置获取并设置
-                    options.RequireHttpsMetadata = false;                     //设置授权服务器是否使用https
-                    options.Audience = "ResourceApi";                           //设置对应授权服务器所使用的资源名称
+                    ClockSkew = TimeSpan.FromSeconds(0),               //授权token有效时间偏移值(单位秒)
+                    //ValidateAudience = true                                     //是否验证授权 用于资源服务器
 
-                    //options.MetadataAddress = "http://localhost:18377/.well-known/openid-configuration";
-                    //options.Configuration = new   Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration();
+                };
 
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ClockSkew = TimeSpan.FromSeconds(0)               //授权token有效时间偏移值(单位秒)
-                        //ValidateAudience = true                                     //是否验证授权 用于资源服务器
-                    };
+                //获取授权相关事件
+                //options.Events = new JwtBearerEvents
+                //{
+                //    OnAuthenticationFailed = OnAuthenticationFailed,
+                //    OnChallenge = OnChallenge,
+                //    OnTokenValidated = OnTokenValidated,
+                //    OnMessageReceived = QueryStringTokenResolver
+                //};
+            });
 
-                    //获取授权相关事件
-                    //options.Events = new JwtBearerEvents
-                    //{
-                    //    OnAuthenticationFailed = OnAuthenticationFailed,
-                    //    OnChallenge = OnChallenge,
-                    //    OnTokenValidated = OnTokenValidated,
-                    //    OnMessageReceived = QueryStringTokenResolver
-                    //};
-                });
+          
         }
 
         public static Task OnTokenValidated(TokenValidatedContext context)
@@ -98,8 +102,8 @@ namespace NetCoreFrame.WebApi
             .AddCookie()
             .AddOAuth(OAuthDefaults.DisplayName, options =>
             {
-                options.ClientId = "oauth.code";
-                options.ClientSecret = "secret";
+                options.ClientId = "clientAll";
+                options.ClientSecret = "secretAll";
                 options.AuthorizationEndpoint = "http://localhost:18377/";
                 options.TokenEndpoint = "http://localhost:18377/connect/token";
                 options.CallbackPath = "/signin-oauth";
@@ -109,11 +113,11 @@ namespace NetCoreFrame.WebApi
                 options.SaveTokens = true;
                 // 事件执行顺序 ：
                 // 1.创建Ticket之前触发
-                options.Events.OnCreatingTicket = context => Task.CompletedTask;
+                //options.Events.OnCreatingTicket = context => Task.CompletedTask;
                 // 2.创建Ticket失败时触发
-                options.Events.OnRemoteFailure = context => Task.CompletedTask;
+                //options.Events.OnRemoteFailure = context => Task.CompletedTask;
                 // 3.Ticket接收完成之后触发
-                options.Events.OnTicketReceived = context => Task.CompletedTask;
+                //options.Events.OnTicketReceived = context => Task.CompletedTask;
                 // 4.Challenge时触发，默认跳转到OAuth服务器
                 // options.Events.OnRedirectToAuthorizationEndpoint = context => context.Response.Redirect(context.RedirectUri);
             });
