@@ -52,8 +52,7 @@ namespace NetCoreFrame.WebApi
             if (authorizationWay == "OIDC")
             {
                 #region 在IdentityServer4 授权验证端需要加载的注入, 资源服务器可以忽略
-
-              
+                 
                 services
                     .AddIdentityServer(option =>
                     {
