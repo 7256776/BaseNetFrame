@@ -14,9 +14,7 @@ namespace NetCoreFrame.WebApi
     /// </summary>
     public static class JwtTokenMiddleware
     {
-        public static IApplicationBuilder UseJwtTokenMiddleware(this IApplicationBuilder app,
-            IConfigurationRoot configuration,
-            string schema = JwtBearerDefaults.AuthenticationScheme)
+        public static IApplicationBuilder UseJwtTokenMiddleware(this IApplicationBuilder app, IConfigurationRoot configuration, string schema = JwtBearerDefaults.AuthenticationScheme)
         {
             return app.Use(async (ctx, next) =>
             {
@@ -74,6 +72,5 @@ namespace NetCoreFrame.WebApi
             });
         }
     }
-
 
 }
