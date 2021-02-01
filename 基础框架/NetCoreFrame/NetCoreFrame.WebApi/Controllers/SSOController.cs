@@ -19,7 +19,6 @@ namespace IdentityServer
 {
     public class SSOController : NetCoreFrameWebApiControllerBase
     {
-        private readonly TestUserStore _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -55,13 +54,13 @@ namespace IdentityServer
 
             //单点登录过程中扩展实现
             //通过url地址获取请求上下文, 该过程会调用客户端验证
-            //var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
             //返回所有当前注册的身份验证方案。
             //var schemes = await _schemeProvider.GetAllSchemesAsync();
             //根据客户id获取授权客户
             //var client = await _clientStore.FindEnabledClientByIdAsync(context.ClientId);
 
-            return View(model);
+            return  View(model);
         }
 
         /// <summary>

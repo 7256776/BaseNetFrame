@@ -50,6 +50,7 @@
 
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
