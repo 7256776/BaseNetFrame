@@ -8,7 +8,6 @@ var component = Vue.component('sys-toptoolsmenu', {
         this.languages.currentLanguage = abp.localization.currentLanguage;
         this.languages.languagesData = abp.localization.languages;
         this.languages.isChat = abp.setting.getBoolean("IsChat");
-
         //注册用户头像刷新事件
         abp.event.on('frame.userimg.ui.event', this.updateUserImg);
         //页面加载同时就刷新推送消息

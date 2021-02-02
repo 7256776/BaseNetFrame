@@ -54,7 +54,10 @@
     "LockedOut": "已锁定",
     "UserPhoneNumberIsNotConfirmed": "电话号码未验证",
     "AuthenticationRegistrationFailure": "身份验证注册失败",
-    "UnacquiredInformation": "未获取任何信息"
+    "UnacquiredInformation": "未获取任何信息",
+
+    "UserCodeRequired": "请输入用户名",
+    "UserCodePass": "请输入密码"
 
   }
 }

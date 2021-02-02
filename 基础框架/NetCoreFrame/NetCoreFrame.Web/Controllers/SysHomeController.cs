@@ -76,7 +76,7 @@ namespace NetCoreFrame.Web.Controllers
         {
             UserMenu mainMenu = await _userNavigationManager.GetMenuAsync("MainMenu", new UserIdentifier(null, AbpSession.UserId.Value));
 
-            //获取授权模块的另一种实现
+            //获取授权模块的另一种实现(备用方案获取授权模块)
             //mainMenu.Items = await this.BuildPermissionMenu(_navigationManager.MainMenu.Items);
 
             return Json(mainMenu);
@@ -88,34 +88,34 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="menuItemDefinitions"></param>
         /// <returns></returns>
-        public async Task<List<UserMenuItem>> BuildPermissionMenu(List<MenuItemDefinition> menuItemDefinitions)
-        {
-            List<UserMenuItem> userMenuItems = new List<UserMenuItem>();
-            foreach (var menuItem in menuItemDefinitions)
-            {
-                //递归验证子模块授权
-                var nextUserMenuItems = await this.BuildPermissionMenu(menuItem.Items);
-                bool isPermission = await _userInfoManager.IsGrantedAsync(menuItem.RequiredPermissionName);
-                if (!isPermission)
-                {
-                    continue;
-                }
-                userMenuItems.Add(new UserMenuItem()
-                {
-                    Name = menuItem.Name,
-                    Icon = menuItem.Icon,
-                    DisplayName = menuItem.DisplayName.Localize(_localizationContext),
-                    Order = menuItem.Order,
-                    Url = menuItem.Url,
-                    CustomData = menuItem.CustomData,
-                    Target = menuItem.Target,
-                    IsEnabled = menuItem.IsEnabled,
-                    IsVisible = menuItem.IsVisible,
-                    Items = nextUserMenuItems
-                });
-            }
-            return userMenuItems;
-        }
+        //public async Task<List<UserMenuItem>> BuildPermissionMenu(List<MenuItemDefinition> menuItemDefinitions)
+        //{
+        //    List<UserMenuItem> userMenuItems = new List<UserMenuItem>();
+        //    foreach (var menuItem in menuItemDefinitions)
+        //    {
+        //        //递归验证子模块授权
+        //        var nextUserMenuItems = await this.BuildPermissionMenu(menuItem.Items);
+        //        bool isPermission = await _userInfoManager.IsGrantedAsync(menuItem.RequiredPermissionName);
+        //        if (!isPermission)
+        //        {
+        //            continue;
+        //        }
+        //        userMenuItems.Add(new UserMenuItem()
+        //        {
+        //            Name = menuItem.Name,
+        //            Icon = menuItem.Icon,
+        //            DisplayName = menuItem.DisplayName.Localize(_localizationContext),
+        //            Order = menuItem.Order,
+        //            Url = menuItem.Url,
+        //            CustomData = menuItem.CustomData,
+        //            Target = menuItem.Target,
+        //            IsEnabled = menuItem.IsEnabled,
+        //            IsVisible = menuItem.IsVisible,
+        //            Items = nextUserMenuItems
+        //        });
+        //    }
+        //    return userMenuItems;
+        //}
 
 
 

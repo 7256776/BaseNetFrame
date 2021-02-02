@@ -54,8 +54,10 @@
     "LockedOut": "Locked Out",
     "UserPhoneNumberIsNotConfirmed": "User Phone NumberIs Not Confirmed",
     "AuthenticationRegistrationFailure": "Authentication Registration Failure",
-    "UnacquiredInformation": "UnacquiredInformation"
+    "UnacquiredInformation": "UnacquiredInformation",
 
+    "UserCodeRequired": "Please Enter A User Name",
+    "UserCodePass": "Please Enter Your Password."
 
   }
 }

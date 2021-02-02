@@ -16,13 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="4.19.0" />
-    <PackageReference Include="Abp.AspNetCore" Version="4.19.0" />
-    <PackageReference Include="Abp.AutoMapper" Version="4.19.0" />
-    <PackageReference Include="Abp.Dapper" Version="4.19.0" />
-    <PackageReference Include="Abp.EntityFrameworkCore" Version="4.19.0" />
-    <PackageReference Include="Abp.Web.Common" Version="4.19.0" />
-    <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="3.3.1" />
+    <PackageReference Include="Abp" Version="4.20.0" />
+    <PackageReference Include="Abp.AspNetCore" Version="4.20.0" />
+    <PackageReference Include="Abp.AutoMapper" Version="4.20.0" />
+    <PackageReference Include="Abp.Dapper" Version="4.20.0" />
+    <PackageReference Include="Abp.EntityFrameworkCore" Version="4.20.0" />
+    <PackageReference Include="Abp.Web.Common" Version="4.20.0" />
     <PackageReference Include="IdentityServer4" Version="2.5.4" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
