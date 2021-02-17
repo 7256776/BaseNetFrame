@@ -3,33 +3,225 @@
 }
 
 <div class="row">
-    <div class="designerTools">
-        <el-button-group>
-            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAddEndpoint('S')" ref="btnAdd">开始</el-button>
-            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doAddEndpoint('E')" ref="btnEdit">结束</el-button>
-            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doAddEndpoint('P')" ref="btnDel">节点</el-button>
-        </el-button-group>
 
-        <el-button-group>
-            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doSaveFlow()" ref="btnAdd">保存</el-button>
-            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doLoadFlow()" ref="btnEdit">载入</el-button>
-            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doClearFlow()" ref="btnDel">清空</el-button>
-        </el-button-group>
-    </div>
+    <div class="designer-main" ref="designerMain">
 
-    <div id="sysDesignerContainer" ref="designerContainer" class="designerContainer">
-        <!-- <div id="designerCanvas"> -->
-        <div v-for="(endpoint,i) in endpointList" 
-                class="item-endpoint"
-                v-bind:id="endpoint.uid" 
-                v-bind:class="endpoint.endpointClass" 
-                v-bind:style="endpoint.style"
-                v-bind:endpointType="endpoint.endpointType">
-            <div class="item-endpoint-content">
-                <span class="item-endpoint-label"  v-bind:class="endpoint.labelClass">{{endpoint.endpointText}}</span>
+        <div id="designerTools" ref="designerTools" class="designer-tools">
+
+            <transition name="el-zoom-in-center">
+                <div v-show="isFlowPage" class="transition-box" >
+                    <fieldset class="designer-tools-top">
+                        <legend>流程面板</legend>
+                        <el-button type="success" size="mini" icon="fa fa-sitemap" v-on:click="getWorkFlowList()" style="width:95%;">加 载 设 计 图</el-button>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <el-input placeholder="流程名称" ref="workFlowName" v-model="workFlowData.workFlowName" v-bind:maxlength="50" style="width:95%;">
+                        </el-input>
+                        <el-input placeholder="流程ID"  v-model="workFlowData.id" v-show="false">
+                        </el-input>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <span style="padding:0 5px 0 5px;">X</span>
+                        <el-input label="X" v-model="currentEndpoint.offsetLeft" v-bind:readonly="true" style="width:70px;" v-bind:controls="false" v-bind:max="3000"></el-input>
+                        <span style="padding: 0 5px 0 5px;">Y</span>
+                        <el-input label="Y" v-model="currentEndpoint.offsetTop" readonly style="width:70px;" v-bind:controls="false" v-bind:max="3000"></el-input>
+
+                        <el-input placeholder="节点名称" v-model="currentEndpoint.endpointText" v-bind:readonly="currentEndpoint.endpointType != 'P'" v-bind:maxlength="50" style="width:95%;">
+                        </el-input>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <el-popover placement="right" width="400" trigger="click">
+                            <div>
+                            </div>
+                            <el-button slot="reference" type="info" plain style="width:95%;">设置明细</el-button>
+                        </el-popover>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <div class="btn-group btn-group-solid">
+                            <button type="button" class="btn red" v-on:click="doClearFlow()" style="padding-left:9px;padding-right:9px;">
+                                <i class="fa fa-recycle"></i> 清空
+                            </button>
+                            <button type="button" class="btn green" v-on:click="doSaveFlow()" style="padding-left:9px;padding-right:9px;">
+                                <i class="fa fa-save"></i> 保存
+                            </button>
+                            <button type="button" class="btn blue" v-on:click="doSettingFlow()" style="padding-left:9px;padding-right:9px;">
+                                <i class="fa fa-cog"></i> 设置
+                            </button>
+
+                        </div>
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>工具箱</legend>
+
+                        <div id="designerToolsDrag">
+
+                            <div style="float:left;width:100px;border: 0px solid rgb(156, 156, 156);text-align:center;">
+                                <el-button-group>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                </el-button-group>
+                                <el-button-group>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                </el-button-group>
+                                <el-button-group>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                </el-button-group>
+                                <el-button-group>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                </el-button-group>
+                                <el-button-group>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                </el-button-group>
+                            </div>
+
+                            <div style="float:right;width:90px;border: 0px solid rgb(156, 156, 156);padding-left:20px;">
+
+                                <div class="designer-tools-septal"></div>
+
+                                <div class="item-endpoint-tool item-endpoint-tool-dot item-endpoint-tool-start" id="btnStart" endpointtype="S">
+                                    开始
+                                </div>
+
+                                <div class="designer-tools-septal"></div>
+
+                                <div class="item-endpoint-tool" id="btnProcess" endpointType="P">
+                                    流程
+                                </div>
+
+                                <div class="designer-tools-septal"></div>
+
+                                <div class="item-endpoint-tool item-endpoint-tool-dot item-endpoint-tool-end" id="btnEnd" endpointtype="E">
+                                    结束
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </transition>
+
+            <transition name="el-zoom-in-center">
+                <div v-show="isSettingPage" class="transition-box" >
+                    <fieldset class="designer-tools-top">
+                        <legend>设置面板</legend>
+                        
+                        <el-input placeholder="流程名称"  v-model="workFlowData.workFlowName" v-bind:maxlength="50" style="width:95%;">
+                        </el-input>
+                        <el-input placeholder="流程ID"   v-model="workFlowData.id" v-show="false">
+                        </el-input>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <span style="padding:0 5px 0 5px;">X</span>
+                        <el-input label="X" v-model="currentEndpoint.offsetLeft" v-bind:readonly="true" style="width:70px;" v-bind:controls="false" v-bind:max="3000"></el-input>
+                        <span style="padding: 0 5px 0 5px;">Y</span>
+                        <el-input label="Y" v-model="currentEndpoint.offsetTop" readonly style="width:70px;" v-bind:controls="false" v-bind:max="3000"></el-input>
+
+                        <el-input placeholder="节点名称" v-model="currentEndpoint.endpointText" v-bind:readonly="currentEndpoint.endpointType != 'P'" v-bind:maxlength="50" style="width:95%;">
+                        </el-input>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <el-popover placement="right" width="400" trigger="click">
+                            <div>
+                            </div>
+                            <el-button slot="reference" type="info" plain style="width:95%;">设置明细</el-button>
+                        </el-popover>
+
+                        <div class="designer-tools-septal"></div>
+
+                        <div class="btn-group btn-group-solid">
+                            <button type="button" class="btn red" v-on:click="doClearFlow()" style="padding-left:9px;padding-right:9px;">
+                                <i class="fa fa-recycle"></i> 清空
+                            </button>
+                            <button type="button" class="btn green" v-on:click="doSaveFlow()" style="padding-left:9px;padding-right:9px;">
+                                <i class="fa fa-save"></i> 保存
+                            </button>
+                            <button type="button" class="btn blue" v-on:click="doSettingFlow()" style="padding-left:9px;padding-right:9px;">
+                                <i class="fa fa-cog"></i> 设置
+                            </button>
+
+                        </div>
+
+                    </fieldset>
+                </div>
+            </transition>
+
+            <div class="designer-tools-bottom">
+
+                双击删除节点或连线
             </div>
         </div>
-        <!-- </div> -->
+        <div id="designerBody" ref="designerBody" class="designer-body designer-body-wrapper" v-on:contextmenu="doDesignerContextmenu">
+            <div id="designerContainer" ref="designerContainer" class="designer-container"
+                 v-on:mousedown="doDesignerMousedown"
+                 v-on:mouseup="doDesignerMouseup"
+                 v-on:mousemove="doDesignerMousemove">
+                <div v-for="(endpoint,i) in endpointList"
+                     class="item-endpoint"
+                     v-if="endpoint.isShow"
+                     v-bind:id="endpoint.uid"
+                     v-bind:class="endpoint.endpointClass"
+                     v-bind:style="endpoint.style"
+                     v-bind:endpointType="endpoint.endpointType">
+                    <div class="item-endpoint-content">
+                        <span class="item-endpoint-label"
+                              v-bind:class="endpoint.labelClass"
+                              v-bind:data-id="endpoint.uid"
+                              v-on:mousedown="doClickEndpoint(endpoint)"
+                              v-on:dblclick="doDeleteEndEndpoint">
+                            {{endpoint.endpointText}}
+                        </span>
+                    </div>
+                </div>
+
+                <!--选择框-->
+                <div ref="selectedRectangle" v-show="selectedRectangle.isShow" v-bind:style="selectedRectangle.style" class="selected-rectangle"></div>
+            </div>
+        </div>
+
     </div>
+
+    <el-dialog title="流程列表"
+               v-bind:visible.sync="tableOptions.tabDialog"
+               v-bind:width="frameWidth('M')">
+        <div>
+            <el-table v-bind:data="tableOptions.tableData"
+                      ref="dataGrid"
+                      stripe
+                      border
+                      highlight-current-row
+                      tooltip-effect="light"
+                      style="width: 100%;height:100%;">
+
+                <el-table-column type="index" width="30"></el-table-column>
+                <el-table-column prop="workFlowName" label="流程名称" width="150"></el-table-column>
+                <el-table-column prop="description" label="描述"></el-table-column>
+                <el-table-column prop="creationTime" label="创建日期" width="150"></el-table-column>
+
+                <el-table-column label="操作" width="100px" align="center">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" v-on:click="getWorkFlow(scope.row)">载入</el-button>
+                        <el-button type="text" size="small" v-on:click="doDeleteWorkFlow(scope.row)">删除</el-button>
+                        @* scope.row *@
+                    </template>
+                </el-table-column>
+
+            </el-table>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="tableOptions.tabDialog = false" icon="fa fa-share-square-o fa-lg">关 闭</el-button>
+        </div>
+    </el-dialog>
 
 </div>

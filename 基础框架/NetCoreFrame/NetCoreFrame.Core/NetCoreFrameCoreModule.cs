@@ -1,17 +1,11 @@
 ﻿using Abp.Dapper;
-using Abp.Dependency;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Configuration;
 using Abp.Localization;
-using Abp.Localization.Dictionaries;
-using Abp.Localization.Dictionaries.Json;
-using Abp.Localization.Dictionaries.Xml;
 using Abp.Modules;
-using Abp.Reflection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Globalization;
 using System.Reflection;
 using System.Transactions;
 

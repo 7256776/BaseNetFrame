@@ -23,8 +23,25 @@ namespace NetCoreFrame.Infrastructure
         {
             builder.UseSqlServer(connection);
         }
+    }
 
-    } 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class WorkFlowInfrastructureConfigurer
+    {
+        public static void Configure(DbContextOptionsBuilder<WorkFlowDbContext> builder, string connectionString)
+        {
+            builder.UseSqlServer(connectionString);
+        }
+
+        public static void Configure(DbContextOptionsBuilder<WorkFlowDbContext> builder, DbConnection connection)
+        {
+            builder.UseSqlServer(connection);
+        }
+    }
+
+
 }
 
 

@@ -62,7 +62,7 @@ namespace NetCoreFrame.Core
                     resList.Add(m);
                 }
                 m.SysOrgLevel = i;
-                m.ChildrenSysOrg = dataAll.Where(p => p.ParentOrgID == m.Id).ToList();
+                m.ChildrenSysOrg = dataAll.Where(p => p.ParentOrgID == m.Id).OrderBy(des=>des.OrderBy).OrderByDescending(des => des.OrgType).ToList();
                 if (m.ChildrenSysOrg.Any())
                 {
                     SetChildrenList(dataAll, m, resList);
@@ -101,7 +101,7 @@ namespace NetCoreFrame.Core
                     resList.Add(item);
                 }
                 //
-                item.ChildrenSysOrg = dataAll.Where(p => p.ParentOrgID == item.Id).ToList();
+                item.ChildrenSysOrg = dataAll.Where(p => p.ParentOrgID == item.Id).OrderBy(asc => asc.OrderBy).OrderByDescending(des => des.OrgType).ToList();
                 if (item.ChildrenSysOrg.Any())
                 {
                     SetChildrenList(dataAll, item, resList);

@@ -112,7 +112,7 @@ var vueApp = new Vue({
                     var menusSub = JSON.parse(JSON.stringify(menus));
                     menusSub.push(item);
                     //地址为空的不设置路由
-                    if (item.url) {
+                    if (item.url && item.url != '/') {
                         //过滤空格
                         item.url = item.url.trim();
                         //设置路由集合

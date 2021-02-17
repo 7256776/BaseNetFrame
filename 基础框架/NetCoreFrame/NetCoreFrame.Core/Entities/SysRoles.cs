@@ -24,19 +24,19 @@ namespace NetCoreFrame.Core
         public virtual long? TenantId { get; set; }
 
         /// <summary>
-        /// 描述
-        /// </summary>		
-        [Column("DESCRIPTION")]
-        [StringLength(1000)]
-        public virtual string Description { get; set; }
-
-        /// <summary>
         /// 角色名称
         /// </summary>		
         [Column("ROLENAME")]
         [Required(ErrorMessage = "请输入角色名称")]
         [StringLength(50)]
         public virtual string RoleName { get; set; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>		
+        [Column("DESCRIPTION")]
+        [StringLength(1000)]
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// 是否激活

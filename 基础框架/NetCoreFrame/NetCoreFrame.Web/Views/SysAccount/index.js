@@ -236,7 +236,7 @@ var component = Vue.component('sys-account', {
                     data: JSON.stringify(_this.tableOptions.selectRows),
                     type: 'POST'
                 }).done(function (data, res, e) {
-                    _this.tipSuccess('save');
+                    _this.tipSuccess('del');
                     _this.getUserList();
                 });
             });

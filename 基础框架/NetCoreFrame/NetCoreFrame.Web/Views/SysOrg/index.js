@@ -30,6 +30,7 @@ var component = Vue.component('sys-org', {
                 orgName: null,
                 orgCode: null,
                 orgType: "2",
+                orderBy: 1,
                 description: null,
                 isActive: true
             },
@@ -45,6 +46,18 @@ var component = Vue.component('sys-org', {
       //计算
     },
     methods: {
+        setNodeIco: function (node) {
+            if (node.level == 1) {
+                return 'fa fa-institution';
+            }
+            if (node.data.orgType == 1) {
+                return 'fa fa-building';
+            }
+            if (node.data.orgType == 2) {
+                return 'fa fa-group';
+            }
+            return 'fa fa-th';
+        },
         initMenusData: function () {
             var _this = this;
             abp.ajax({

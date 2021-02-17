@@ -9,10 +9,10 @@ body {
 }
 .login-form{
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: 250px;
+  width: 300px;
   padding: 20px 20px;
   background-color: rgba(255, 255, 255, 0.541);
   box-shadow: 0 15px 20px rgba(0,0,0,.2);

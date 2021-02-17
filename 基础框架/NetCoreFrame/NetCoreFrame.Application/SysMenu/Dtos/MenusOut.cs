@@ -34,6 +34,13 @@ namespace NetCoreFrame.Application
         public virtual string Icon { get; set; }
 
         /// <summary>
+        /// 模块类型
+        /// 1=系统模块
+        /// 2=业务模块
+        /// </summary>	 
+        public virtual string BusinessType { get; set; }
+
+        /// <summary>
         /// 当前菜单对象子节点菜单
         /// </summary>
         public List<MenusOut> ChildrenMenus { get; set; }

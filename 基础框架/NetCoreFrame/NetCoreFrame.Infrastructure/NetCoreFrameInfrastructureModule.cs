@@ -31,6 +31,19 @@ namespace NetCoreFrame.Infrastructure
                     NetCoreFrameInfrastructureConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
                 }
             });
+
+
+            Configuration.Modules.AbpEfCore().AddDbContext<WorkFlowDbContext>(options =>
+            {
+                if (options.ExistingConnection != null)
+                {
+                    WorkFlowInfrastructureConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
+                }
+                else
+                {
+                    WorkFlowInfrastructureConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
+                }
+            });
         }
 
         public override void Initialize()
@@ -42,8 +55,6 @@ namespace NetCoreFrame.Infrastructure
         {
            
         }
-
-
 
 
     }

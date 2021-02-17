@@ -300,7 +300,7 @@ var initFrame = function (Vue, options) {
         //
         if (path) {
             path = path + '.js';
-        }
+        } 
         //
         return new Promise(function (resolve, reject) {
             if (!path) {
@@ -444,14 +444,14 @@ Vue.mixin({
             switch (type) {
                 case 'SAVE':
                     return abp.frameCore.localization.getLocalization('Save');
-                case 'Edit':
-                    return abp.frameCore.localization.getLocalization('Editor');
+                case 'EDIT':
+                    return abp.frameCore.localization.getLocalization('Edit');
                 case 'ADD':
                     return abp.frameCore.localization.getLocalization('Add');
                 case 'DEL':
                     return abp.frameCore.localization.getLocalization('Del');
                 default:
-                    return "";
+                    return abp.frameCore.localization.getLocalization(type);
             }
         },
         _tipBase: function (type, details, message) {
@@ -485,13 +485,13 @@ Vue.mixin({
             */
             var failure = abp.frameCore.localization.getLocalization('Failure');
             var message = this._operationType(type) + failure;
-            abp.message.success(details, message);
+            abp.message.error(details, message);
         },
         tipShowFormat: function () {
             /*  调用带参数本地化
-            *  tipLocalizat('本地化的key值')                                                   一个参数:  本地化对应的key值, 默认是info类型tip
-            *  tipLocalizat('info','本地化的key值')                                           二个参数:  消息类型(info,success,warn,error), 本地化对应的key值
-            *  tipLocalizat('info','本地化的key值','支持格式化 { 0 } 的参数')       三个参数:  消息类型, 本地化对应的key值, 格式化 { 0 } 的参数列表可多个
+            *  tipShowFormat('本地化的key值')                                                      一个参数:  本地化对应的key值, 默认是info类型tip
+            *  tipShowFormat('info','本地化的key值')                                             二个参数:  消息类型(info,success,warn,error), 本地化对应的key值
+            *  tipShowFormat('info','本地化的key值','支持格式化 { 0 } 的参数')       三个参数:  消息类型, 本地化对应的key值, 格式化 { 0 } 的参数列表可多个
             */
             //参数集合
             var arg = arguments.length;
@@ -512,8 +512,8 @@ Vue.mixin({
         },
         tipShow: function () {
             /*  调用提示消息(默认本地化转换)
-             *  tipShow('提示消息')                                     一个参数:  提示消息,默认是info类型tip
-             *  tipShow('info','提示消息')                             二个参数:  消息类型(info,success,warn,error), 提示消息
+             *  tipShow('提示消息')                                       一个参数:  提示消息,默认是info类型tip
+             *  tipShow('info','提示消息')                              二个参数:  消息类型(info,success,warn,error), 提示消息
              *  tipShow('info','提示消息','提示消息详情')       三个参数:  消息类型, 提示消息, 提示消息详情
              */
             //参数集合
@@ -530,7 +530,7 @@ Vue.mixin({
             //获取消息提示详情
             details = arg == 3 ? arguments[2] : '';
             //默认进行本地化转换
-            this._tipBase(type, message, details);
+            this._tipBase(type, details, message);
         },
 
         /*

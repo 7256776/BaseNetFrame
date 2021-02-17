@@ -44,7 +44,7 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 扩展数据
         /// </summary>	
-        [Column("ExtensionData")]
+        [Column("EXTENSIONDATA")]
         [StringLength(4000)]
         public virtual string ExtensionData { get; set; }
 

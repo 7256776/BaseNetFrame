@@ -193,6 +193,10 @@ namespace NetCoreFrame.Core
             //组织管理
             var SysOrgContext = modelBuilder.Entity<SysOrg>().ToTable(ToDBAttributeCase("Sys_Org"));
             SysOrgContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
+            SysOrgContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            SysOrgContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
+            SysOrgContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
+            SysOrgContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
             //模块管理
             var SysMenusContext = modelBuilder.Entity<SysMenus>().ToTable(ToDBAttributeCase("Sys_Menus"));
             SysMenusContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
@@ -280,6 +284,7 @@ namespace NetCoreFrame.Core
             var entitys = modelBuilder.Model.GetEntityTypes();
             foreach (var entity in entitys)
             {
+                //ToDo移除实体对象的Table标签(由于实体类与表名格式不同因此都进行了转义因此此处暂时省略
                 //if (entity.FindAnnotation("Relational:TableName") != null)
                 //{
                 //    //entity.RemoveAnnotation("Relational:TableName");

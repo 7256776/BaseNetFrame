@@ -9,7 +9,7 @@
     "日志管理": "系统日志",
     "组织机构": "组织机构",
     "字典管理": "字典管理",
-    "Login": "登录",
+    "Login": "登          录",
     "IsPersistent": "记住",
     "IsRepeat": "您输入的 {0} 重复,请重新输入。",
     "AtLeastOneOfThesePermissionsMustBeGranted": "没有授予所需的权限。至少必须授予其中一种权限：{0}",
@@ -38,7 +38,7 @@
     "SendSuccess": "发送成功",
 
     "Save": "保存",
-    "Editor": "修改",
+    "Edit": "修改",
     "Add": "新增",
     "Del": "删除",
     "Success": "成功",

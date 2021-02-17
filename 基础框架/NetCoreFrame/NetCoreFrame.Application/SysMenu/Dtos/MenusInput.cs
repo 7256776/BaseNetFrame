@@ -31,6 +31,14 @@ namespace NetCoreFrame.Application
         public string MenuName { get; set; }
 
         /// <summary>
+        /// 模块类型
+        /// 1=系统模块
+        /// 2=业务模块
+        /// </summary>	 
+        [Required(ErrorMessage = "请选择模块类型")]
+        public virtual string BusinessType { get; set; }
+
+        /// <summary>
         /// 描述
         /// </summary>	 
         public string Description { get; set; }

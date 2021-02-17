@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
+    <ProjectReference Include="..\NetCoreWorkFlow.Application\NetCoreWorkFlow.Application.csproj" />
   </ItemGroup>
 
 </Project>

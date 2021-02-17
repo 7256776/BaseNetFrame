@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreFrame.Application;
 using NetCoreFrame.Core;
+using NetCoreWorkFlow.Application;
 using System.Reflection;
 
 namespace NetCoreFrame.Web
@@ -16,7 +17,8 @@ namespace NetCoreFrame.Web
     [DependsOn(
         typeof(AbpAspNetCoreModule),
         typeof(AbpAspNetCoreSignalRModule),
-        typeof(NetCoreFrameApplicationModule)
+        typeof(NetCoreFrameApplicationModule),
+        typeof(NetCoreWorkFlowApplicationModule)
         )]
     public class NetCoreFrameWebModule : AbpModule
     {

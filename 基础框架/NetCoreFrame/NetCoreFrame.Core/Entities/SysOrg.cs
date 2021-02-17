@@ -1,6 +1,8 @@
 ﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,7 +12,7 @@ namespace NetCoreFrame.Core
  	/// Sys_Org
  	/// </summary>
  	[Table("SYS_ORG")]
-    public class SysOrg : Entity<Guid>
+    public class SysOrg : AuditedEntity<Guid>
     {
         public SysOrg()
         {    }
@@ -45,7 +47,6 @@ namespace NetCoreFrame.Core
         [Required(ErrorMessage = "请设置组织机构节点编码")]
         public virtual string OrgNode { get; set; }
 
-
         /// <summary>
         /// 组织机构类型 
         /// </summary>		
@@ -53,7 +54,6 @@ namespace NetCoreFrame.Core
         [StringLength(20)]
         [Required(ErrorMessage = "请输入组织机构类型")]
         public virtual string OrgType { get; set; }
-
 
         /// <summary>
         /// 组织机构是否启用
@@ -68,6 +68,13 @@ namespace NetCoreFrame.Core
         [Column("DESCRIPTION")]
         [StringLength(1000)]
         public virtual string Description { get; set; }
+
+        /// <summary>
+        /// 排序
+        /// </summary>	 
+        [Column("ORDERBY")]
+        [DefaultValue(1)]
+        public virtual int? OrderBy { get; set; }
 
         /// <summary>
         /// 当前组织节点对象子节点

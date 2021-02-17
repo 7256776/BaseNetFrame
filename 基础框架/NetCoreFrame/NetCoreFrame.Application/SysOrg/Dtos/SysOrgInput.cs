@@ -41,5 +41,11 @@ namespace NetCoreFrame.Application
         /// 描述
         /// </summary>
         public virtual string Description { get; set; }
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public virtual int? OrderBy { get; set; }
+
     }
 }

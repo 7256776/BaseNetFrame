@@ -2,7 +2,7 @@
 using Abp.Domain.Services;
 using NetCoreFrame.Core;
 
-namespace NetCoreFrame.Application
+namespace NetCoreFrame.Core
 {
     /// <summary>
     /// 领域核心 基础类

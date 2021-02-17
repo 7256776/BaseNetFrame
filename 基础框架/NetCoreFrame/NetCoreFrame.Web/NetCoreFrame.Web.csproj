@@ -69,7 +69,6 @@
     <Content Remove="Views\SysComponents\TopToolsMenu.cshtml" />
     <Content Remove="Views\SysComponents\UserInfoExtens.cshtml" />
     <Content Remove="Views\SysDict\Index.cshtml" />
-    <Content Remove="Views\SysFlowDesigner\Index.cshtml" />
     <Content Remove="Views\SysHome\DesktopPage.cshtml" />
     <Content Remove="Views\SysHome\Index.cshtml" />
     <Content Remove="Views\SysLogin\Login - 复制.cshtml" />
@@ -104,6 +103,7 @@
     <None Remove="Views\SysComponents\UserInfoExtens.js" />
     <None Remove="Views\SysComponents\WebTitle.js" />
     <None Remove="Views\SysDict\index.js" />
+    <None Remove="Views\SysFlowDesigner\FlowConfig.js" />
     <None Remove="Views\SysFlowDesigner\index.js" />
     <None Remove="Views\SysHome\DesktopPage.js" />
     <None Remove="Views\SysMenus\index.js" />
@@ -129,9 +129,12 @@
     <EmbeddedResource Include="Views\SysAuthorization\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysFlowDesigner\index.js">
+    <Content Include="Views\SysFlowDesigner\FlowConfig.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
+    <Content Include="Views\SysFlowDesigner\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
     <Content Include="wwwroot\Content\assets\global\img\social\Thumbs.db" />
   </ItemGroup>
 
@@ -259,7 +262,6 @@
     <EmbeddedResource Include="Views\SysDict\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysFlowDesigner\Index.cshtml" />
     <EmbeddedResource Include="Views\SysHome\DesktopPage.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -343,6 +345,7 @@
     <ProjectReference Include="..\NetCoreFrame.Application\NetCoreFrame.Application.csproj" />
     <ProjectReference Include="..\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
     <ProjectReference Include="..\NetCoreFrame.Infrastructure\NetCoreFrame.Infrastructure.csproj" />
+    <ProjectReference Include="..\NetCoreWorkFlow.Application\NetCoreWorkFlow.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

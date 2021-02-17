@@ -41,7 +41,11 @@ Vue.component('sys-sidemenusub', {
             return false;
         },
         toUrl: function (url) {
-            return url || '';
+            //如果路由设置了 '/' 默认不做任何操作
+            if (url == '/' || url.length <= 1) {
+                return '';
+            }
+            return url;
         }
 
     }

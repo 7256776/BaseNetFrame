@@ -3,8 +3,6 @@
     //组织管理
 }
 <div class="row">
-    @*<el-container>
-        <el-aside width="250px">*@
     <div class="col-lg-3 col-md-4 col-sm-4" style="padding-left:0px;padding-right:5px;">
         <div style="height:100%;padding:5px;border:1px solid #DCDFE6;">
 
@@ -20,14 +18,12 @@
                      v-on:node-click="doNodeClick">
 
                 <span slot-scope="scope">
-                    <i v-bind:class="scope.node.level>1?'fa fa-th':'fa fa-th-large'"></i>
+                    <i v-bind:class="setNodeIco(scope.node)"></i>
                     <span>{{ scope.node.label }}</span>
                 </span>
             </el-tree>
         </div>
     </div>
-    @*</el-aside>
-        <el-main style="padding:0px 5px 0px 5px;">*@
     <div class="col-lg-9 col-md-8 col-sm-8" style="padding-left:0px;padding-right:0px;">
         <div class="frame-btn-tools">
             <el-button-group>
@@ -57,44 +53,49 @@
                                      clearable
                                      suffix-icon="fa fa-list-ol"
                                      placeholder="选择模块上级组织机构(如需创建根组织机构,该选择为空)"
-                                     style="width:475px;">
+                                     v-bind:style="formFormItem2">
                         </el-cascader>
                     </el-form-item>
 
                     <el-form-item label="机构名称" prop="orgName">
-                        <el-input v-model="formData.orgName" style="width:475px" clearable placeholder="组织机构名称" suffix-icon="fa fa-list-ol" v-bind:maxlength="50">
+                        <el-input v-model="formData.orgName" v-bind:style="formFormItem2" clearable placeholder="组织机构名称" suffix-icon="fa fa-list-ol" v-bind:maxlength="50">
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="机构编码" prop="orgCode">
-                        <el-input v-model="formData.orgCode" style="width:475px" clearable placeholder="组织机构编码" suffix-icon="fa fa-list-ul" v-bind:maxlength="50">
+                        <el-input v-model="formData.orgCode" v-bind:style="formFormItem2" clearable placeholder="组织机构编码" suffix-icon="fa fa-list-ul" v-bind:maxlength="50">
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="机构类型" prop="orgType">
                         <el-select v-model="formData.orgType"
                                    default-first-option
-                                   style="width:180px"
+                                   v-bind:style="formFormItem1"
                                    placeholder="请选择">
-                            <el-option v-bind:label="item.dictContent" v-bind:value="item.dictCode"  v-bind:key="item.id" v-for="item in orgTypeData"></el-option>
+                            <el-option v-bind:label="item.dictContent" v-bind:value="item.dictCode" v-bind:key="item.id" v-for="item in orgTypeData"></el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item label="启用状态" prop="isActive">
                         <el-select v-model="formData.isActive"
                                    default-first-option
-                                   style="width:180px"
+                                   v-bind:style="formFormItem1"
                                    placeholder="请选择">
                             <el-option label="启用" v-bind:value="true"></el-option>
                             <el-option label="禁用" v-bind:value="false"></el-option>
                         </el-select>
                     </el-form-item>
+
+                    <el-form-item label="模块排序" prop="orderBy">
+                        <el-input-number v-model="formData.orderBy" :step="1" v-bind:style="formFormItem1" v-bind:min="0"></el-input-number>
+                    </el-form-item>
+
                     <el-form-item label="备注" prop="description">
                         <el-input v-model="formData.description"
                                   type="textarea"
                                   v-bind:maxlength="150"
-                                  style="width:475px;"
-                                  autosize
+                                  v-bind:style="formFormItem2"
+                                  v-bind:autosize="{ minRows: 4, maxRows: 8}"
                                   placeholder="请输入备注信息"
                                   show-word-limit>
                         </el-input>
@@ -109,7 +110,5 @@
             </div>
         </div>
 
-        @*</el-main>
-            </el-container>*@
     </div>
 </div>

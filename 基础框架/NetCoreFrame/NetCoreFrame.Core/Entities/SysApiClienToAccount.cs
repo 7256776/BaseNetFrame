@@ -11,7 +11,7 @@ namespace NetCoreFrame.Core
   /// <summary>
   /// Api授权客户与账号关系对象
   /// </summary>
-  [Table("Sys_ApiClienToAccount")]
+  [Table("SYS_APICLIENTOACCOUNT")]
     public class SysApiClienToAccount : Entity<Guid> 
     {
         public SysApiClienToAccount()

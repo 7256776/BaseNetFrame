@@ -11,7 +11,7 @@ namespace NetCoreFrame.Core
     /// <summary>
     /// Api资源授权客户对象
     /// </summary>
-    [Table("Sys_ApiResourceToClient")]
+    [Table("SYS_APIRESOURCETOCLIENT")]
     public class SysApiResourceToClient : Entity<Guid>
     {
         public SysApiResourceToClient()

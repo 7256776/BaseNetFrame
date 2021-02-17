@@ -49,7 +49,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "",
                     Icon = "fa-list-ol",
                     OrderBy = 1,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //菜单管理
                 new SysMenus
@@ -63,7 +64,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysMenus/Index",
                     Icon = "fa-list-ol",
                     OrderBy = 1,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //用户管理
                 new SysMenus
@@ -77,7 +79,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysAccount/index",
                     Icon = "fa-users",
                     OrderBy = 2,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //角色管理
                 new SysMenus
@@ -91,7 +94,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysRole/Index",
                     Icon = "fa-vcard",
                     OrderBy = 3,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //消息通知
                 new SysMenus
@@ -105,7 +109,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysNotifications/Index",
                     Icon = "fa-bullhorn",
                     OrderBy = 5,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //日志管理
                 new SysMenus
@@ -119,7 +124,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysAuditLogs/Index",
                     Icon = "fa-book",
                     OrderBy = 7,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //组织机构
                 new SysMenus
@@ -133,7 +139,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysOrg/Index",
                     Icon = "fa-university",
                     OrderBy = 6,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //字典管理
                 new SysMenus
@@ -147,7 +154,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysDict/Index",
                     Icon = "fa-bookmark",
                     OrderBy = 7,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 },
                 //OIDC授权
                 new SysMenus
@@ -161,7 +169,8 @@ namespace NetCoreFrame.Infrastructure
                     Url = "/Views/SysAuthorization/Index",
                     Icon = "fa-windows",
                     OrderBy = 9,
-                    IsActive = true
+                    IsActive = true,
+                    BusinessType = "1"
                 }
             );
             #endregion

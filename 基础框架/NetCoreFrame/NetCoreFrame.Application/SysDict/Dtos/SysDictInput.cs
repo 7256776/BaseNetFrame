@@ -37,6 +37,11 @@ namespace NetCoreFrame.Application
         /// </summary>	 
         public bool IsActive { get; set; }
 
+        /// <summary>
+        /// 行数据对象状态
+        ///  ADD  = 新增
+        ///  MODIFY = 修改
+        /// </summary>
         public string EditState { get; set; } = "";
     }
 }

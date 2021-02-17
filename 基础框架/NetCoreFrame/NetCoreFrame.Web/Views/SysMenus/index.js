@@ -48,6 +48,7 @@ var component = Vue.component('sys-menus', {
                 permissionName: '',
                 customData: null,
                 description: null,
+                businessType: '1',
                 isActive: true
             },
             formSubRules: {
