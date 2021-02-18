@@ -75,7 +75,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
-        public FlowPagingResult<SysFlowAccounts> GetFlowAccountsPaging(FlowPagingParam<SysFlowAccountsSearch> flowPagingDto)
+        public FlowPagingResult<SysFlowAccounts> GetFlowUserPaging(FlowPagingParam<SysFlowAccountsSearch> flowPagingDto)
         {
             //参数对象
             var model = flowPagingDto.Params;
@@ -101,7 +101,7 @@ namespace NetCoreFrame.Application
             var resultPageData = queue.GetPagingData<UserInfo>(pagingDto);
             var resultData = resultPageData.Items.Select(s => new SysFlowAccounts()
             {
-                AccountId = s.Id.ToString(),
+                UserId = s.Id.ToString(),
                 UserCode = s.UserCode,
                 UserNameCn = s.UserNameCn,
                 Sex = s.Sex,

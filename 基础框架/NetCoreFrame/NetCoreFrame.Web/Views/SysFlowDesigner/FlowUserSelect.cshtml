@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <!--v-on:before-enter="afterLeave"-->
+    <transition name="el-drawer-fade" v-on:enter="enter" >
+        <div v-show="visible">
+            
+            <el-dialog title="用户选择"
+                       v-bind:visible.sync="visible"
+                       v-bind:before-close="beforeCloseDialog"
+                       v-bind:width="frameWidth('L')">
+                <div>
+                    <el-container v-bind:style="frameHeightStyle('L')">
+                        <el-aside width="250px" style="padding: 0px;border:1px solid #DCDFE6; ">
+                            <div class="row" style="margin:0px;">
+                                <div class="col-md-12 col-sm-12" style="text-align:left;padding:4px 0px 0px 4px;">
+                                    <el-input placeholder="组织机构 筛选" size="mini" clearable v-model="treeOptions.orgCode" style="width:99%;" v-on:change="filtOrgList">
+                                        <el-button slot="append" icon="el-icon-search" v-on:click="filtOrgList"></el-button>
+                                    </el-input>
+                                </div>
+                            </div>
+
+                            <el-tree ref="treeData"
+                                     v-bind:filter-node-method="filterNode"
+                                     v-bind:data="treeOptions.treeData"
+                                     v-bind:props="defaultProps"
+                                     node-keys="Id"
+                                     highlight-current
+                                     v-bind:expand-on-click-node="false"
+                                     accordion
+                                     v-bind:default-expand-all="true"
+                                     v-on:node-click="getFlowUserList">
+                                <span slot-scope="scope">
+                                    <i v-bind:class="setNodeIco(scope.node)"></i>
+                                    <span>{{ scope.node.label }}</span>
+                                </span>
+                            </el-tree>
+
+                        </el-aside>
+                        <el-main style="padding: 0px;margin-left:5px; border:1px solid #DCDFE6; ">
+                            <div class="row" style="margin:0px;">
+                                <div class="col-md-7 col-sm-7" style="text-align:left;padding:4px 0px 0px 4px;">
+                                    <el-checkbox-group slot="prepend" v-model="treeOptions.isChild">
+                                        <el-checkbox-button label="city">是否包含子机构</el-checkbox-button>
+                                    </el-checkbox-group>
+                                </div>
+                                <div class="col-md-5 col-sm-5" style="text-align:right;padding:4px 0px 0px 4px;">
+                                    <el-input placeholder="用户名称 筛选" clearable v-model="userPageOptions.params.userCodeOrName" style="max-width:300px;" v-on:change="getFlowUserList">
+                                        <el-button slot="append" icon="el-icon-search" v-on:click="getFlowUserList"></el-button>
+                                    </el-input>
+                                </div>
+                            </div>
+
+                            <el-table v-bind:data="userTableOptions.tableData"
+                                      ref="userDataGrid"
+                                      stripe
+                                      border
+                                      highlight-current-row
+                                      tooltip-effect="light"
+                                      v-bind:height="userTableOptions.gridHeight"
+                                      style="width: 100%;"
+                                      v-on:selection-change="doRowSelectChange"
+                                      v-on:row-click="doRowclick">
+                                <el-table-column type="selection" width="40"></el-table-column>
+                                <el-table-column prop="userCode" label="用户账号" align="center" width="120" fixed>
+                                </el-table-column>
+                                <el-table-column prop="userNameCn" label="用户名称" align="center" width="120">
+                                </el-table-column>
+                                <el-table-column prop="sex" label="性别" align="center" width="80">
+                                    <template slot-scope="scope">
+                                        <el-tag type="primary" disable-transitions>
+                                            {{scope.row.sex == '1'? '男':'女'}}
+                                        </el-tag>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="phoneNumber" label="电话" width="100px" align="center"></el-table-column>
+                                <el-table-column prop="emailAddress" label="邮箱" align="center"></el-table-column>
+
+                            </el-table>
+                            <div style="text-align:right;padding-top:3px;">
+                                <el-pagination background
+                                               v-on:size-change="handleSizeChange"
+                                               v-on:current-change="handleCurrentChange"
+                                               v-bind:current-page="userPageOptions.pageIndex"
+                                               v-bind:page-sizes="[20, 50, 100]"
+                                               v-bind:page-size="20"
+                                               v-bind:total="userPageOptions.total"
+                                               layout="total, sizes, prev, pager, next, jumper">
+                                </el-pagination>
+                            </div>
+                        </el-main>
+                    </el-container>
+                </div>
+                <div slot="footer" style="padding-right:20px;">
+                    <!--v-on:click="isOpen = false"-->
+                    <el-button type="info" icon="fa fa-share-square-o fa-lg" v-on:click="closeDialog()">取 消</el-button>
+                    <el-button type="primary" icon="fa fa-check-square-o fa-lg" v-on:click="selectRow()">确 定</el-button>
+                </div>
+            </el-dialog>
+
+        </div>
+    </transition>
+</div>

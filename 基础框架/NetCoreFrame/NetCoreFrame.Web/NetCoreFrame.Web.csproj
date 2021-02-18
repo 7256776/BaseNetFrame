@@ -104,6 +104,7 @@
     <None Remove="Views\SysComponents\WebTitle.js" />
     <None Remove="Views\SysDict\index.js" />
     <None Remove="Views\SysFlowDesigner\FlowConfig.js" />
+    <None Remove="Views\SysFlowDesigner\FlowUserSelect.js" />
     <None Remove="Views\SysFlowDesigner\index.js" />
     <None Remove="Views\SysHome\DesktopPage.js" />
     <None Remove="Views\SysMenus\index.js" />
@@ -129,6 +130,9 @@
     <EmbeddedResource Include="Views\SysAuthorization\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Views\SysFlowDesigner\FlowUserSelect.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\SysFlowDesigner\FlowConfig.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

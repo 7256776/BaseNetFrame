@@ -36,7 +36,8 @@
 .frame-body-height {
     height: calc(100vh - 270px);
 }
-    /*按钮工具栏区域样式*/
+
+/*按钮工具栏区域样式*/
 .frame-btn-tools {
     padding: 3px 0px 3px 3px;
     margin-bottom: 2px;

@@ -6,6 +6,7 @@ using Abp.AspNetCore.Mvc.Authorization;
 using Abp.Auditing;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreWorkFlow.Application;
+using NetCoreWorkFlow.Core;
 
 namespace NetCoreFrame.Web.Controllers
 {
@@ -28,6 +29,17 @@ namespace NetCoreFrame.Web.Controllers
             _sysWorkFlowRoleAppService = sysWorkFlowRoleAppService;
             _sysWorkFlowBaseInfoAppService = sysWorkFlowBaseInfoAppService;
         }
+
+        #region 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult FlowUserSelect()
+        {
+            return View();
+        }
+        #endregion
 
         /// <summary>
         /// 
@@ -166,6 +178,13 @@ namespace NetCoreFrame.Web.Controllers
         public JsonResult GetFlowOrg()
         {
             var data = _sysWorkFlowBaseInfoAppService.GetFlowOrgAll();
+            return Json(data);
+        }
+
+        [AbpMvcAuthorize]
+        public JsonResult GetFlowUserPaging([FromBody]FlowPagingParam<SysFlowAccountsSearch> flowPagingDto)
+        {
+            var data = _sysWorkFlowBaseInfoAppService.GetFlowUserPaging(flowPagingDto);
             return Json(data);
         }
 

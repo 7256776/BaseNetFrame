@@ -68,13 +68,13 @@
                                                 </el-button-group>
                                             </div>
                                             <div class="col-md-6" style="text-align:right;">
-                                                <el-input placeholder="用户名称 筛选" size="mini" clearable v-model="userOptions.searchTxt" style="width:300px;" v-on:change="getUserByRole">
+                                                <el-input placeholder="用户名称 筛选" size="mini" clearable v-model="userTableOptions.searchTxt" style="width:300px;" v-on:change="getUserByRole">
                                                     <el-button slot="append" icon="el-icon-search" v-on:click="getUserByRole"></el-button>
                                                 </el-input>
                                             </div>
                                         </div>
-                                        <el-table v-bind:data="userOptions.tableData"
-                                                  ref="userDataGrid"
+                                        <el-table v-bind:data="userTableOptions.tableData"
+                                                  ref="userInfoDataGrid"
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -161,41 +161,9 @@
         </div>
     </el-dialog>
 
-    <el-dialog title="角色基础信息"
-               v-bind:visible.sync="userOptions.formDialog"
-               v-bind:width="frameWidth('L')" 
-               >
-        <div>
-            <el-container v-bind:style="frameHeightStyle('L')">
-                <el-aside width="200px" style="border:1px solid #ff0000;">
-                    <el-tree ref="treeData"
-                             
-                             v-bind:data="treeData"
-                             v-bind:props="defaultProps"
-                             node-keys="Id"
-                             highlight-current
-                             v-bind:expand-on-click-node="false"
-                             accordion
-                             v-bind:default-expand-all="true"
-                             v-on:node-click="doNodeClick">
+    {{flowUserSelectOptions.selectData}}
+    <flowuserselect v-bind:visible.sync="flowUserSelectOptions.visible" v-model="flowUserSelectOptions.selectData">
+    </flowuserselect>
 
-                        <span slot-scope="scope">
-                            <i v-bind:class="setNodeIco(scope.node)"></i>
-                            <span>{{ scope.node.label }}</span>
-                        </span>
-                    </el-tree>
-
-                </el-aside>
-                <el-main style="border:1px solid #ff0000;">
-
-
-                </el-main>
-            </el-container>
-        </div>
-        <div slot="footer" style="padding-right:20px;">
-            <el-button type="info" v-on:click="userOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
-            <el-button type="primary" v-on:click="doRoleSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
-        </div>
-    </el-dialog>
 
 </div>

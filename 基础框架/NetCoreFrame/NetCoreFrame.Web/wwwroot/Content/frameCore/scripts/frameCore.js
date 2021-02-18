@@ -18,65 +18,58 @@ var componentAssemble = {
     SysWebTitle: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-webtitle', 'Views/SysComponents/WebTitle').then(resolve, reject);
     },
-
     //用户表单扩展
     SysUserInfoExtens: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-userinfoextens', 'Views/SysComponents/UserInfoExtens').then(resolve, reject);
     },
-
     //侧边菜单
     SysSideMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-sidemenu', 'Views/SysMenus/SideMenu').then(resolve, reject);
     },
-
     //侧边菜单(子菜单)
     SysSideMenuSub: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-sidemenusub', 'Views/SysMenus/SideMenuSub').then(resolve, reject);
     },
-
     //页面顶部横向布局菜单
     SysTopMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-topmenu', 'Views/SysMenus/TopMenu').then(resolve, reject);
     },
-
     //页面顶部横向布局菜单(子菜单折叠)
     SysTopMenuSub: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-topmenusub', 'Views/SysMenus/TopMenusSub').then(resolve, reject);
     },
-
     //页面顶部横向布局菜单(子菜单平铺)
     SysTopMenuFullSub: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-topmenufullsub', 'Views/SysMenus/TopMenusFullSub').then(resolve, reject);
     },
-
     //JSON格式化组件
     SysJsonFormat: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-jsonformat', 'Views/SysComponents/jsonFormat').then(resolve, reject);
     },
-
     //侧扩展窗体(聊天窗体)
     SysQuickSideBar: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-quicksidebar', 'Views/SysComponents/QuickSidebar').then(resolve, reject);
     },
-
     //页面顶部工具栏菜单
     SysTopToolsMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-toptoolsmenu', 'Views/SysComponents/TopToolsMenu').then(resolve, reject);
     },
-
     //搜索工具栏
     SysSearchForm: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-searchform', 'Views/SysComponents/SearchForm').then(resolve, reject);
     },
-
     //搜索工具栏内嵌扩展菜单
     SysSearchDropdown: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-searchdropdown', 'Views/SysComponents/SearchDropdown').then(resolve, reject);
     },
-
     //头部工具栏
     SysHeadToolButton: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-headtoolbutton', 'Views/SysComponents/HeadToolButton').then(resolve, reject);
+    },
+
+    //用户选择
+    FlowUserSelect: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-flowuserselect', 'Views/SysFlowDesigner/FlowUserSelect').then(resolve, reject);
     },
 };
 

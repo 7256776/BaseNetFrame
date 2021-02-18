@@ -29,7 +29,7 @@ var component = Vue.component('sys-org', {
                 parentOrgID: null,
                 orgName: null,
                 orgCode: null,
-                orgType: "2",
+                orgType: "1",
                 orderBy: 1,
                 description: null,
                 isActive: true

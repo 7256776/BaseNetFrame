@@ -1,11 +1,14 @@
 ﻿var component = Vue.component('sys-flowconfig',
 {
-	template: Vue.frameTemplate('SysFlowDesigner/FlowConfig'),
+    template: Vue.frameTemplate('SysFlowDesigner/FlowConfig'),
+    components: {
+        flowuserselect: componentAssemble.FlowUserSelect,
+    },
 	created: function () {
 		this.getWorkFlowRoleDataList();
 	},
 	mounted: function () {
-		
+	    var data = this.$refs["userDataGrid"];
 	},
 	data: function () {
 		return {
@@ -26,20 +29,17 @@
 					{ min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
 				],
 			},
-
-			userOptions: {
-				tableData: [],
-				searchTxt: '',
-				formDialog: false,
+			userTableOptions: {
+			    searchTxt: '',
+			    tableData:[]
 			},
 
-
-			treeData: [],
-			defaultProps: {
-				children: 'childrenOrg',
-				label: 'orgName',
-				value: 'orgId'
+			flowUserSelectOptions: {
+			    visible: false,
+			    selectData: []
 			},
+
+			
 			
 		}
 	},
@@ -147,37 +147,63 @@
 
 		doLinkUser: function () {
 			var _this = this;
-			this.userOptions.formDialog = true;
-			abp.ajax({
-				url: '/SysFlowDesigner/GetFlowOrg',
-			}).done(function (data, res, e) {
-				if (!data) {
-					_this.tipShow('error', '未获取到数据');
-					return;
-				}
-				_this.treeData = data;
-			});
+			this.flowUserSelectOptions.visible = true;
+
 		},
 		doDelLinkUser: function () {
 
+		    this.flowUserSelectOptions.visible = false;
 		},
 
 
-		setNodeIco: function (node) {
-			if (node.level == 1) {
-				return 'fa fa-institution';
-			}
-			if (node.data.orgType == 1) {
-				return 'fa fa-building';
-			}
-			if (node.data.orgType == 2) {
-				return 'fa fa-group';
-			}
-			return 'fa fa-th';
-		},
-		doNodeClick: function (data, node, e) {
-			
-		},
+		//setNodeIco: function (node) {
+		//	if (node.level == 1) {
+		//		return 'fa fa-institution';
+		//	}
+		//	if (node.data.orgType == 1) {
+		//		return 'fa fa-building';
+		//	}
+		//	if (node.data.orgType == 2) {
+		//		return 'fa fa-group';
+		//	}
+		//	return 'fa fa-th';
+		//},
+		//doNodeClick: function (data, node, e) {
+		//    this.getFlowUserList();
+		//},
+		//getFlowUserList: function () {
+		//    var _this = this;
+		//    var data = this.$refs["treeData"].getCurrentNode();
+		//    //
+		//    this.userPageOptions.params.orgCode = data.orgCode; 
+		//    abp.ajax({
+		//        url: '/SysFlowDesigner/GetFlowUserPaging',
+		//        data: JSON.stringify(this.userPageOptions)
+		//        //type: 'POST'
+		//    }).done(function (data) {
+		//        _this.userPageOptions.total = data.totalCount;
+		//        _this.userTableOptions.tableData = data.resultData;
+		//        _this.userTableOptions.selectRow = {};
+		//        _this.userTableOptions.selectRows = [];
+		//    });
+		//},
+		//handleSizeChange: function (val) {
+		//    this.userPageOptions.pageSize = val;
+		//    this.getFlowUserList();
+		//},
+		//handleCurrentChange: function (val, e) {
+		//    this.userPageOptions.pageIndex = val;
+		//    this.getFlowUserList();
+		//},
+		//filterNode(value, data) {
+		//    if (!value)
+		//        return true;
+		//    return data.orgName.indexOf(value) !== -1;
+		//},
+		//filtOrgList: function (val) {
+		//    this.$refs["treeData"].filter(val);
+		//}
+        
 
 	}
 });

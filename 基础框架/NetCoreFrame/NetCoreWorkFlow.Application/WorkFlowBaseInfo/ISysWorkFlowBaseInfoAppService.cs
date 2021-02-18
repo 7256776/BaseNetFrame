@@ -27,7 +27,7 @@ namespace NetCoreWorkFlow.Application
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
-        FlowPagingResult<SysFlowAccounts> GetFlowAccountsPaging(FlowPagingParam<SysFlowAccountsSearch> flowPagingDto);
+        FlowPagingResult<SysFlowAccounts> GetFlowUserPaging(FlowPagingParam<SysFlowAccountsSearch> flowPagingDto);
 
 
 

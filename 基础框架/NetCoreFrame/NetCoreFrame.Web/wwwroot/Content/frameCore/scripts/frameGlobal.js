@@ -157,7 +157,7 @@ var globalVue = new Vue({
         return str.replace(regZh, "");   
     }
 
-    /*******************************************************通知公用函数*********************************************************/
+    /*******************************************************通知 公用函数*********************************************************/
     frameCore.notifications = frameCore.notifications || {};
 
     //通知ui显示(调用方式 : abp.frameCore.notifications.showUiNotifications )
@@ -172,7 +172,7 @@ var globalVue = new Vue({
         uiNotifyFunc(message, notification.data.title, detailed)
     };
 
-    /*****************************************************本地化公用函数***********************************************************/
+    /*****************************************************本地化 公用函数***********************************************************/
     frameCore.localization = frameCore.localization || {};
     //本地化资源名称
     frameCore.localization.localizationName = "FrameLocalization";
@@ -192,7 +192,7 @@ var globalVue = new Vue({
         return localizationValue;
     };
 
-    /*******************************************************常规公用函数*********************************************************/
+    /*******************************************************常规 公用函数*********************************************************/
     frameCore.utils = frameCore.utils || {};
 
     /*
@@ -406,7 +406,7 @@ var globalVue = new Vue({
                 queryRef(dataList[i][childName])
             }
         };
-        //设置路由列表
+        //
         queryRef(data);
         return resList;
     };

@@ -9,7 +9,7 @@ namespace NetCoreWorkFlow.Application
         /// <summary>
         /// 用户主键ID
         /// </summary>
-        public string AccountId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 用户账号
