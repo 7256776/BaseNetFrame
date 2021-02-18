@@ -27,6 +27,11 @@ namespace NetCoreWorkFlow.Application
         public virtual string OrgName { get; set; }
 
         /// <summary>
+        /// 组织机构节点
+        /// </summary>
+        public virtual string OrgNode { get; set; }
+
+        /// <summary>
         /// 组织机构类型 
         /// 公司 = 1;  部门 = 2
         /// </summary>

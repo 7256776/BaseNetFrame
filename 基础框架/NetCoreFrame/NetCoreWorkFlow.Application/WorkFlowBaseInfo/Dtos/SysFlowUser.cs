@@ -3,7 +3,7 @@ using System;
 
 namespace NetCoreWorkFlow.Application
 {
-    public class SysFlowAccounts
+    public class SysFlowUser
     {
 
         /// <summary>
@@ -37,15 +37,35 @@ namespace NetCoreWorkFlow.Application
         public virtual string PhoneNumber { get; set; }
 
         /// <summary>
+        /// 是否超级管理员
+        /// </summary>		
+        public virtual bool IsAdmin { get; set; } = false;
+
+        /// <summary>
         /// 所属部门
         /// </summary>		
         public string OrgCode { get; set; }
 
         /// <summary>
-        /// 是否超级管理员
-        /// </summary>		
-        public virtual bool IsAdmin { get; set; } = false;
+        /// 机构名称
+        /// </summary>
+        public string OrgName { get; set; }
 
+        /// <summary>
+        /// 机构类型
+        /// 1=公司
+        /// 2=部门
+        /// </summary>
+        public string OrgType { get; set; }
+
+        /// <summary>
+        /// 机构节点
+        /// </summary>
+        public string OrgNode { get; set; }
+
+        
+        
+           
 
     }
 }

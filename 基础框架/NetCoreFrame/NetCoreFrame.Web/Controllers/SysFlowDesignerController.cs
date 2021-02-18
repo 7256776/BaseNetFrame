@@ -182,7 +182,7 @@ namespace NetCoreFrame.Web.Controllers
         }
 
         [AbpMvcAuthorize]
-        public JsonResult GetFlowUserPaging([FromBody]FlowPagingParam<SysFlowAccountsSearch> flowPagingDto)
+        public JsonResult GetFlowUserPaging([FromBody]FlowPagingParam<SysFlowUserSearch> flowPagingDto)
         {
             var data = _sysWorkFlowBaseInfoAppService.GetFlowUserPaging(flowPagingDto);
             return Json(data);

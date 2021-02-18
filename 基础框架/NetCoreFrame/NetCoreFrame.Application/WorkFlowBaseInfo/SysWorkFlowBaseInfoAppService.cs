@@ -46,6 +46,7 @@ namespace NetCoreFrame.Application
                 OrgCode = s.OrgCode,
                 OrgName = s.OrgName,
                 OrgType = s.OrgType,
+                OrgNode = s.OrgNode,
                 OrderBy = s.OrderBy
             });
             var data = ConvertMenusList(dataAll.ToList());
@@ -58,7 +59,8 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         public List<SysFlowBusinessModule> GetFlowBusinessModuleAll()
         {
-            var dataAll = _sysMenusRepository.GetAll().Where(w => w.IsActive == true).Select(s => new SysFlowBusinessModule()
+            //仅查询业务模块
+            var dataAll = _sysMenusRepository.GetAll().Where(w => w.IsActive == true && w.BusinessType == "2").Select(s => new SysFlowBusinessModule()
             {
                 MenuId = s.Id.ToString(),
                 ParentID = s.ParentID.ToString(),
@@ -75,12 +77,30 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
-        public FlowPagingResult<SysFlowAccounts> GetFlowUserPaging(FlowPagingParam<SysFlowAccountsSearch> flowPagingDto)
+        public FlowPagingResult<SysFlowUser> GetFlowUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto)
         {
             //参数对象
             var model = flowPagingDto.Params;
             //基础查询
-            var queue = _userInfoRepository.GetAll();
+            var queue = from user in _userInfoRepository.GetAll()
+                        join org in _sysOrgRepository.GetAll()
+                        on user.OrgCode equals org.OrgCode into joinedOrg
+                        from OrgTmp in joinedOrg.DefaultIfEmpty()
+                        select new SysFlowUser
+                        {
+                            UserId = user.Id.ToString(),
+                            UserCode = user.UserCode,
+                            UserNameCn = user.UserNameCn,
+                            Sex = user.Sex,
+                            EmailAddress = user.EmailAddress,
+                            PhoneNumber = user.PhoneNumber,
+                            OrgCode = user.OrgCode,
+                            IsAdmin = user.IsAdmin,
+                            OrgName = OrgTmp != null ? OrgTmp.OrgName : "",
+                            OrgType = OrgTmp != null ? OrgTmp.OrgType : "",
+                            OrgNode = OrgTmp != null ? OrgTmp.OrgNode : "",
+                        };
+
             #region 筛选条件
             //用户账号或名称 条件筛选
             if (model != null && !string.IsNullOrEmpty(model.UserCodeOrName))
@@ -88,32 +108,25 @@ namespace NetCoreFrame.Application
                 queue = queue.Where(w => (w.UserCode.Contains(model.UserCodeOrName) || w.UserNameCn.Contains(model.UserCodeOrName)));
             }
             //组织机构 条件筛选
-            if (model != null && !string.IsNullOrEmpty(model.OrgCode))
+            if (model != null && !string.IsNullOrEmpty(model.OrgCode) && !model.IsInclude)
             {
                 queue = queue.Where(w => w.OrgCode == model.OrgCode);
             }
+            if (model != null && !string.IsNullOrEmpty(model.OrgNode) && model.IsInclude)
+            {
+                queue = queue.Where(w => w.OrgNode.StartsWith(model.OrgNode));
+            }
             //排序
-            queue = queue.OrderBy(o => o.UserNameCn);
+            queue = queue.OrderBy(o => o.UserNameCn).OrderBy(o => o.UserId);
             #endregion
             //转义分页条件
             PagingDto pagingDto = new PagingDto() { PageIndex = flowPagingDto.PageIndex, MaxResultCount = flowPagingDto.PageSize };
             //输出查询数据
-            var resultPageData = queue.GetPagingData<UserInfo>(pagingDto);
-            var resultData = resultPageData.Items.Select(s => new SysFlowAccounts()
-            {
-                UserId = s.Id.ToString(),
-                UserCode = s.UserCode,
-                UserNameCn = s.UserNameCn,
-                Sex = s.Sex,
-                EmailAddress = s.EmailAddress,
-                PhoneNumber = s.PhoneNumber,
-                OrgCode = s.OrgCode,
-                IsAdmin = s.IsAdmin,
-            });
+            var resultPageData = queue.GetPagingData<SysFlowUser>(pagingDto);
 
-            return new FlowPagingResult<SysFlowAccounts>()
+            return new FlowPagingResult<SysFlowUser>()
             {
-                ResultData = resultData.ToList(),
+                ResultData = resultPageData.Items,
                 TotalCount = resultPageData.TotalCount
             };
         }

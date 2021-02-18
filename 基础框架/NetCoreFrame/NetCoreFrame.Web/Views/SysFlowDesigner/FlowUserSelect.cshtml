@@ -31,7 +31,7 @@
                                      v-bind:expand-on-click-node="false"
                                      accordion
                                      v-bind:default-expand-all="true"
-                                     v-on:node-click="getFlowUserList">
+                                     v-on:node-click="filterFlowUserList">
                                 <span slot-scope="scope">
                                     <i v-bind:class="setNodeIco(scope.node)"></i>
                                     <span>{{ scope.node.label }}</span>
@@ -42,13 +42,22 @@
                         <el-main style="padding: 0px;margin-left:5px; border:1px solid #DCDFE6; ">
                             <div class="row" style="margin:0px;">
                                 <div class="col-md-7 col-sm-7" style="text-align:left;padding:4px 0px 0px 4px;">
-                                    <el-checkbox-group slot="prepend" v-model="treeOptions.isChild">
-                                        <el-checkbox-button label="city">是否包含子机构</el-checkbox-button>
-                                    </el-checkbox-group>
+                                    <el-radio-group v-model="userPageOptions.params.isInclude" v-on:change="filterFlowUserList">
+                                        <el-radio-button v-bind:label="true">
+                                            <el-tooltip  effect="light" content="含下级机构用户" placement="top">
+                                                <span>包含</span>
+                                            </el-tooltip>
+                                        </el-radio-button>
+                                        <el-radio-button v-bind:label="false">
+                                            <el-tooltip effect="light" content="当前机构用户" placement="top">
+                                                <span>不包含</span>
+                                            </el-tooltip>
+                                        </el-radio-button>
+                                    </el-radio-group>
                                 </div>
                                 <div class="col-md-5 col-sm-5" style="text-align:right;padding:4px 0px 0px 4px;">
-                                    <el-input placeholder="用户名称 筛选" clearable v-model="userPageOptions.params.userCodeOrName" style="max-width:300px;" v-on:change="getFlowUserList">
-                                        <el-button slot="append" icon="el-icon-search" v-on:click="getFlowUserList"></el-button>
+                                    <el-input placeholder="用户名称 筛选" clearable v-model="userPageOptions.params.userCodeOrName" style="max-width:300px;" v-on:change="filterFlowUserList">
+                                        <el-button slot="append" icon="el-icon-search" v-on:click="filterFlowUserList"></el-button>
                                     </el-input>
                                 </div>
                             </div>
@@ -75,7 +84,8 @@
                                         </el-tag>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="phoneNumber" label="电话" width="100px" align="center"></el-table-column>
+                                <el-table-column prop="orgName" label="机构" width="200px" align="center"></el-table-column>
+                                <el-table-column prop="phoneNumber" label="电话" width="150px" align="center"></el-table-column>
                                 <el-table-column prop="emailAddress" label="邮箱" align="center"></el-table-column>
 
                             </el-table>

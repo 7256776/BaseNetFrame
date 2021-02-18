@@ -13,7 +13,7 @@ namespace NetCoreFrame.Infrastructure
     {
         /// <summary>
         ///   执行命令
-        ///   Add-Migration InitDataBase -c InfrastructureDbContext
+        ///   Add-Migration 'InitDataBase' -c InfrastructureDbContext
         ///   Update-Database -Verbose -c InfrastructureDbContext
         ///   
         ///   1. Add-Migration InitDataBase                init生成的类名称后缀,前缀是日期表示 (如需撤销该操作 Remove-Migration)

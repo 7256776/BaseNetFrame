@@ -32,7 +32,9 @@
 	        userPageOptions: {
 	            params: {
 	                userCodeOrName: '',
-	                orgCode: ''
+					orgCode: '',
+					OrgNode: '',
+					isInclude:false
 	            },
 	            pageIndex: 1,
 	            pageSize: 20,
@@ -63,7 +65,8 @@
 	        this.$nextTick(function () {
 	            var grid = _this.$refs["userDataGrid"];
 	            _this.userTableOptions.gridHeight = grid.$parent.$el.clientHeight - 80;
-	            _this.initOrg();
+				_this.initOrg();
+				_this.filterFlowUserList();
 	        });
 	    },
         //点击模式窗体右上角 关闭图标 触发
@@ -96,15 +99,23 @@
 			}
 			return 'fa fa-th';
 		},
+		//
+		filterFlowUserList: function () {
+			this.userPageOptions.pageIndex = 1;
+			this.getFlowUserList();
+		},
         //
 		getFlowUserList: function () {
 		    var _this = this;
-		    var data = this.$refs["treeData"].getCurrentNode();
-		    //
-		    this.userPageOptions.params.orgCode = data.orgCode; 
+			var data = this.$refs["treeData"].getCurrentNode();
+			if (data) {
+				//
+				this.userPageOptions.params.orgCode = data.orgCode;
+				this.userPageOptions.params.orgNode = data.orgNode; 
+            }
 		    abp.ajax({
 		        url: '/SysFlowDesigner/GetFlowUserPaging',
-		        data: JSON.stringify(this.userPageOptions)
+		        data: JSON.stringify(_this.userPageOptions)
 		        //type: 'POST'
 		    }).done(function (data) {
 		        _this.userPageOptions.total = data.totalCount;
