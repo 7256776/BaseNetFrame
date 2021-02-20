@@ -57,7 +57,7 @@ var component = Vue.component('sys-userinfoextens', {
 
             var res = {
                 isSubmit: isValidate,
-                formDate: this.formDataEx
+                formData: this.formDataEx
             }
             return res;
         }

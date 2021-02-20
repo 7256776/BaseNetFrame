@@ -28,14 +28,14 @@ namespace NetCoreFrame.Application
         /// 资源服务名称
         /// </summary>
         [Required(ErrorMessage = "请输入资源服务名称")]
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "资源服务名称长度超过100")]
         public virtual string ResourceName { get; set; }
 
         /// <summary>
         /// 资源服务显示名称
         /// </summary>		
         [Required(ErrorMessage = "请输入资源服务显示名称")]
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "资源服务显示名称长度超过100")]
         public virtual string ResourceDisplayName { get; set; }
 
         /// <summary>

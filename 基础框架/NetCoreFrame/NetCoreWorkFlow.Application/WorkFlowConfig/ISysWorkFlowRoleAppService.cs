@@ -39,5 +39,19 @@ namespace NetCoreWorkFlow.Application
         /// <returns></returns>
         Task DelWorkFlowRole(List<string> ids);
 
+        // <summary>
+        /// 保存流程角色与用户关系
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<int> SaveWorkFlowRoleToUser(SysWorkFlowRoleToUserInput model);
+
+        /// <summary>
+        /// 删除流程角色与用户关系
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task DelWorkFlowRoleToUser(SysWorkFlowRoleToUserInput model);
+
     }
 }

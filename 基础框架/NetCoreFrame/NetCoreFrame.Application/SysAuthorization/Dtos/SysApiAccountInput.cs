@@ -29,14 +29,14 @@ namespace NetCoreFrame.Application
         /// 用户账号
         /// </summary>
         [Required(ErrorMessage = "请输入账号名称")]
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "账号名称长度超过100")]
         public virtual string UserName { get; set; }
 
         /// <summary>
         /// 用户密码
         /// </summary>		
         [Required(ErrorMessage = "请输入账号密码")]
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "账号密码长度超过100")]
         public virtual string Password { get; set; }
 
         /// <summary>

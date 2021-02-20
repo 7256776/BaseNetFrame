@@ -1004,6 +1004,8 @@
 					}
 					_this.getWorkFlowList();
 				});
+			}).catch(function (action) {
+			    //取消操作必须有避免js链式调用报异常
 			});
 		},
 		//保存配置数据
@@ -1045,6 +1047,8 @@
 				type: 'warning'
 			}).then(function () {
 				_this.clearFlow()
+			}).catch(function (action) {
+			    //取消操作必须有避免js链式调用报异常
 			});
 		},
 		//

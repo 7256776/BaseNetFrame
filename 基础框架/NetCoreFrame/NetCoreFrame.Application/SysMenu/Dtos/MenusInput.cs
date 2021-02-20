@@ -22,12 +22,14 @@ namespace NetCoreFrame.Application
         /// 菜单标题
         /// </summary>	 
         [Required(ErrorMessage = "请输入菜单标题")]
+        [StringLength(50, ErrorMessage = "菜单标题长度超过50")]
         public string MenuDisplayName { get; set; }
 
         /// <summary>
         /// 菜单名称
         /// </summary>	 
         [Required(ErrorMessage = "请输入菜单名称")]
+        [StringLength(50, ErrorMessage = "菜单名称长度超过50")]
         public string MenuName { get; set; }
 
         /// <summary>
@@ -54,9 +56,9 @@ namespace NetCoreFrame.Application
         public string PermissionName { get; set; }
 
         /// <summary>
-        /// 授权模式:1=开放模式 2=登录模式 3=登录模式
+        /// 授权类型:1=开放模式 2=登录模式 3=登录模式
         /// </summary>	 
-        [Required(ErrorMessage = "请输入授权模式")]
+        [Required(ErrorMessage = "请输入授权类型")]
         public string RequiresAuthModel { get; set; }
 
         /// <summary>

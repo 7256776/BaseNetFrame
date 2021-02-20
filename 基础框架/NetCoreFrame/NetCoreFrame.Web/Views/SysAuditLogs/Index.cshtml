@@ -34,8 +34,8 @@
                     <el-table-column v-bind:fixed="true" type="index"></el-table-column>
                     <el-table-column label="操作人(模糊筛选)" prop="userName" width="150">
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.userName" placeholder="用户名称/账号">
-                                <el-button slot="prepend" icon="el-icon-search" v-on:click="doSearchLog"></el-button>
+                            <el-input v-model="scope.row.userName" placeholder="用户名称/账号" v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid" clearable>
+                                <el-button slot="prepend" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
                             </el-input>
                         </template>
                     </el-table-column>
@@ -54,24 +54,24 @@
                                 </el-date-picker>
                             </el-popover>
                             <el-input v-model="scope.row.dateRange" placeholder="设置日期区间" v-bind:disabled="true" suffix-icon="el-icon-date">
-                                <el-button v-popover:popoverDate icon="el-icon-search" v-on:click="doSearchLog" slot="prepend"></el-button> 
+                                <el-button v-popover:popoverDate icon="el-icon-search" v-on:click="refreshGrid" slot="prepend"></el-button> 
                             </el-input>
                         </template>
                     </el-table-column>
                     <el-table-column prop="methodName" label="方法名称(模糊筛选)" width="250" show-overflow-tooltip>
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.methodName" placeholder="方法名称">
-                                <el-button slot="prepend" icon="el-icon-search" v-on:click="doSearchLog"></el-button>
+                            <el-input v-model="scope.row.methodName" placeholder="方法名称" v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid" clearable>
+                                <el-button slot="prepend" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
                             </el-input>
                         </template>
                     </el-table-column>
                     <el-table-column prop="serviceName" label="服务名称(模糊筛选)" show-overflow-tooltip>
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.serviceName" placeholder="服务名称">
-                                <el-button slot="prepend" icon="el-icon-search" v-on:click="doSearchLog"></el-button>
+                            <el-input v-model="scope.row.serviceName" placeholder="服务名称" v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid" clearable>
+                                <el-button slot="prepend" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
                                 <el-button-group slot="append">
                                     <el-tooltip content="清空条件并刷新" placement="top">
-                                        <el-button size="mini" type="warning" icon="el-icon-delete" v-on:click="doClear"></el-button>
+                                        <el-button size="mini" type="warning" icon="fa fa-refresh" v-on:click="doClear"></el-button>
                                     </el-tooltip>
                                 </el-button-group>
                             </el-input>

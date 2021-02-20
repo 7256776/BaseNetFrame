@@ -23,7 +23,7 @@ namespace NetCoreFrame.Core
         /// </summary>
         [Required(ErrorMessage = "请输入用户账号")]
         [Column("USERCODE")]
-        [StringLength(100)]
+        [StringLength(100)] 
         public virtual string UserCode { get; set; }
 
         /// <summary>

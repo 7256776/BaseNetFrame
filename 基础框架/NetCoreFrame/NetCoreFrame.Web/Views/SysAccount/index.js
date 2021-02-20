@@ -2,7 +2,8 @@
 var component = Vue.component('sys-account', {
     template: Vue.frameTemplate('SysAccount/Index'),
     components: {
-        userinfoextens: componentAssemble.SysUserInfoExtens
+        userinfoextens: componentAssemble.SysUserInfoExtens,
+        orgtreeselection: componentAssemble.SysOrgTreeSelection,
     },
     //updated: function () {
     //    var isShowUserInfo = this.$refs["userFormEx"];
@@ -14,7 +15,7 @@ var component = Vue.component('sys-account', {
         //var isShowUserInfo = this.$refs["userFormEx"].isShowUserInfo;
         this.getUserList();
         //
-        this.initMenusData();
+        //this.initMenusData();
         //超级管理员显示是否删除的表单下拉框
         this.isShowDeleteInput = Vue.prototype.GlobalAuthorizedEntity.user.isAdmin;
     },
@@ -23,16 +24,6 @@ var component = Vue.component('sys-account', {
             isShowDeleteInput: false,
             isCloseUserInfoEx: false,
             activeName: 'userInfo',
-            treeOptions: {
-                treeData: [],
-                isShowTree: false,
-                defaultProps: {
-                    children: 'childrenSysOrg',
-                    label: 'orgName',
-                    value: 'id'
-                },
-                currentOrgName: '请选择组织机构...'
-            },
             formRules: {
                 userCode: [
                     { required: true, message: '必填项', trigger: 'blur' },
@@ -57,7 +48,8 @@ var component = Vue.component('sys-account', {
                 description: '',
                 isActive: true,
                 isDeleted: false,
-                userInfoExtensJson:''
+                userInfoExtensJson: '',
+                orgCode: ''
             },
             formDataEx: {},
             tableOptions: {
@@ -87,19 +79,6 @@ var component = Vue.component('sys-account', {
                 _this.isCloseUserInfoEx = isFormEx ? true : false;
             });
         },
-        initMenusData: function () {
-            var _this = this;
-            abp.ajax({
-                url: '/SysOrg/GetSysOrgList'
-            }).done(function (data, res, e) {
-                _this.treeOptions.treeData = data;
-            });
-        },
-        doNodeClick: function (data, node, e) {
-            this.formData.orgCode = data.orgCode;
-            this.treeOptions.currentOrgName = data.orgName;
-            this.treeOptions.isShowTree = false;
-        },
         doRowSelectChange: function (selection) {
             this.tableOptions.selectRows = selection
         },
@@ -109,7 +88,7 @@ var component = Vue.component('sys-account', {
             //
             this.tableOptions.selectRow = row;
         },
-        doSearchUser: function () {
+        refreshGrid: function () {
             this.pageOptions.pageIndex = 1;
             this.getUserList();
         },
@@ -152,7 +131,7 @@ var component = Vue.component('sys-account', {
             //
             this.activeName = "userInfo";
             if (!this.tableOptions.selectRow.id) {
-                this.tipSuccess('error','IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.pageOptions.formDialog = true;
@@ -167,14 +146,6 @@ var component = Vue.component('sys-account', {
                 _this.formData = data;
                 //获取用户扩展数据
                 _this.formDataEx = data.userInfoEx;
-                _this.treeOptions.currentOrgName = '请选择组织机构...';
-                //设置组织机构的名称转义
-                if (data.orgCode) {
-                    var resData = abp.frameCore.utils.queryRecursive(_this.treeOptions.treeData, data.orgCode, 'childrenSysOrg', 'orgCode');
-                    if (resData) {
-                        _this.treeOptions.currentOrgName = resData.orgName;
-                    }
-                }
                 //页面加载完成后执行验证避免出现错误的验证提示
                 _this.$nextTick(function () {
                     _this.$refs.formUserData.validate();
@@ -189,7 +160,7 @@ var component = Vue.component('sys-account', {
                 return false;
             }
             //获取扩展数据
-            this.formData.userInfoExtensJson = JSON.stringify(formEx.formDate);
+            this.formData.userInfoExtensJson = JSON.stringify(formEx.formData);
 
             this.$refs["formUserData"].validate(
                 function (valid) {
@@ -223,7 +194,7 @@ var component = Vue.component('sys-account', {
             var _this = this;
 
             if (this.tableOptions.selectRows.length === 0) {
-                this.tipSuccess('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除所选择的用户?', '提示', {
@@ -237,14 +208,16 @@ var component = Vue.component('sys-account', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     _this.tipSuccess('del');
-                    _this.getUserList();
+                    _this.refreshGrid();
                 });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
         doResetPass: function () {
             var _this = this;
             if (!this.tableOptions.selectRow.id) {
-                this.tipShow('IsSelect!');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.$confirm('确定重置所选择用户的密码?', '提示', { type: 'warning' })
@@ -253,10 +226,12 @@ var component = Vue.component('sys-account', {
                         url: '/SysAccount/ResetUserPass',
                         data: JSON.stringify(_this.tableOptions.selectRow.id)
                     }).done(function (data, res, e) {
-                        _this.tipShow('密码重置成功,新密码' + data);
+                        _this.tipSuccess('密码重置成功,新密码' + data);
                     });
                     //基本上可以忽略监控fail,abp已经完成了这部分处理
                     //fail(function (res, e) { });
+                }).catch(function (action) {
+                    //取消操作必须有避免js链式调用报异常
                 });
         },
         formatterSex: function (row, column) {

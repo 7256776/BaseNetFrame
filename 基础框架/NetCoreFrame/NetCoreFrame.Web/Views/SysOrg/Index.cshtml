@@ -44,12 +44,18 @@
                          label-suffix=":"
                          label-width="100px">
 
+                    <!--v-on:change="doParentTreeChange"
+      "disabled":true,
+                    v-on:expand-change="doParentTreeChange"
+                         v-model="pageOptions.selectedParent"
+    -->
                     <el-form-item label="上级机构" prop="parentOrgID">
-                        <el-cascader v-bind:props="defaultProps"
-                                     v-bind:options="treeData"
+                        <el-cascader ref="orgTree"
                                      v-model="pageOptions.selectedParent"
+                                     v-bind:props="defaultProps"
+                                     v-bind:options="treeSelectData"
                                      v-on:change="doParentTreeChange"
-                                     change-on-select
+                                     v-on:visible-change="doVisibleChange"
                                      clearable
                                      suffix-icon="fa fa-list-ol"
                                      placeholder="选择模块上级组织机构(如需创建根组织机构,该选择为空)"

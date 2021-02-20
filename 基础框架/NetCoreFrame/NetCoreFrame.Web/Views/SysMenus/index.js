@@ -34,7 +34,10 @@ var component = Vue.component('sys-menus', {
                 //],
                 requiresAuthModel: [
                     { required: true, message: '请选择一个项目', trigger: 'change' }
-                ]
+                ],
+                businessType: [
+                    { required: true, message: '必填项', trigger: 'blur' },
+                ],
             },
             formData: {
                 id: null,
@@ -142,7 +145,6 @@ var component = Vue.component('sys-menus', {
             }).done(function (data, res, e) {
                 _this.formData = data;
                 _this.tableData = data.sysMenuActions;
-
             });
         },
         doRowSelectChange: function (selection) {
@@ -186,8 +188,6 @@ var component = Vue.component('sys-menus', {
                 callback();
                 return;
             }
-            //var _this = this;
-            //var i = 0;
             var data = {
                 permissionName: this.formData.permissionName,
                 id: this.formData.id
@@ -203,7 +203,6 @@ var component = Vue.component('sys-menus', {
                     callback(new Error());
                 }
             }).fail(function (data, res, e) {
-                //debugger;
                 callback(new Error("验证超时"));
             });
         },
@@ -272,6 +271,8 @@ var component = Vue.component('sys-menus', {
                     _this.initMenusData();
                     _this.tipSuccess('del');
                 });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
         doSubAdd: function () {
@@ -351,6 +352,8 @@ var component = Vue.component('sys-menus', {
                     return false;
                 });
                 _this.tableData = data;
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
         doParentTreeChange: function (v) {

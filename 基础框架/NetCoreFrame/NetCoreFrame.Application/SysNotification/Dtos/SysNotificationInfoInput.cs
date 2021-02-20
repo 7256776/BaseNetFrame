@@ -15,12 +15,14 @@ namespace NetCoreFrame.Application
         /// 通知类型名称
         /// </summary>
         [Required(ErrorMessage = "请输入通知类型名称")]
+        [StringLength(50, ErrorMessage = "通知类型名称长度超过50")]
         public virtual string NotificationName { get; set; }
 
         /// <summary>
         /// 通知显示名称
         /// </summary>
         [Required(ErrorMessage = "请输入通知显示名称")]
+        [StringLength(50, ErrorMessage = "通知显示名称长度超过50")]
         public virtual string NotificationDisplayName { get; set; }
 
         /// <summary>

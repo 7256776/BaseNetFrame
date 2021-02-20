@@ -12,27 +12,15 @@ namespace NetCoreFrame.Infrastructure.Migrations
         /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string sql = @"CREATE VIEW [dbo].[V_SysUserAccount] 
-                                    AS
-
-                                    SELECT ua.Id,
-                                           ua.UserCode,
-                                           ua.UserNameCn,
-                                           ua.TenantId,
-                                           ua.ImageUrl,
-                                           ua.Sex,
-                                           ua.EmailAddress,
-                                           ua.PhoneNumber,
-                                           ua.LastLoginTime,
-                                           ua.[Description],
-                                           ua.IsActive,
-                                           ua.IsAdmin,
-                                           so.OrgCode,
-                                           so.OrgName,
-                                           so.OrgNode,
-                                           so.OrgType
-                                    FROM   Sys_UserAccounts ua 
-			                                    INNER JOIN Sys_Org so ON  ua.OrgCode = so.OrgCode ";
+            string sql = @"CREATE VIEW [dbo].[V_SysFlowRoleToUser] 
+                                                    AS
+                                                    SELECT rtu.Id, r.Id FlowRoleId, r.FlowRoleName, r.[Description], 
+                                                                ua.Id UserId, ua.UserCode, ua.Sex, ua.UserNameCn, ua.EmailAddress, ua.PhoneNumber,
+                                                                so.OrgCode, so.OrgName, so.OrgNode, so.OrgType
+                                                    FROM   Sys_WorkFlowRole r 
+                                                                    INNER JOIN Sys_WorkFlowRoleToUser rtu ON  r.Id = rtu.FlowRoleID
+                                                                    INNER JOIN Sys_UserAccounts ua ON  rtu.UserID = ua.Id
+                                                                    LEFT JOIN Sys_Org so ON  ua.OrgCode = so.OrgCode";
             migrationBuilder.Sql(sql);
         }
 

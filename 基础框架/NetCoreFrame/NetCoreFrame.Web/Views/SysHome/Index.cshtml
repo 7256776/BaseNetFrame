@@ -3,9 +3,12 @@
     //Layout = "~/Views/Shared/_LayoutTop.cshtml";
     Layout = GetMainLayout();
 }
-@*<transition name="el-fade-in-linear">*@
-@*name="frame-fade-in-linear"*@
+<!-- 页面过度效果
+    name="el-fade-in-linear"
+    name="el-zoom-in-center"  eleUI定义的方式
 
-<transition name="frame-fade-in-linear">
+    name="frame-fade-in-linear" 自定义样式的方式
+    -->
+<transition name="el-fade-in-linear">
     <router-view></router-view>
 </transition>

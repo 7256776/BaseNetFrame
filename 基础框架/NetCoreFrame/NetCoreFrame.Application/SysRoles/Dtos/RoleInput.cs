@@ -17,7 +17,8 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 角色名称
         /// </summary>
-        [Required(ErrorMessage = "请输入角色名称")]
+        [Required(ErrorMessage = "请输入角色名称")] 
+        [StringLength(50, ErrorMessage = "组织机构编码长度超过50")]
         public string RoleName { get; set; }
 
         /// <summary>

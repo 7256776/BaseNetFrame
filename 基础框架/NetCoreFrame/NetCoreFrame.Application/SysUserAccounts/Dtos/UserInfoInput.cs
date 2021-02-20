@@ -1,5 +1,6 @@
 ﻿using Abp.AutoMapper;
 using NetCoreFrame.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreFrame.Application
 {
@@ -15,6 +16,8 @@ namespace NetCoreFrame.Application
         /// 用户名称
         /// </summary>	
         //[Required]
+        [Required(ErrorMessage = "请输入用户名称")]
+        [StringLength(50, ErrorMessage = "用户名称长度超过50")]
         public string UserNameCn { get; set; }
 
         /// <summary>
@@ -56,8 +59,23 @@ namespace NetCoreFrame.Application
         /// ID
         /// </summary>	
         public long ID { get; set; }
+
+        /// <summary>
+        /// 旧密码
+        /// </summary>
+        [Required(ErrorMessage = "请输入旧密码")]
         public string OldPass { get; set; }
+
+        /// <summary>
+        /// 新密码
+        /// </summary>
+        [Required(ErrorMessage = "请输入新密码")]
         public string NewPass { get; set; }
+
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        [Required(ErrorMessage = "请输入确认密码")] 
         public string CheckPass { get; set; }
     }
 

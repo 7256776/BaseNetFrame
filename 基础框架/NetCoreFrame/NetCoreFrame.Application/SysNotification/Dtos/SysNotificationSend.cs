@@ -1,5 +1,6 @@
 ﻿using Abp.Notifications;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreFrame.Application
 {
@@ -11,6 +12,8 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 通知类型名称
         /// </summary>
+        [Required(ErrorMessage = "请输入通知类型名称")]
+        [StringLength(50, ErrorMessage = "通知类型名称长度超过50")]
         public virtual string NotificationName { get; set; }
 
         /// <summary>
@@ -21,6 +24,7 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 通知内容
         /// </summary>
+        [Required(ErrorMessage = "请输入通知内容")]
         public virtual string NotificationContent { get; set; }
 
         /// <summary>

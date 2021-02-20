@@ -67,6 +67,11 @@ var componentAssemble = {
         Vue.prototype.pageLoad('sys-headtoolbutton', 'Views/SysComponents/HeadToolButton').then(resolve, reject);
     },
 
+    //组织机构选择下拉框(树节点)
+    SysOrgTreeSelection: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-orgtreeselection', 'Views/SysBusinessComponentss/OrgTreeSelection').then(resolve, reject);
+    },
+
     //用户选择
     FlowUserSelect: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-flowuserselect', 'Views/SysFlowDesigner/FlowUserSelect').then(resolve, reject);

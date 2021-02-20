@@ -19,6 +19,8 @@ namespace NetCoreWorkFlow.Core
         public virtual DbSet<SysWorkFlowRole> SysWorkFlowRoles { set; get; }
         public virtual DbSet<SysWorkFlowRoleToUser> SysWorkFlowRoleToUsers { set; get; }
 
+        public virtual DbSet<ViewSysFlowRoleToUser> ViewSysFlowRoleToUsers { set; get; }
+
         #endregion
 
         public NetCoreWorkFlowDbContext(DbContextOptions<NetCoreWorkFlowDbContext> options)

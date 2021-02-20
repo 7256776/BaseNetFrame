@@ -80,6 +80,8 @@
                                 _this.$refs["formSysDictData"].resetFields();
                             });
                         });
+                    }).catch(function (action) {
+                        //取消操作必须有避免js链式调用报异常
                     });
             },
             getSysDictTypeDataList: function () {
@@ -257,6 +259,8 @@
                             _this.getDataList();
                             _this.tipSuccess('del');
                         });
+                    }).catch(function (action) {
+                        //取消操作必须有避免js链式调用报异常
                     });
             },
             doSaveRow: function () {

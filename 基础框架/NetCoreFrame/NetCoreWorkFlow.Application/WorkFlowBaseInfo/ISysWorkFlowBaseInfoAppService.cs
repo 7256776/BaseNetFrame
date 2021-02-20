@@ -14,21 +14,27 @@ namespace NetCoreWorkFlow.Application
         /// 查询所有组织机构
         /// </summary>
         /// <returns></returns>
-        List<SysFlowOrgData> GetFlowOrgAll();
+        List<SysFlowOrgData> GetSysOrgAll();
 
         /// <summary>
         /// 查询所有业务流程
         /// </summary>
         /// <returns></returns>
-        List<SysFlowBusinessModule> GetFlowBusinessModuleAll();
+        List<SysFlowBusiness> GetSysBusinessModuleAll();
 
         /// <summary>
         /// 分页查询账号信息,并可根据参数进行筛选
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
-        FlowPagingResult<SysFlowUser> GetFlowUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto);
+        FlowPagingResult<SysFlowUser> GetSysUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flowPagingDto"></param>
+        /// <returns></returns>
+        FlowPagingResult<ViewSysFlowRoleToUser> GetFlowUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto);
 
 
     }

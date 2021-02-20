@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="WorkFlowBaseInfo\Dtos\SysFlowRoleToUser.cs" />
     <Compile Remove="WorkFlowBaseInfo\SysWorkFlowSettingAppService.cs" />
-    <Compile Remove="WorkFlowConfig\Dtos\SysWorkFlowSettingData.cs" />
   </ItemGroup>
 
   <ItemGroup>

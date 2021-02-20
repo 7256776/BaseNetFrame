@@ -3,7 +3,7 @@ using System;
 
 namespace NetCoreWorkFlow.Application
 {
-    public class SysFlowBusinessModule
+    public class SysFlowBusiness
     {
         /// <summary>
         /// ID

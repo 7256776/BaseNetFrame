@@ -22,12 +22,14 @@ namespace NetCoreFrame.Application
         /// 动作标题
         /// </summary>	 
         [Required(ErrorMessage = "请输入动作标题")]
+        [StringLength(50, ErrorMessage = "动作标题长度超过50")]
         public string ActionDisplayName { get; set; }
 
         /// <summary>
         /// 动作名称
         /// </summary>	 
         [Required(ErrorMessage = "请输入动作名称")]
+        [StringLength(50, ErrorMessage = "动作名称长度超过50")]
         public string ActionName { get; set; }
 
         /// <summary>
@@ -41,8 +43,9 @@ namespace NetCoreFrame.Application
         public string Description { get; set; }
 
         /// <summary>
-        /// 授权模式:1=开放模式 2=登录模式 3=登录模式
+        /// 授权类型:1=开放模式 2=登录模式 3=登录模式
         /// </summary>	 
+        [Required(ErrorMessage = "请输入授权类型")]
         public string RequiresAuthModel { get; set; }
 
         /// <summary>

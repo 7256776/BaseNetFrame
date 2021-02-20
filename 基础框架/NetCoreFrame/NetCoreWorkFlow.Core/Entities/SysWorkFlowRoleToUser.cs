@@ -17,7 +17,7 @@ namespace NetCoreWorkFlow.Core
         /// </summary>		
         [Column("FlowRoleID")]
         [Required(ErrorMessage = "请设置流程角色ID")]
-        public virtual string FlowRoleID { get; set; }
+        public virtual Guid FlowRoleID { get; set; }
 
         /// <summary>
         /// 用户ID

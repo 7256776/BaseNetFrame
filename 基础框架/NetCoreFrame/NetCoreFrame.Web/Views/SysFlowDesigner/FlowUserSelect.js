@@ -33,7 +33,7 @@
 	            params: {
 	                userCodeOrName: '',
 					orgCode: '',
-					OrgNode: '',
+					orgNode: '',
 					isInclude:false
 	            },
 	            pageIndex: 1,
@@ -45,7 +45,6 @@
 	            tableData: [],
 	            selectRows: []
 	        },
-
 	    }
 	},
 	computed: {
@@ -56,7 +55,9 @@
 	},
 	methods: {
 	    closeDialog: function () {
-	        this.$emit('update:visible', false)
+	        this.$emit('update:visible', false);
+            //触发关闭后事件
+	        this.$emit('closed');
 	    },
         //显示窗口时
 	    enter: function (el, done) {
@@ -72,12 +73,13 @@
         //点击模式窗体右上角 关闭图标 触发
 	    beforeCloseDialog: function (done) {
 	        this.closeDialog();
+	        // done 是控件的关闭事件,此处忽略
 	    },
         //初始组织机构
 		initOrg: function () {
 			var _this = this;
 			abp.ajax({
-				url: '/SysFlowDesigner/GetFlowOrg',
+				url: '/SysFlowDesigner/GetSysOrg',
 			}).done(function (data, res, e) {
 				if (!data) {
 					_this.tipShow('error', '未获取到数据');
@@ -114,7 +116,7 @@
 				this.userPageOptions.params.orgNode = data.orgNode; 
             }
 		    abp.ajax({
-		        url: '/SysFlowDesigner/GetFlowUserPaging',
+		        url: '/SysFlowDesigner/GetSysUserPaging',
 		        data: JSON.stringify(_this.userPageOptions)
 		        //type: 'POST'
 		    }).done(function (data) {
@@ -153,7 +155,7 @@
 		    this.userPageOptions.pageIndex = val;
 		    this.getFlowUserList();
 		},
-		filterNode(value, data) {
+		filterNode: function (value, data) {
 		    if (!value)
 		        return true;
 		    return data.orgName.indexOf(value) !== -1;

@@ -121,7 +121,7 @@ namespace NetCoreFrame.Core
                 _sysApiAccountRepository.Delete(Guid.Parse(id));
                 //删除该客户相关的所有资源(目前对应关系是 一个账号仅对应一个客户 因此删除仅会删除一条关系数据)
                 //注: 可扩展一对多
-                _sysApiClienToAccountRepository.Delete(w => w.ApiClientId == Guid.Parse(id));
+                _sysApiClienToAccountRepository.Delete(w => w.ApiAccountId == Guid.Parse(id));
             }
             //移除缓存
             _sysIdentityServerCacheAppService.RemoveClientAndAccountCache();

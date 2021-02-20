@@ -376,8 +376,8 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="授权Token有效期  (小时)" prop="accessTokenLifetime" v-FormLine>
-                    <el-input v-model="clientFormData.accessTokenLifetime" v-bind:style="formFormItem1" clearable show-word-limit>
-                    </el-input>
+                    <el-input-number v-model="clientFormData.accessTokenLifetime" v-bind:style="formFormItem1" :min="1" :max="99"  >
+                    </el-input-number>
                 </el-form-item>
                 <el-form-item label="刷新Token" prop="allowOfflineAccess">
                     <el-select v-model="clientFormData.allowOfflineAccess"
@@ -390,8 +390,8 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="刷新Token有效期  (小时)" prop="slidingRefreshTokenLifetime" v-FormLine>
-                    <el-input v-model="clientFormData.slidingRefreshTokenLifetime" v-bind:style="formFormItem1" clearable>
-                    </el-input>
+                    <el-input-number v-model="clientFormData.slidingRefreshTokenLifetime" v-bind:style="formFormItem1" :min="1" :max="99" v-bind:disabled="tokenLifetimeDisabled">
+                    </el-input-number>
                 </el-form-item>
 
                 <el-form-item label="关联资源" prop="apiResourceId">

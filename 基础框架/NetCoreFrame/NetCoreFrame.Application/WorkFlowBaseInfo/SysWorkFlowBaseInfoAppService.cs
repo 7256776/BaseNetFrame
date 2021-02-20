@@ -17,6 +17,9 @@ namespace NetCoreFrame.Application
         private readonly IUserInfoRepository _userInfoRepository;
         private readonly ISysMenusRepository _sysMenusRepository;
 
+        public readonly IViewSysFlowRoleToUserRepository _viewSysFlowRoleToUserRepository;
+        public readonly ISysWorkFlowRoleRepository _sysWorkFlowRoleRepository;
+
 
         /// <summary>
         /// 
@@ -25,19 +28,24 @@ namespace NetCoreFrame.Application
         public SysWorkFlowBaseInfoAppService(
             ISysOrgRepository sysOrgRepository,
             IUserInfoRepository userInfoRepository,
-            ISysMenusRepository sysMenusRepository
+            ISysMenusRepository sysMenusRepository,
+
+            IViewSysFlowRoleToUserRepository viewSysFlowRoleToUserRepository,
+            ISysWorkFlowRoleRepository sysWorkFlowRoleRepository
             )
         {
             _sysOrgRepository = sysOrgRepository;
             _userInfoRepository = userInfoRepository;
             _sysMenusRepository = sysMenusRepository;
+            _viewSysFlowRoleToUserRepository = viewSysFlowRoleToUserRepository;
+            _sysWorkFlowRoleRepository = sysWorkFlowRoleRepository;
         }
 
         /// <summary>
         /// 查询所有组织机构
         /// </summary>
         /// <returns></returns>
-        public List<SysFlowOrgData> GetFlowOrgAll()
+        public List<SysFlowOrgData> GetSysOrgAll()
         {
             var dataAll = _sysOrgRepository.GetAll().Where(w => w.IsActive == true).Select(s => new SysFlowOrgData()
             {
@@ -57,10 +65,10 @@ namespace NetCoreFrame.Application
         /// 查询所有业务流程
         /// </summary>
         /// <returns></returns>
-        public List<SysFlowBusinessModule> GetFlowBusinessModuleAll()
+        public List<SysFlowBusiness> GetSysBusinessModuleAll()
         {
             //仅查询业务模块
-            var dataAll = _sysMenusRepository.GetAll().Where(w => w.IsActive == true && w.BusinessType == "2").Select(s => new SysFlowBusinessModule()
+            var dataAll = _sysMenusRepository.GetAll().Where(w => w.IsActive == true && w.BusinessType == "2").Select(s => new SysFlowBusiness()
             {
                 MenuId = s.Id.ToString(),
                 ParentID = s.ParentID.ToString(),
@@ -77,7 +85,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
-        public FlowPagingResult<SysFlowUser> GetFlowUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto)
+        public FlowPagingResult<SysFlowUser> GetSysUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto)
         {
             //参数对象
             var model = flowPagingDto.Params;
@@ -107,11 +115,12 @@ namespace NetCoreFrame.Application
             {
                 queue = queue.Where(w => (w.UserCode.Contains(model.UserCodeOrName) || w.UserNameCn.Contains(model.UserCodeOrName)));
             }
-            //组织机构 条件筛选
+            //不包含子节点组织机构 条件筛选
             if (model != null && !string.IsNullOrEmpty(model.OrgCode) && !model.IsInclude)
             {
                 queue = queue.Where(w => w.OrgCode == model.OrgCode);
             }
+            //包含子节点组织机构
             if (model != null && !string.IsNullOrEmpty(model.OrgNode) && model.IsInclude)
             {
                 queue = queue.Where(w => w.OrgNode.StartsWith(model.OrgNode));
@@ -131,6 +140,63 @@ namespace NetCoreFrame.Application
             };
         }
 
+      /// <summary>
+        /// 分页查询账号信息,并可根据参数进行筛选
+        /// </summary>
+        /// <param name="flowPagingDto"></param>
+        /// <returns></returns>
+        public FlowPagingResult<ViewSysFlowRoleToUser> GetFlowUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto)
+        {
+            //参数对象
+            var model = flowPagingDto.Params;
+
+
+            var queue = _viewSysFlowRoleToUserRepository.GetAll();
+
+
+            //var queue = from flowRole in _sysWorkFlowRoleRepository.GetAll()
+            //            join roleUser in _sysWorkFlowRoleToUserRepository.GetAll()
+            //            on flowRole.Id equals roleUser.FlowRoleID
+            //            join user in _userInfoRepository.GetAll()
+            //           on roleUser.UserID equals user.Id.ToString()
+            //            select new SysFlowRoleToUser
+            //            {
+            //                UserId = user.Id.ToString(),
+            //                UserCode = user.UserCode,
+            //                UserNameCn = user.UserNameCn,
+            //                Sex = user.Sex,
+            //                EmailAddress = user.EmailAddress,
+            //                PhoneNumber = user.PhoneNumber,
+            //                FlowRoleId = flowRole.Id,
+            //                FlowRoleName = flowRole.FlowRoleName
+                       
+            //            };
+
+            #region 筛选条件
+            //用户账号或名称 条件筛选
+            if (model != null && !string.IsNullOrEmpty(model.UserCodeOrName))
+            {
+                queue = queue.Where(w => (w.UserCode.Contains(model.UserCodeOrName) || w.UserNameCn.Contains(model.UserCodeOrName)));
+            }
+            //流程角色 条件筛选
+            if (model != null && model.FlowRoleId!=null)
+            {
+                queue = queue.Where(w => w.FlowRoleId == model.FlowRoleId);
+            }
+            //排序
+            queue = queue.OrderBy(o => o.UserNameCn).OrderBy(o => o.UserId);
+            #endregion
+            //转义分页条件
+            PagingDto pagingDto = new PagingDto() { PageIndex = flowPagingDto.PageIndex, MaxResultCount = flowPagingDto.PageSize };
+            //输出查询数据
+            var resultPageData = queue.GetPagingData<ViewSysFlowRoleToUser>(pagingDto);
+
+            return new FlowPagingResult<ViewSysFlowRoleToUser>()
+            {
+                ResultData = resultPageData.Items,
+                TotalCount = resultPageData.TotalCount
+            };
+        }
 
 
 
@@ -171,7 +237,6 @@ namespace NetCoreFrame.Application
 
             return parentData.ToList();
         }
-
 
         /// <summary>
         /// 递归获取所有子节点

@@ -96,7 +96,7 @@ var component = Vue.component('sys-roles', {
         },
         doAddRoleMenu: function () {
             if (this.tableOptions.selectRows.length === 0) {
-                this.tipShow('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.pageOptions.menuDialog = true;
@@ -118,7 +118,7 @@ var component = Vue.component('sys-roles', {
         },
         doUserMenu: function () {
             if (this.tableOptions.selectRows.length === 0) {
-                this.tipShow('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.pageOptions.userDialog = true;
@@ -256,7 +256,7 @@ var component = Vue.component('sys-roles', {
         },
         doEdit: function () {
             if (!this.tableOptions.selectRow.id) {
-                this.tipShow('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             var _this = this;
@@ -299,7 +299,7 @@ var component = Vue.component('sys-roles', {
         doDelForm: function () {
             var _this = this;
             if (this.tableOptions.selectRows.length == 0) {
-                this.tipShow('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除?', '提示', {
@@ -315,6 +315,8 @@ var component = Vue.component('sys-roles', {
                     _this.tipSuccess('del');
                     _this.getDataList();
                 });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
 

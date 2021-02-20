@@ -25,7 +25,11 @@ namespace NetCoreWorkFlow.Application
         /// 是否包含子节点机构
         /// </summary>		
         public virtual bool IsInclude { get; set; }
-        
+
+        /// <summary>
+        /// 审核角色ID
+        /// </summary>		
+        public Guid? FlowRoleId { get; set; }
 
     }
 }

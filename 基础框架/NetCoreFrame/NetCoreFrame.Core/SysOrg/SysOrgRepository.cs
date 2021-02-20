@@ -69,6 +69,7 @@ namespace NetCoreFrame.Core
                 }
                 else
                 {
+                    m.ChildrenSysOrg = null;
                     m.IsLeaf = true;
                 }
                 i = 1;
@@ -108,6 +109,7 @@ namespace NetCoreFrame.Core
                 }
                 else
                 {
+                    item.ChildrenSysOrg = null;
                     item.IsLeaf = true;
                 }
 

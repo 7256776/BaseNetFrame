@@ -7,14 +7,14 @@
             <div class="col-md-7 col-sm-7" style="text-align:left;">
                 <el-button-group>
                     <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAdd()" ref="btnAdd" v-IsAuthorized>新增</el-button>
-                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()" ref="btnEdit" >编辑</el-button>
+                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()" ref="btnEdit" v-IsAuthorized>编辑</el-button>
                     <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelForm()" ref="btnDel" v-IsAuthorized>删除</el-button>
                     <el-button size="mini" type="primary" icon="fa fa-key fa-lg" v-on:click="doResetPass()" ref="btnResetPass" v-IsAuthorized>重置密码</el-button>
                 </el-button-group>
             </div>
             <div class="col-md-5 col-sm-5" style="text-align:right;">
-                <el-input placeholder="用户名称/用户账号 查询" v-model="pageOptions.searchTxt" size="mini"  style="width:300px;" clearable v-on:change="getUserList"  >
-                    <el-button slot="append" icon="el-icon-search" v-on:click="doSearchUser"></el-button>
+                <el-input placeholder="用户名称/用户账号 查询" v-model="pageOptions.searchTxt" size="mini"  style="width:300px;" clearable v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid"  >
+                    <el-button slot="append" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
                 </el-input>
             </div>
         </div>
@@ -111,32 +111,10 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="组织机构" prop="orgCode">
-                                <el-popover title="组织机构"
-                                            v-model="treeOptions.isShowTree"
-                                            placement="bottom"
-                                            width="500"
-                                            trigger="click">
-                                    <div>
-                                        <el-tree ref="treeData"
-                                                 v-bind:data="treeOptions.treeData"
-                                                 v-bind:props="treeOptions.defaultProps"
-                                                 node-keys="Id"
-                                                 highlight-current
-                                                 v-bind:expand-on-click-node="false"
-                                                 accordion
-                                                 v-bind:default-expand-all="true"
-                                                 v-on:node-click="doNodeClick">
-                                            <span slot-scope="scope">
-                                                <i v-bind:class="scope.node.level>1?'fa fa-th':'fa fa-th-large'"></i>
-                                                <span>{{ scope.node.label }}</span>
-                                            </span>
-                                        </el-tree>
-                                    </div>
-                                    <el-button slot="reference" v-bind:style="formFormItem2" style="text-align:left;">{{ treeOptions.currentOrgName}}</el-button>
-                                </el-popover>
+                                <orgtreeselection v-model="formData.orgCode" v-bind:button-style="formFormItem2"></orgtreeselection>
                             </el-form-item>
                             <el-form-item label="描述" prop="description">
-                                <el-input type="textarea" v-model="formData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="200" show-word-limit>
+                                <el-input type="textarea" v-model="formData.description" v-bind:style="formFormItem1" clearable v-bind:maxlength="200" show-word-limit>
                                 </el-input>
                             </el-form-item>
                             <el-form-item label="删除状态" prop="isDeleted" v-show="isShowDeleteInput">

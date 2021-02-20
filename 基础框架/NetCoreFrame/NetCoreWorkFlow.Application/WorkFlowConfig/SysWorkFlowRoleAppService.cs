@@ -14,6 +14,7 @@ namespace NetCoreWorkFlow.Application
     public class SysWorkFlowRoleAppService : NetCoreWorkFlowApplicationBase, ISysWorkFlowRoleAppService
     {
         private readonly ISysWorkFlowRoleRepository _sysWorkFlowRoleRepository;
+        private readonly ISysWorkFlowRoleToUserRepository _sysWorkFlowRoleToUserRepository;
 
 
         /// <summary>
@@ -21,11 +22,12 @@ namespace NetCoreWorkFlow.Application
         /// </summary>
         /// <param name="dbcontext"></param>
         public SysWorkFlowRoleAppService(
-            ISysWorkFlowRoleRepository sysWorkFlowRoleRepository
+            ISysWorkFlowRoleRepository sysWorkFlowRoleRepository,
+            ISysWorkFlowRoleToUserRepository sysWorkFlowRoleToUserRepository
             )
         {
             _sysWorkFlowRoleRepository = sysWorkFlowRoleRepository;
-
+            _sysWorkFlowRoleToUserRepository = sysWorkFlowRoleToUserRepository;
 
         }
 
@@ -51,7 +53,7 @@ namespace NetCoreWorkFlow.Application
             var data = _sysWorkFlowRoleRepository.GetAsync(new Guid(id));
             return data;
         }
-          
+
         /// <summary>
         /// 保存角色(新增,修改)
         /// </summary>
@@ -60,7 +62,7 @@ namespace NetCoreWorkFlow.Application
         [AbpAuthorize]
         public async Task<AjaxResponse> SaveWorkFlowRole(SysWorkFlowRoleInput model)
         {
-            var repeatData =await _sysWorkFlowRoleRepository.GetAllListAsync(w => w.FlowRoleName == model.FlowRoleName && w.Id != model.Id);
+            var repeatData = await _sysWorkFlowRoleRepository.GetAllListAsync(w => w.FlowRoleName == model.FlowRoleName && w.Id != model.Id);
             if (repeatData.Any())
             {
                 throw new UserFriendlyException("角色名称重复", "您设置的角色名称" + model.FlowRoleName + "重复!");
@@ -99,6 +101,45 @@ namespace NetCoreWorkFlow.Application
             return Task.CompletedTask;
         }
 
+        // <summary>
+        /// 保存流程角色与用户关系
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpAuthorize]
+        public async Task<int> SaveWorkFlowRoleToUser(SysWorkFlowRoleToUserInput model)
+        {
+            int row = 0;
+            foreach (var item in model.UserList)
+            {
+                var isExist = await _sysWorkFlowRoleToUserRepository.GetAllListAsync(w => w.FlowRoleID == model.FlowRoleID && w.UserID == item);
+                if (!isExist.Any())
+                {
+                    await _sysWorkFlowRoleToUserRepository.InsertAsync(new SysWorkFlowRoleToUser()
+                    {
+                        FlowRoleID = model.FlowRoleID,
+                        UserID = item
+                    });
+                    row++;
+                }
+            }
+            return row;
+        }
+
+        /// <summary>
+        /// 删除流程角色与用户关系
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpAuthorize]
+        [UnitOfWork]
+        public async Task DelWorkFlowRoleToUser(SysWorkFlowRoleToUserInput model)
+        {
+            foreach (var item in model.UserList)
+            {
+               await _sysWorkFlowRoleToUserRepository.DeleteAsync(w => w.FlowRoleID == model.FlowRoleID && w.UserID == item);
+            }
+        }
 
     }
 }

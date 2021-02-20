@@ -200,6 +200,8 @@ var component = Vue.component('sys-userinbox', {
                     }).fail(function (data, res, e) {
                         _this.tableOptions.gridLoading = false;
                     });
+                }).catch(function (action) {
+                    //取消操作必须有避免js链式调用报异常
                 });
         },
         doDel: function (val, e) {
@@ -229,6 +231,8 @@ var component = Vue.component('sys-userinbox', {
                     }).fail(function (data, res, e) {
                         _this.tableOptions.gridLoading = false;
                     });
+                }).catch(function (action) {
+                    //取消操作必须有避免js链式调用报异常
                 });
         },
         doTab: function (index) {
@@ -378,6 +382,8 @@ var component = Vue.component('sys-userinbox', {
                         _this.chatData.chatContentList = [];
                         _this.tipSuccess('del');
                     });
+                }).catch(function (action) {
+                    //取消操作必须有避免js链式调用报异常
                 });
         },
         doSendCaht: function () {

@@ -116,8 +116,8 @@
                                                     </div>
                                                     <div class="col-md-6 " style="text-align:right;">
                                                        
-                                                        <el-input placeholder="用户账号/名称 筛选" size="mini" clearable v-model="tableOptions.searchTxt"  v-on:change="getDataList">
-                                                            <el-button slot="append" icon="el-icon-search" v-on:click="doSearchData"></el-button>
+                                                        <el-input placeholder="用户账号/名称 筛选" size="mini" clearable v-model="tableOptions.searchTxt"  v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid">
+                                                            <el-button slot="append" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
                                                         </el-input>
                                                     </div>
                                                 </div>

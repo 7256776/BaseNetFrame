@@ -112,9 +112,11 @@ var component = Vue.component('sys-auditlogs', {
                     _this.tipShow('success', 'OperationComplete');
                     _this.getDataList();
                 });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
-        doSearchLog: function () {
+        refreshGrid: function () {
             this.pageOptions.pageIndex = 1;
             this.getDataList(); 
         }, 
@@ -127,7 +129,7 @@ var component = Vue.component('sys-auditlogs', {
                 abp.frameCore.format.formatDate(v[0], "yyyy-MM-dd")
                 + "--" +
                 abp.frameCore.format.formatDate(v[1], "yyyy-MM-dd");
-            this.doSearchLog();
+            this.refreshGrid();
         },
         doClear: function (v) {
             this.tableOptions.tableFiltersData[0].userName = "";
@@ -135,7 +137,7 @@ var component = Vue.component('sys-auditlogs', {
             this.tableOptions.tableFiltersData[0].methodName = "";
             this.tableOptions.tableFiltersData[0].executionTime = [];
             this.tableOptions.tableFiltersData[0].dateRange = "";
-            this.doSearchLog();
+            this.refreshGrid();
         }, 
         handleSizeChange: function (val) {
             this.pageOptions.maxResultCount = val;

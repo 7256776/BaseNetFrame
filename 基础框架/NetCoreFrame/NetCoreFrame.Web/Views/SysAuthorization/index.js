@@ -108,6 +108,14 @@ var component = Vue.component('sys-authorization', {
             },
         };
     },
+    computed: {
+        tokenLifetimeDisabled: function () {
+            if (this.clientFormData.allowOfflineAccess) {
+                return false;
+            }
+            return true;
+        }
+    }, 
     watch: {
         //监听
     },
@@ -184,9 +192,7 @@ var component = Vue.component('sys-authorization', {
                 url: '/SysAuthorization/GetApiAccountByClient',
                 data: JSON.stringify(row.id)
             }).done(function (data, res, e) {
-              
                     row.sysApiAccountList = data;
-             
             });
         },
         doResourceAdd: function () {
@@ -198,6 +204,10 @@ var component = Vue.component('sys-authorization', {
         },
         doResourceEdit: function () {
             var _this = this;
+            if (!this.resourceOptions.apiResourceCurrentId) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
             this.resourceOptions.formDialog = true;
             abp.ajax({
                 url: '/SysAuthorization/GetSysApiResource',
@@ -214,7 +224,7 @@ var component = Vue.component('sys-authorization', {
         doResourceDel: function () {
             var _this = this;
             if (!this.resourceOptions.apiResourceCurrentId) {
-                this.tipShow('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除?', '提示', {
@@ -227,7 +237,9 @@ var component = Vue.component('sys-authorization', {
                     _this.tipSuccess('del');
                     _this.getApiResourceDataListAll();
                 });
-            }).catch(function () { });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
+            });
         },
         doResourceSave: function () {
             var _this=this;
@@ -310,6 +322,10 @@ var component = Vue.component('sys-authorization', {
         },
         doClientEdit: function () {
             var _this = this;
+            if (!this.clientTableOptions.selectRow.id) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
             this.clientOptions.formDialog = true;
             abp.ajax({
                 url: '/SysAuthorization/GetSysApiClient/',
@@ -322,7 +338,7 @@ var component = Vue.component('sys-authorization', {
         doClientDel: function () {
             var _this = this;
             if (this.clientTableOptions.selectRows.length === 0) {
-                this.tipSuccess('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             var ids = [];
@@ -340,7 +356,9 @@ var component = Vue.component('sys-authorization', {
                     _this.tipSuccess('del');
                     _this.getClientDataAll();
                 });
-            }).catch(function () { });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
+            });
         },
 
         getAccount: function (id) {
@@ -371,6 +389,10 @@ var component = Vue.component('sys-authorization', {
         },
         doAccountEdit: function () {
             var _this = this;
+            if (!this.accountOptions.accountCurrentId) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
             this.accountOptions.formDialog = true;
             abp.ajax({
                 url: '/SysAuthorization/GetSysApiAccount/',
@@ -383,7 +405,7 @@ var component = Vue.component('sys-authorization', {
         doAccountDel: function () {
             var _this = this;
             if (!this.accountOptions.accountCurrentId) {
-                this.tipShow('error', 'IsSelect');
+                this.tipShow('warn', 'IsSelect');
                 return;
             }
             this.$confirm('确定删除?', '提示', {

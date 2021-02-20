@@ -61,6 +61,7 @@
     <Content Remove="Views\SysAccount\UserSettings.cshtml" />
     <Content Remove="Views\SysAuditLogs\Index.cshtml" />
     <Content Remove="Views\SysAuthorization\Index.cshtml" />
+    <Content Remove="Views\SysBusinessComponentss\OrgTreeSelection.cshtml" />
     <Content Remove="Views\SysComponents\HeadToolButton.cshtml" />
     <Content Remove="Views\SysComponents\QuickSidebar.cshtml" />
     <Content Remove="Views\SysComponents\SearchDropdown.cshtml" />
@@ -92,6 +93,7 @@
     <None Remove="Views\SysAccount\UserSettings.js" />
     <None Remove="Views\SysAuditLogs\index.js" />
     <None Remove="Views\SysAuthorization\index.js" />
+    <None Remove="Views\SysBusinessComponentss\OrgTreeSelection.js" />
     <None Remove="Views\SysComponents\HeadToolButton.js" />
     <None Remove="Views\SysComponents\InitPage.js" />
     <None Remove="Views\SysComponents\jsonFormat.js" />
@@ -120,6 +122,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Views\SysAccount\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysBusinessComponentss\OrgTreeSelection.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysBusinessComponentss\OrgTreeSelection.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SampleMvc\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -212,10 +223,16 @@
     <EmbeddedResource Include="Views\SysNotifications\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysNotifications\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysNotifications\UserInbox.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysOrg\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysOrg\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysRole\index.js">
@@ -234,9 +251,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Shared\_LayoutTop.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysAccount\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysAccount\UserSettings.cshtml">
@@ -281,13 +295,7 @@
     <EmbeddedResource Include="Views\SysMenus\TopMenu.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysNotifications\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysNotifications\UserInbox.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysOrg\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysRole\Index.cshtml">

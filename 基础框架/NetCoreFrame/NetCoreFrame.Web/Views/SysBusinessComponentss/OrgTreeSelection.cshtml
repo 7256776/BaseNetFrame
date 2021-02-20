@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+ 
+<!-- class 添加 "hide" 设置隐藏 -->
+<div>
+
+    <el-popover title="组织机构"
+                v-model="treeOptions.isShowTree"
+                placement="bottom"
+                v-bind:width="popoverWidth"
+                trigger="click">
+        <div>
+
+            <el-tree ref="treeData"
+                     v-bind:data="treeOptions.treeData"
+                     v-bind:props="treeOptions.defaultProps"
+                     node-keys="Id"
+                     highlight-current
+                     v-bind:expand-on-click-node="false"
+                     accordion
+                     v-bind:default-expand-all="true"
+                     v-on:node-click="doNodeClick">
+                <span slot-scope="scope">
+                    <i v-bind:class="setNodeIco(scope.node)"></i>
+                    <span>{{ scope.node.label }}</span>
+                </span>
+            </el-tree>
+
+        </div>
+        <el-button slot="reference" v-bind:style="buttonStyle" style="text-align:left;">{{ treeOptions.currentOrgName}}</el-button>
+    </el-popover>
+
+</div>

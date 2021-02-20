@@ -125,8 +125,11 @@ var component = Vue.component('sys-notifications', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     _this.getNotificationsDataList();
+                    _this.$refs["formNotificationData"].resetFields();
                     _this.tipSuccess('del');
                 });
+            }).catch(function (action) {
+              //取消操作必须有避免js链式调用报异常
             });
           
         },
@@ -191,7 +194,9 @@ var component = Vue.component('sys-notifications', {
                 //
                 if (_this.notificationsData.length > 0 && isInit) {
                     //
-                    _this.$refs["formNotificationData"].resetFields();
+                    if (_this.$refs["formNotificationData"]) {
+                        _this.$refs["formNotificationData"].resetFields();
+                    }
                     _this.doNotificationsClick(_this.notificationsData[0].id);
                 } 
             });
@@ -216,8 +221,10 @@ var component = Vue.component('sys-notifications', {
                 url: '/SysNotifications/InsertSubscription',
                 data: JSON.stringify({ params: list })
             }).done(function (data) {
+                //添加判断 单条数据设置订阅或取消订阅不进行列表刷新和提示消息
                 if (!dataRow) {
                     _this.getDataList();
+                    _this.tipShow('success', "订阅完成");
                 }
             });
         },
@@ -237,8 +244,10 @@ var component = Vue.component('sys-notifications', {
                 data: JSON.stringify({ params: list })
                 //type: 'POST'
             }).done(function (data) {
+                //添加判断 单条数据设置订阅或取消订阅不进行列表刷新和提示消息
                 if (!dataRow) {
                     _this.getDataList();
+                    _this.tipShow('success', "取消订阅完成");
                 }
             });
         },
@@ -285,7 +294,7 @@ var component = Vue.component('sys-notifications', {
             this.pageOptions.pageIndex = val;
             this.getDataList();
         },
-        doSearchData: function () {
+        refreshGrid: function () {
             this.pageOptions.pageIndex = 1;
             this.getDataList();
         },

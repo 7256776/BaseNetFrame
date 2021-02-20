@@ -168,26 +168,66 @@ namespace NetCoreFrame.Web.Controllers
             _sysWorkFlowRoleAppService.DelWorkFlowRole(new List<string>() { id });
             return Task.FromResult(Json(true));
         }
-        #endregion
 
-
-
-
-        #region 用户选择窗口
+        /// <summary>
+        /// 保存流程角色与用户关系
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AbpMvcAuthorize]
-        public JsonResult GetFlowOrg()
+        public async Task<JsonResult> SaveWorkFlowRoleToUser([FromBody] SysWorkFlowRoleToUserInput model)
         {
-            var data = _sysWorkFlowBaseInfoAppService.GetFlowOrgAll();
-            return Json(data);
+            var row = await _sysWorkFlowRoleAppService.SaveWorkFlowRoleToUser(model);
+            return Json(row);
         }
 
+        /// <summary>
+        /// 删除流程角色与用户关系
+        /// </summary>
+        /// <param name="flowPagingDto"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> DelWorkFlowRoleToUser([FromBody]SysWorkFlowRoleToUserInput model)
+        {
+            await _sysWorkFlowRoleAppService.DelWorkFlowRoleToUser(model);
+            return Json(true);
+        }
+
+        /// <summary>
+        /// 流程角色相关用户
+        /// </summary>
+        /// <param name="flowPagingDto"></param>
+        /// <returns></returns>
         [AbpMvcAuthorize]
         public JsonResult GetFlowUserPaging([FromBody]FlowPagingParam<SysFlowUserSearch> flowPagingDto)
         {
             var data = _sysWorkFlowBaseInfoAppService.GetFlowUserPaging(flowPagingDto);
             return Json(data);
         }
+        #endregion
+
+
+
+        #region 用户选择窗口
+        /// <summary>
+        /// 获取所有系统组织机构
+        /// </summary>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public JsonResult GetSysOrg()
+        {
+            var data = _sysWorkFlowBaseInfoAppService.GetSysOrgAll();
+            return Json(data);
+        }
+
+        [AbpMvcAuthorize]
+        public JsonResult GetSysUserPaging([FromBody]FlowPagingParam<SysFlowUserSearch> flowPagingDto)
+        {
+            var data = _sysWorkFlowBaseInfoAppService.GetSysUserPaging(flowPagingDto);
+            return Json(data);
+        }
 
         #endregion
+
     }
 }

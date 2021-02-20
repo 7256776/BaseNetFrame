@@ -2,17 +2,22 @@
 var component = Vue.component('sys-org', {
     template: Vue.frameTemplate('SysOrg/Index'),
     created: function () {
-        this.initMenusData();
+        this.initOrgData();
         this.getOrgType();
     },
     data: function () {
         return {
             treeData: [],
+            treeSelectData: [],
             orgTypeData: [],
             defaultProps: {
                 children:'childrenSysOrg',
                 label: 'orgName',
-                value: 'id'
+                value: 'id',
+                checkStrictly: true
+                //leaf: 'isLeaf'
+                //multiple: false,
+                //checkStrictly: true
             },
             formRules: {
                 orgName: [
@@ -43,9 +48,39 @@ var component = Vue.component('sys-org', {
       //监听
     },
     computed: {
-      //计算
+        //计算
     },
     methods: {
+        doVisibleChange: function (state) {
+            if (state == false) {
+                return;
+            }
+            var _this = this;
+            //首先清空数据,
+            this.treeSelectData = [];
+            //待页面处理完成后进行节点数据处理
+            this.$nextTick(function () {
+                //当前选择节点
+                var cuId = _this.formData.id;
+                //递归循环设置当前节点以及子节点不可选择状态
+                var setTreeData = function (data, parent) {
+                    data.forEach(function (item, index) {
+                        item.disabled = false;
+                        if (item.id == cuId || parent.disabled == true) {
+                            item.disabled = true;
+                        }
+                        //
+                        if (item.childrenSysOrg) {
+                            setTreeData(item.childrenSysOrg, item);
+                        }
+                    });
+                };
+                //执行递归
+                setTreeData(this.treeData, {});
+                //返回处理后数据
+                _this.treeSelectData = _this.treeData;
+            });
+        },
         setNodeIco: function (node) {
             if (node.level == 1) {
                 return 'fa fa-institution';
@@ -58,12 +93,14 @@ var component = Vue.component('sys-org', {
             }
             return 'fa fa-th';
         },
-        initMenusData: function () {
+        initOrgData: function () {
             var _this = this;
             abp.ajax({
                 url: '/SysOrg/GetSysOrgList'
             }).done(function (data, res, e) {
-                _this.treeData = data; 
+                _this.treeData = data;
+                _this.treeSelectData = data;
+
             });
         },
         getOrgType: function () {
@@ -76,6 +113,8 @@ var component = Vue.component('sys-org', {
             });
         },
         doNodeClick: function (data, node, e) {
+          
+            //
             this.getFormData(data.id);
             //
             var _node = node;
@@ -88,7 +127,7 @@ var component = Vue.component('sys-org', {
                     selectList.push(_node.parent.data.id)
                 }
                 _node = _node.parent
-            }
+            } 
             //设置表单级联选择器显示的列表
             this.pageOptions.selectedParent = selectList.reverse();
         },
@@ -104,24 +143,6 @@ var component = Vue.component('sys-org', {
             });
         },
         doParentTreeChange: function (v) {
-            var _this = this;
-            var delIndex = v.length;
-            //
-            var isAs = v.some(function (e, i, d) {
-                if (e === _this.formData.id) {
-                    delIndex = i;
-                    return true;
-                }
-            });
-            //判断不允许调整到当前节点的子节点上
-            if (isAs) {
-                //只有选择了当前节点下级节点才给出提示
-                if (v.length > (delIndex + 1)) {
-                    _this.tipShow('warn','无法使用当前机构下级机构，作为该机构的上级机构。');
-                }
-                v.splice(delIndex, v.length);
-                return;
-            }
             //设置父节点ID
             this.formData.parentOrgID = v[v.length - 1];
         },
@@ -142,7 +163,7 @@ var component = Vue.component('sys-org', {
                             //保存成功获取返回id
                             _this.formData.id = data.id; 
                             //重载树菜单
-                            _this.initMenusData();
+                            _this.initOrgData();
                             _this.tipSuccess('save');
                         });
                     }
@@ -156,10 +177,9 @@ var component = Vue.component('sys-org', {
                 this.tipShow('warn', '请选择组织机构');
                 return;
             }
-
             //验证删除的节点
             var currentNode = this.$refs["treeData"].getCurrentNode();
-            if (currentNode.childrenSysOrg.length > 0) {
+            if (currentNode.childrenSysOrg && currentNode.childrenSysOrg.length > 0) {
                 this.tipShow('warn', '请先移除该机构的子节点机构');
                 return;
             }
@@ -175,9 +195,11 @@ var component = Vue.component('sys-org', {
                     _this.$refs["formInfoData"].resetFields();
                     _this.pageOptions.selectedParent = [];
                     //重载树菜单
-                    _this.initMenusData();
+                    _this.initOrgData();
                     _this.tipSuccess('del');
                 });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
         validateOrgCode: function (rule, value, callback) {

@@ -1,6 +1,7 @@
 ﻿using Abp.AutoMapper;
 using NetCoreFrame.Core;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreFrame.Application
 {
@@ -20,16 +21,21 @@ namespace NetCoreFrame.Application
         /// <summary>
         /// 组织机构编码
         /// </summary>
+        [Required(ErrorMessage = "请输入组织机构编码")]
+        [StringLength(100, ErrorMessage = "组织机构编码长度超过100")]
         public virtual string OrgCode { get; set; }
 
         /// <summary>
         /// 组织机构名称
         /// </summary>
+        [Required(ErrorMessage = "请输入组织机构名称")]
+        [StringLength(100, ErrorMessage = "组织机构名称长度超过100")]
         public virtual string OrgName { get; set; }
 
         /// <summary>
         /// 组织机构类型 
         /// </summary>
+        [Required(ErrorMessage = "请输入通知类型名称")]
         public virtual string OrgType { get; set; }
 
         /// <summary>

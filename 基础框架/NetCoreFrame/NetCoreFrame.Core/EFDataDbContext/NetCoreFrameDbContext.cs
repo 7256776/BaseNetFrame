@@ -211,7 +211,7 @@ namespace NetCoreFrame.Core
             SysRolesContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
             SysRolesContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
             //用户设置
-            var SysSettingContext = modelBuilder.Entity<SysSetting>().ToTable(ToDBAttributeCase("Sys_Settings"));
+            var SysSettingContext = modelBuilder.Entity<SysSetting>().ToTable(ToDBAttributeCase("Sys_Settings")); 
             SysSettingContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
             SysSettingContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
             SysSettingContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
@@ -219,6 +219,7 @@ namespace NetCoreFrame.Core
             SysSettingContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
             //用户管理
             var SysUserAccountsContext = modelBuilder.Entity<UserInfo>().ToTable(ToDBAttributeCase("Sys_UserAccounts"));
+            SysUserAccountsContext.HasIndex(e => e.UserCode).IsUnique();
             SysUserAccountsContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
             SysUserAccountsContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
             SysUserAccountsContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));

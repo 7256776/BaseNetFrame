@@ -31,6 +31,11 @@
     height: 355px;
 }
 
+/* 设置ElUI穿梭Grid的高度样式*/
+.frame-transfer-panel .el-checkbox.el-transfer-panel__item {
+    width: 100%;
+}
+
 /***********************************基础布局样式**************************************/
 /*内容区域的高度计算*/
 .frame-body-height {
