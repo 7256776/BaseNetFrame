@@ -21,6 +21,8 @@ namespace NetCoreWorkFlow.Core
 
         public virtual DbSet<ViewSysFlowRoleToUser> ViewSysFlowRoleToUsers { set; get; }
 
+        public virtual DbSet<SysWorkFlowType> SysWorkFlowTypes { set; get; }
+
         #endregion
 
         public NetCoreWorkFlowDbContext(DbContextOptions<NetCoreWorkFlowDbContext> options)
@@ -89,13 +91,19 @@ namespace NetCoreWorkFlow.Core
             sysWorkFlowRolesContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
             #endregion
 
-
-            #region Sys_WorkFlowEndpoint
+            #region Sys_WorkFlowRoleToUser
             var sysWorkFlowRoleToUserContext = modelBuilder.Entity<SysWorkFlowRoleToUser>().ToTable(ToDBAttributeCase("Sys_WorkFlowRoleToUser"));
             sysWorkFlowRoleToUserContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-
             #endregion
 
+            #region Sys_WorkFlowType
+            var sysWorkFlowTypeContext = modelBuilder.Entity<SysWorkFlowType>().ToTable(ToDBAttributeCase("Sys_WorkFlowType"));
+            sysWorkFlowTypeContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
+            sysWorkFlowTypeContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
+            sysWorkFlowTypeContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
+            sysWorkFlowTypeContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
+            sysWorkFlowTypeContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
+            #endregion
             base.OnModelCreating(modelBuilder);
         }
 
