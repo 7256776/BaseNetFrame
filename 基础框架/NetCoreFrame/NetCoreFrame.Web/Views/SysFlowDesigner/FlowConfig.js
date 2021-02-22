@@ -42,13 +42,16 @@
                 pageSize: 20,
                 total: 0
             },
-
+            //用户选择组件
             flowUserSelectOptions: {
                 visible: false,
                 selectData: []
             },
 
-
+            flowOptions: {
+                tableData: [],
+                selectRows: []
+            },
 
         }
     },
@@ -157,6 +160,7 @@
             //设置选中行
             this.$refs["roleToUserDataGrid"].toggleRowSelection(row);
         },
+        //用户列表
         refreshUserByRole: function () {
             this.userPageOptions.pageIndex = 1;
             this.getUserByRole();
@@ -182,7 +186,7 @@
             this.userPageOptions.pageIndex = val;
             this.getUserByRole();
         },
-
+        //关联用户设置
         doLinkUser: function () {
             var _this = this;
             if (!this.roleOptions.currentRoleId) {
@@ -244,7 +248,37 @@
             });
         },
 
+        //
+        doAddFlow: function () {
+            var _this = this;
+         
+            //
+            //abp.ajax({
+            //    url: '/SysFlowDesigner/SaveWorkFlowRoleToUser',
+            //    data: JSON.stringify(roleUser)
+            //}).done(function (data, res, e) {
+            //    //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
+            //    if (data > 0) {
+            //        _this.refreshUserByRole();
+            //        _this.tipSuccess('关联用户');
+            //    }
+            //});
+        },
+        doEditFlow: function () {
+            var _this = this;
 
+            //
+            //abp.ajax({
+            //    url: '/SysFlowDesigner/SaveWorkFlowRoleToUser',
+            //    data: JSON.stringify(roleUser)
+            //}).done(function (data, res, e) {
+            //    //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
+            //    if (data > 0) {
+            //        _this.refreshUserByRole();
+            //        _this.tipSuccess('关联用户');
+            //    }
+            //});
+        },
 
 
     }
