@@ -48,9 +48,28 @@
                 selectData: []
             },
 
-            flowOptions: {
+            //流程类型设置
+            flowTypeOptions: {
+                params: {
+                    flowTypeName: '',
+                },
+                formDialog: false,
                 tableData: [],
-                selectRows: []
+                selectRows: [],
+                selectRow: {}
+            },
+            flowTypeFormData: {
+                id: '',
+                flowTypeName: '',
+                isActive: true,
+                isReadOnly: true,
+                description: '',
+            },
+            flowTypeRules: {
+                flowTypeName: [
+					{ required: true, message: '必填项', trigger: 'blur' },
+					{ min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                ],
             },
 
         }
@@ -63,10 +82,10 @@
     },
     methods: {
         doNav: function (page) {
-            if (page == 'WorkFlowRole') {
+            if (page == 'tabRole') {
                 this.getWorkFlowRoleDataList();
-            } else if (page == '') {
-
+            } else if (page == 'tabFlowType') {
+                this.getWorkFlowTypeDataList();
             }
         },
         getWorkFlowRoleDataList: function () {
@@ -119,6 +138,10 @@
         },
         doRoleEdit: function () {
             var _this = this;
+            if (!_this.roleOptions.currentRoleId) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            } 
             this.roleOptions.formDialog = true;
             abp.ajax({
                 url: '/SysFlowDesigner/GetRoleModel',
@@ -248,36 +271,90 @@
             });
         },
 
+        //审核流程类型 设置
+        doFlowRowSelectChange: function (selection) {
+            this.flowTypeOptions.selectRows = selection
+        },
+        doFlowRowclick: function (row, event, column) {
+            //设置选中行
+            this.$refs.flowDataGrid.toggleRowSelection(row);
+            //
+            this.flowTypeOptions.selectRow = row;
+        },
+        getWorkFlowTypeDataList: function () {
+            var _this = this;
+            abp.ajax({
+                url: '/SysFlowDesigner/GetWorkFlowTypeList',
+                data: JSON.stringify(_this.flowTypeOptions.params)
+            }).done(function (data) {
+                _this.flowTypeOptions.tableData = data;
+            });
+        },
         //
         doAddFlow: function () {
             var _this = this;
-         
-            //
-            //abp.ajax({
-            //    url: '/SysFlowDesigner/SaveWorkFlowRoleToUser',
-            //    data: JSON.stringify(roleUser)
-            //}).done(function (data, res, e) {
-            //    //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
-            //    if (data > 0) {
-            //        _this.refreshUserByRole();
-            //        _this.tipSuccess('关联用户');
-            //    }
-            //});
+            this.flowTypeOptions.formDialog = true
+            this.$nextTick(function () {
+                _this.$refs.formFlowTypeData.resetFields();
+            });
         },
         doEditFlow: function () {
             var _this = this;
-
+            if (!this.flowTypeOptions.selectRow.id) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
+            this.flowTypeOptions.formDialog = true
+            abp.ajax({
+                url: '/SysFlowDesigner/GetWorkFlowTypeModel',
+                data: JSON.stringify(_this.flowTypeOptions.selectRow.id)
+            }).done(function (data, res, e) {
+                if (!data) {
+                    _this.tipShow('error', '未获取到数据');
+                }
+                _this.flowTypeFormData = data;
+            });
+        },
+        doDelFlow: function () {
+            var _this = this;
+            if (this.flowTypeOptions.selectRows.length==0) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
+            var ids = [];
             //
-            //abp.ajax({
-            //    url: '/SysFlowDesigner/SaveWorkFlowRoleToUser',
-            //    data: JSON.stringify(roleUser)
-            //}).done(function (data, res, e) {
-            //    //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
-            //    if (data > 0) {
-            //        _this.refreshUserByRole();
-            //        _this.tipSuccess('关联用户');
-            //    }
-            //});
+            this.flowTypeOptions.selectRows.forEach(function (item, index) {
+                ids.push(item.id);
+            });
+            abp.ajax({
+                url: '/SysFlowDesigner/DelWorkFlowType',
+                data: JSON.stringify(ids)
+            }).done(function (data, res, e) {
+                //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
+                _this.tipSuccess('del');
+                _this.getWorkFlowTypeDataList();
+
+            });
+        },
+        doFlowTypeSaveForm: function () {
+            var _this = this;
+            this.$refs["formFlowTypeData"].validate(
+				function (valid) {
+				    if (valid) {
+				        //
+				        abp.ajax({
+				            url: '/SysFlowDesigner/SaveWorkFlowType',
+				            data: JSON.stringify(_this.flowTypeFormData),
+				            type: 'POST'
+				        }).done(function (data, res, e) {
+				            _this.flowTypeOptions.formDialog = false
+				            _this.tipSuccess('save');
+				            _this.getWorkFlowTypeDataList();
+				        });
+				    } else {
+				        return false;
+				    }
+				});
         },
 
 

@@ -1,46 +1,41 @@
-﻿using Abp.Domain.Entities;
-using Abp.Domain.Entities.Auditing;
+﻿using Abp.AutoMapper;
+using NetCoreWorkFlow.Core;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NetCoreWorkFlow.Core
+namespace NetCoreWorkFlow.Application
 {
-    /// <summary>
-    /// 节点关系集合
-    /// </summary>
-    [Table("SYS_WORKFLOWTYPE")]
-    public class SysWorkFlowType : AuditedEntity<Guid>
+    [AutoMap(typeof(SysWorkFlowType))]
+    public class SysWorkFlowTypeInput
     {
+        /// <summary>
+        /// 主键ID 
+        /// </summary> 
+        public Guid? Id { get; set; }
 
         /// <summary>
         /// 流程类型
         /// </summary>
-        [StringLength(50)]
         [Required(ErrorMessage = "请输入流程类型")]
-        [Column("FLOWTYPENAME")]
         public string FlowTypeName { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
-        [StringLength(2000)]
-        [Column("DESCRIPTION")]
         public string Description { get; set; }
 
         /// <summary>
         /// 是否只读
         /// </summary>
-        [Column("ISREADONLY")]
         public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// 启用状态
         /// </summary>
-        [Column("ISACTIVE")]
         public bool IsActive { get; set; }
 
 
-
     }
+
 }

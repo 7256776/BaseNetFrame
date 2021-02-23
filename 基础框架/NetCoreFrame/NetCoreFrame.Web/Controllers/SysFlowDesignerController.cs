@@ -17,17 +17,20 @@ namespace NetCoreFrame.Web.Controllers
         private readonly ISysWorkFlowSettingAppService _sysWorkFlowSettingAppService;
         private readonly ISysWorkFlowRoleAppService _sysWorkFlowRoleAppService;
         private readonly ISysWorkFlowBaseInfoAppService _sysWorkFlowBaseInfoAppService;
+        private readonly ISysWorkFlowTypeAppService _sysWorkFlowTypeAppService;
 
         public SysFlowDesignerController(
             ISysWorkFlowSettingAppService sysWorkFlowSettingAppService,
             ISysWorkFlowRoleAppService sysWorkFlowRoleAppService,
-            ISysWorkFlowBaseInfoAppService sysWorkFlowBaseInfoAppService
+            ISysWorkFlowBaseInfoAppService sysWorkFlowBaseInfoAppService,
+            ISysWorkFlowTypeAppService sysWorkFlowTypeAppService
 
             )
         {
             _sysWorkFlowSettingAppService = sysWorkFlowSettingAppService;
             _sysWorkFlowRoleAppService = sysWorkFlowRoleAppService;
             _sysWorkFlowBaseInfoAppService = sysWorkFlowBaseInfoAppService;
+            _sysWorkFlowTypeAppService = sysWorkFlowTypeAppService;
         }
 
         #region 
@@ -206,7 +209,55 @@ namespace NetCoreFrame.Web.Controllers
         }
         #endregion
 
+        #region 审核流程类型
 
+        /// <summary>
+        /// 查询流程类型集合
+        /// </summary>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public JsonResult GetWorkFlowTypeList([FromBody]SysWorkFlowTypeModel model)
+        {
+            var data = _sysWorkFlowTypeAppService.GetWorkFlowTypeList(model);
+            return Json(data);
+        }
+
+        /// <summary> 
+        /// 查询角色对象       
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> GetWorkFlowTypeModel([FromBody]string id)
+        {
+            var data = await _sysWorkFlowTypeAppService.GetWorkFlowTypeModel(id);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 保存角色(新增,修改)
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> SaveWorkFlowType([FromBody]SysWorkFlowTypeInput model)
+        {
+             await _sysWorkFlowTypeAppService.SaveWorkFlowType(model);
+            return Json(true);
+        }
+
+        /// <summary>
+        /// 删除角色
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public Task<JsonResult> DelWorkFlowType([FromBody]List<string> ids)
+        {
+            _sysWorkFlowTypeAppService.DelWorkFlowType(ids);
+            return Task.FromResult(Json(true));
+        }
+        #endregion
 
         #region 用户选择窗口
         /// <summary>
