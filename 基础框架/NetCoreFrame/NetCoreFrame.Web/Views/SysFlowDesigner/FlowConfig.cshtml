@@ -9,11 +9,14 @@
                 <a href="#tabRole" data-toggle="tab" v-on:click="doNav('tabRole')">流程角色</a>
             </li>
             <li>
-                <a href="#tabFlowType" data-toggle="tab" v-on:click="doNav('tabFlowType')">授权客户维护</a>
+                <a href="#tabFlowType" data-toggle="tab" v-on:click="doNav('tabFlowType')">流程类型</a>
+            </li>
+            <li>
+                <a href="#tabFlowDataSource" data-toggle="tab" v-on:click="doNav('tabFlowDataSource')">流程数据源</a>
             </li>
         </ul>
         <div class="tab-content" style="padding-top:5px;">
-            <!--角色列表-->
+            <!--流程角色-->
             <div class="tab-pane active" id="tabRole">
                 <div class="row">
                     <div class="col-md-3" style="padding-left:5px;padding-right:5px;">
@@ -68,7 +71,7 @@
                                                 </el-button-group>
                                             </div>
                                             <div class="col-md-6" style="text-align:right;">
-                                                <el-input placeholder="用户名称 筛选" size="mini" clearable v-model="userPageOptions.params.userCodeOrName" style="width:300px;"  v-on:keyup.enter.native="refreshUserByRole" v-on:clear="refreshUserByRole">
+                                                <el-input placeholder="用户名称 筛选" size="mini" clearable v-model="userPageOptions.params.userCodeOrName" style="width:300px;" v-on:keyup.enter.native="refreshUserByRole" v-on:clear="refreshUserByRole">
                                                     <el-button slot="append" icon="el-icon-search" v-on:click="refreshUserByRole"></el-button>
                                                 </el-input>
                                             </div>
@@ -86,7 +89,7 @@
                                             <el-table-column type="index" width="40" fixed></el-table-column>
                                             <el-table-column type="selection" width="40" fixed></el-table-column>
                                             <el-table-column prop="userNameCn" label="用户名称" align="center" width="120" fixed></el-table-column>
-                                            <el-table-column prop="userCode" label="用户账号" align="center" width="120" ></el-table-column>
+                                            <el-table-column prop="userCode" label="用户账号" align="center" width="120"></el-table-column>
                                             <el-table-column prop="sex" label="性别" align="center" width="80">
                                                 <template slot-scope="scope">
                                                     <el-tag type="primary" disable-transitions>
@@ -118,6 +121,7 @@
                     </div>
                 </div>
             </div>
+            <!--流程类型-->
             <div class="tab-pane" id="tabFlowType">
                 <div class="row">
                     <div class="col-md-12" style="padding-left:5px;padding-right:5px;">
@@ -125,7 +129,7 @@
                             <div class="portlet-title tabbable-line">
                                 <div class="caption caption-md">
                                     <i class="icon-globe theme-font hide"></i>
-                                    <span class="caption-subject font-blue-madison bold uppercase">角色相关用户</span>
+                                    <span class="caption-subject font-blue-madison bold uppercase">流程类型</span>
                                 </div>
                             </div>
                             <div class="portlet-body">
@@ -193,6 +197,86 @@
                 </div>
 
             </div>
+            
+            <!--流程数据源-->
+            <div class="tab-pane" id="tabFlowDataSource">
+                <div class="row">
+                    <div class="col-md-12" style="padding-left:5px;padding-right:5px;">
+                        <div class="portlet light bordered">
+                            <div class="portlet-title tabbable-line">
+                                <div class="caption caption-md">
+                                    <i class="icon-globe theme-font hide"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">流程数据源</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        <!--可扩展批量添加-->
+                                        <div class="row">
+                                            <div class="col-md-6 " style="padding-bottom:5px;">
+                                                <el-button-group>
+                                                    <el-button type="primary" size="mini" icon="fa fa-user-plus fa-lg" v-on:click="doAddFlowDataSource()">&nbsp;新增数据源</el-button>
+                                                    <el-button type="primary" size="mini" icon="fa fa-user-times fa-lg" v-on:click="doEditFlowDataSource()">&nbsp;编辑数据源</el-button>
+                                                    <el-button type="primary" size="mini" icon="fa fa-user-times fa-lg" v-on:click="doDelFlowDataSource()">&nbsp;删除数据源</el-button>
+                                                </el-button-group>
+                                            </div>
+                                            <div class="col-md-6" style="text-align:right;">
+                                                <el-input placeholder="流程名称 筛选" size="mini" clearable v-model="flowDataSourceOptions.params.flowTypeName" style="width:300px;" v-on:keyup.enter.native="getWorkFlowDataSourceList" v-on:clear="getWorkFlowDataSourceList">
+                                                    <el-button slot="append" icon="el-icon-search" v-on:click="getWorkFlowDataSourceList"></el-button>
+                                                </el-input>
+                                            </div>
+                                        </div>
+
+                                        <el-table v-bind:data="flowDataSourceOptions.tableData"
+                                                  ref="flowDataSourceGrid"
+                                                  stripe
+                                                  border
+                                                  highlight-current-row
+                                                  tooltip-effect="light"
+                                                  style="width: 100%;"
+                                                  v-on:selection-change="doFlowDataSourceRowSelectChange"
+                                                  v-on:row-click="doFlowDataSourceRowclick">
+                                            <el-table-column type="index" width="40"></el-table-column>
+                                            <el-table-column type="selection" width="40"></el-table-column>
+                                            <el-table-column prop="flowTypeName" label="流程类型" align="center" width="150">
+                                            </el-table-column>
+                                            <el-table-column label="是否只读" width="100px" align="center">
+                                                <template slot-scope="scope">
+                                                    <el-tag v-bind:type="scope.row.isReadOnly ? 'info' : 'success'">{{ scope.row.isActive ? '只读方式' : '允许编辑' }}</el-tag>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column label="启用状态" width="100px" align="center">
+                                                <template slot-scope="scope">
+                                                    <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="description" label="描述" align="center"></el-table-column>
+
+                                        </el-table>
+                                        <div style="text-align:right;padding-top:3px;">
+                                            <el-pagination background
+                                                           v-on:size-change="handleSizeChange"
+                                                           v-on:current-change="handleCurrentChange"
+                                                           v-bind:current-page="userPageOptions.pageIndex"
+                                                           v-bind:page-sizes="[20, 50, 100]"
+                                                           v-bind:page-size="20"
+                                                           v-bind:total="userPageOptions.total"
+                                                           layout="total, sizes, prev, pager, next, jumper">
+                                            </el-pagination>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
         </div>
     </div>
 
@@ -289,7 +373,56 @@
         </div>
     </el-dialog>
 
+    <el-dialog title="流程类型基础信息"
+               v-bind:visible.sync="flowDataSourceOptions.formDialog"
+               v-bind:width="formWinCol2">
+        <div>
+            <el-form v-bind:model="flowDataSourceFormData"
+                     v-bind:rules="flowDataSourceRules"
+                     ref="formFlowDataSourceData"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+                <el-form-item label="流程名称" prop="flowTypeName">
+                    <el-input v-model="flowTypeFormData.flowTypeName" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="是否只读" prop="isActive">
+                    <el-select v-model="flowTypeFormData.isReadOnly"
+                               default-first-option
+                               v-bind:style="formFormItem1"
+                               placeholder="请选择">
+                        <el-option label="只读方式" v-bind:value="true"></el-option>
+                        <el-option label="允许编辑" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="启用状态" prop="isActive">
+                    <el-select v-model="flowTypeFormData.isActive"
+                               default-first-option
+                               v-bind:style="formFormItem1"
+                               placeholder="请选择">
+                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="禁用" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="描述" prop="description">
+                    <el-input type="textarea" v-model="flowTypeFormData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="500" show-word-limit>
+                    </el-input>
+                </el-form-item>
 
+                <!--重置表单时一并清空-->
+                <el-form-item label="" prop="id" v-show="false">
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="flowTypeOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doFlowDataSourceSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
     <flowuserselect v-bind:visible.sync="flowUserSelectOptions.visible" v-model="flowUserSelectOptions.selectData" v-on:closed="doClosed">
     </flowuserselect>
 

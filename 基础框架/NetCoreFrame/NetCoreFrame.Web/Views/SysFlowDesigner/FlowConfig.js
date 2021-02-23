@@ -72,6 +72,28 @@
                 ],
             },
 
+            //流程类型设置
+            flowDataSourceOptions: {
+                params: {
+                    flowTypeName: '',
+                },
+                formDialog: false,
+                tableData: [],
+                selectRows: [],
+                selectRow: {}
+            },
+            flowDataSourceFormData: {
+                id: '',
+               
+                description: '',
+            },
+            flowDataSourceRules: {
+                flowTypeName: [
+                    { required: true, message: '必填项', trigger: 'blur' },
+                    { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                ],
+            },
+
         }
     },
     watch: {
@@ -357,6 +379,91 @@
 				});
         },
 
+        //审核流程数据源 设置
+        doFlowDataSourceRowSelectChange: function (selection) {
+            this.flowDataSourceOptions.selectRows = selection
+        },
+        doFlowDataSourceRowclick: function (row, event, column) {
+            //设置选中行
+            this.$refs.flowDataSourceGrid.toggleRowSelection(row);
+            //
+            this.flowDataSourceOptions.selectRow = row;
+        },
+        getWorkFlowDataSourceList: function () {
+            var _this = this;
+            abp.ajax({
+                url: '/SysFlowDesigner/GetWorkFlowTypeList',
+                data: JSON.stringify(_this.flowTypeOptions.params)
+            }).done(function (data) {
+                _this.flowDataSourceOptions.tableData = data;
+            });
+        },
+        //
+        doAddFlowDataSource: function () {
+            var _this = this;
+            this.flowTypeOptions.formDialog = true
+            this.$nextTick(function () {
+                _this.$refs.formFlowDataSourceData.resetFields();
+            });
+        },
+        doEditFlowDataSource: function () {
+            var _this = this;
+            if (!this.flowDataSourceOptions.selectRow.id) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
+            this.flowDataSourceOptions.formDialog = true
+            abp.ajax({
+                url: '/SysFlowDesigner/GetWorkFlowTypeModel',
+                data: JSON.stringify(_this.flowDataSourceOptions.selectRow.id)
+            }).done(function (data, res, e) {
+                if (!data) {
+                    _this.tipShow('error', '未获取到数据');
+                }
+                _this.flowDataSourceFormData = data;
+            });
+        },
+        doDelFlowDataSource: function () {
+            var _this = this;
+            if (this.flowDataSourceOptions.selectRows.length == 0) {
+                this.tipShow('warn', 'IsSelect');
+                return;
+            }
+            var ids = [];
+            //
+            this.flowDataSourceOptions.selectRows.forEach(function (item, index) {
+                ids.push(item.id);
+            });
+            abp.ajax({
+                url: '/SysFlowDesigner/DelWorkFlowType',
+                data: JSON.stringify(ids)
+            }).done(function (data, res, e) {
+                //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
+                _this.tipSuccess('del');
+                _this.getWorkFlowDataSourceList();
+
+            });
+        },
+        doFlowDataSourceSaveForm: function () {
+            var _this = this;
+            this.$refs["formFlowDataSourceData"].validate(
+                function (valid) {
+                    if (valid) {
+                        //
+                        abp.ajax({
+                            url: '/SysFlowDesigner/SaveWorkFlowType',
+                            data: JSON.stringify(_this.flowTypeFormData),
+                            type: 'POST'
+                        }).done(function (data, res, e) {
+                            _this.flowDataSourceOptions.formDialog = false
+                            _this.tipSuccess('save');
+                            _this.getWorkFlowDataSourceList();
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+        },
 
     }
 });
