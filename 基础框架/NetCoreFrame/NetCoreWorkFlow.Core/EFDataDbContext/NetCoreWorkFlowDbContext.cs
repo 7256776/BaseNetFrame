@@ -42,7 +42,6 @@ namespace NetCoreWorkFlow.Core
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             string defaultSchema = ConstantConfig.DBSchemaName;
             if (base.Database.GetDbConnection().GetType().Name == "OracleConnection")
             {
@@ -58,75 +57,47 @@ namespace NetCoreWorkFlow.Core
                     defaultSchema = "dbo";
                 //
                 modelBuilder.HasDefaultSchema(defaultSchema);
-                RemoveAnnotation(modelBuilder);
             }
-
-            #region Sys_WorkFlowSetting
-            var sysWorkFlowSettingContext = modelBuilder.Entity<SysWorkFlowSetting>().ToTable(ToDBAttributeCase("Sys_WorkFlowSetting"));
-            sysWorkFlowSettingContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-            sysWorkFlowSettingContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
-            sysWorkFlowSettingContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
-            sysWorkFlowSettingContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
-            sysWorkFlowSettingContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId")); 
-            #endregion
-
-            #region Sys_WorkFlowConnection
-            var sysWorkFlowConnectionContext = modelBuilder.Entity<SysWorkFlowConnection>().ToTable(ToDBAttributeCase("Sys_WorkFlowConnection"));
-            sysWorkFlowConnectionContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-
-            #endregion
-
-            #region Sys_WorkFlowEndpoint
-            var sysWorkFlowEndpointContext = modelBuilder.Entity<SysWorkFlowEndpoint>().ToTable(ToDBAttributeCase("Sys_WorkFlowEndpoint"));
-            sysWorkFlowEndpointContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-
-            #endregion
-
-            #region Sys_WorkFlowRoles
-            var sysWorkFlowRolesContext = modelBuilder.Entity<SysWorkFlowRole>().ToTable(ToDBAttributeCase("Sys_WorkFlowRole"));
-            sysWorkFlowRolesContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-            sysWorkFlowRolesContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
-            sysWorkFlowRolesContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
-            sysWorkFlowRolesContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
-            sysWorkFlowRolesContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
-            #endregion
-
-            #region Sys_WorkFlowRoleToUser
-            var sysWorkFlowRoleToUserContext = modelBuilder.Entity<SysWorkFlowRoleToUser>().ToTable(ToDBAttributeCase("Sys_WorkFlowRoleToUser"));
-            sysWorkFlowRoleToUserContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-            #endregion
-
-            #region Sys_WorkFlowType
-            var sysWorkFlowTypeContext = modelBuilder.Entity<SysWorkFlowType>().ToTable(ToDBAttributeCase("Sys_WorkFlowType"));
-            sysWorkFlowTypeContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
-            sysWorkFlowTypeContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
-            sysWorkFlowTypeContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
-            sysWorkFlowTypeContext.Property(p => p.LastModificationTime).HasColumnName(ToDBAttributeCase("LastModificationTime"));
-            sysWorkFlowTypeContext.Property(p => p.LastModifierUserId).HasColumnName(ToDBAttributeCase("LastModifierUserId"));
-            #endregion
+            //
+            this.SetAnnotation(modelBuilder);
+            //
             base.OnModelCreating(modelBuilder);
         }
 
         /// <summary>
-        /// 移除实体对象的 Table,Column 属性名称,动态创建库时根据列的名称产生字段
+        /// 设置实体对象的 Table,Column 属性名称
         /// </summary>
         /// <param name="modelBuilder"></param>
-        private void RemoveAnnotation(ModelBuilder modelBuilder)
+        private void SetAnnotation(ModelBuilder modelBuilder)
         {
-            var entitys = modelBuilder.Model.GetEntityTypes();
-            foreach (var entity in entitys)
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
-                var properties = entity.GetProperties();
-                if (properties == null)
-                    continue;
-
-                foreach (var pro in properties)
+                // 重置所有表名
+                entity.Relational().TableName = this.ToDBAttributeCase(entity.Relational().TableName);
+                // 重置所有列名
+                foreach (var property in entity.GetProperties())
                 {
-                    if (pro.FindAnnotation("Relational:ColumnName") != null)
-                    {
-                        pro.RemoveAnnotation("Relational:ColumnName");
-                    }
+                    property.Relational().ColumnName = this.ToDBAttributeCase(property.Relational().ColumnName);
                 }
+                #region 
+                // 重置所有主键名
+                //foreach (var key in entity.GetKeys())
+                //{
+                //    key.Relational().Name = key.Relational().Name;
+                //}
+
+                // 重置所有外键名
+                //foreach (var key in entity.GetForeignKeys())
+                //{
+                //    key.Relational().Name = key.Relational().Name;
+                //}
+
+                // 重置所有索引名
+                //foreach (var index in entity.GetIndexes())
+                //{
+                //    index.Relational().Name = index.Relational().Name;
+                //}
+                #endregion
             }
         }
 

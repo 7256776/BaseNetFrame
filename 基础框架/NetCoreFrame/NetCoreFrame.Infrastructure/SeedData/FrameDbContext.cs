@@ -4,18 +4,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetCoreFrame.Core;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Text;
 
 namespace NetCoreFrame.Infrastructure
 {
-    public class InfrastructureDbContext : NetCoreFrameDbContext
+    public class FrameDbContext : NetCoreFrameDbContext
     {
-        public InfrastructureDbContext(DbContextOptions<InfrastructureDbContext> options)
+        public FrameDbContext(DbContextOptions<FrameDbContext> options)
                 : base(options)
         {
         }
 
+        /// <summary>
+        /// 全局记录需要执行的脚本数据
+        /// </summary>
+        public static List<StringBuilder> tabList = new List<StringBuilder>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -547,7 +558,12 @@ namespace NetCoreFrame.Infrastructure
              );
             #endregion
 
+            //初始扩展属性的脚本
+            DbSqlInit DbSqlInit = new DbSqlInit();
+            tabList = DbSqlInit.SetExtendedProperties(modelBuilder);
+
         }
 
+       
     }
 }

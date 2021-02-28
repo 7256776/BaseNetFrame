@@ -11,7 +11,7 @@ namespace NetCoreFrame.Core
     /// <summary>
     /// Api授权客户对象
     /// </summary>
-    [Table("SYS_APICLIENT")]
+    [Table("Sys_ApiClient")]
     public class SysApiClient : AuditedEntity<Guid>
     {
         public SysApiClient()
@@ -22,8 +22,9 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 客户ID
         /// </summary>
+        [Column("ClientId")]
+        [Description("客户ID")]
         [Required(ErrorMessage = "请输入客户ID")]
-        [Column("CLIENTID")]
         [StringLength(100)]
         public virtual string ClientId { get; set; }
 
@@ -31,35 +32,39 @@ namespace NetCoreFrame.Core
         /// 客户秘钥
         /// </summary>		
         [Required(ErrorMessage = "请输入客户密钥")]
-        [Column("CLIENTSECRETS")]
+        [Column("ClientSecrets")]
+        [Description("客户密钥")]
         [StringLength(100)]
         public virtual string ClientSecrets { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>	 
-        [Column("DESCRIPTION")]
-        [StringLength(1000)]
+        [Column("Description")]
+        [Description("描述")]
+        [StringLength(2000)]
         public virtual string Description { get; set; }
 
         /// <summary>
         /// 扩展数据
         /// </summary>	 
         [Column("ExtensionData")]
-        [StringLength(4000)]
+        [Description("扩展数据")]
         public virtual string ExtensionData { get; set; }
 
         /// <summary>
         /// 是否使用刷新token
         /// </summary>		
-        [Column("ALLOWOFFLINEACCESS")]
+        [Column("AllowOfflineAccess")]
+        [Description("是否使用刷新token")]
         [Required]
         public virtual bool AllowOfflineAccess { get; set; } = true;
 
         /// <summary>
         /// 授权token有效期 单位小时
         /// </summary>		
-        [Column("ACCESSTOKENLIFETIME")]
+        [Column("AccessTokenLifetime")]
+        [Description("授权token有效期 单位小时")]
         [Required]
         [DefaultValue(0)]
         public virtual int? AccessTokenLifetime { get; set; } = 0;
@@ -67,14 +72,16 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 刷新token有效期 单位小时
         /// </summary>		
-        [Column("SLIDINGREFRESHTOKENLIFETIME")]
+        [Column("SlidingRefreshTokenLifetime")]
+        [Description("刷新token有效期 单位小时")]
         [DefaultValue(0)]
         public virtual int? SlidingRefreshTokenLifetime { get; set; } = 0;
 
         /// <summary>
         /// 是否激活
         /// </summary>		
-        [Column("ISACTIVE")]
+        [Column("IsActive")]
+        [Description("是否激活")]
         [Required]
         public virtual bool IsActive { get; set; } = true;
 

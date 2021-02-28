@@ -11,7 +11,7 @@ namespace NetCoreFrame.Core
   /// <summary>
   /// Api授权客户与账号关系对象
   /// </summary>
-  [Table("SYS_APICLIENTOACCOUNT")]
+  [Table("Sys_ApiClientoaccount")]
     public class SysApiClienToAccount : Entity<Guid> 
     {
         public SysApiClienToAccount()
@@ -21,13 +21,15 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 授权账号ID主键
         /// </summary>
-        [Column("APIACCOUNTID")]
+        [Column("ApiAccountId")]
+        [Description("授权账号ID主键 关联 Sys_ApiAccount")]
         public virtual Guid ApiAccountId { get; set; }
 
         /// <summary>
         /// 授权客户ID主键
         /// </summary>		
-        [Column("APICLIENTID")]
+        [Column("ApiClientId")]
+        [Description("授权客户ID主键 关联 Sys_ApiClient")]
         public virtual Guid ApiClientId { get; set; }
 
         /// <summary>
@@ -35,7 +37,8 @@ namespace NetCoreFrame.Core
         /// 1=来自系统账号管理
         /// 2=来自服务授权账号管理
         /// </summary>	
-        [Column("ACCOUNTSOURCE")]
+        [Column("AccountSource")]
+        [Description("账号来源(用于扩展) 1=来自系统账号管理 2=来自服务授权账号管理")]
         [StringLength(10)]
         public virtual string AccountSource { get; set; }
 

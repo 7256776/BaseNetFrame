@@ -20,30 +20,16 @@ namespace NetCoreFrame.Infrastructure
         /// </summary>
         public override void PreInitialize()
         {
-            Configuration.Modules.AbpEfCore().AddDbContext<InfrastructureDbContext>(options =>
+            Configuration.Modules.AbpEfCore().AddDbContext<FrameDbContext>(options =>
             {
-                if (options.ExistingConnection != null)
-                {
-                    NetCoreFrameInfrastructureConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
-                }
-                else
-                {
-                    NetCoreFrameInfrastructureConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                }
+                DbContextConfigurer<FrameDbContext>.Configure(options);
             });
-
 
             Configuration.Modules.AbpEfCore().AddDbContext<WorkFlowDbContext>(options =>
             {
-                if (options.ExistingConnection != null)
-                {
-                    WorkFlowInfrastructureConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
-                }
-                else
-                {
-                    WorkFlowInfrastructureConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                }
+                DbContextConfigurer<WorkFlowDbContext>.Configure(options);
             });
+
         }
 
         public override void Initialize()
