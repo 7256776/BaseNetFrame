@@ -45,7 +45,7 @@ namespace NetCoreWorkFlow.Application
         /// </summary>
         /// <returns></returns>
         [AbpAuthorize]
-        public async Task<List<SysWorkFlowDataSource>> GetWorkFlowDataSourceList(SysWorkFlowDataSourceParam model)
+        public List<SysWorkFlowDataSource> GetWorkFlowDataSourceList(SysWorkFlowDataSourceParam model)
         {
             var data = _sysWorkFlowDataSourceRepository.GetAll();
             if (!string.IsNullOrEmpty(model.DataSourceType))

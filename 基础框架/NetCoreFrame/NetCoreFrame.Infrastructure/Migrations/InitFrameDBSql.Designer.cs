@@ -9,9 +9,9 @@ using NetCoreFrame.Infrastructure;
 
 namespace NetCoreFrame.Infrastructure.Migrations
 {
-    [DbContext(typeof(InfrastructureDbContext))]
+    [DbContext(typeof(FrameDbContext))]
     [Migration("InitDataBaseSql")]
-    partial class InitDataBaseSql
+    partial class InitFrameDBSql
     {
     }
 }

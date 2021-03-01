@@ -40,7 +40,7 @@
             //监听
         },
         computed: {
-            searchGrid: function () {
+            tableDataRefresh: function () {
                 var _this = this;
                 if (!this.tableOptions.searchTxt) {
                     return this.tableOptions.tableData;
@@ -55,7 +55,7 @@
         },
         methods: {
             doAddDictType: function () {
-                this.$refs["formSysDictData"].resetFields();
+                this.$refs["formDictEl"].resetFields();
                 this.tableOptions.tableData = [];
                 this.pageOptions.isDictType = false;
                 this.pageOptions.tableEditState = true;
@@ -77,7 +77,7 @@
                             _this.tipSuccess('del');
                             _this.getSysDictTypeDataList();
                             _this.$nextTick(function () {
-                                _this.$refs["formSysDictData"].resetFields();
+                                _this.$refs["formDictEl"].resetFields();
                             });
                         });
                     }).catch(function (action) {
@@ -100,7 +100,7 @@
             },
             doSysDictTypeClick: function (id) {
                 this.tableOptions.searchTxt = "";
-                this.$refs["formSysDictData"].resetFields();
+                this.$refs["formDictEl"].resetFields();
                 this.formData.id = id;
                 this.pageOptions.isDictType = true;
                 this.pageOptions.tableEditState = false;
@@ -160,9 +160,9 @@
                 if (oldCurrentRow) {
                     oldCurrentRow.showState = false;
                 }
-                this.$refs.dataGrid.clearSelection();                              //清空选择行
+                this.$refs["gridEl"].clearSelection();                              //清空选择行
                 this.tableOptions.selectRow = null;                              //将当前选中行置空
-                this.$refs.dataGrid.toggleRowSelection(currentRow);   //设置当前行为选中行
+                this.$refs["gridEl"].toggleRowSelection(currentRow);   //设置当前行为选中行
                 this.tableOptions.selectRow = currentRow;                 //设置当前选中行对象
                 this.doRemoveExpandIcon();                                       //隐藏展开图标
             },
@@ -175,7 +175,7 @@
                 row.rowKey = _this.tableOptions.tableData.indexOf(row);
                 _this.expands.push(row.rowKey);
                 //设置当前行为选中行并触发事件(doRowCurrentChange)
-                _this.$refs.dataGrid.setCurrentRow(row);
+                _this.$refs["gridEl"].setCurrentRow(row);
             },
             doSaveDictType: function () {
                 var _this = this;
@@ -198,7 +198,7 @@
                         }
                     });
                 */
-                this.$refs["formSysDictData"].validate(
+                this.$refs["formDictEl"].validate(
                     function (valid) {
                         if (!valid) {
                             return false;
@@ -273,7 +273,7 @@
                     this.tipShow('warn', '请设置字典编码或字典名称');
                     row.isActive = true;
                     row.showState = true;
-                    this.$refs.dataGrid.setCurrentRow(row);
+                    this.$refs["gridEl"].setCurrentRow(row);
                     return;
                 }
                 sysDictInput.push(row);
@@ -291,8 +291,9 @@
                     //修改后保存修改后的值
                     _this.tableOptions.tableDataBak[index] = JSON.parse(JSON.stringify(row));
                     _this.expands = [];
-                    _this.$refs.dataGrid.setCurrentRow(null);
+                    _this.$refs["gridEl"].setCurrentRow(null);
                     _this.tipSuccess('save');
+                    _this.getDataList();
                 });
 
             },
@@ -309,7 +310,7 @@
                     this.tableOptions.tableData.splice(index, 1)
                 }
                 this.expands = [];
-                this.$refs.dataGrid.setCurrentRow(null);
+                this.$refs["gridEl"].setCurrentRow(null);
                 this.doRemoveExpandIcon();
             },
             fnStyle: function (e) {

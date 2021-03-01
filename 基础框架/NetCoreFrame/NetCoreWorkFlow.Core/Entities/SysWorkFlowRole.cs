@@ -10,28 +10,31 @@ namespace NetCoreWorkFlow.Core
     /// <summary>
     /// 审核角色
     /// </summary>
-    [Table("SYS_WORKFLOWROLE")]
+    [Table("Sys_WorkFlowRole")]
     public class SysWorkFlowRole : AuditedEntity<Guid>
     {
         /// <summary>
-        /// 流程对象ID 关联 SysWorkFlowSetting 主键ID
+        /// 流程对象ID
         /// </summary>
+        [Column("FlowRoleName")]
+        [Description("流程角色名称")]
         [Required(ErrorMessage = "请输入流程角色名称")]
         [StringLength(50)]
-        [Column("FLOWROLENAME")]
         public string FlowRoleName { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>		
-        [Column("DESCRIPTION")]
-        [StringLength(1000)]
+        [Column("Description")]
+        [Description("描述")]
+        [StringLength(2000)]
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// 是否激活
+        /// 是否启用
         /// </summary>		
-        [Column("ISACTIVE")]
+        [Column("IsActive")]
+        [Description("是否启用 0=否, 1=是")]
         [DefaultValue(true)]
         [Required]
         public virtual bool? IsActive { get; set; } = true;

@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities.Auditing;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,33 +9,37 @@ namespace NetCoreFrame.Core
     /// <summary>
     /// Represents a setting for a tenant or user.
     /// </summary>
-    [Table("SYS_SETTINGS")]
+    [Table("Sys_Setting")]
     public class SysSetting : AuditedEntity<Guid>//, IMayHaveTenant
     {
         /// <summary>
         /// 租户id
         /// </summary>
-        [Column("TENANTID")]
+        [Column("TenantId")]
+        [Description("租户id")]
         public virtual int? TenantId { get; set; }
 
         /// <summary>
         /// 用户id
         /// </summary>
-        [Column("USERID")]
+        [Column("UserId")]
+        [Description("用户id")]
         public virtual long? UserId { get; set; }
 
         /// <summary>
         /// 设置的名称.
         /// </summary>
+        [Column("Name")]
+        [Description("设置的名称")]
         [Required(ErrorMessage = "请设置名称")]
         [MaxLength(256)]
-        [Column("NAME")]
         public virtual string Name { get; set; }
 
         /// <summary>
         /// 设置的值
         /// </summary>
-        [Column("VALUE")]
+        [Column("Value")]
+        [Description("设置的值")]
         public virtual string Value { get; set; }
 
         /// <summary>

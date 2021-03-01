@@ -141,7 +141,7 @@
         },
         doRoleSaveForm: function () {
             var _this = this;
-            this.$refs["formRoleData"].validate(
+            this.$refs["formRoleEl"].validate(
 				function (valid) {
 				    if (valid) {
 				        //
@@ -163,7 +163,7 @@
             this.roleOptions.formDialog = true;
             var _this = this;
             this.$nextTick(function () {
-                _this.$refs.formRoleData.resetFields();
+                _this.$refs["formRoleEl"].resetFields();
             });
 
         },
@@ -183,7 +183,7 @@
                     return;
                 }
                 _this.roleFormData = data;
-                _this.$refs["formRoleData"].clearValidate();
+                _this.$refs["formRoleEl"].clearValidate();
             });
         },
         doRoleDel: function () {
@@ -212,7 +212,7 @@
         },
         doRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs["roleToUserDataGrid"].toggleRowSelection(row);
+            this.$refs["gridRoleToUserEl"].toggleRowSelection(row);
         },
         //用户列表
         refreshUserByRole: function () {
@@ -308,7 +308,7 @@
         },
         doFlowRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs.flowDataGrid.toggleRowSelection(row);
+            this.$refs["gridFlowEl"].toggleRowSelection(row);
             //
             this.flowTypeOptions.selectRow = row;
         },
@@ -319,6 +319,8 @@
                 data: JSON.stringify(_this.flowTypeOptions.params)
             }).done(function (data) {
                 _this.flowTypeOptions.tableData = data;
+                _this.flowTypeOptions.selectRows = [];
+                _this.flowTypeOptions.selectRow = {};
             });
         },
         //
@@ -326,7 +328,7 @@
             var _this = this;
             this.flowTypeOptions.formDialog = true
             this.$nextTick(function () {
-                _this.$refs.formFlowTypeData.resetFields();
+                _this.$refs["formFlowTypeEl"].resetFields();
             });
         },
         doEditFlow: function () {
@@ -357,19 +359,26 @@
             this.flowTypeOptions.selectRows.forEach(function (item, index) {
                 ids.push(item.id);
             });
-            abp.ajax({
-                url: '/SysFlowDesigner/DelWorkFlowType',
-                data: JSON.stringify(ids)
-            }).done(function (data, res, e) {
-                //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
-                _this.tipSuccess('del');
-                _this.getWorkFlowTypeDataList();
 
+            this.$confirm('确定移除?', '提示', {
+                type: 'warning'
+            }).then(function () {
+                abp.ajax({
+                    url: '/SysFlowDesigner/DelWorkFlowType',
+                    data: JSON.stringify(ids)
+                }).done(function (data, res, e) {
+                    //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
+                    _this.tipSuccess('del');
+                    _this.getWorkFlowTypeDataList();
+
+                });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
         doFlowTypeSaveForm: function () {
             var _this = this;
-            this.$refs["formFlowTypeData"].validate(
+            this.$refs["formFlowTypeEl"].validate(
 				function (valid) {
 				    if (valid) {
 				        //
@@ -394,7 +403,7 @@
         },
         doFlowDataSourceRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs.flowDataSourceGrid.toggleRowSelection(row);
+            this.$refs["gridFlowDataSourceEl"].toggleRowSelection(row);
             //
             this.flowDataSourceOptions.selectRow = row;
         },
@@ -405,6 +414,8 @@
                 data: JSON.stringify(_this.flowDataSourceOptions.params)
             }).done(function (data) {
                 _this.flowDataSourceOptions.tableData = data;
+                _this.flowDataSourceOptions.selectRow = {};
+                _this.flowDataSourceOptions.selectRows = [];
             });
         },
         //
@@ -412,7 +423,7 @@
             var _this = this;
             this.flowDataSourceOptions.formDialog = true
             this.$nextTick(function () {
-                _this.$refs.formFlowDataSourceData.resetFields();
+                _this.$refs["formFlowDataSourceEl"].resetFields();
             });
         },
         doEditFlowDataSource: function () {
@@ -443,19 +454,25 @@
             this.flowDataSourceOptions.selectRows.forEach(function (item, index) {
                 ids.push(item.id);
             });
-            abp.ajax({
-                url: '/SysFlowDesigner/DelWorkFlowDataSource',
-                data: JSON.stringify(ids)
-            }).done(function (data, res, e) {
-                //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
-                _this.tipSuccess('del');
-                _this.getWorkFlowDataSourceList();
+            this.$confirm('确定移除?', '提示', {
+                type: 'warning'
+            }).then(function () {
+                abp.ajax({
+                    url: '/SysFlowDesigner/DelWorkFlowDataSource',
+                    data: JSON.stringify(ids)
+                }).done(function (data, res, e) {
+                    //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
+                    _this.tipSuccess('del');
+                    _this.getWorkFlowDataSourceList();
 
+                });
+            }).catch(function (action) {
+                //取消操作必须有避免js链式调用报异常
             });
         },
         doFlowDataSourceSaveForm: function () {
             var _this = this;
-            this.$refs["formFlowDataSourceData"].validate(
+            this.$refs["formFlowDataSourceEl"].validate(
                 function (valid) {
                     if (valid) {
                         //

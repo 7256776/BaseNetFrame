@@ -6,7 +6,7 @@
     <div class="col-lg-3 col-md-4 col-sm-4" style="padding-left:0px;padding-right:5px;">
         <div style="height:100%;padding:5px;border:1px solid #DCDFE6;">
 
-            <el-tree ref="treeData"
+            <el-tree ref="treeEl"
                      style="min-height:525px;"
                      v-bind:data="treeData"
                      v-bind:props="defaultProps"
@@ -37,18 +37,17 @@
             <div style="width:650px;">
                 <el-form v-bind:model="formData"
                          v-bind:rules="formRules"
-                         ref="formInfoData"
+                         ref="formEl"
                          label-position="left"
                          v-bind:inline="true"
                          v-bind:status-icon="true"
                          label-suffix=":"
                          label-width="100px">
 
-                    <!--v-on:change="doParentTreeChange"
-      "disabled":true,
-                    v-on:expand-change="doParentTreeChange"
+                    <!--v-on:change="doParentTreeChange" "disabled":true,
+                         v-on:expand-change="doParentTreeChange"
                          v-model="pageOptions.selectedParent"
-    -->
+                     -->
                     <el-form-item label="上级机构" prop="parentOrgID">
                         <el-cascader ref="orgTree"
                                      v-model="pageOptions.selectedParent"

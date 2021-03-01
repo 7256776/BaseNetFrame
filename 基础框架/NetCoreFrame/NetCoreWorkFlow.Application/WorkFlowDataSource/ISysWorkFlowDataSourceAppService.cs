@@ -22,7 +22,7 @@ namespace NetCoreWorkFlow.Application
         /// 查询集合
         /// </summary>
         /// <returns></returns> 
-        Task<List<SysWorkFlowDataSource>> GetWorkFlowDataSourceList(SysWorkFlowDataSourceParam model);
+        List<SysWorkFlowDataSource> GetWorkFlowDataSourceList(SysWorkFlowDataSourceParam model);
 
 
         /// <summary>

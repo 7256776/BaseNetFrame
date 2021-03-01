@@ -152,7 +152,7 @@ var component = Vue.component('sys-menus', {
         },
         doRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs.dataGrid.toggleRowSelection(row);
+            this.$refs["gridActionEl"].toggleRowSelection(row);
             this.pageOptions.selectRow = row;
         },
         validateActionName: function (rule, value, callback) {
@@ -207,7 +207,7 @@ var component = Vue.component('sys-menus', {
             });
         },
         doAdd: function () { 
-            this.$refs["formInfoData"].resetFields();
+            this.$refs["formEl"].resetFields();
             this.pageOptions.selectedParent = [];
             this.tableData = [];
         },
@@ -216,7 +216,7 @@ var component = Vue.component('sys-menus', {
             //获取动作明细
             this.formData["sysMenuActions"] = this.tableData;
             //
-            this.$refs["formInfoData"].validate(
+            this.$refs["formEl"].validate(
                 function (valid) {
                     if (valid) {
                         //
@@ -248,7 +248,7 @@ var component = Vue.component('sys-menus', {
                 return;
             }
             //验证删除的节点
-            var currentNode = this.$refs["treeData"].getCurrentNode();
+            var currentNode = this.$refs["treeEl"].getCurrentNode();
             if (currentNode.childrenMenus.length > 0) {
                 this.tipShow('warn', '请先移除该模块的子模块节点');
                 return;
@@ -264,7 +264,7 @@ var component = Vue.component('sys-menus', {
                     data: JSON.stringify(_this.formData.id),
                     type: 'POST'
                 }).done(function (data, res, e) {
-                    _this.$refs["formInfoData"].resetFields();
+                    _this.$refs["formEl"].resetFields();
                     _this.pageOptions.selectedParent = [];
                     _this.tableData = [];
                     //重载树菜单
@@ -280,7 +280,7 @@ var component = Vue.component('sys-menus', {
             this.pageOptions.isAdd = true;
             this.pageOptions.formDialog = true;
             this.$nextTick(function () {
-                _this.$refs["formSubData"].resetFields();
+                _this.$refs["formActionEl"].resetFields();
             });
         },
         doSubEdit: function () {
@@ -294,13 +294,13 @@ var component = Vue.component('sys-menus', {
             this.$nextTick(function () {
                 //获取需要修改的数据,采用复制
                 _this.formSubData = JSON.parse(JSON.stringify(this.pageOptions.selectRow));
-                //_this.$refs["formSubData"].validate();
+                //_this.$refs["formActionEl"].validate();
             });
         },
         doSubSave: function () {
             var _this = this;
            
-            this.$refs["formSubData"].validate(
+            this.$refs["formActionEl"].validate(
                 function (valid) {
                     if (!valid) {
                         return false;
@@ -323,7 +323,7 @@ var component = Vue.component('sys-menus', {
                     }
                     _this.pageOptions.formDialog = false;
                     //取消选中状态刷新修改后的数据
-                    _this.$refs.dataGrid.clearSelection();
+                    _this.$refs["gridActionEl"].clearSelection();
                 }
             );
         },

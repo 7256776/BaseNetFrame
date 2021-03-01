@@ -11,7 +11,7 @@ namespace NetCoreFrame.Core
     /// <summary>
     /// Api资源授权客户对象
     /// </summary>
-    [Table("SYS_APIRESOURCETOCLIENT")]
+    [Table("Sys_ApiResourceToClient")]
     public class SysApiResourceToClient : Entity<Guid>
     {
         public SysApiResourceToClient()
@@ -21,13 +21,15 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 资源ID主键
         /// </summary>
-        [Column("APIRESOURCEID")]
+        [Column("ApiResourceId")]
+        [Description("资源ID主键 关联 Sys_ApiResource")]
         public virtual Guid ApiResourceId { get; set; }
 
         /// <summary>
         /// 授权客户ID主键
         /// </summary>		
-        [Column("APICLIENTID")]
+        [Column("ApiClientId")]
+        [Description("授权客户ID主键 关联 Sys_ApiClient")]
         public virtual Guid ApiClientId { get; set; }
 
          

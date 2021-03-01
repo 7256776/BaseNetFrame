@@ -199,7 +199,7 @@ var component = Vue.component('sys-authorization', {
             var _this = this;
             this.resourceOptions.formDialog = true;
             this.$nextTick(function () {
-                _this.$refs["formResourceData"].resetFields();
+                _this.$refs["formResourceEl"].resetFields();
             });
         },
         doResourceEdit: function () {
@@ -218,7 +218,7 @@ var component = Vue.component('sys-authorization', {
                     return;
                 }
                 _this.resourceFormData = data;
-                _this.$refs["formResourceData"].clearValidate();
+                _this.$refs["formResourceEl"].clearValidate();
             });
         },
         doResourceDel: function () {
@@ -243,7 +243,7 @@ var component = Vue.component('sys-authorization', {
         },
         doResourceSave: function () {
             var _this=this;
-            this.$refs["formResourceData"].validate(
+            this.$refs["formResourceEl"].validate(
              function (valid) {
                  if (!valid) {
                      return false;
@@ -281,6 +281,9 @@ var component = Vue.component('sys-authorization', {
                 data: JSON.stringify(client)
             }).done(function (data, res, e) {
                 _this.clientTableOptions.tableData = data;
+                _this.clientTableOptions.selectRow = {};
+                _this.clientTableOptions.selectRows = [];
+
             });
         },
         doRowSelectChange: function (selection) {
@@ -288,13 +291,13 @@ var component = Vue.component('sys-authorization', {
         },
         doRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs["clientDataGrid"].toggleRowSelection(row);
+            this.$refs["gridClientEl"].toggleRowSelection(row);
             //
             this.clientTableOptions.selectRow = row;
         },
         doSaveClientForm: function () {
             var _this = this;
-            this.$refs["formClientData"].validate(
+            this.$refs["formClientEl"].validate(
              function (valid) {
                  if (!valid) {
                      return false;
@@ -317,7 +320,7 @@ var component = Vue.component('sys-authorization', {
             var _this = this;
             this.clientOptions.formDialog = true;
             this.$nextTick(function () {
-                _this.$refs.formClientData.resetFields();
+                _this.$refs["formClientEl"].resetFields();
             });
         },
         doClientEdit: function () {
@@ -384,7 +387,7 @@ var component = Vue.component('sys-authorization', {
             var _this = this;
             this.accountOptions.formDialog = true;
             this.$nextTick(function () {
-                _this.$refs["formAccountData"].resetFields();
+                _this.$refs["formAccountEl"].resetFields();
             });
         },
         doAccountEdit: function () {
@@ -426,7 +429,7 @@ var component = Vue.component('sys-authorization', {
         },
         doSaveAccountForm: function () {
             var _this = this;
-            this.$refs["formAccountData"].validate(
+            this.$refs["formAccountEl"].validate(
              function (valid) {
                  if (!valid) {
                      return false;

@@ -6,13 +6,13 @@ var component = Vue.component('sys-account', {
         orgtreeselection: componentAssemble.SysOrgTreeSelection,
     },
     //updated: function () {
-    //    var isShowUserInfo = this.$refs["userFormEx"];
+    //    var isShowUserInfo = this.$refs["formUseElEx"];
     //},
     //mounted: function () {
-    //    var isShowUserInfo = this.$refs["userFormEx"];
+    //    var isShowUserInfo = this.$refs["formUseElEx"];
     //},
     created: function () {
-        //var isShowUserInfo = this.$refs["userFormEx"].isShowUserInfo;
+        //var isShowUserInfo = this.$refs["formUseElEx"].isShowUserInfo;
         this.getUserList();
         //
         //this.initMenusData();
@@ -75,7 +75,7 @@ var component = Vue.component('sys-account', {
             var _this = this;
             this.$nextTick(function () {
                 //判断扩展表单是否存在表单(扩展表单的ref=formUserDataEx)来显示扩展页面
-                var isFormEx = _this.$refs["userFormEx"].$refs["formUserDataEx"];
+                var isFormEx = _this.$refs["formUseElEx"].$refs["formUserDataEx"];
                 _this.isCloseUserInfoEx = isFormEx ? true : false;
             });
         },
@@ -84,7 +84,7 @@ var component = Vue.component('sys-account', {
         },
         doRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs.dataGrid.toggleRowSelection(row);
+            this.$refs["gridEl"].toggleRowSelection(row);
             //
             this.tableOptions.selectRow = row;
         },
@@ -118,10 +118,10 @@ var component = Vue.component('sys-account', {
             //
             this.initTab();
             this.$nextTick(function () {
-                _this.$refs.formUserData.resetFields();
+                _this.$refs["formUseEl"].resetFields();
                   //重置扩展用户信息的表单
-                if (_this.$refs["userFormEx"]) {
-                    _this.$refs["userFormEx"].doResetFields();
+                if (_this.$refs["formUseElEx"]) {
+                    _this.$refs["formUseElEx"].doResetFields();
                 }
             });
             this.pageOptions.isUserCode = false;
@@ -148,21 +148,21 @@ var component = Vue.component('sys-account', {
                 _this.formDataEx = data.userInfoEx;
                 //页面加载完成后执行验证避免出现错误的验证提示
                 _this.$nextTick(function () {
-                    _this.$refs.formUserData.validate();
+                    _this.$refs["formUseEl"].validate();
                 });
             });
         },
         doSaveForm: function () {
             var _this = this;
            //
-            var formEx = this.$refs["userFormEx"].doSubmitForm()
+            var formEx = this.$refs["formUseElEx"].doSubmitForm()
             if (!formEx.isSubmit) {
                 return false;
             }
             //获取扩展数据
             this.formData.userInfoExtensJson = JSON.stringify(formEx.formData);
 
-            this.$refs["formUserData"].validate(
+            this.$refs["formUseEl"].validate(
                 function (valid) {
                     if (valid) {
                         //

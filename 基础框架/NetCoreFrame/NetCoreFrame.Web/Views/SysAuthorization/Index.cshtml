@@ -78,7 +78,7 @@
                                             </div>
                                         -->
                                         <el-table v-bind:data="clientTableOptions.clientTableData"
-                                                  ref="clientSubDataGrid"
+                                                  ref="gridclientSubEl"
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -169,7 +169,7 @@
 
                     <div style="padding:5px;border:1px solid #DCDFE6;">
                         <el-table v-bind:data="clientTableOptions.tableData"
-                                  ref="clientDataGrid"
+                                  ref="gridClientEl"
                                   stripe
                                   border
                                   highlight-current-row
@@ -280,7 +280,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active">
                                         <el-table v-bind:data="permissionTableOptions.tableData"
-                                                  ref="permissionDataGrid"
+                                                  ref="gridPermissionEl"
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -306,7 +306,7 @@
         <div>
             <el-form v-bind:model="resourceFormData"
                      v-bind:rules="formRules"
-                     ref="formResourceData"
+                     ref="formResourceEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"
@@ -351,7 +351,7 @@
         <div>
             <el-form v-bind:model="clientFormData"
                      v-bind:rules="formRules"
-                     ref="formClientData"
+                     ref="formClientEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"
@@ -428,7 +428,7 @@
         <div>
             <el-form v-bind:model="accountFormData"
                      v-bind:rules="formRules"
-                     ref="formAccountData"
+                     ref="formAccountEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"

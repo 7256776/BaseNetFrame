@@ -4,18 +4,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetCoreFrame.Core;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Text;
 
 namespace NetCoreFrame.Infrastructure
 {
-    public class InfrastructureDbContext : NetCoreFrameDbContext
+    public class FrameDbContext : NetCoreFrameDbContext
     {
-        public InfrastructureDbContext(DbContextOptions<InfrastructureDbContext> options)
+        public FrameDbContext(DbContextOptions<FrameDbContext> options)
                 : base(options)
         {
         }
 
+        /// <summary>
+        /// 全局记录需要执行的脚本数据
+        /// </summary>
+        public static List<StringBuilder> tabList = new List<StringBuilder>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,6 +44,9 @@ namespace NetCoreFrame.Infrastructure
             int menuOrgId = 7;
             int menuDictId = 8;
             int menuAuthorization = 9;
+            int menuFlow = 10;
+            int menuFlowConfig = 11;
+            int menuFlowDesigner = 12;
             #endregion
 
             #region 菜单
@@ -163,7 +177,7 @@ namespace NetCoreFrame.Infrastructure
                     Id = menuAuthorization,
                     ParentID = menuSysId,
                     MenuDisplayName = "OIDC授权",
-                    MenuName = "sys-dict",
+                    MenuName = "sys-authorization",
                     PermissionName = "AuthorizationManager",
                     RequiresAuthModel = "3",
                     Url = "/Views/SysAuthorization/Index",
@@ -171,7 +185,53 @@ namespace NetCoreFrame.Infrastructure
                     OrderBy = 9,
                     IsActive = true,
                     BusinessType = "1"
+                },
+                 //流程管理
+                new SysMenus
+                {
+                    Id = menuFlow,
+                    ParentID = menuSysId,
+                    MenuDisplayName = "流程管理",
+                    MenuName = "sys-flow",
+                    PermissionName = "Flow",
+                    RequiresAuthModel = "2",
+                    Url = "/",
+                    Icon = "fa-windows",
+                    OrderBy = 10,
+                    IsActive = true,
+                    BusinessType = "1"
+                },
+                //流程基础数据
+                new SysMenus
+                {
+                    Id = menuFlowConfig,
+                    ParentID = menuFlow,
+                    MenuDisplayName = "流程基础数据",
+                    MenuName = "sys-flowconfig",
+                    PermissionName = "FlowConfig",
+                    RequiresAuthModel = "2",
+                    Url = "/Views/SysFlowDesigner/FlowConfig",
+                    Icon = "fa-windows",
+                    OrderBy = 1,
+                    IsActive = true,
+                    BusinessType = "1"
+                },
+                //流程设计器
+                new SysMenus
+                {
+                    Id = menuFlowDesigner,
+                    ParentID = menuFlow,
+                    MenuDisplayName = "流程设计器",
+                    MenuName = "sys-flowdesigner",
+                    PermissionName = "FlowDesigner",
+                    RequiresAuthModel = "2",
+                    Url = "/Views/SysFlowDesigner/Index",
+                    Icon = "fa-windows",
+                    OrderBy = 2,
+                    IsActive = true,
+                    BusinessType = "1"
                 }
+              
             );
             #endregion
 
@@ -547,7 +607,12 @@ namespace NetCoreFrame.Infrastructure
              );
             #endregion
 
+            //初始扩展属性的脚本
+            DbSqlInit DbSqlInit = new DbSqlInit();
+            tabList = DbSqlInit.SetExtendedProperties(modelBuilder);
+
         }
 
+       
     }
 }

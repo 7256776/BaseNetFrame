@@ -7,7 +7,7 @@
         <div style="height:100%;padding:5px;border:1px solid #DCDFE6;">
             @*<el-tabs v-model="tabActivatePage">*@
                 @*<el-tab-pane label="菜单管理" name="menu">*@
-                    <el-tree ref="treeData"
+                    <el-tree ref="treeEl"
                              style="min-height:580px;"
                              v-bind:data="treeData"
                              v-bind:props="defaultProps"
@@ -42,7 +42,7 @@
 
                 <el-form v-bind:model="formData"
                          v-bind:rules="formRules"
-                         ref="formInfoData"
+                         ref="formEl"
                          label-position="left"
                          v-bind:inline="true"
                          v-bind:status-icon="true"
@@ -170,7 +170,7 @@
 
             <div style="padding:0px;border:0px solid #DCDFE6;">
                 <el-table v-bind:data="tableData"
-                          ref="dataGrid"
+                          ref="gridActionEl"
                           stripe
                           border
                           fit
@@ -202,7 +202,7 @@
         <div>
             <el-form v-bind:model="formSubData"
                      v-bind:rules="formSubRules"
-                     ref="formSubData"
+                     ref="formActionEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"

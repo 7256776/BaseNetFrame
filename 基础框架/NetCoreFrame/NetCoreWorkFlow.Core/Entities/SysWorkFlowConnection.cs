@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,32 +10,33 @@ namespace NetCoreWorkFlow.Core
     /// <summary>
     /// 节点关系集合
     /// </summary>
-    [Table("SYS_WORKFLOWCONNECTION")]
+    [Table("Sys_WorkFlowConnection")]
     public class SysWorkFlowConnection : Entity<Guid>
     {
         /// <summary>
         /// 流程对象ID 关联 SysWorkFlowSetting 主键ID
         /// </summary>
-        //[DisplayFormat(]
-        //[DisplayColumn]
+        [Column("WorkFlowSettingID")]
+        [Description("流程对象ID 关联 SysWorkFlowSetting 主键ID")]
         [Required(ErrorMessage = "请输入节点ID")]
-        [Column("WORKFLOWSETTINGID")]
         public Guid WorkFlowSettingID { get; set; }
 
         /// <summary>
         /// 来源节点ID 关联SysWorkFlowEndpoint Uid
         /// </summary>
-        [StringLength(50)]
+        [Column("SourceId")]
+        [Description("来源节点ID 关联SysWorkFlowEndpoint Uid")]
         [Required(ErrorMessage = "请输入来源节点ID")]
-        [Column("SOURCEID")]
+        [StringLength(50)]
         public string SourceId { get; set; }
 
         /// <summary>
         /// 目标节点ID 关联SysWorkFlowEndpoint Uid
         /// </summary>
-        [StringLength(50)]
+        [Column("TargetId")]
+        [Description("目标节点ID 关联SysWorkFlowEndpoint Uid")]
         [Required(ErrorMessage = "请输入来目标节点ID")]
-        [Column("TARGETID")]
+        [StringLength(50)]
         public string TargetId { get; set; }
 
 

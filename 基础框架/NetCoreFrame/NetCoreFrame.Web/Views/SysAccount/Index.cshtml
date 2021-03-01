@@ -22,7 +22,7 @@
 
     <div style="padding:5px;border:1px solid #DCDFE6;">
         <el-table v-bind:data="tableOptions.tableData"
-                  ref="dataGrid"
+                  ref="gridEl"
                   stripe
                   border
                   highlight-current-row
@@ -67,7 +67,7 @@
                 <el-tab-pane label="用户基础信息" name="userInfo">
                         <el-form v-bind:model="formData" 
                                  v-bind:rules="formRules"
-                                 ref="formUserData"
+                                 ref="formUseEl"
                                  label-position="left"
                                  v-bind:inline="true"
                                  v-bind:status-icon="true"
@@ -114,7 +114,7 @@
                                 <orgtreeselection v-model="formData.orgCode" v-bind:button-style="formFormItem2"></orgtreeselection>
                             </el-form-item>
                             <el-form-item label="描述" prop="description">
-                                <el-input type="textarea" v-model="formData.description" v-bind:style="formFormItem1" clearable v-bind:maxlength="200" show-word-limit>
+                                <el-input type="textarea" v-model="formData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="200" show-word-limit>
                                 </el-input>
                             </el-form-item>
                             <el-form-item label="删除状态" prop="isDeleted" v-show="isShowDeleteInput">
@@ -132,7 +132,7 @@
                         </el-form>
                 </el-tab-pane>
                 <el-tab-pane v-bind:label="isCloseUserInfoEx ? '用户详细信息' : ''"  name="userEx"  v-bind:disabled="!isCloseUserInfoEx">
-                    <userinfoextens  ref="userFormEx" v-model="formDataEx" ></userinfoextens>
+                    <userinfoextens  ref="formUseElEx" v-model="formDataEx" ></userinfoextens>
                 </el-tab-pane>
 
             </el-tabs>

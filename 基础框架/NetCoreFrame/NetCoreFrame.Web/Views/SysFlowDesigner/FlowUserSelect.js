@@ -64,7 +64,7 @@
 	        var _this = this;
 	        //通过容器定义高度
 	        this.$nextTick(function () {
-	            var grid = _this.$refs["userDataGrid"];
+	            var grid = _this.$refs["gridUserSelect"];
 	            _this.userTableOptions.gridHeight = grid.$parent.$el.clientHeight - 80;
 				_this.initOrg();
 				_this.filterFlowUserList();
@@ -130,7 +130,7 @@
 		},
 		doRowclick: function (row, event, column) {
 		    //设置选中行
-		    this.$refs["userDataGrid"].toggleRowSelection(row);
+		    this.$refs["gridUserSelect"].toggleRowSelection(row);
 		},
 		selectRow: function () {
 		    //设置选中行

@@ -79,13 +79,13 @@ var component = Vue.component('sys-usersetting', {
                 _this.userAvatars = data.imageUrl;
                 //页面加载完成后执行验证避免出现错误的验证提示
                 _this.$nextTick(function () {
-                    //_this.$refs.formMyUserData.validate();
+                    //_this.$refs["formMyUserEl"].validate();
                 });
             });
         },
         doSaveForm: function () {
             var _this = this;
-            this.$refs["formMyUserData"].validate(
+            this.$refs["formMyUserEl"].validate(
                 function (valid) {
                     if (valid) {
                         //

@@ -11,7 +11,7 @@ namespace NetCoreFrame.Core
     /// <summary>
  	/// Sys_Org
  	/// </summary>
- 	[Table("SYS_ORG")]
+ 	[Table("Sys_Org")]
     public class SysOrg : AuditedEntity<Guid>
     {
         public SysOrg()
@@ -20,13 +20,15 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 上级节点主键
         /// </summary>		
-        [Column("PARENTORGID")]
+        [Column("ParentOrgID")]
+        [Description("上级节点主键")]
         public virtual Guid? ParentOrgID { get; set; }
 
         /// <summary>
         /// 组织机构编码
         /// </summary>		
-        [Column("ORGCODE")]
+        [Column("OrgCode")]
+        [Description("组织机构编码")]
         [StringLength(100)]
         [Required]
         public virtual string OrgCode { get; set; }
@@ -34,45 +36,50 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 组织机构名称
         /// </summary>		
-        [Column("ORGNAME")]
-        [StringLength(100)]
+        [Column("OrgName")]
+        [Description("组织机构名称")]
         [Required(ErrorMessage = "请输入组织机构名称")]
+        [StringLength(100)]
         public virtual string OrgName { get; set; }
 
         /// <summary>
         /// 组织机构节点编码
         /// </summary>		
-        [Column("ORGNODE")]
-        [StringLength(1000)]
+        [Column("OrgNode")]
+        [Description("组织机构节点编码")]
         [Required(ErrorMessage = "请设置组织机构节点编码")]
+        [StringLength(1000)]
         public virtual string OrgNode { get; set; }
 
         /// <summary>
         /// 组织机构类型 
         /// </summary>		
-        [Column("ORGTYPE")]
-        [StringLength(20)]
+        [Column("OrgType")]
+        [Description("组织机构类型")]
         [Required(ErrorMessage = "请输入组织机构类型")]
+        [StringLength(20)]
         public virtual string OrgType { get; set; }
 
         /// <summary>
         /// 组织机构是否启用
         /// </summary>		
-        [Column("ISACTIVE")]
+        [Column("IsActive")]
         [Required]
         public virtual bool IsActive { get; set; } = true;
 
         /// <summary>
         /// 描述
         /// </summary>		
-        [Column("DESCRIPTION")]
-        [StringLength(1000)]
+        [Column("Description")]
+        [Description("描述")]
+        [StringLength(2000)]
         public virtual string Description { get; set; }
 
         /// <summary>
         /// 排序
         /// </summary>	 
-        [Column("ORDERBY")]
+        [Column("OrderBy")]
+        [Description("排序")]
         [DefaultValue(1)]
         public virtual int? OrderBy { get; set; }
 

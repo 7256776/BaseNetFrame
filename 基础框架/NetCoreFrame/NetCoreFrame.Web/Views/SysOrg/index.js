@@ -133,7 +133,7 @@ var component = Vue.component('sys-org', {
         },
         getFormData: function (id) {
             var _this = this;
-            this.$refs["formInfoData"].clearValidate();
+            this.$refs["formEl"].clearValidate();
             abp.ajax({
                 url: '/SysOrg/GetSysOrgModel',
                 data: JSON.stringify(id),
@@ -147,12 +147,12 @@ var component = Vue.component('sys-org', {
             this.formData.parentOrgID = v[v.length - 1];
         },
         doAdd: function () {
-            this.$refs["formInfoData"].resetFields();
+            this.$refs["formEl"].resetFields();
             this.pageOptions.selectedParent = [];
         },
         doSave: function () {
             var _this = this;
-            this.$refs["formInfoData"].validate(
+            this.$refs["formEl"].validate(
                 function (valid) {
                     if (valid) {
                         abp.ajax({
@@ -178,7 +178,7 @@ var component = Vue.component('sys-org', {
                 return;
             }
             //验证删除的节点
-            var currentNode = this.$refs["treeData"].getCurrentNode();
+            var currentNode = this.$refs["treeEl"].getCurrentNode();
             if (currentNode.childrenSysOrg && currentNode.childrenSysOrg.length > 0) {
                 this.tipShow('warn', '请先移除该机构的子节点机构');
                 return;
@@ -192,7 +192,7 @@ var component = Vue.component('sys-org', {
                     data: JSON.stringify(_this.formData.id),
                     type: 'POST'
                 }).done(function (data, res, e) {
-                    _this.$refs["formInfoData"].resetFields();
+                    _this.$refs["formEl"].resetFields();
                     _this.pageOptions.selectedParent = [];
                     //重载树菜单
                     _this.initOrgData();

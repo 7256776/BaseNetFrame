@@ -68,7 +68,7 @@
 
                                 <el-form v-bind:model="formData"
                                          v-bind:rules="formRules"
-                                         ref="formSysDictData"
+                                         ref="formDictEl"
                                          label-position="top"
                                          v-bind:inline="true"
                                          v-bind:status-icon="true"
@@ -121,8 +121,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <el-table v-bind:data="searchGrid"
-                                                      ref="dataGrid"
+                                            <el-table v-bind:data="tableDataRefresh"
+                                                      ref="gridEl"
                                                       @*stripe*@
                                                       border
                                                       @*highlight-current-row*@

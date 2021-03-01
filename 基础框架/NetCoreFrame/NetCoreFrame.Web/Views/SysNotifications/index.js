@@ -75,15 +75,15 @@ var component = Vue.component('sys-notifications', {
             });
         },
         doRowclick: function (row, event, column) {
-            //this.$refs.dataGrid.clearSelection();
+            //this.$refs["gridEl"].clearSelection();
             //设置选中行
-            this.$refs.dataGrid.toggleRowSelection(row);
+            this.$refs["gridEl"].toggleRowSelection(row);
             //
             this.tableOptions.selectRow = row;
         },
         doSaveSubscription: function () {
             var _this = this;
-            this.$refs["formNotificationData"].validate(
+            this.$refs["formNotificationEl"].validate(
                 function (valid) {
                     if (valid) {
                         //
@@ -125,7 +125,7 @@ var component = Vue.component('sys-notifications', {
                     type: 'POST'
                 }).done(function (data, res, e) {
                     _this.getNotificationsDataList();
-                    _this.$refs["formNotificationData"].resetFields();
+                    _this.$refs["formNotificationEl"].resetFields();
                     _this.tipSuccess('del');
                 });
             }).catch(function (action) {
@@ -134,7 +134,7 @@ var component = Vue.component('sys-notifications', {
           
         },
         doAddSubscription: function () {
-            this.$refs["formNotificationData"].resetFields();
+            this.$refs["formNotificationEl"].resetFields();
             //清空用户筛选条件
             this.tableOptions.searchTxt = '';
             this.tableOptions.tableData = [];
@@ -194,8 +194,8 @@ var component = Vue.component('sys-notifications', {
                 //
                 if (_this.notificationsData.length > 0 && isInit) {
                     //
-                    if (_this.$refs["formNotificationData"]) {
-                        _this.$refs["formNotificationData"].resetFields();
+                    if (_this.$refs["formNotificationEl"]) {
+                        _this.$refs["formNotificationEl"].resetFields();
                     }
                     _this.doNotificationsClick(_this.notificationsData[0].id);
                 } 
@@ -216,6 +216,10 @@ var component = Vue.component('sys-notifications', {
                 });
             } else {
                 list = this.tableOptions.selectRows;
+            }
+            if (!list || list.length==0) {
+                this.tipShow('warn', '请选择订阅用户');
+                return;
             }
             abp.ajax({
                 url: '/SysNotifications/InsertSubscription',
@@ -239,6 +243,10 @@ var component = Vue.component('sys-notifications', {
             } else {
                 list = this.tableOptions.selectRows;
             }
+            if (!list || list.length == 0) {
+                this.tipShow('warn', '请选择订阅用户');
+                return;
+            }
             abp.ajax({
                 url: '/SysNotifications/DeleteSubscription',
                 data: JSON.stringify({ params: list })
@@ -253,7 +261,7 @@ var component = Vue.component('sys-notifications', {
         },
         doSend: function (type) {
             var _this = this;
-            this.$refs["formSendNotificationData"].validate(
+            this.$refs["formSendNotificationEl"].validate(
                 function (valid) {
                     if (valid) {
                         //

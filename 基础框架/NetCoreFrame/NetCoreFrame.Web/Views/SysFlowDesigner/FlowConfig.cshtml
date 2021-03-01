@@ -78,7 +78,7 @@
                                         </div>
 
                                         <el-table v-bind:data="userTableOptions.tableData"
-                                                  ref="roleToUserDataGrid"
+                                                  ref="gridRoleToUserEl" 
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -152,7 +152,7 @@
                                         </div>
 
                                         <el-table v-bind:data="flowTypeOptions.tableData"
-                                                  ref="flowDataGrid"
+                                                  ref="gridFlowEl"
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -228,7 +228,7 @@
                                             </div>
                                         </div>
                                         <el-table v-bind:data="flowDataSourceOptions.tableData"
-                                                  ref="flowDataSourceGrid"
+                                                  ref="gridFlowDataSourceEl"
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -255,10 +255,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
 
         </div>
     </div>
@@ -269,7 +266,7 @@
         <div>
             <el-form v-bind:model="roleFormData"
                      v-bind:rules="formRules"
-                     ref="formRoleData"
+                     ref="formRoleEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"
@@ -311,7 +308,7 @@
         <div>
             <el-form v-bind:model="flowTypeFormData"
                      v-bind:rules="flowTypeRules"
-                     ref="formFlowTypeData"
+                     ref="formFlowTypeEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"
@@ -362,7 +359,7 @@
         <div>
             <el-form v-bind:model="flowDataSourceFormData"
                      v-bind:rules="flowDataSourceRules"
-                     ref="formFlowDataSourceData"
+                     ref="formFlowDataSourceEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"

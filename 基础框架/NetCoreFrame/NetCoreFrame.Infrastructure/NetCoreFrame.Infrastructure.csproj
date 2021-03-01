@@ -23,7 +23,12 @@
     <Compile Remove="Migrations\20210117024722_InitDataBase.Designer.cs" />
     <Compile Remove="Migrations\Configuration.cs" />
     <Compile Remove="Migrations\InitDataBase.cs" />
+    <Compile Remove="SeedData\DbContextFrame.cs" />
+    <Compile Remove="SeedData\DbContextWorkFlow.cs" />
     <Compile Remove="SeedData\DefaultFrameDB.cs" />
+    <Compile Remove="SeedData\InitDbContextOptionsConfigurer.cs" />
+    <Compile Remove="SeedData\InitialFrameDbBuilder.cs" />
+    <Compile Remove="SeedData\InitialWorkFlowbBuilder.cs" />
     <Compile Remove="SeedData\SeedHelper.cs" />
   </ItemGroup>
 

@@ -16,7 +16,7 @@
     <!--v-bind:header-cell-style="{'padding':'2px'}"-->
     <div style="padding:5px;border:1px solid #DCDFE6;">
         <el-table v-bind:data="tableOptions.tableData"
-                  ref="dataGrid"
+                  ref="gridEl"
                   stripe
                   border
                   highlight-current-row
@@ -44,7 +44,7 @@
         <div>
             <el-form v-bind:model="formData"
                      v-bind:rules="formRules"
-                     ref="formInputData"
+                     ref="formEl"
                      label-position="left"
                      v-bind:inline="true"
                      v-bind:status-icon="true"
@@ -90,8 +90,8 @@
                v-bind:width="frameWidth('L')">
         <div>
             <div v-bind:style="frameHeightStyle('L')" >
-                <el-table ref="dataGridMenu"
-                          v-bind:data="gridDataMenu"
+                <el-table ref="gridMenuEl"
+                          v-bind:data="gridMenuData"
                           style="width: 100%;"
                           row-key="id"
                           border

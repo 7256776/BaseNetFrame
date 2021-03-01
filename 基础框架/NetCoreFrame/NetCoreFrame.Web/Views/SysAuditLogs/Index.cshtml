@@ -26,7 +26,7 @@
 
             <div class="row" style="margin-left:0px;margin-right:0px;">
                 <el-table v-bind:data="tableOptions.tableFiltersData"
-                          ref="dataFiltersGrid"
+                          ref="gridSearEl"
                           border
                           highlight-current-row
                           tooltip-effect="light"
@@ -80,7 +80,7 @@
                 </el-table>
                 <el-table v-bind:data="tableOptions.tableData"
                           v-loading="tableOptions.gridLoading"
-                          ref="dataGrid"
+                          ref="gridEl"
                           @*stripe*@
                           border
                           v-bind:show-header="true"

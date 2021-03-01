@@ -91,7 +91,7 @@ var component = Vue.component('sys-userinbox', {
         },
         doRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs.dataGrid.toggleRowSelection(row);
+            this.$refs["gridEl"].toggleRowSelection(row);
             //
             this.tableOptions.selectRow = row;
         },

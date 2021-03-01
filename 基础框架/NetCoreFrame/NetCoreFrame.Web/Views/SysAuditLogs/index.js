@@ -70,7 +70,7 @@ var component = Vue.component('sys-auditlogs', {
         },
         doRowclick: function (row, event, column) {
             //设置选中行
-            this.$refs.dataGrid.toggleRowSelection(row);
+            this.$refs["gridEl"].toggleRowSelection(row);
             //
             this.tableOptions.selectRow = row;
             //
@@ -123,12 +123,12 @@ var component = Vue.component('sys-auditlogs', {
         doSetDate: function (v) {
             if (!v) {
                 this.tableOptions.tableFiltersData[0].dateRange = '';
-                return;
+            } else {
+                this.tableOptions.tableFiltersData[0].dateRange =
+                    abp.frameCore.format.formatDate(v[0], "yyyy-MM-dd")
+                    + "--" +
+                    abp.frameCore.format.formatDate(v[1], "yyyy-MM-dd");
             }
-            this.tableOptions.tableFiltersData[0].dateRange =
-                abp.frameCore.format.formatDate(v[0], "yyyy-MM-dd")
-                + "--" +
-                abp.frameCore.format.formatDate(v[1], "yyyy-MM-dd");
             this.refreshGrid();
         },
         doClear: function (v) {

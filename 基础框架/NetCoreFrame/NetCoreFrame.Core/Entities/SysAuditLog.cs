@@ -2,6 +2,8 @@ using Abp.Auditing;
 using Abp.Domain.Entities;
 using Abp.Extensions;
 using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetCoreFrame.Core
@@ -9,7 +11,7 @@ namespace NetCoreFrame.Core
     /// <summary>
     /// Used to store audit logs.
     /// </summary>
-    [Table("SYS_AUDITLOGS")]
+    [Table("Sys_AuditLog")]
     public class SysAuditLog : Entity<long>
     {
         #region 设置字符串长度
@@ -57,88 +59,110 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 租户id.
         /// </summary>
-        [Column("TENANTID")]
+        [Column("TenantId")]
+        [Description("租户id")]
         public virtual int? TenantId { get; set; }
 
         /// <summary>
         /// 用户id.
         /// </summary>
-        [Column("USERID")]
+        [Column("UserId")]
+        [Description("用户id")]
         public virtual long? UserId { get; set; }
 
         /// <summary>
         /// 服务(类/接口)的名字
         /// </summary>
-        [Column("SERVICENAME")]
+        [Column("ServiceName")]
+        [Description("服务(类/接口)的名字")]
+        [StringLength(256)]
         public virtual string ServiceName { get; set; }
 
         /// <summary>
         /// 方法名称
         /// </summary>
-        [Column("METHODNAME")]
+        [Column("MethodName")]
+        [Description("方法名称")]
+        [StringLength(256)]
         public virtual string MethodName { get; set; }
 
         /// <summary>
         /// 参数.
         /// </summary>
-        [Column("PARAMETERS")]
+        [Column("Parameters")]
+        [Description("参数")]
+        [StringLength(1024)]
         public virtual string Parameters { get; set; }
 
         /// <summary>
         /// 方法执行的开始时间
         /// </summary>
-        [Column("EXECUTIONTIME")]
+        [Column("ExecutionTime")]
+        [Description("方法执行的开始时间")]
         public virtual DateTime ExecutionTime { get; set; }
 
         /// <summary>
         /// 调用时长.
         /// </summary>
-        [Column("EXECUTIONDURATION")]
+        [Column("ExecutionDuration")]
+        [Description("调用时长")]
         public virtual int ExecutionDuration { get; set; }
 
         /// <summary>
         /// IP 地址
         /// </summary>
-        [Column("CLIENTIPADDRESS")]
+        [Column("ClientIpAddress")]
+        [Description("IP 地址")]
+        [StringLength(64)]
         public virtual string ClientIpAddress { get; set; }
 
         /// <summary>
         /// 客户端名称.(一般计算机名称)
         /// </summary>
-        [Column("CLIENTNAME")]
+        [Column("ClientName")]
+        [Description("客户端名称.(一般计算机名称)")]
+        [StringLength(128)]
         public virtual string ClientName { get; set; }
 
         /// <summary>
         /// 浏览器
         /// </summary>
-        [Column("BROWSERINFO")]
+        [Column("BrowserInfo")]
+        [Description("浏览器")]
+        [StringLength(256)]
         public virtual string BrowserInfo { get; set; }
 
         /// <summary>
         /// 异常对象.
         /// </summary>
-        [Column("EXCEPTION")]
+        [Column("Exception")]
+        [Description("异常对象")]
+        [StringLength(2000)]
         public virtual string Exception { get; set; }
 
         /// <summary>
         /// 用户id
         /// <see cref="AuditInfo.ImpersonatorUserId"/>.
         /// </summary>
-        [Column("IMPERSONATORUSERID")]
+        [Column("ImpersonatorUserId")]
+        [Description("用户id")]
         public virtual long? ImpersonatorUserId { get; set; }
 
         /// <summary>
         /// 租户id
         /// <see cref="AuditInfo.ImpersonatorTenantId"/>.
         /// </summary>
-        [Column("IMPERSONATORTENANTID")]
+        [Column("ImpersonatorTenantId")]
+        [Description("租户id")]
         public virtual int? ImpersonatorTenantId { get; set; }
 
         /// <summary>
         /// 自定义数据
         /// <see cref="AuditInfo.CustomData"/>.
         /// </summary>
-        [Column("CUSTOMDATA")]
+        [Column("CustomData")]
+        [Description("自定义数据")]
+        [StringLength(2000)]
         public virtual string CustomData { get; set; }
 
         /// <summary>

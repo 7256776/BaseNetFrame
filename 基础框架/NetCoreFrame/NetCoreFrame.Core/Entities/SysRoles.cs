@@ -9,7 +9,7 @@ namespace NetCoreFrame.Core
     /// <summary>
  	/// Sys_Roles
  	/// </summary>
- 	[Table("SYS_ROLES")]
+ 	[Table("Sys_Roles")]
     public class SysRoles : AuditedEntity<long>
     {
         public SysRoles()
@@ -20,13 +20,15 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 租户ID
         /// </summary>		
-        [Column("TENANTID")]
+        [Column("TenantId")]
+        [Description("租户ID")]
         public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// 角色名称
         /// </summary>		
-        [Column("ROLENAME")]
+        [Column("RoleName")]
+        [Description("角色名称")]
         [Required(ErrorMessage = "请输入角色名称")]
         [StringLength(50)]
         public virtual string RoleName { get; set; }
@@ -34,14 +36,15 @@ namespace NetCoreFrame.Core
         /// <summary>
         /// 描述
         /// </summary>		
-        [Column("DESCRIPTION")]
-        [StringLength(1000)]
+        [Column("Description")]
+        [Description("描述")]
+        [StringLength(2000)]
         public virtual string Description { get; set; }
 
         /// <summary>
         /// 是否激活
         /// </summary>		
-        [Column("ISACTIVE")]
+        [Column("IsActive")]
         [DefaultValue(true)]
         [Required]
         public virtual bool? IsActive { get; set; } = true;

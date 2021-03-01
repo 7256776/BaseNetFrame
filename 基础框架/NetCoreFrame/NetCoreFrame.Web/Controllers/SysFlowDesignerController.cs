@@ -272,9 +272,9 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize]
-        public async Task<JsonResult> GetWorkFlowDataSourceList([FromBody]SysWorkFlowDataSourceParam model)
+        public JsonResult GetWorkFlowDataSourceList([FromBody]SysWorkFlowDataSourceParam model)
         {
-            var data = await _sysWorkFlowDataSourceAppService.GetWorkFlowDataSourceList(model);
+            var data = _sysWorkFlowDataSourceAppService.GetWorkFlowDataSourceList(model);
             return Json(data);
         }
 
