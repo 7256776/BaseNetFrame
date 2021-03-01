@@ -1,4 +1,5 @@
 ﻿using Abp.AutoMapper;
+using Abp.Dependency;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using NetCoreWorkFlow.Core;
@@ -13,7 +14,9 @@ namespace NetCoreWorkFlow.Application
     {
         public override void PreInitialize()
         {
-            
+            //IocManager.Register<ClassMain, ClassSubA>(DependencyLifeStyle.Transient);
+            //IocManager.Register<ClassMain, ClassSubB>(DependencyLifeStyle.Transient);
+
         }
 
         public override void Initialize()
@@ -24,6 +27,8 @@ namespace NetCoreWorkFlow.Application
 
         public override void PostInitialize()
         {
+
+           
         }
 
 

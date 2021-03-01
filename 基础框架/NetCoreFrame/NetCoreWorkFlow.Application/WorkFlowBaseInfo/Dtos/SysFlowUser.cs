@@ -3,6 +3,9 @@ using System;
 
 namespace NetCoreWorkFlow.Application
 {
+    /// <summary>
+    /// 用户对象信息
+    /// </summary>
     public class SysFlowUser
     {
 

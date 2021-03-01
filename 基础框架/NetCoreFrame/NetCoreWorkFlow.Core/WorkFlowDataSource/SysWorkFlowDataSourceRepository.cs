@@ -9,15 +9,15 @@ using System.Linq;
 
 namespace NetCoreWorkFlow.Core
 {
-    public class ViewSysFlowRoleToUserRepository : EfCoreRepositoryBase<NetCoreWorkFlowDbContext, ViewSysFlowRoleToUser, Guid>, IViewSysFlowRoleToUserRepository
+    public class SysWorkFlowDataSourceRepository : EfCoreRepositoryBase<NetCoreWorkFlowDbContext, SysWorkFlowDataSource, Guid>, ISysWorkFlowDataSourceRepository
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="dbcontext"></param>
-        public ViewSysFlowRoleToUserRepository(IDbContextProvider<NetCoreWorkFlowDbContext> dbcontext) : base(dbcontext)
+        public SysWorkFlowDataSourceRepository(IDbContextProvider<NetCoreWorkFlowDbContext> dbcontext) : base(dbcontext)
         {
-          
+
         }
 
        

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Authorization;
 using Abp.Auditing;
+using Abp.Dependency;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreWorkFlow.Application;
 using NetCoreWorkFlow.Core;
@@ -18,12 +19,15 @@ namespace NetCoreFrame.Web.Controllers
         private readonly ISysWorkFlowRoleAppService _sysWorkFlowRoleAppService;
         private readonly ISysWorkFlowBaseInfoAppService _sysWorkFlowBaseInfoAppService;
         private readonly ISysWorkFlowTypeAppService _sysWorkFlowTypeAppService;
+        private readonly ISysWorkFlowDataSourceAppService _sysWorkFlowDataSourceAppService;
+        
 
         public SysFlowDesignerController(
             ISysWorkFlowSettingAppService sysWorkFlowSettingAppService,
             ISysWorkFlowRoleAppService sysWorkFlowRoleAppService,
             ISysWorkFlowBaseInfoAppService sysWorkFlowBaseInfoAppService,
-            ISysWorkFlowTypeAppService sysWorkFlowTypeAppService
+            ISysWorkFlowTypeAppService sysWorkFlowTypeAppService,
+            ISysWorkFlowDataSourceAppService sysWorkFlowDataSourceAppService
 
             )
         {
@@ -31,11 +35,13 @@ namespace NetCoreFrame.Web.Controllers
             _sysWorkFlowRoleAppService = sysWorkFlowRoleAppService;
             _sysWorkFlowBaseInfoAppService = sysWorkFlowBaseInfoAppService;
             _sysWorkFlowTypeAppService = sysWorkFlowTypeAppService;
+            _sysWorkFlowDataSourceAppService = sysWorkFlowDataSourceAppService;
+
         }
 
         #region 
         /// <summary>
-        /// 
+        /// 流程用户选择窗体
         /// </summary>
         /// <returns></returns>
         public IActionResult FlowUserSelect()
@@ -49,7 +55,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <returns></returns>
         public IActionResult Index()
-        {
+        { 
             return View();
         }
 
@@ -258,6 +264,59 @@ namespace NetCoreFrame.Web.Controllers
             return Task.FromResult(Json(true));
         }
         #endregion
+
+        #region 审核数据源
+        /// <summary>
+        /// 查询数据源集合
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> GetWorkFlowDataSourceList([FromBody]SysWorkFlowDataSourceParam model)
+        {
+            var data = await _sysWorkFlowDataSourceAppService.GetWorkFlowDataSourceList(model);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 查询数据源对象
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> GetWorkFlowDataSource([FromBody] string id)
+        {
+            var data = await _sysWorkFlowDataSourceAppService.GetWorkFlowDataSource(id);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 保存数据源
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public async Task<JsonResult> SaveWorkFlowDataSource([FromBody] SysWorkFlowDataSourceInput model)
+        {
+            await _sysWorkFlowDataSourceAppService.SaveWorkFlowDataSource(model);
+            return Json(true);
+        }
+
+        /// <summary>
+        /// 删除数据源对象
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public Task<JsonResult> DelWorkFlowDataSource([FromBody]List<string> ids)
+        {
+            _sysWorkFlowDataSourceAppService.DelWorkFlowDataSource(ids);
+            return Task.FromResult(Json(true));
+        }
+
+        #endregion
+
+
 
         #region 用户选择窗口
         /// <summary>

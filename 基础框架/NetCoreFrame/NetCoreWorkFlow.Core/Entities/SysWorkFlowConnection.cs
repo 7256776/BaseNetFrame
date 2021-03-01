@@ -15,6 +15,8 @@ namespace NetCoreWorkFlow.Core
         /// <summary>
         /// 流程对象ID 关联 SysWorkFlowSetting 主键ID
         /// </summary>
+        //[DisplayFormat(]
+        //[DisplayColumn]
         [Required(ErrorMessage = "请输入节点ID")]
         [Column("WORKFLOWSETTINGID")]
         public Guid WorkFlowSettingID { get; set; }

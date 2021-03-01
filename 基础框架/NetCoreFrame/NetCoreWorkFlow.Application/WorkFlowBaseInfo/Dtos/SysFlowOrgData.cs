@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace NetCoreWorkFlow.Application
 {
+    /// <summary>
+    /// 组织机构
+    /// </summary>
     public class SysFlowOrgData
     {
         /// <summary>
@@ -43,7 +46,7 @@ namespace NetCoreWorkFlow.Application
         public virtual int? OrderBy { get; set; }
 
         /// <summary>
-        /// 当前组织节点对象子节点
+        /// 当前组织节点对象子节点 
         /// </summary>
         public virtual List<SysFlowOrgData> ChildrenOrg { get; set; }
 

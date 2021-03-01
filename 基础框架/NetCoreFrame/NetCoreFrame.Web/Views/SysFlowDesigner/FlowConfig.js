@@ -72,10 +72,10 @@
                 ],
             },
 
-            //流程类型设置
+            //流程数据源设置
             flowDataSourceOptions: {
                 params: {
-                    flowTypeName: '',
+                    dataSourceName: '',
                 },
                 formDialog: false,
                 tableData: [],
@@ -84,13 +84,20 @@
             },
             flowDataSourceFormData: {
                 id: '',
-               
+                dataSourceType: '',
+                dataSourceName: '',
+                dataSourceWay: '',
+                isActive: true,
                 description: '',
             },
             flowDataSourceRules: {
-                flowTypeName: [
+                dataSourceName: [
                     { required: true, message: '必填项', trigger: 'blur' },
                     { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                ],
+                dataSourceType: [
+                   { required: true, message: '必填项', trigger: 'blur' },
+                   { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
                 ],
             },
 
@@ -108,6 +115,8 @@
                 this.getWorkFlowRoleDataList();
             } else if (page == 'tabFlowType') {
                 this.getWorkFlowTypeDataList();
+            } else if (page == 'tabFlowDataSource') {
+                this.getWorkFlowDataSourceList();
             }
         },
         getWorkFlowRoleDataList: function () {
@@ -392,8 +401,8 @@
         getWorkFlowDataSourceList: function () {
             var _this = this;
             abp.ajax({
-                url: '/SysFlowDesigner/GetWorkFlowTypeList',
-                data: JSON.stringify(_this.flowTypeOptions.params)
+                url: '/SysFlowDesigner/GetWorkFlowDataSourceList',
+                data: JSON.stringify(_this.flowDataSourceOptions.params)
             }).done(function (data) {
                 _this.flowDataSourceOptions.tableData = data;
             });
@@ -401,7 +410,7 @@
         //
         doAddFlowDataSource: function () {
             var _this = this;
-            this.flowTypeOptions.formDialog = true
+            this.flowDataSourceOptions.formDialog = true
             this.$nextTick(function () {
                 _this.$refs.formFlowDataSourceData.resetFields();
             });
@@ -414,7 +423,7 @@
             }
             this.flowDataSourceOptions.formDialog = true
             abp.ajax({
-                url: '/SysFlowDesigner/GetWorkFlowTypeModel',
+                url: '/SysFlowDesigner/GetWorkFlowDataSource',
                 data: JSON.stringify(_this.flowDataSourceOptions.selectRow.id)
             }).done(function (data, res, e) {
                 if (!data) {
@@ -435,7 +444,7 @@
                 ids.push(item.id);
             });
             abp.ajax({
-                url: '/SysFlowDesigner/DelWorkFlowType',
+                url: '/SysFlowDesigner/DelWorkFlowDataSource',
                 data: JSON.stringify(ids)
             }).done(function (data, res, e) {
                 //判断是否有数据建立关系(后台对重复添加关联用户进行了验证)
@@ -451,8 +460,8 @@
                     if (valid) {
                         //
                         abp.ajax({
-                            url: '/SysFlowDesigner/SaveWorkFlowType',
-                            data: JSON.stringify(_this.flowTypeFormData),
+                            url: '/SysFlowDesigner/SaveWorkFlowDataSource',
+                            data: JSON.stringify(_this.flowDataSourceFormData),
                             type: 'POST'
                         }).done(function (data, res, e) {
                             _this.flowDataSourceOptions.formDialog = false

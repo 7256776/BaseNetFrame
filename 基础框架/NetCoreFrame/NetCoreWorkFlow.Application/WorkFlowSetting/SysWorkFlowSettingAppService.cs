@@ -30,7 +30,6 @@ namespace NetCoreWorkFlow.Application
             _sysWorkFlowEndpointRepository = sysWorkFlowEndpointRepository;
             _sysWorkFlowConnectionRepository = sysWorkFlowConnectionRepository;
 
-
         }
 
         /// <summary>

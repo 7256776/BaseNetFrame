@@ -1,11 +1,17 @@
 ﻿using Abp.AspNetCore.Mvc.Authorization;
 using Abp.Auditing;
+using Abp.Dependency;
+using Abp.Domain.Repositories;
 using Abp.UI;
 using Abp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreFrame.Application;
 using NetCoreFrame.Core;
+using NetCoreWorkFlow.Application;
+using NetCoreWorkFlow.Core;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NetCoreFrame.Web.Controllers
@@ -16,13 +22,21 @@ namespace NetCoreFrame.Web.Controllers
         private readonly IUserInfoAppService _userInfoAppService;
         private readonly IAccounExtens _accounExtens;
 
+        private readonly IIocResolver _iocResolver;
+
         public SysLoginController(
             IUserInfoAppService userInfoAppService,
-            IAccounExtens accounExtens
+            IAccounExtens accounExtens,
+
+
+            IIocResolver iocResolver
             )
         {
             _userInfoAppService = userInfoAppService;
             _accounExtens = accounExtens;
+
+            _iocResolver = iocResolver;
+
         }
 
 
@@ -34,7 +48,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="returnUrl"></param>
         /// <returns></returns>
         public ActionResult Login(string returnUrl)
-        { 
+        {
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
                 returnUrl = GetAppHomeUrl();

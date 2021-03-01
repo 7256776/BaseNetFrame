@@ -30,7 +30,7 @@ namespace NetCoreWorkFlow.Application
         FlowPagingResult<SysFlowUser> GetSysUserPaging(FlowPagingParam<SysFlowUserSearch> flowPagingDto);
 
         /// <summary>
-        /// 
+        /// 通过定义视图查询流程角色相关用户
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
