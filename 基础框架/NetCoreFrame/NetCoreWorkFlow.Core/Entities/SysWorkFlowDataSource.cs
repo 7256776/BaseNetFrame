@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NetCoreWorkFlow.Core
 {
     /// <summary>
-    /// 节点关系集合
+    /// 流程数据源
     /// </summary>
     [Table("Sys_WorkFlowDataSource")]
     public class SysWorkFlowDataSource : AuditedEntity<Guid>
@@ -19,7 +19,7 @@ namespace NetCoreWorkFlow.Core
         [Column("DataSourceType")]
         [Description("数据源类型")]
         [Required(ErrorMessage = "请输入数据源类型")]
-        [StringLength(20)]
+        [StringLength(50)]
         public string DataSourceType { get; set; }
 
         /// <summary>
