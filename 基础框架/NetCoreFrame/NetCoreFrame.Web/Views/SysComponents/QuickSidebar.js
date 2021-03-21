@@ -132,7 +132,7 @@ var component = Vue.component('sys-quicksidebar', {
                 data: JSON.stringify(this.charSend)
             }).done(function (data) {
                 if (data === true) {
-                    //发送信息写入消息到在线用户对象的了解记录集合
+                    //发送信息写入消息到在线用户对象的聊天记录集合
                     _this.setChat(_this.charSend.receiveUserId, _this.charSend.chatDetailed, new Date(), 'in');
 
                     _this.charSend.chatDetailed = "";
@@ -169,7 +169,7 @@ var component = Vue.component('sys-quicksidebar', {
                 });
                 //判断是否属于初始加载
                 if (isInit!==true) {
-                    _this.tipShow('success', '您的消息未发送,刷新在线用户列表完成');
+                    _this.tipShow('success', '刷新在线用户列表完成');
                 } 
              
             });

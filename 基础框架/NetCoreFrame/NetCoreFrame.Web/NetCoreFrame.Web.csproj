@@ -341,8 +341,8 @@
     <None Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.js" />
     <None Include="wwwroot\Abp\Framework\scripts\libs\abp.jtable.js" />
     <None Include="wwwroot\Abp\Framework\scripts\libs\abp.moment.js" />
-    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr-client.js" />
-    <None Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\bak\abp.signalr-client.js" />
+    <None Include="wwwroot\Abp\Framework\scripts\libs\bak\abp.signalr.js" />
     <None Include="wwwroot\Abp\Framework\scripts\libs\abp.spin.js" />
     <None Include="wwwroot\Abp\Framework\scripts\libs\abp.sweet-alert.js" />
     <None Include="wwwroot\Abp\Framework\scripts\libs\abp.toastr.js" />

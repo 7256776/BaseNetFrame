@@ -105,7 +105,7 @@ namespace NetCoreFrame.Core
             //NotificationInfoContext.Property(p => p.Id).HasColumnName(ToDBAttributeCase("Id"));
             //NotificationInfoContext.Property(p => p.CreationTime).HasColumnName(ToDBAttributeCase("CreationTime"));
             //NotificationInfoContext.Property(p => p.CreatorUserId).HasColumnName(ToDBAttributeCase("CreatorUserId"));
-            NotificationInfoContext.Property(p => p.NotificationName).HasColumnName(ToDBAttributeCase("NotificationName"));
+            //NotificationInfoContext.Property(p => p.NotificationName).HasColumnName(ToDBAttributeCase("NotificationName"));
             //NotificationInfoContext.Property(p => p.Data).HasColumnName(ToDBAttributeCase("Data"));
             //NotificationInfoContext.Property(p => p.DataTypeName).HasColumnName(ToDBAttributeCase("DataTypeName"));
             //NotificationInfoContext.Property(p => p.EntityTypeName).HasColumnName(ToDBAttributeCase("EntityTypeName"));

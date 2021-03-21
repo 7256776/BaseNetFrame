@@ -18,8 +18,9 @@ namespace NetCoreWorkFlow.Core
         public virtual DbSet<SysWorkFlowEndpoint> SysWorkFlowEndpoints { set; get; }
         public virtual DbSet<SysWorkFlowRole> SysWorkFlowRoles { set; get; }
         public virtual DbSet<SysWorkFlowRoleToUser> SysWorkFlowRoleToUsers { set; get; }
-        public virtual DbSet<SysWorkFlowDataSource> SysWorkFlowDataSources { set; get; }
         public virtual DbSet<SysWorkFlowType> SysWorkFlowTypes { set; get; }
+        public virtual DbSet<SysWorkFlowDataSource> SysWorkFlowDataSources { set; get; }
+        public virtual DbSet<SysWorkFlowDataSourceItem> SysWorkFlowDataSourceItems { set; get; }
 
         /// <summary>
         /// 视图

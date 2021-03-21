@@ -10,8 +10,7 @@
     -webkit-transition: opacity .2s linear;
     transition: opacity .2s linear;
 }
-
-
+ 
 /* 设置ElUI所有btn的文字信息偏移*/
 .el-button span {
     padding-left: 5px;

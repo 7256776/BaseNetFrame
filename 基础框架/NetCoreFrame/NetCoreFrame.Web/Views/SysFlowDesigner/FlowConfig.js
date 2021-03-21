@@ -25,8 +25,8 @@
             },
             formRules: {
                 flowRoleName: [
-					{ required: true, message: '必填项', trigger: 'blur' },
-					{ min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                    { required: true, message: '必填项', trigger: 'blur' },
+                    { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
                 ],
             },
             userTableOptions: {
@@ -56,7 +56,23 @@
                 formDialog: false,
                 tableData: [],
                 selectRows: [],
-                selectRow: {}
+                selectRow: {},
+                predefineColors: [
+                    '#ff4500',
+                    '#ff8c00',
+                    '#ffd700',
+                    '#90ee90',
+                    '#00ced1',
+                    '#1e90ff',
+                    '#c71585',
+                    'rgba(255, 69, 0, 0.68)',
+                    'rgb(255, 120, 0)',
+                    'hsv(51, 100, 98)',
+                    'hsva(120, 40, 94, 0.5)',
+                    'hsl(181, 100%, 37%)',
+                    'hsla(209, 100%, 56%, 0.73)',
+                    '#c7158577'
+                ]
             },
             flowTypeFormData: {
                 id: '',
@@ -67,8 +83,8 @@
             },
             flowTypeRules: {
                 flowTypeName: [
-					{ required: true, message: '必填项', trigger: 'blur' },
-					{ min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                    { required: true, message: '必填项', trigger: 'blur' },
+                    { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
                 ],
             },
 
@@ -80,11 +96,19 @@
                 formDialog: false,
                 tableData: [],
                 selectRows: [],
-                selectRow: {}
+                selectRow: {},
+                dataSourceType: [{
+                    text: '系统数据',
+                    value: '1'
+                }, {
+                    text: '业务数据',
+                    value: '2'
+                }]
             },
             flowDataSourceFormData: {
                 id: '',
-                dataSourceType: '',
+                dataSourceType: '1',
+                dataSourceAliasName: '',
                 dataSourceName: '',
                 dataSourceWay: '',
                 isActive: true,
@@ -95,16 +119,35 @@
                     { required: true, message: '必填项', trigger: 'blur' },
                     { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
                 ],
+                dataSourceAliasName: [
+                    { required: true, message: '必填项', trigger: 'blur' },
+                    { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                ],
                 dataSourceType: [
-                   { required: true, message: '必填项', trigger: 'blur' },
-                   { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+                    { required: true, message: '必填项', trigger: 'blur' },
                 ],
             },
 
+            //流程数据源字段
+            dataSourceFieldOptions: {
+                formDialog: false,
+                title:'',
+                dataType: [
+                    { text: '整数', value: 'Int' },
+                    { text: '布尔', value: 'Bool' },
+                    { text: '日期', value: 'DateTime' },
+                    { text: '小数', value: 'Double' },
+                    { text: '字符串', value: 'String' },
+                    { text: '唯一标识', value: 'Guid' },
+                ],
+                tableData: [],
+                selectRows: [],
+                selectRow: {},
+            },
         }
     },
     watch: {
-        //监听
+       
     },
     computed: {
         //计算
@@ -329,6 +372,9 @@
             this.flowTypeOptions.formDialog = true
             this.$nextTick(function () {
                 _this.$refs["formFlowTypeEl"].resetFields();
+                //设置颜色选择组件大小
+                var pickerColor = this.$refs["pickerColorEl"];
+                pickerColor.$el.children[0].style.width = pickerColor.$el.style.width;
             });
         },
         doEditFlow: function () {
@@ -346,6 +392,11 @@
                     _this.tipShow('error', '未获取到数据');
                 }
                 _this.flowTypeFormData = data;
+            });
+            this.$nextTick(function () {
+                //设置颜色选择组件大小
+                var pickerColor = this.$refs["pickerColorEl"];
+                pickerColor.$el.children[0].style.width = pickerColor.$el.style.width;
             });
         },
         doDelFlow: function () {
@@ -418,7 +469,8 @@
                 _this.flowDataSourceOptions.selectRows = [];
             });
         },
-        //
+
+        //数据源
         doAddFlowDataSource: function () {
             var _this = this;
             this.flowDataSourceOptions.formDialog = true
@@ -490,6 +542,47 @@
                     }
                 });
         },
+        formatDataSourceType: function (row, column, cellValue, index) {
+            var data = this.flowDataSourceOptions.dataSourceType.find(function (item, index) {
+                if (item.value == row.dataSourceType) {
+                    return true;
+                }
+            });
+            if (data) {
+                return data.text;
+            }
+            return '';
+        },
+
+        //数据源明细字段
+        getDataSourceFieldList: function (row) {
+            var _this = this;
+            this.dataSourceFieldOptions.selectRow = row;
+            this.dataSourceFieldOptions.title = "数据源明细 " + "[" + row.dataSourceAliasName + "] [" + row.dataSourceName +"]";
+            this.dataSourceFieldOptions.formDialog = true
+            abp.ajax({
+                url: '/SysFlowDesigner/GetDataStructure',
+                data: JSON.stringify(row.id),
+            }).done(function (data) {
+                _this.dataSourceFieldOptions.tableData = data;
+                _this.dataSourceFieldOptions.selectRows = [];
+            });
+        },
+        doDataSourceFieldSaveForm: function () {
+            var _this = this;
+            abp.ajax({
+                url: '/SysFlowDesigner/SaveWorkFlowDataSourceItem',
+                data: JSON.stringify(this.dataSourceFieldOptions.tableData),
+            }).done(function (data) {
+                _this.tipSuccess('save');
+                _this.getDataSourceFieldList(_this.dataSourceFieldOptions.selectRow);
+            });
+        },
+        doLineEditing: function (row) {
+            if (row.states == "NONE") {
+                row.states = "EDIT"
+            }
+        }
 
     }
 });

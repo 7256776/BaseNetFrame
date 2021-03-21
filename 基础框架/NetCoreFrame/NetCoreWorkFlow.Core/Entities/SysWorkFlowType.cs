@@ -24,6 +24,14 @@ namespace NetCoreWorkFlow.Core
         public string FlowTypeName { get; set; }
 
         /// <summary>
+        /// 风格样式
+        /// </summary>
+        [Column("FlowTypeColor")]
+        [Description("风格样式")]
+        [StringLength(50)]
+        public string FlowTypeColor { get; set; }
+
+        /// <summary>
         /// 描述
         /// </summary>
         [Column("Description")]

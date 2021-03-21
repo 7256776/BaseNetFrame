@@ -78,7 +78,7 @@
                                         </div>
 
                                         <el-table v-bind:data="userTableOptions.tableData"
-                                                  ref="gridRoleToUserEl" 
+                                                  ref="gridRoleToUserEl"
                                                   stripe
                                                   border
                                                   highlight-current-row
@@ -166,10 +166,10 @@
                                             </el-table-column>
                                             <el-table-column label="是否只读" width="100px" align="center">
                                                 <template slot-scope="scope">
-                                                    <el-tag v-bind:type="scope.row.isReadOnly ? 'info' : 'success'">{{ scope.row.isActive ? '只读方式' : '允许编辑' }}</el-tag>
+                                                    <el-tag v-bind:type="scope.row.isReadOnly ? 'info' : 'success'">{{ scope.row.isReadOnly ? '只读方式' : '允许编辑' }}</el-tag>
                                                 </template>
                                             </el-table-column>
-                                            <el-table-column label="启用状态" width="100px" align="center">
+                                            <el-table-column label="启用状态" width="100px" align="left">
                                                 <template slot-scope="scope">
                                                     <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
                                                 </template>
@@ -197,7 +197,6 @@
                 </div>
 
             </div>
-            
             <!--流程数据源-->
             <div class="tab-pane" id="tabFlowDataSource">
                 <div class="row">
@@ -239,14 +238,19 @@
                                             <el-table-column type="index" width="40"></el-table-column>
                                             <el-table-column type="selection" width="40"></el-table-column>
                                             <el-table-column prop="dataSourceName" label="数据源名称" align="center" width="150"></el-table-column>
-                                            <el-table-column prop="dataSourceType" label="数据源类型" align="center" width="150"></el-table-column>
+                                            <el-table-column prop="dataSourceAliasName" label="数据源别名" align="center" width="150"></el-table-column>
+                                            <el-table-column prop="dataSourceType" label="数据源类型" align="center" width="150" v-bind:formatter="formatDataSourceType"></el-table-column>
                                             <el-table-column label="启用状态" width="100px" align="center">
                                                 <template slot-scope="scope">
                                                     <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
                                                 </template>
                                             </el-table-column>
-                                            <el-table-column prop="description" label="描述" align="center"></el-table-column>
-
+                                            <el-table-column prop="description" label="描述" align="left" ></el-table-column>
+                                            <el-table-column label="操作" width="100px" align="center">
+                                                <template slot-scope="scope">
+                                                    <el-button type="primary" plain v-on:click="getDataSourceFieldList(scope.row)">设置</el-button>
+                                                </template>
+                                            </el-table-column>
                                         </el-table>
 
                                     </div>
@@ -282,7 +286,7 @@
                                default-first-option
                                v-bind:style="formFormItem1"
                                placeholder="请选择">
-                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="启用" v-bind:value="true" ></el-option>
                         <el-option label="禁用" v-bind:value="false"></el-option>
                     </el-select>
                 </el-form-item>
@@ -337,6 +341,15 @@
                         <el-option label="禁用" v-bind:value="false"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="风格样式" prop="isActive">
+                    <el-color-picker v-model="flowTypeFormData.flowTypeColor"
+                                     ref="pickerColorEl"
+                                     show-alpha
+                                     v-bind:style="formFormItem1"
+                                     class="frame-color-picker"
+                                     v-bind:predefine="flowTypeOptions.predefineColors">
+                    </el-color-picker>
+                </el-form-item>
                 <el-form-item label="描述" prop="description">
                     <el-input type="textarea" v-model="flowTypeFormData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="500" show-word-limit>
                     </el-input>
@@ -366,14 +379,22 @@
                      size="medium"
                      label-suffix=":"
                      label-width="100px">
-                 
-                <el-form-item label="流程名称" prop="dataSourceName">
+
+                <el-form-item label="数据源别名" prop="dataSourceAliasName">
+                    <el-input v-model="flowDataSourceFormData.dataSourceAliasName" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="数据源名称" prop="dataSourceName">
                     <el-input v-model="flowDataSourceFormData.dataSourceName" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
                     </el-input>
                 </el-form-item>
                 <el-form-item label="数据源类型" prop="dataSourceType">
-                    <el-input v-model="flowDataSourceFormData.dataSourceType" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
-                    </el-input>
+                    <el-select v-model="flowDataSourceFormData.dataSourceType"
+                               default-first-option
+                               v-bind:style="formFormItem1"
+                               placeholder="请选择">
+                        <el-option v-for="item in flowDataSourceOptions.dataSourceType" v-bind:label="item.text" v-bind:value="item.value" v-bind:key="item.value"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="数据源方式" prop="dataSourceWay">
                     <el-input v-model="flowDataSourceFormData.dataSourceWay" v-bind:style="formFormItem1" clearable v-bind:maxlength="50" show-word-limit>
@@ -403,8 +424,77 @@
             <el-button type="primary" v-on:click="doFlowDataSourceSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
         </div>
     </el-dialog>
-    
-    
+
+    <el-dialog v-bind:title="dataSourceFieldOptions.title"
+               v-bind:visible.sync="dataSourceFieldOptions.formDialog"
+               v-bind:width="frameWidth('L')">
+        <div>
+            <el-table v-bind:data="dataSourceFieldOptions.tableData"
+                      ref="gridDataSourceFieldEl"
+                      stripe
+                      border
+                      highlight-current-row
+                      tooltip-effect="light"
+                      style="width: 100%;">
+                <el-table-column type="index" width="40"></el-table-column>
+
+                <el-table-column label="字段名称" align="center" width="300">
+                    <template slot-scope="scope">
+                        <el-input v-model="scope.row.fieldName" clearable v-bind:maxlength="50" show-word-limit v-bind:disabled="!scope.row.fieldDataDisabled">
+                        </el-input>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="数据类型" width="150px" align="center">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.fieldDataType"
+                                   v-bind:disabled="!scope.row.fieldDataDisabled"
+                                   placeholder="选择数据类型"
+                                   style="width:100%;">
+                            <el-option v-for="item in dataSourceFieldOptions.dataType"
+                                       v-bind:key="item.value"
+                                       v-bind:label="item.text"
+                                       v-bind:value="item.value">
+                            </el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="字段别名" align="center" width="300">
+                    <template slot-scope="scope">
+                        <el-input v-model="scope.row.fieldAliasName" clearable v-bind:maxlength="50" show-word-limit v-on:change="doLineEditing(scope.row)">
+                        </el-input>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="描述" align="center">
+                    <template slot-scope="scope">
+                        <el-input v-model="scope.row.description" clearable v-bind:maxlength="500" show-word-limit v-on:change="doLineEditing(scope.row)">
+                        </el-input>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="是否启用" width="100px" align="center">
+                    <template slot-scope="scope">
+                        <el-switch v-model="scope.row.isActive"
+                                   content="是否启用"
+                                   v-on:change="doLineEditing(scope.row)"
+                                   placement="top"
+                                   active-color="#13ce66"
+                                   inactive-color="#666">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="" align="center" width="10px"></el-table-column>
+            </el-table>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="dataSourceFieldOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doDataSourceFieldSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
     <flowuserselect v-bind:visible.sync="flowUserSelectOptions.visible" v-model="flowUserSelectOptions.selectData" v-on:closed="doClosed">
     </flowuserselect>
 

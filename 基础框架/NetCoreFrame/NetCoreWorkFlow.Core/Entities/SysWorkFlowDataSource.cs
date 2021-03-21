@@ -32,6 +32,15 @@ namespace NetCoreWorkFlow.Core
         public string DataSourceName { get; set; }
 
         /// <summary>
+        /// 数据源别名
+        /// </summary>
+        [Column("DataSourceAliasName")]
+        [Description("数据源别名")]
+        [Required(ErrorMessage = "请输入数据源别名")]
+        [StringLength(50)]
+        public string DataSourceAliasName { get; set; }
+
+        /// <summary>
         /// 数据源获取方式 (预留)
         /// </summary>
         [Column("DataSourceWay")]

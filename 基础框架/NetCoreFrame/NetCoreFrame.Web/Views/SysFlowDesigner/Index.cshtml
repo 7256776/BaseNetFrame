@@ -16,9 +16,9 @@
 
                         <div class="designer-tools-septal"></div>
 
-                        <el-input placeholder="流程名称" ref="workFlowName" v-model="workFlowData.workFlowName" v-bind:maxlength="50" style="width:95%;">
+                        <el-input placeholder="流程名称" ref="workFlowName" v-model="workFlowData.workFlowName" v-bind:maxlength="50" style="width:95%;" v-bind:readonly="true">
                         </el-input>
-                        <el-input placeholder="流程ID"  v-model="workFlowData.id" v-show="false">
+                        <el-input placeholder="流程ID" v-model="workFlowData.id" v-show="false">
                         </el-input>
 
                         <div class="designer-tools-septal"></div>
@@ -29,6 +29,9 @@
                         <el-input label="Y" v-model="currentEndpoint.offsetTop" readonly style="width:70px;" v-bind:controls="false" v-bind:max="3000"></el-input>
 
                         <el-input placeholder="节点名称" v-model="currentEndpoint.endpointText" v-bind:readonly="currentEndpoint.endpointType != 'P'" v-bind:maxlength="50" style="width:95%;">
+                        </el-input>
+
+                        <el-input placeholder="背景颜色" v-model="currentEndpoint.style"  v-bind:maxlength="50" style="width:95%;">
                         </el-input>
 
                         <div class="designer-tools-septal"></div>
@@ -63,7 +66,7 @@
 
                             <div style="float:left;width:100px;border: 0px solid rgb(156, 156, 156);text-align:center;">
                                 <el-button-group>
-                                    <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
+                                    <el-button type="primary" icon="fa fa-cog" size="mini" v-on:click="doStyle()"></el-button>
                                     <el-button type="primary" icon="fa fa-cog" size="mini"></el-button>
                                 </el-button-group>
                                 <el-button-group>
@@ -148,7 +151,7 @@
                                 <i class="fa fa-save"></i> 保存
                             </button>
                             <button type="button" class="btn blue" v-on:click="doSettingFlow()" style="padding-left:9px;padding-right:9px;">
-                                <i class="fa fa-cog"></i> 设置
+                                <i class="fa fa-cog"></i> 返回
                             </button>
 
                         </div>

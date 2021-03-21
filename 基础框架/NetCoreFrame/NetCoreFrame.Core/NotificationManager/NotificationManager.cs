@@ -288,7 +288,8 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         public virtual async Task SendChatAsync(long recipientId, string chatDetailed, NotificationSeverity severity = NotificationSeverity.Info)
         {
-            UserIdentifier userIdentifier = new UserIdentifier(AbpSessionExtens.TenantId, recipientId);
+            //UserIdentifier userIdentifier = new UserIdentifier(AbpSessionExtens.TenantId, recipientId);
+            UserIdentifier userIdentifier = new UserIdentifier(null, recipientId);
             //用户不在线直接返回
             var onlineClients = _onlineClientManager.GetAllByUserId(userIdentifier);
             if (onlineClients == null || onlineClients.Count==0)

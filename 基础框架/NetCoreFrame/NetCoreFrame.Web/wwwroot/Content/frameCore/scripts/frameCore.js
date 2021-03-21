@@ -91,8 +91,6 @@ var initFrame = function (Vue, options) {
             type: 'POST'
         }).done(function (data, res, e) {
             Vue.prototype.GlobalAuthorizedEntity = data;
-
-
             //设置头像默认路径
             Vue.prototype.GlobalAuthorizedEntity.DefaultImgUrl = '/Content/frameCore/img/avatars/';
 
@@ -168,37 +166,6 @@ var initFrame = function (Vue, options) {
             //console.log('unbind=只调用一次，指令在元素解绑时调用。');
         }
     });
-
-    // 设置全局方法或属性 (通过Vue.initGlobalAuthorized 调用 )
-    Vue.initGlobalAuthorized = function (e) {
-        abp.ajax({
-            url: '/SysAccount/GetUserPermission',
-            async: false,
-            type: 'POST'
-        }).done(function (data, res, e) {
-            Vue.prototype.GlobalAuthorizedEntity = data;
-             
-            //设置头像默认路径
-            Vue.prototype.GlobalAuthorizedEntity.DefaultImgUrl = '/Content/frameCore/img/avatars/';
-
-            if (data.user) {
-                //设置头像完整路径
-                Vue.prototype.GlobalAuthorizedEntity.user.refresh = function (imgIndex) {
-                    var imgUrl = Vue.prototype.GlobalAuthorizedEntity.DefaultImgUrl;
-                    Vue.prototype.GlobalAuthorizedEntity.user.imageUrl_150 = imgUrl + imgIndex + '_150.png';
-                    Vue.prototype.GlobalAuthorizedEntity.user.imageUrl_40 = imgUrl + imgIndex + '_40.png';
-                }
-
-                var imgUrl = Vue.prototype.GlobalAuthorizedEntity.DefaultImgUrl;
-                var imgIndex = Vue.prototype.GlobalAuthorizedEntity.user.imageUrl;
-
-                Vue.prototype.GlobalAuthorizedEntity.user.imageUrl_150 = imgUrl + imgIndex + '_150.png';
-                Vue.prototype.GlobalAuthorizedEntity.user.imageUrl_40 = imgUrl + imgIndex + '_40.png';
-            }
-        }).fail(function (data, res, e) {
-            //debugger;
-        });
-    }
 
     //设置表单标签设置Lable文本超长情况下的样式
     Vue.directive('FormLine', {

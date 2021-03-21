@@ -140,8 +140,9 @@ namespace NetCoreFrame.Application
             };
         }
 
-      /// <summary>
-        /// 分页查询账号信息,并可根据参数进行筛选
+        /// <summary>
+        ///  通过定义视图查询流程角色相关用户
+        ///  分页查询
         /// </summary>
         /// <param name="flowPagingDto"></param>
         /// <returns></returns>
@@ -149,10 +150,7 @@ namespace NetCoreFrame.Application
         {
             //参数对象
             var model = flowPagingDto.Params;
-
-
             var queue = _viewSysFlowRoleToUserRepository.GetAll();
-
 
             //var queue = from flowRole in _sysWorkFlowRoleRepository.GetAll()
             //            join roleUser in _sysWorkFlowRoleToUserRepository.GetAll()

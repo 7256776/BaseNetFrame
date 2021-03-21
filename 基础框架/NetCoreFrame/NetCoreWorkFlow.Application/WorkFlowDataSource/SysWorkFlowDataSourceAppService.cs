@@ -15,7 +15,6 @@ namespace NetCoreWorkFlow.Application
     {
         private readonly ISysWorkFlowDataSourceRepository _sysWorkFlowDataSourceRepository;
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -26,8 +25,7 @@ namespace NetCoreWorkFlow.Application
 
         }
 
-
-
+        #region 数据源配置
         /// <summary>
         /// 获取对象
         /// </summary>
@@ -54,7 +52,7 @@ namespace NetCoreWorkFlow.Application
             }
             if (!string.IsNullOrEmpty(model.DataSourceName))
             {
-                data = data.Where(w => w.DataSourceType.Contains(model.DataSourceName));
+                data = data.Where(w => w.DataSourceName.Contains(model.DataSourceName) || w.DataSourceAliasName.Contains(model.DataSourceName));
             }
             return data.ToList();
         }
@@ -103,7 +101,7 @@ namespace NetCoreWorkFlow.Application
                 await _sysWorkFlowDataSourceRepository.UpdateAsync(m);
             }
         }
-
+        #endregion
 
 
 

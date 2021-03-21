@@ -26,6 +26,11 @@ namespace NetCoreWorkFlow.Application
         public string Description { get; set; }
 
         /// <summary>
+        /// 风格样式
+        /// </summary>
+        public string FlowTypeColor { get; set; }
+
+        /// <summary>
         /// 是否只读
         /// </summary>
         public bool IsReadOnly { get; set; }

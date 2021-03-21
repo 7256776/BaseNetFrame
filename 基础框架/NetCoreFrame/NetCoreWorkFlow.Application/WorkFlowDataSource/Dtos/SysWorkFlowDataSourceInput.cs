@@ -27,6 +27,13 @@ namespace NetCoreWorkFlow.Application
         [StringLength(50)]
         [Required(ErrorMessage = "请输入数据源名称")]
         public string DataSourceName { get; set; }
+        
+        /// <summary>
+        /// 数据源别名称
+        /// </summary>
+        [Required(ErrorMessage = "请输入数据源别名称")]
+        [StringLength(50)]
+        public string DataSourceAliasName { get; set; }
 
         /// <summary>
         /// 数据源获取方式 (预留)

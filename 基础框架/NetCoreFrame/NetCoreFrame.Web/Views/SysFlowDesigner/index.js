@@ -185,6 +185,12 @@
 		//计算
 	},
 	methods: {
+		doStyle: function () {
+			//ToDo 测试 设置流程图背景颜色
+			this.endpointList.forEach(function (item,index) {
+				Vue.set(item.style, 'background', 'rgba(203, 201, 99, 0.5)')
+			});
+		},
 		//初始工具栏jsPlumb库
 		jsPlumbToolsInit: function () {
 			var _this = this

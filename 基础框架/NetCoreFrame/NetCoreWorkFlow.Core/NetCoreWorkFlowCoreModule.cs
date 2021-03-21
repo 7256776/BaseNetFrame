@@ -5,6 +5,7 @@ using Abp.Modules;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Transactions;
 
@@ -45,6 +46,7 @@ namespace NetCoreWorkFlow.Core
                     NetCoreWorkFlowDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
                 }
             });
+
         }
 
         public override void Initialize()

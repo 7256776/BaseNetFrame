@@ -21,13 +21,15 @@ namespace NetCoreFrame.Web.Controllers
         private readonly ISysWorkFlowTypeAppService _sysWorkFlowTypeAppService;
         private readonly ISysWorkFlowDataSourceAppService _sysWorkFlowDataSourceAppService;
         
+        private readonly ISysDataSourceFieldAppService _sysDataSourceFieldAppService;
 
         public SysFlowDesignerController(
             ISysWorkFlowSettingAppService sysWorkFlowSettingAppService,
             ISysWorkFlowRoleAppService sysWorkFlowRoleAppService,
             ISysWorkFlowBaseInfoAppService sysWorkFlowBaseInfoAppService,
             ISysWorkFlowTypeAppService sysWorkFlowTypeAppService,
-            ISysWorkFlowDataSourceAppService sysWorkFlowDataSourceAppService
+            ISysWorkFlowDataSourceAppService sysWorkFlowDataSourceAppService,
+            ISysDataSourceFieldAppService sysDataSourceFieldAppService
 
             )
         {
@@ -37,6 +39,7 @@ namespace NetCoreFrame.Web.Controllers
             _sysWorkFlowTypeAppService = sysWorkFlowTypeAppService;
             _sysWorkFlowDataSourceAppService = sysWorkFlowDataSourceAppService;
 
+            _sysDataSourceFieldAppService = sysDataSourceFieldAppService;
         }
 
         #region 
@@ -273,7 +276,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <returns></returns>
         [AbpMvcAuthorize]
         public JsonResult GetWorkFlowDataSourceList([FromBody]SysWorkFlowDataSourceParam model)
-        {
+        { 
             var data = _sysWorkFlowDataSourceAppService.GetWorkFlowDataSourceList(model);
             return Json(data);
         }
@@ -314,6 +317,29 @@ namespace NetCoreFrame.Web.Controllers
             return Task.FromResult(Json(true));
         }
 
+        /// <summary>
+        /// 查询数据源关联字段集合
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public JsonResult GetDataStructure([FromBody] string dataSourceId)
+        {
+            var data = _sysDataSourceFieldAppService.GetDataStructure(dataSourceId);
+            return Json(data);
+        }
+
+        /// <summary>
+        /// 查询数据源关联字段集合
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AbpMvcAuthorize]
+        public Task<JsonResult> SaveWorkFlowDataSourceItem([FromBody] List<SysWorkFlowDataSourceItemInput> list)
+        {
+            _sysDataSourceFieldAppService.SaveWorkFlowDataSourceItem(list);
+            return Task.FromResult(Json(true));
+        }
         #endregion
 
 
