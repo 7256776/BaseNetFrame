@@ -208,15 +208,15 @@
                             data: JSON.stringify(_this.formData)
                         }).done(function (data, res, e) {
                             if (data) {
-                                _this.formData.id = data.id;
+                                _this.formData.id = data;
                                 _this.getSysDictTypeDataList();
                                 //
                                 _this.getDataList();
                                 //_this.pageOptions.isDictType = true;
                                 //_this.pageOptions.tableEditState = false;
-                                _this.tipSuccess('del');
+                                _this.tipSuccess('save');
                             } else {
-                                _this.tipFail('del');
+                                _this.tipFail('save');
                             }
                         });
                     }

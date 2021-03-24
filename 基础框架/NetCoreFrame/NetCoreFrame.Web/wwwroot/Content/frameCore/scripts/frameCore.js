@@ -195,7 +195,6 @@ var initFrame = function (Vue, options) {
      */
     Vue.prototype.pageRouter = function (pageOption) {
         var _this = this;
-
         if (!pageOption.name) {
             return;
         }
@@ -256,7 +255,7 @@ var initFrame = function (Vue, options) {
     }
 
     //注册组件this共有函数或属性
-    Vue.prototype.pageLoad = function (componentName, path) { 
+    Vue.prototype.pageLoad = function (componentName, path) {
         //判断地址第一个是否存在 / 如果存在就剔除掉
         var i = path.indexOf('/');
         if (i == 0) {

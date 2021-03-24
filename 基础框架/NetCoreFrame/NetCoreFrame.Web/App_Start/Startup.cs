@@ -172,7 +172,7 @@ namespace NetCoreFrame.Web
 
 
         #region 构建启动服务配置
-        public virtual void BuildConfigureServices(IServiceCollection services)
+        protected virtual void BuildConfigureServices(IServiceCollection services)
         {
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc(

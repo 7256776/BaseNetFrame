@@ -59,7 +59,6 @@
     <Content Remove="Views\SysAccount\Index.cshtml" />
     <Content Remove="Views\SysAccount\Login.cshtml" />
     <Content Remove="Views\SysAccount\UserSettings.cshtml" />
-    <Content Remove="Views\SysAuditLogs\Index.cshtml" />
     <Content Remove="Views\SysAuthorization\Index.cshtml" />
     <Content Remove="Views\SysBusinessComponentss\OrgTreeSelection.cshtml" />
     <Content Remove="Views\SysComponents\HeadToolButton.cshtml" />
@@ -144,9 +143,6 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysAuditLogs\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysAuthorization\Index.cshtml" />
     <EmbeddedResource Include="Views\SysBusinessComponentss\OrgTreeSelection.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -179,9 +175,9 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SysAuditLogs\index.js">
+    <Content Include="Views\SysAuditLogs\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Views\SysBusinessComponentss\OrgTreeSelection.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -368,6 +364,12 @@
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\abp.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\SysAuditLogs\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   

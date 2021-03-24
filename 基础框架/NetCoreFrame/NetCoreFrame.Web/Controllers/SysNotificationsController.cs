@@ -116,7 +116,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public async Task<JsonResult> InsertSubscription([FromBody]RequestParam<List<SysUserNotification>> requestParam)
+        public async Task<JsonResult> InsertSubscription([FromBody]RequestParam<List<SysUserNotificationInput>> requestParam)
         {
             await _sysNotificationAppService.InsertSubscriptionAsync(requestParam);
             return Json(true);
@@ -127,7 +127,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public async Task<JsonResult> DeleteSubscription([FromBody]RequestParam<List<SysUserNotification>> requestParam)
+        public async Task<JsonResult> DeleteSubscription([FromBody]RequestParam<List<SysUserNotificationInput>> requestParam)
         {
             await _sysNotificationAppService.DeleteSubscriptionAsync(requestParam);
             return Json(true);
@@ -156,7 +156,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="skipCount"></param>
         /// <param name="maxResultCount"></param>
         /// <returns></returns>
-        public async Task<JsonResult> GetUserNotifications([FromBody]RequestParam<SysUserNotification> requestParam)
+        public async Task<JsonResult> GetUserNotifications([FromBody]RequestParam<SysUserNotificationInput> requestParam)
         {
             var data = await _sysNotificationAppService.GetUserNotificationsAsync(requestParam);
             return Json(data);
@@ -170,7 +170,7 @@ namespace NetCoreFrame.Web.Controllers
         public async Task<JsonResult> CleanUserNotificationByName([FromBody]string notificationName)
         {
             long userId = AbpSession.UserId.Value;
-            await _sysNotificationAppService.CleanUserNotificationByName(new SysUserNotification() { UserId = userId, NotificationName = notificationName });
+            await _sysNotificationAppService.CleanUserNotificationByName(new SysUserNotificationInput() { UserId = userId, NotificationName = notificationName });
             return Json(true);
         }
 
@@ -215,7 +215,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public async Task<JsonResult> NotificationsSend([FromBody]SysNotificationSend model)
+        public async Task<JsonResult> NotificationsSend([FromBody]SysNotificationSendInput model)
         {
             foreach (var item in model.NotificationNameList)
             {
@@ -236,7 +236,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public async Task<JsonResult> SendChatAsync([FromBody]SysCharSend model)
+        public async Task<JsonResult> SendChatAsync([FromBody]SysCharSendInput model)
         {
             //推送消息到用户
             await _notificationManager.SendChatAsync(model.ReceiveUserId, model.ChatDetailed, model.Severity);
@@ -261,7 +261,7 @@ namespace NetCoreFrame.Web.Controllers
         /// </summary>
         /// <param name="receiveUserId"></param>
         /// <returns></returns>
-        public JsonResult GetChatRecordList([FromBody]RequestParam<SysCharPage> requestParam)
+        public JsonResult GetChatRecordList([FromBody]RequestParam<SysCharParam> requestParam)
         {
             var data = _sysChatRecordAppService.GetChatRecordListAsync(requestParam);
             return Json(data);
@@ -273,7 +273,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        public JsonResult GetChatRecordMutualList([FromBody]RequestParam<SysCharPage> requestParam)
+        public JsonResult GetChatRecordMutualList([FromBody]RequestParam<SysCharParam> requestParam)
         {
             var data = _sysChatRecordAppService.GetChatRecordMutualListAsync(requestParam);
             return Json(data);

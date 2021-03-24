@@ -67,7 +67,7 @@ namespace NetCoreFrame.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[IgnoreAntiforgeryToken]
-        public async Task<JsonResult> LoginRequest([FromBody]LoginUser model)
+        public async Task<JsonResult> LoginRequest([FromBody]LoginUserInput model)
         { 
             if (string.IsNullOrWhiteSpace(model.ReturnUrl))
             {

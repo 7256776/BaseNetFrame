@@ -70,7 +70,7 @@ namespace NetCoreFrame.Web.Controllers
         [AbpMvcAuthorize]
         public JsonResult GetMenusListOrderByRole([FromBody]long roleId)
         {
-            List<MenusOut> data = _sysMenusManager.GetMenusListOrderBy(roleId);
+            List<SysMenusData> data = _sysMenusManager.GetMenusListOrderBy(roleId);
             return Json(data);
         }
 
@@ -82,7 +82,7 @@ namespace NetCoreFrame.Web.Controllers
         [AbpMvcAuthorize]
         public JsonResult GetRoleToUser([FromBody]long roleId)
         {
-            RoleToUserReturn data = _sysRoleManager.GetRoleToUser(roleId);
+            SysRoleToUserData data = _sysRoleManager.GetRoleToUser(roleId);
             return Json(data);
         }
 
@@ -92,10 +92,10 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("RoleManager.SaveRole")]
-        public async Task<JsonResult> SaveRoleModel([FromBody]RoleInput model)
+        public async Task<JsonResult> SaveRoleModel([FromBody]SysRoleInput model)
         {
-            var ajaxResponse = await _sysRoleManager.SaveRoleModel(model);
-            return Json(ajaxResponse);
+            await _sysRoleManager.SaveRoleModel(model);
+            return Json(true);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("RoleManager.DelRole")]
-        public JsonResult DelRoleModel([FromBody]List<RoleInput> model)
+        public JsonResult DelRoleModel([FromBody]List<SysRoleInput> model)
         {
             _sysRoleManager.DelRoleModel(model);
             return Json(true);
@@ -116,10 +116,10 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("RoleManager.SaveRoleToMenu")]
-        public JsonResult SaveRoleToMenu([FromBody]RoleInput model)
+        public JsonResult SaveRoleToMenu([FromBody]SysRoleInput model)
         {
-            var ajaxResponse = _sysRoleManager.SaveRoleToMenu(model);
-            return Json(ajaxResponse);
+            _sysRoleManager.SaveRoleToMenu(model);
+            return Json(true);
         }
 
         /// <summary>
@@ -128,10 +128,10 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("RoleManager.SaveRoleToUser")]
-        public JsonResult SaveRoleToUser([FromBody]RoleToUser model)
+        public JsonResult SaveRoleToUser([FromBody]SysRoleToUserInput model)
         {
             var ajaxResponse = _sysRoleManager.SaveRoleToUser(model);
-            return Json(ajaxResponse);
+            return Json(true);
         }
         
     }

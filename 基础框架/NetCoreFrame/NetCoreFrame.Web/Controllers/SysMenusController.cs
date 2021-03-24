@@ -56,7 +56,7 @@ namespace NetCoreFrame.Web.Controllers
         [AbpMvcAuthorize("MenusManager")]
         public JsonResult GetMenusList()
         {
-            List<MenusOut> data = _sysMenusManager.GetMenusList();
+            List<SysMenusData> data = _sysMenusManager.GetMenusList();
             return Json(data);
         }
 
@@ -78,10 +78,10 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("MenusManager.SaveMenus")]
-        public JsonResult SaveMenus([FromBody]MenusInput model)
+        public JsonResult SaveMenus([FromBody]SysMenusInput model)
         {
-            var ajaxResponse = _sysMenusManager.SaveMenusModel(model);
-            return Json(ajaxResponse);
+            var resId = _sysMenusManager.SaveMenusModel(model);
+            return Json(resId);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize]
-        public JsonResult IsPermissionRepeat([FromBody]MenuData model)
+        public JsonResult IsPermissionRepeat([FromBody]SysMenuParam model)
         {
             bool res = _sysMenusManager.IsPermissionRepeat(model);
             return Json(res);

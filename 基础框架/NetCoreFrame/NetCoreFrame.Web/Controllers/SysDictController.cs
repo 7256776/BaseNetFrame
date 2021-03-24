@@ -66,13 +66,13 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="modelInput"></param>
         /// <param name="listSysDict"></param>
         /// <returns></returns>
-        [AbpMvcAuthorize("DictManager.SaveDictType")]
+        [AbpMvcAuthorize("DictManager.SaveDict")]
         public async Task<JsonResult> SaveSysDictTypeModel([FromBody]SysDictTypeInput modelInput)
         {
             //保存字典类型值
-            var ajaxResponse = await _sysDictTypeAppService.SaveSysDictTypeModel(modelInput);
+            var resId = await _sysDictTypeAppService.SaveSysDictTypeModel(modelInput);
 
-            return Json(ajaxResponse);
+            return Json(resId);
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace NetCoreFrame.Web.Controllers
         public async Task<JsonResult> SaveSysDictCodeModel([FromBody]List<SysDictInput> sysDictInput)
         {
             //保存字典编码值
-            var ajaxResponse = await _sysDictAppService.SaveSysDictModel(sysDictInput);
+            await _sysDictAppService.SaveSysDictModel(sysDictInput);
 
-            return Json(ajaxResponse);
+            return Json(true);
         }
 
         /// <summary>

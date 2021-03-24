@@ -226,11 +226,11 @@ var component = Vue.component('sys-menus', {
                             type: 'POST'
                         }).done(function (data, res, e) {
                             //保存成功获取返回id
-                            _this.formData.id = data.id;
+                            _this.formData.id = data;
                             //重载树菜单
                             _this.initMenusData();
                             //重载明细Table
-                            _this.getFormData(data.id);
+                            _this.getFormData(data);
                             _this.tipSuccess('save');
                         }).fail(function (data, res, e) {
                             //debugger;

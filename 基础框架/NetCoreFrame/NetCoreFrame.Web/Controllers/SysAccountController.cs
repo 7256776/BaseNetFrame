@@ -49,7 +49,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("UserInfoManager")]
-        public JsonResult GetUserList([FromBody]RequestParam<UserOut> requestParam)
+        public JsonResult GetUserList([FromBody]RequestParam<UserInfoData> requestParam)
         {
             var data = _userInfoAppService.GetUserList(requestParam);
             return Json(data);
@@ -61,7 +61,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize]
-        public JsonResult GetAllUserList([FromBody]UserOut model)
+        public JsonResult GetAllUserList([FromBody]UserInfoData model)
         {
             var data = _userInfoAppService.GetAllUserList(model);
             return Json(data);
@@ -85,7 +85,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("UserInfoManager.SaveUser")]
-        public async Task<JsonResult> SaveUserModel([FromBody]UserInput model)
+        public async Task<JsonResult> SaveUserModel([FromBody]UserInfoInput model)
         {
             var ajaxResponse = await _userInfoAppService.SaveUserModel(model);
             return Json(ajaxResponse);
@@ -97,7 +97,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpMvcAuthorize("UserInfoManager.DelUser")]
-        public async Task<JsonResult> DelUserModel([FromBody]List<UserInput> model)
+        public async Task<JsonResult> DelUserModel([FromBody]List<UserInfoInput> model)
         {
             await _userInfoAppService.DelUserModel(model);
             return Json(true);
@@ -116,7 +116,7 @@ namespace NetCoreFrame.Web.Controllers
         /// 修改用户基础信息
         /// </summary> 
         [AbpMvcAuthorize]
-        public async Task<JsonResult> SeetingUserInfo([FromBody]UserInfoInput model)
+        public async Task<JsonResult> SeetingUserInfo([FromBody]UserInfoSettingInput model)
         {
             var ajaxResponse = await _userInfoAppService.SeetingUserInfo(model);
             return Json(ajaxResponse);
