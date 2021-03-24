@@ -26,7 +26,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="listSysDict"></param>
         /// <returns></returns>
-        Task<AjaxResponse> SaveSysDictModel(List<SysDictInput> listSysDict);
+        Task SaveSysDictModel(List<SysDictInput> listSysDict);
 
         /// <summary>
         /// 判断字典编码是否重复

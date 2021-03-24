@@ -17,6 +17,7 @@ namespace NetCoreFrame.Core
     /// 授权资源
     /// </summary>
     [Audited]
+    [AbpAuthorize]
     public class SysIdentityServerCacheAppService : NetCoreFrameApplicationBase, ISysIdentityServerCacheAppService
     {
         private readonly ISysApiResourceRepository _sysApiResourceRepository;
@@ -248,8 +249,6 @@ namespace NetCoreFrame.Core
         {
             //获取客户与资源关系
             var apiAccountList = _sysApiClienToAccountRepository.GetApiClientAndAccount().ToList();
-            //
-            List<ApiResource> resourceList = new List<ApiResource>();
             //
             if (apiAccountList == null && !apiAccountList.Any())
             {

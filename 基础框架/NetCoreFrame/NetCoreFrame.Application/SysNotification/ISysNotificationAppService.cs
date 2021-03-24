@@ -73,14 +73,14 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="list">=订阅通知的用户集合</param>
         /// <returns></returns>
-        Task InsertSubscriptionAsync(RequestParam<List<SysUserNotification>> requestParam);
+        Task InsertSubscriptionAsync(RequestParam<List<SysUserNotificationInput>> requestParam);
 
         /// <summary>
         /// 退订通知
         /// </summary>
         /// <param name="list">=订阅通知的用户集合</param>
         /// <returns></returns>
-        Task DeleteSubscriptionAsync(RequestParam<List<SysUserNotification>> requestParam);
+        Task DeleteSubscriptionAsync(RequestParam<List<SysUserNotificationInput>> requestParam);
 
         /// <summary>
         /// 获取用户订阅的通知
@@ -94,7 +94,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        Task<PagedResultDto<SysUserNotificationInfo>> GetUserNotificationsAsync(RequestParam<SysUserNotification> requestParam);
+        Task<PagedResultDto<SysUserNotificationInfo>> GetUserNotificationsAsync(RequestParam<SysUserNotificationInput> requestParam);
 
         /// <summary>
         /// 清空消息
@@ -102,7 +102,7 @@ namespace NetCoreFrame.Application
         /// <param name="userId"></param>
         /// <param name="notificationName"></param>
         /// <returns></returns>
-        Task CleanUserNotificationByName(SysUserNotification model);
+        Task CleanUserNotificationByName(SysUserNotificationInput model);
 
         /// <summary>
         /// 删除消息

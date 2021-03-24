@@ -10,7 +10,7 @@
     -webkit-transition: opacity .2s linear;
     transition: opacity .2s linear;
 }
-
+ 
 /* 设置ElUI所有btn的文字信息偏移*/
 .el-button span {
     padding-left: 5px;
@@ -31,7 +31,17 @@
     height: 355px;
 }
 
+/* 设置ElUI穿梭Grid的宽度样式*/
+.frame-transfer-panel .el-checkbox.el-transfer-panel__item {
+    width: 100%;
+}
+
 /***********************************基础布局样式**************************************/
+/*内容区域的高度计算*/
+.frame-body-height {
+    height: calc(100vh - 270px);
+}
+
 /*按钮工具栏区域样式*/
 .frame-btn-tools {
     padding: 3px 0px 3px 3px;

@@ -50,7 +50,7 @@ namespace NetCoreFrame.Application
         /// <param name="listSysDict"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public async Task<AjaxResponse> SaveSysDictModel(List<SysDictInput> listSysDict)
+        public async Task SaveSysDictModel(List<SysDictInput> listSysDict)
         {
             var validDt = from c in listSysDict group c by c.DictCode into lb where lb.Count() > 1 select new { DictCodeCount = lb.Count() };
             if (validDt.Any())
@@ -83,8 +83,6 @@ namespace NetCoreFrame.Application
                     UnitOfWorkManager.Current.SaveChanges();
                 }
             }
-
-            return new AjaxResponse { Success = true };
         }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace NetCoreFrame.WebApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<AuthenticateResultModel> AuthenticateAuth([FromBody]LoginUser model)
+        public async Task<AuthenticateResultModel> AuthenticateAuth([FromBody]LoginUserInput model)
         {
             return await Authenticate(new AuthenticateModel() { Password = model.Password, UserNameOrEmailAddress = model.UserCode });
         }
@@ -63,7 +63,7 @@ namespace NetCoreFrame.WebApi.Controllers
         public async Task<AuthenticateResultModel> Authenticate([FromBody]AuthenticateModel model)
         {
             //调用接口实现的登录验证
-            SysLoginResult<UserInfo> result = await _accounExtens.LoginRequest(new LoginUser()
+            SysLoginResult<UserInfo> result = await _accounExtens.LoginRequest(new LoginUserInput()
             {
                 UserCode = model.UserNameOrEmailAddress,
                 Password = model.Password

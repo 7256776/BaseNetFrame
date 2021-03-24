@@ -8,12 +8,16 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.UI;
+using Abp.Auditing;
+using Abp.Authorization;
 
 namespace NetCoreFrame.Core
 {
     /// <summary> 
     /// 资源授权的客户
     /// </summary>
+    [Audited]
+    [AbpAuthorize]
     public class SysApiResourceToClientAppService : NetCoreFrameApplicationBase, ISysApiResourceToClientAppService
     {
         private readonly ISysApiResourceToClientRepository _sysApiResourceToClientRepository;

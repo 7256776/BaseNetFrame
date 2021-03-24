@@ -15,14 +15,14 @@ namespace NetCoreFrame.Application
         /// <param name="userInfo"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<bool> UpdateUserInfo(UserInput model);
+        Task<bool> UpdateUserInfo(UserInfoInput model);
 
         /// <summary>
         /// 获取用户信息
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        UserOut GetUserModel(long id);
+        UserInfoData GetUserModel(long id);
 
     }
 

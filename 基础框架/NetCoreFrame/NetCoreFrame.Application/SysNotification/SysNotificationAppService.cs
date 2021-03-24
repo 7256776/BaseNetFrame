@@ -138,17 +138,17 @@ namespace NetCoreFrame.Application
         public async Task UserSubscriptionNotificationInfoAll(long userId)
         {
             var notificationInfo = await GetNotificationInfoAllAsync();
-            List<SysUserNotification> sysUserNotification = new List<SysUserNotification>();
+            List<SysUserNotificationInput> sysUserNotification = new List<SysUserNotificationInput>();
             foreach (var item in notificationInfo)
             {
                 sysUserNotification.Add(
-                    new SysUserNotification()
+                    new SysUserNotificationInput()
                     {
                         UserId = userId,
                         NotificationName = item.NotificationName
                     });
             }
-            await InsertSubscriptionAsync(new RequestParam<List<SysUserNotification>>() { Params = sysUserNotification });
+            await InsertSubscriptionAsync(new RequestParam<List<SysUserNotificationInput>>() { Params = sysUserNotification });
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace NetCoreFrame.Application
         /// <param name="list">=订阅通知的用户集合</param>
         /// <param name="notificationName">=通知名称</param>
         /// <returns></returns>
-        public async Task InsertSubscriptionAsync(RequestParam<List<SysUserNotification>> requestParam)
+        public async Task InsertSubscriptionAsync(RequestParam<List<SysUserNotificationInput>> requestParam)
         {
             Check.NotNull(requestParam.Params, nameof(requestParam.Params));
 
@@ -184,7 +184,7 @@ namespace NetCoreFrame.Application
         /// <param name="list">=订阅通知的用户集合</param>
         /// <param name="notificationName">=通知名称</param>
         /// <returns></returns>
-        public async Task DeleteSubscriptionAsync(RequestParam<List<SysUserNotification>> requestParam)
+        public async Task DeleteSubscriptionAsync(RequestParam<List<SysUserNotificationInput>> requestParam)
         {
             Check.NotNull(requestParam.Params, nameof(requestParam.Params));
              
@@ -210,7 +210,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        public async Task<PagedResultDto<SysUserNotificationInfo>> GetUserNotificationsAsync(RequestParam<SysUserNotification> requestParam)
+        public async Task<PagedResultDto<SysUserNotificationInfo>> GetUserNotificationsAsync(RequestParam<SysUserNotificationInput> requestParam)
         {
             Check.NotNull(requestParam.Params, nameof(requestParam.Params));
 
@@ -229,7 +229,7 @@ namespace NetCoreFrame.Application
         /// <param name="userId"></param>
         /// <param name="notificationName"></param>
         /// <returns></returns>
-        public async Task CleanUserNotificationByName(SysUserNotification model)
+        public async Task CleanUserNotificationByName(SysUserNotificationInput model)
         {
             await _sysNotificationInfoRepository.CleanUserNotificationByName(model.UserId.Value, model.NotificationName);
         }

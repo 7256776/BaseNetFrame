@@ -27,7 +27,7 @@ namespace NetCoreFrame.Sample
         /// 验证登录用户
         /// </summary>
         /// <param name="context"></param>
-        public override async Task<SysLoginResult<UserInfo>> LoginRequest(LoginUser model)
+        public override async Task<SysLoginResult<UserInfo>> LoginRequest(LoginUserInput model)
         {
             //重写还可以执行原有父类业务
             //var resultData = await base.LoginRequest(model);

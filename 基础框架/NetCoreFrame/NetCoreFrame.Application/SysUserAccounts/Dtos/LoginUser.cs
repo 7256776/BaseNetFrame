@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace NetCoreFrame.Application
 {
     [AutoMap(typeof(UserInfo))]
-    public class LoginUser
+    public class LoginUserInput
     {
         /// <summary>
         /// 

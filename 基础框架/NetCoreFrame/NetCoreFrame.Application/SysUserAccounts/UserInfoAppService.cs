@@ -65,7 +65,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [DisableAuditing]
-        public async Task<SysLoginResult<UserInfo>> VerifyAuthAndSignIn(LoginUser model)
+        public async Task<SysLoginResult<UserInfo>> VerifyAuthAndSignIn(LoginUserInput model)
         {
             //验证并返回登录用户对象
             SysLoginResult<UserInfo> resLoginUser = await _sysSignInManager.LoginAuth(ObjectMapper.Map<UserInfo>(model));
@@ -83,7 +83,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [DisableAuditing]
-        public async Task<SysLoginResult<UserInfo>> LoginAuth(LoginUser model)
+        public async Task<SysLoginResult<UserInfo>> LoginAuth(LoginUserInput model)
         {
             //验证并返回登录用户对象
             SysLoginResult<UserInfo> resLoginUser = await _sysSignInManager.LoginAuth(ObjectMapper.Map<UserInfo>(model));
@@ -97,7 +97,7 @@ namespace NetCoreFrame.Application
         /// <param name="resLoginUser"></param>
         [RemoteService(false)]
         [DisableAuditing]
-        public async Task SetAuthenticationProperties(LoginUser model, SysLoginResult<UserInfo> resLoginUser)
+        public async Task SetAuthenticationProperties(LoginUserInput model, SysLoginResult<UserInfo> resLoginUser)
         {
             if (resLoginUser.Identity != null)
             {
@@ -130,7 +130,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public PagedResultDto<UserOut> GetUserList(RequestParam<UserOut> requestParam)
+        public PagedResultDto<UserInfoData> GetUserList(RequestParam<UserInfoData> requestParam)
         {
             //反序列化参数对象
             var model = requestParam.Params;
@@ -150,12 +150,12 @@ namespace NetCoreFrame.Application
                 //禁用过滤器
                 using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.SoftDelete))
                 {
-                    return queue.GetPagingData<UserInfo, UserOut>(requestParam.PagingDto);
+                    return queue.GetPagingData<UserInfo, UserInfoData>(requestParam.PagingDto);
                 }
             }
             else
             {
-                return queue.GetPagingData<UserInfo, UserOut>(requestParam.PagingDto);
+                return queue.GetPagingData<UserInfo, UserInfoData>(requestParam.PagingDto);
             }
         }
 
@@ -166,7 +166,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public List<UserOut> GetAllUserList(UserOut model)
+        public List<UserInfoData> GetAllUserList(UserInfoData model)
         {
             //
             var queue = _userInfoRepository.GetAll();
@@ -178,7 +178,7 @@ namespace NetCoreFrame.Application
                 );
             }
             queue = queue.OrderBy(o => o.UserNameCn);
-            return ObjectMapper.Map<List<UserOut>>(queue.ToList());
+            return ObjectMapper.Map<List<UserInfoData>>(queue.ToList());
         }
 
         /// <summary>
@@ -187,21 +187,21 @@ namespace NetCoreFrame.Application
         /// <param name="id"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public UserOut GetUserModel(long id)
+        public UserInfoData GetUserModel(long id)
         {
             //禁用过滤器
             using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.SoftDelete))
             {
                 //获取用户数据
                 UserInfo model = _userInfoRepository.Get(id);
-                UserOut data = ObjectMapper.Map<UserOut>(model);
+                UserInfoData data = ObjectMapper.Map<UserInfoData>(model);
                 //获取用户扩展的数据
                 data.UserInfoEx = _userInfoExtens.GetUserModel(id);
 
                 //此处添加超级管理员判断,删除的用户仅超级管理员可以查看
                 if (!AbpSession.IsAdmin && data.IsDeleted)
                 {
-                    return new UserOut();
+                    return new UserInfoData();
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public async Task<AjaxResponse> SaveUserModel(UserInput model)
+        public async Task<AjaxResponse> SaveUserModel(UserInfoInput model)
         { 
             if (model.ID == null)
             {
@@ -276,7 +276,7 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         [RemoteService(false)]
         [AbpAuthorize]
-        public async Task DelUserModel(List<UserInput> model)
+        public async Task DelUserModel(List<UserInfoInput> model)
         {
             foreach (var item in model)
             {
@@ -369,7 +369,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<AjaxResponse> SeetingUserInfo(UserInfoInput model)
+        public async Task<AjaxResponse> SeetingUserInfo(UserInfoSettingInput model)
         {
             long id = Convert.ToInt64(model.ID);
             //获取需要更新的数据

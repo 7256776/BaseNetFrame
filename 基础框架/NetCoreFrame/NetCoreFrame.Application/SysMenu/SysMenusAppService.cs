@@ -46,12 +46,12 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public List<MenusOut> GetMenusList()
+        public List<SysMenusData> GetMenusList()
         {
             List<SysMenus> dataAll= _sysMenusRepository.GetAllList();
             //转换数据集合的关系格式
             dataAll = _sysMenusRepository.ConvertMenusByChildrenList(dataAll);
-            return ObjectMapper.Map<List<MenusOut>>(dataAll); 
+            return ObjectMapper.Map<List<SysMenusData>>(dataAll); 
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public List<MenusOut> GetMenusListOrderBy(long? roleId = null)
+        public List<SysMenusData> GetMenusListOrderBy(long? roleId = null)
         {
             //查询相关子表数据
             List<SysMenus> dataAll= _sysMenusRepository.GetAllIncluding(x => x.SysMenuActions).ToList();
@@ -85,7 +85,7 @@ namespace NetCoreFrame.Application
                 }
             }
             List<SysMenus> resData = _sysMenusRepository.ConvertMenusByChildrenList(dataAll);
-            return ObjectMapper.Map<List<MenusOut>>(resData);
+            return ObjectMapper.Map<List<SysMenusData>>(resData);
         }
 
         /// <summary>
@@ -94,11 +94,11 @@ namespace NetCoreFrame.Application
         /// <param name="id"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public MenusInput GetMenusModel(long id)
+        public SysMenusInput GetMenusModel(long id)
         {
             //查询模块以及所包含的授权动作
             var data = _sysMenusRepository.GetAllIncluding(x => x.SysMenuActions).FirstOrDefault(x => x.Id == id);
-            return ObjectMapper.Map<MenusInput>(data); 
+            return ObjectMapper.Map<SysMenusInput>(data); 
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public  AjaxResponse SaveMenusModel(MenusInput model)
+        public long SaveMenusModel(SysMenusInput model)
         {
             long resId;
             #region 验证
-            MenuData menuData = ObjectMapper.Map<MenuData>(model);
+            SysMenuParam menuData = ObjectMapper.Map<SysMenuParam>(model);
             var isRepeat = IsPermissionRepeat(menuData);
             if (isRepeat)
             {
@@ -147,7 +147,7 @@ namespace NetCoreFrame.Application
             _cacheManagerExtens.RemoveMenuActionPermissionCache();
             //重置初始菜单以及授权
             _navigationMenusExt.UpNavigationMenusProvider(ObjectMapper.Map<SysMenus>(model));
-            return new AjaxResponse { Success = true, Result = new { id = resId } };
+            return resId;
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace NetCoreFrame.Application
         /// </param>
         /// <returns></returns>
         [AbpAuthorize]
-        public bool IsPermissionRepeat(MenuData model)
+        public bool IsPermissionRepeat(SysMenuParam model)
         {
             var data = _sysMenusRepository.FirstOrDefault(w => w.PermissionName == model.PermissionName && w.Id != model.Id);
             return data != null ? true : false;

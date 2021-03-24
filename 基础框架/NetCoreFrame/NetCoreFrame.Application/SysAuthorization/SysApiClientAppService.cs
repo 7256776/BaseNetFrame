@@ -1,4 +1,6 @@
-﻿using Abp.UI;
+﻿using Abp.Auditing;
+using Abp.Authorization;
+using Abp.UI;
 using NetCoreFrame.Application;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,8 @@ namespace NetCoreFrame.Core
     /// <summary>
     /// 授权客户
     /// </summary>
+    [Audited]
+    [AbpAuthorize]
     public class SysApiClientAppService : NetCoreFrameApplicationBase, ISysApiClientAppService
     {
         private readonly ISysApiClientRepository _sysApiClientRepository;

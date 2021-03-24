@@ -45,7 +45,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        public PagedResultDto<SysChatRecord> GetChatRecordListAsync(RequestParam<SysCharPage> requestParam)
+        public PagedResultDto<SysChatRecord> GetChatRecordListAsync(RequestParam<SysCharParam> requestParam)
         {
             Check.NotNull(requestParam.Params, nameof(requestParam.Params));
 
@@ -63,7 +63,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        public PagedResultDto<SysChatRecord> GetChatRecordMutualListAsync(RequestParam<SysCharPage> requestParam)
+        public PagedResultDto<SysChatRecord> GetChatRecordMutualListAsync(RequestParam<SysCharParam> requestParam)
         {
             Check.NotNull(requestParam.Params, nameof(requestParam.Params));
             var model = requestParam.Params;
@@ -80,7 +80,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task InsertChatRecordAsync(SysCharSend model)
+        public async Task InsertChatRecordAsync(SysCharSendInput model)
         {
             SysChatRecord sysChatRecord = ObjectMapper.Map<SysChatRecord>(model); 
 

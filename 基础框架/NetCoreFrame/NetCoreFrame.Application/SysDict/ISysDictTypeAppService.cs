@@ -27,7 +27,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<AjaxResponse> SaveSysDictTypeModel(SysDictTypeInput model);
+        Task<Guid> SaveSysDictTypeModel(SysDictTypeInput model);
 
         /// <summary>
         /// 判断字典类型是否重复

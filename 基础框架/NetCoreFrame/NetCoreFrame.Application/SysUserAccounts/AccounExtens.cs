@@ -25,7 +25,7 @@ namespace NetCoreFrame.Application
         /// 验证登录用户
         /// </summary>
         /// <param name="context"></param>
-        public virtual async Task<SysLoginResult<UserInfo>> LoginRequest(LoginUser model)
+        public virtual async Task<SysLoginResult<UserInfo>> LoginRequest(LoginUserInput model)
         {
             //验证用户信息
             SysLoginResult<UserInfo> result = await _userInfoAppService.LoginAuth(model);

@@ -44,10 +44,10 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public List<RoleOut> GetRoleList()
+        public List<SysRoleData> GetRoleList()
         {
             var data = _sysRolesRepository.GetAll();
-            return ObjectMapper.Map<List<RoleOut>>(data); 
+            return ObjectMapper.Map<List<SysRoleData>>(data); 
         }
 
         /// <summary> 
@@ -56,10 +56,10 @@ namespace NetCoreFrame.Application
         /// <param name="id"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public RoleOut GetRoleModel(long id)
+        public SysRoleData GetRoleModel(long id)
         {
             var data = _sysRolesRepository.Get(id);
-            return ObjectMapper.Map<RoleOut>(data);
+            return ObjectMapper.Map<SysRoleData>(data);
         }
 
         /// <summary>
@@ -69,16 +69,16 @@ namespace NetCoreFrame.Application
         /// <returns></returns>
         [AbpAuthorize]
         [UnitOfWork]
-        public RoleToUserReturn GetRoleToUser(long roleId)
+        public SysRoleToUserData GetRoleToUser(long roleId)
         {
-            RoleToUserReturn roleToUSer = new RoleToUserReturn();
+            SysRoleToUserData roleToUser = new SysRoleToUserData();
             //带授权用户集合(默认是查询所有用户)
             var userAll= _userInfoRepository.GetAllList();
-            roleToUSer.RoleNotUser= ObjectMapper.Map<List<UserOut>>(userAll.ToList()); 
+            roleToUser.RoleNotUser= ObjectMapper.Map<List<UserInfoData>>(userAll.ToList()); 
             //查询授权用户集合
             var inData = _sysRolesRepository.GetRoleToUSer(roleId);
-            roleToUSer.RoleInUser = ObjectMapper.Map<List<RoleUser>>(inData.ToList()); 
-            return roleToUSer;
+            roleToUser.RoleInUser = ObjectMapper.Map<List<SysRoleUserData>>(inData.ToList()); 
+            return roleToUser;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public async Task<AjaxResponse> SaveRoleModel(RoleInput model)
+        public async Task SaveRoleModel(SysRoleInput model)
         {
             var isRepeat = _sysRolesRepository.GetAllList(w => w.RoleName == model.RoleName && w.Id != model.ID).Any();
             if (isRepeat)
@@ -112,7 +112,6 @@ namespace NetCoreFrame.Application
                 _cacheManagerExtens.RemoveRoleToPermissionCache(id);
             }
 
-            return new AjaxResponse { Success = true };
         }
 
         /// <summary>
@@ -121,7 +120,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public  void DelRoleModel(List<RoleInput> model)
+        public  void DelRoleModel(List<SysRoleInput> model)
         {
             foreach (var item in model)
             {
@@ -142,7 +141,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public AjaxResponse SaveRoleToMenu(RoleInput model)
+        public void SaveRoleToMenu(SysRoleInput model)
         {
             //删除原有授权
             _sysMenuActionRepository.DelRoleToMenuAction(Convert.ToInt64(model.ID));
@@ -153,7 +152,6 @@ namespace NetCoreFrame.Application
             //删除缓存所有用户信息(确保所有用户的角色重新获取)
             _cacheManagerExtens.ClearUserInfoCache();
 
-            return new AjaxResponse { Success = true };
         }
 
         /// <summary>
@@ -162,7 +160,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public AjaxResponse SaveRoleToUser(RoleToUser model)
+        public bool SaveRoleToUser(SysRoleToUserInput model)
         {
             //删除原有授权
             _sysRolesRepository.DelRoleToUser(model.RoleID);
@@ -170,7 +168,7 @@ namespace NetCoreFrame.Application
             if (model.RoleToUserList==null || !model.RoleToUserList.Any())
             {
                 //未设置授权用户直接返回
-                return new AjaxResponse { Success = true };
+                return  true ;
             }
             //新增授权 
             _sysRolesRepository.AddRoleToUser(ObjectMapper.Map<List<SysRoleToUser>>(model.RoleToUserList));
@@ -179,7 +177,7 @@ namespace NetCoreFrame.Application
             {
                 _cacheManagerExtens.RemoveUserInfoCache(item.UserID);
             }
-            return new AjaxResponse { Success = true };
+            return true;
         }
  
     }

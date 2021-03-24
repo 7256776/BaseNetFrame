@@ -1,4 +1,4 @@
-﻿var abp = abp || {};
+var abp = abp || {};
 (function () {
     // 检查是否定义
     if (!signalR) {
@@ -9,27 +9,33 @@
     abp.signalr = abp.signalr || {};
     abp.signalr.hubs = abp.signalr.hubs || {};
 
-    // 配置连接
+    // 配置连接 for abp.signalr.hubs.common
     function configureConnection(connection) {
         // 设置公共集线器
         abp.signalr.hubs.common = connection;
 
+        // 设置连接交换
+        function start() {
+            connection.start().catch(function () {
+                setTimeout(function () {
+                    start();
+                }, 5000);
+            });
+        }
+
         // 如果集线器断开，重新连接
         connection.onclose(function (e) {
             if (e) {
-                abp.log.debug('signalr连接错误关闭: ' + e);
-            }
-            else {
+                abp.log.debug('signalr连接关闭错误:  ' + e);
+            } else {
                 abp.log.debug('signalr断开后');
             }
 
-            if (!abp.signalr.autoConnect) {
+            if (!abp.signalr.autoReconnect) {
                 return;
             }
 
-            setTimeout(function () {
-                connection.start();
-            }, 5000);
+            start();
         });
 
         // 注册获得通知事件
@@ -40,23 +46,23 @@
     }
 
     // 连接服务器
-    abp.signalr.connect = function () {
-        var url = abp.signalr.url || '/signalr';
+    function connect() {
+        var url = abp.signalr.url || (abp.appPath + 'signalr');
 
-        //开始连接
+        // Start the connection
         startConnection(url, configureConnection)
             .then(function (connection) {
-                abp.log.debug('连接到SignalR 服务器!'); //TODO: Remove log
-                abp.event.trigger('abp.signalr.connected');
-                // 调用集线器上的Register方法
-                connection.invoke('register').then(function () {
+                    abp.log.debug('连接到SignalR 服务器!'); //TODO: Remove log
+                    abp.event.trigger('abp.signalr.connected');
+                    // 调用集线器上的Register方法
+                    connection.invoke('register').then(function () {
                     abp.log.debug('注册 SignalR 到服务器!'); //TODO: Remove log
                 });
             })
             .catch(function (error) {
                 abp.log.debug(error.message);
             });
-    };
+    }
 
     // Starts a connection with transport fallback - if the connection cannot be started using
     // the webSockets transport the function will fallback to the serverSentEvents transport and
@@ -69,11 +75,11 @@
 
         // Add query string: https://github.com/aspnet/SignalR/issues/680
         if (abp.signalr.qs) {
-            url += '?' + abp.signalr.qs;
+            url += (url.indexOf('?') == -1 ? '?' : '&') + abp.signalr.qs;
         }
 
         return function start(transport) {
-            abp.log.debug('启动连接 使用' + signalR.HttpTransportType[transport] + ' 传输');
+            abp.log.debug('启动连接 使用 ' + signalR.HttpTransportType[transport] + ' 传输');
             var connection = new signalR.HubConnectionBuilder()
                 .withUrl(url, transport)
                 .build();
@@ -96,13 +102,12 @@
         }(signalR.HttpTransportType.WebSockets);
     }
 
-    abp.signalr.startConnection = startConnection;
+    abp.signalr.autoConnect = abp.signalr.autoConnect === undefined ? true : abp.signalr.autoConnect;
+    abp.signalr.autoReconnect = abp.signalr.autoReconnect === undefined ? true : abp.signalr.autoReconnect;
+    abp.signalr.connect = abp.signalr.connect || connect;
+    abp.signalr.startConnection = abp.signalr.startConnection || startConnection;
 
-    if (abp.signalr.autoConnect === undefined) {
-        abp.signalr.autoConnect = true;
-    }
-
-    if (abp.signalr.autoConnect) {
+    if (abp.signalr.autoConnect && !abp.signalr.hubs.common) {
         abp.signalr.connect();
     }
 

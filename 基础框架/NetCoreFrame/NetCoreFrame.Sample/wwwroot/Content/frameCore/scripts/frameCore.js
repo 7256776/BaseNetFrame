@@ -18,65 +18,63 @@ var componentAssemble = {
     SysWebTitle: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-webtitle', 'Views/SysComponents/WebTitle').then(resolve, reject);
     },
-
     //用户表单扩展
     SysUserInfoExtens: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-userinfoextens', 'Views/SysComponents/UserInfoExtens').then(resolve, reject);
     },
-
     //侧边菜单
     SysSideMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-sidemenu', 'Views/SysMenus/SideMenu').then(resolve, reject);
     },
-
     //侧边菜单(子菜单)
     SysSideMenuSub: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-sidemenusub', 'Views/SysMenus/SideMenuSub').then(resolve, reject);
     },
-
     //页面顶部横向布局菜单
     SysTopMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-topmenu', 'Views/SysMenus/TopMenu').then(resolve, reject);
     },
-
     //页面顶部横向布局菜单(子菜单折叠)
     SysTopMenuSub: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-topmenusub', 'Views/SysMenus/TopMenusSub').then(resolve, reject);
     },
-
     //页面顶部横向布局菜单(子菜单平铺)
     SysTopMenuFullSub: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-topmenufullsub', 'Views/SysMenus/TopMenusFullSub').then(resolve, reject);
     },
-
     //JSON格式化组件
     SysJsonFormat: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-jsonformat', 'Views/SysComponents/jsonFormat').then(resolve, reject);
     },
-
     //侧扩展窗体(聊天窗体)
     SysQuickSideBar: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-quicksidebar', 'Views/SysComponents/QuickSidebar').then(resolve, reject);
     },
-
     //页面顶部工具栏菜单
     SysTopToolsMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-toptoolsmenu', 'Views/SysComponents/TopToolsMenu').then(resolve, reject);
     },
-
     //搜索工具栏
     SysSearchForm: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-searchform', 'Views/SysComponents/SearchForm').then(resolve, reject);
     },
-
     //搜索工具栏内嵌扩展菜单
     SysSearchDropdown: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-searchdropdown', 'Views/SysComponents/SearchDropdown').then(resolve, reject);
     },
-
     //头部工具栏
     SysHeadToolButton: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-headtoolbutton', 'Views/SysComponents/HeadToolButton').then(resolve, reject);
+    },
+
+    //组织机构选择下拉框(树节点)
+    SysOrgTreeSelection: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-orgtreeselection', 'Views/SysBusinessComponentss/OrgTreeSelection').then(resolve, reject);
+    },
+
+    //用户选择
+    FlowUserSelect: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-flowuserselect', 'Views/SysFlowDesigner/FlowUserSelect').then(resolve, reject);
     },
 };
 
@@ -93,8 +91,6 @@ var initFrame = function (Vue, options) {
             type: 'POST'
         }).done(function (data, res, e) {
             Vue.prototype.GlobalAuthorizedEntity = data;
-
-
             //设置头像默认路径
             Vue.prototype.GlobalAuthorizedEntity.DefaultImgUrl = '/Content/frameCore/img/avatars/';
 
@@ -124,7 +120,6 @@ var initFrame = function (Vue, options) {
             //console.log('bind=只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作。')
             var actionName = vnode.data.ref;
             var menuName = vueApp.$route.name
-
             //如果未设置模块或授权ref的忽略权限判断
             if (!actionName || !menuName) {
                 return
@@ -170,6 +165,16 @@ var initFrame = function (Vue, options) {
         unbind: function (el, binding, vnode, oldVnode) {
             //console.log('unbind=只调用一次，指令在元素解绑时调用。');
         }
+    });
+
+    //设置表单标签设置Lable文本超长情况下的样式
+    Vue.directive('FormLine', {
+        //自定义指令，可以通过组件添加属性即可使用(el.dataset在钩子间传递参数)
+        bind: function (el, binding, vnode, oldVnode) {
+            if ( el.children &&  el.children.length>0) {
+                el.children[0].style.lineHeight = "18px";
+            }
+        },
     });
 
     //加载模板页面(同步执行)
@@ -260,7 +265,7 @@ var initFrame = function (Vue, options) {
         //
         if (path) {
             path = path + '.js';
-        }
+        } 
         //
         return new Promise(function (resolve, reject) {
             if (!path) {
@@ -316,7 +321,14 @@ var initFrame = function (Vue, options) {
 //应用初始化
 Vue.use(initFrame)
 
-//简单的状态管理对象
+//
+/*
+*   简单的状态管理对象
+*   screenHeight 当Dom高度     ┓   
+*                                              ┣   初始值通过framePageStart.js 的 winResize              
+*   screenWidth  当Dom宽度     ┛
+*       
+*/
 var frameStore = Vue.observable({
     screenHeight: 0,
     screenWidth: 0
@@ -380,7 +392,7 @@ Vue.mixin({
                 return num;
             }
             size = size.toUpperCase();
-              if(size == 'L') {
+            if (size == 'L') {
                 return num * 0.8;
             }
             else if (size == 'M') {
@@ -392,6 +404,116 @@ Vue.mixin({
                 return num;
             }
         },
+        _operationType: function (type) {
+            type = type.toUpperCase();
+            switch (type) {
+                case 'SAVE':
+                    return abp.frameCore.localization.getLocalization('Save');
+                case 'EDIT':
+                    return abp.frameCore.localization.getLocalization('Edit');
+                case 'ADD':
+                    return abp.frameCore.localization.getLocalization('Add');
+                case 'DEL':
+                    return abp.frameCore.localization.getLocalization('Del');
+                default:
+                    return abp.frameCore.localization.getLocalization(type);
+            }
+        },
+        _tipBase: function (type, details, message) {
+            type = type.toUpperCase();
+            switch (type) {
+                case 'INFO':
+                    return abp.message.info(details, message);
+                case 'SUCCESS':
+                    return abp.message.success(details, message);
+                case 'WARN':
+                    return abp.message.warn(details, message);
+                case 'ERROR':
+                    return abp.message.error(details, message);
+                default:
+                    return abp.message.info(details, message);
+            }
+        },
+        tipSuccess: function (type, details) {
+            /*
+             *  type        操作类型 save, edit, add, del
+             *  details     消息详细
+             */
+            var successful = abp.frameCore.localization.getLocalization('Success');
+            var message = this._operationType(type) + successful;
+            abp.message.success(details, message);
+        },
+        tipFail: function (type, details) {
+            /*
+            *  type        操作类型 save, edit, add, del
+            *  details     消息详细
+            */
+            var failure = abp.frameCore.localization.getLocalization('Failure');
+            var message = this._operationType(type) + failure;
+            abp.message.error(details, message);
+        },
+        tipShowFormat: function () {
+            /*  调用带参数本地化
+            *  tipShowFormat('本地化的key值')                                                      一个参数:  本地化对应的key值, 默认是info类型tip
+            *  tipShowFormat('info','本地化的key值')                                             二个参数:  消息类型(info,success,warn,error), 本地化对应的key值
+            *  tipShowFormat('info','本地化的key值','支持格式化 { 0 } 的参数')       三个参数:  消息类型, 本地化对应的key值, 格式化 { 0 } 的参数列表可多个
+            */
+            //参数集合
+            var arg = arguments.length;
+            var type = 'info';
+            var localization = '';
+            //获取消息参数
+            type = arg > 1 ? arguments[0] : '';
+            //获取消息提示
+            localization = arg == 1 ? arguments[0] : '';
+            localization = arg >= 2 ? arguments[1] : localization;
+            //获取本地化提示消息
+            var message = abp.frameCore.localization.getLocalization(localization);
+            for (var i = 0; i < arguments.length - 2; i++) {
+                var reg = new RegExp("\\{" + i + "\\}", "gm");
+                message = message.replace(reg, arguments[i + 2]);
+            }
+            this._tipBase(type, message, '');
+        },
+        tipShow: function () {
+            /*  调用提示消息(默认本地化转换)
+             *  tipShow('提示消息')                                       一个参数:  提示消息,默认是info类型tip
+             *  tipShow('info','提示消息')                              二个参数:  消息类型(info,success,warn,error), 提示消息
+             *  tipShow('info','提示消息','提示消息详情')       三个参数:  消息类型, 提示消息, 提示消息详情
+             */
+            //参数集合
+            var arg = arguments.length;
+            //
+            var type = 'info';
+            var message = '';
+            var details = '';
+            //获取消息参数
+            type = arg > 1 ? arguments[0] : '';
+            //获取消息提示
+            message = arg == 1 ? arguments[0] : '';
+            message = arg >= 2 ? arguments[1] : message;
+            //获取消息提示详情
+            details = arg == 3 ? arguments[2] : '';
+            //默认进行本地化转换
+            this._tipBase(type, details, message);
+        },
+
+        /*
+            _this.tipSuccess('save');
+            _this.tipSuccess('edit');
+            _this.tipSuccess('add');
+            _this.tipSuccess('del');
+
+            this.tipFail('save');
+            this.tipFail('edit');
+            this.tipFail('add');
+            this.tipFail('del');
+
+            this.tipShow('warn','IsSelect');
+            this.tipShow('success','IsSelect');
+            this.tipShow('error','IsSelect');
+
+        */
 
     }
 

@@ -10,7 +10,7 @@ namespace NetCoreFrame.Application
     [RemoteService(false)]
     public class UserInfoExtens : IUserInfoExtens
     {
-        public UserOut GetUserModel(long id)
+        public UserInfoData GetUserModel(long id)
         {
             return null;
         }
@@ -19,7 +19,7 @@ namespace NetCoreFrame.Application
         /// 保存用户基本信息扩展
         /// </summary>
         /// <param name="context"></param>
-        public Task<bool> UpdateUserInfo(UserInput model)
+        public Task<bool> UpdateUserInfo(UserInfoInput model)
         {
             return Task.FromResult(true);
         }

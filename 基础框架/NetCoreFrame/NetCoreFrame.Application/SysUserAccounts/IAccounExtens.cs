@@ -15,7 +15,7 @@ namespace NetCoreFrame.Application
         /// 重构登录验证
         /// </summary>
         /// <param name="context"></param>
-        Task<SysLoginResult<UserInfo>> LoginRequest(LoginUser model);
+        Task<SysLoginResult<UserInfo>> LoginRequest(LoginUserInput model);
 
         /// <summary>
         /// 个人设置修改密码

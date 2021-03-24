@@ -22,7 +22,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        PagedResultDto<SysChatRecord> GetChatRecordListAsync(RequestParam<SysCharPage> requestParam);
+        PagedResultDto<SysChatRecord> GetChatRecordListAsync(RequestParam<SysCharParam> requestParam);
 
         /// <summary>
         /// 获取发送人与接收人相互的所有消息
@@ -30,14 +30,14 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <param name="pagingDto"></param>
         /// <returns></returns>
-        PagedResultDto<SysChatRecord> GetChatRecordMutualListAsync(RequestParam<SysCharPage> requestParam);
+        PagedResultDto<SysChatRecord> GetChatRecordMutualListAsync(RequestParam<SysCharParam> requestParam);
 
         /// <summary>
         /// 新增消息
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task InsertChatRecordAsync(SysCharSend model);
+        Task InsertChatRecordAsync(SysCharSendInput model);
 
         /// <summary>
         /// 删除聊天消息

@@ -8,12 +8,16 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.UI;
+using Abp.Authorization;
+using Abp.Auditing;
 
 namespace NetCoreFrame.Core
 {
     /// <summary> 
     /// 授权账号
     /// </summary>
+    [Audited]
+    [AbpAuthorize]
     public class SysApiClienToAccountAppService : NetCoreFrameApplicationBase, ISysApiClienToAccountAppService
     {
         private readonly ISysApiClienToAccountRepository _sysApiClienToAccountRepository;

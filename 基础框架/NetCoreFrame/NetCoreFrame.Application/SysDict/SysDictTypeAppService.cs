@@ -53,7 +53,7 @@ namespace NetCoreFrame.Application
         /// <param name="model"></param>
         /// <returns></returns>
         [AbpAuthorize]
-        public async Task<AjaxResponse> SaveSysDictTypeModel(SysDictTypeInput model)
+        public async Task<Guid> SaveSysDictTypeModel(SysDictTypeInput model)
         {
             Guid? resId;
             //验证重复
@@ -86,7 +86,7 @@ namespace NetCoreFrame.Application
             //        return res;
             //    }
             //}
-            return new AjaxResponse { Success = true, Result = new { id = resId } };
+            return resId.Value;
         }
 
         /// <summary>

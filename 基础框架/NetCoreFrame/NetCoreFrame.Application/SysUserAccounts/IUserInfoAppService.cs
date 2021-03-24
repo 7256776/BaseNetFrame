@@ -17,21 +17,21 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<SysLoginResult<UserInfo>> LoginAuth(LoginUser model);
+        Task<SysLoginResult<UserInfo>> LoginAuth(LoginUserInput model);
 
         /// <summary>
         /// 验证身份信息并且注册登录凭证
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<SysLoginResult<UserInfo>> VerifyAuthAndSignIn(LoginUser model);
+        Task<SysLoginResult<UserInfo>> VerifyAuthAndSignIn(LoginUserInput model);
 
         /// <summary>
         /// 注册身份验证的属性
         /// </summary>
         /// <param name="model"></param>
         /// <param name="resLoginUser"></param>
-        Task SetAuthenticationProperties(LoginUser model, SysLoginResult<UserInfo> resLoginUser);
+        Task SetAuthenticationProperties(LoginUserInput model, SysLoginResult<UserInfo> resLoginUser);
 
         /// <summary>
         /// 注销
@@ -45,7 +45,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        PagedResultDto<UserOut> GetUserList(RequestParam<UserOut> requestParam);
+        PagedResultDto<UserInfoData> GetUserList(RequestParam<UserInfoData> requestParam);
 
         /// <summary>
         /// 查询用户集合
@@ -53,28 +53,28 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        List<UserOut> GetAllUserList(UserOut model);
+        List<UserInfoData> GetAllUserList(UserInfoData model);
 
         /// <summary>
         /// 获取用户对象
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        UserOut GetUserModel(long id);
+        UserInfoData GetUserModel(long id);
 
         /// <summary>
         /// 保存用户信息(新增,修改)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<AjaxResponse> SaveUserModel(UserInput model);
+        Task<AjaxResponse> SaveUserModel(UserInfoInput model);
 
         /// <summary>
         /// 删除用户对象(逻辑删除)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task DelUserModel(List<UserInput> model);
+        Task DelUserModel(List<UserInfoInput> model);
 
         /// <summary>
         /// 获取登录用户所有授权模块以及动作
@@ -87,7 +87,7 @@ namespace NetCoreFrame.Application
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<AjaxResponse> SeetingUserInfo(UserInfoInput model);
+        Task<AjaxResponse> SeetingUserInfo(UserInfoSettingInput model);
 
         /// <summary>
         /// 修改用户密码
