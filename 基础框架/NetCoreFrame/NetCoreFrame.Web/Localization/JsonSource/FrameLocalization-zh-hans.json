@@ -44,6 +44,7 @@
     "Success": "成功",
     "Failure": "失败",
 
+    "InvalidUserName": "账号无效",
     "InvalidUserNameOrEmailAddress": "账号或邮箱地址无效",
     "InvalidPassword": "密码无效",
     "UserIsNotActive": "用户未激活",

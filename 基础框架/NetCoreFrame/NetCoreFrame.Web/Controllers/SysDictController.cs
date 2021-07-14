@@ -66,7 +66,7 @@ namespace NetCoreFrame.Web.Controllers
         /// <param name="modelInput"></param>
         /// <param name="listSysDict"></param>
         /// <returns></returns>
-        [AbpMvcAuthorize("DictManager.SaveDict")]
+        [AbpMvcAuthorize("DictManager.SaveDictType")]
         public async Task<JsonResult> SaveSysDictTypeModel([FromBody]SysDictTypeInput modelInput)
         {
             //保存字典类型值

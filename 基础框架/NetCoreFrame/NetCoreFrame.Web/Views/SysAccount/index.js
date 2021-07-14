@@ -4,6 +4,7 @@ var component = Vue.component('sys-account', {
     components: {
         userinfoextens: componentAssemble.SysUserInfoExtens,
         orgtreeselection: componentAssemble.SysOrgTreeSelection,
+        sysmenutitle: componentAssemble.SysMenuTitle,
     },
     //updated: function () {
     //    var isShowUserInfo = this.$refs["formUseElEx"];
@@ -12,15 +13,15 @@ var component = Vue.component('sys-account', {
     //    var isShowUserInfo = this.$refs["formUseElEx"];
     //},
     created: function () {
+       
         //var isShowUserInfo = this.$refs["formUseElEx"].isShowUserInfo;
         this.getUserList();
-        //
-        //this.initMenusData();
         //超级管理员显示是否删除的表单下拉框
         this.isShowDeleteInput = Vue.prototype.GlobalAuthorizedEntity.user.isAdmin;
     },
     data: function () {
         return {
+            isShowSearch:false,
             isShowDeleteInput: false,
             isCloseUserInfoEx: false,
             activeName: 'userInfo',

@@ -1,7 +1,9 @@
 ﻿using Abp.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NetCoreFrame.WebApi.Controllers
@@ -22,6 +24,28 @@ namespace NetCoreFrame.WebApi.Controllers
     [ApiController]
     public class TestServiceController : NetCoreFrameWebApiControllerBase
     {
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult AppUpload([FromForm(Name = "files")] IFormFile formFile)
+        {
+            return Json("这是Post返回数据");
+        }
+
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult AppUploadList([FromForm(Name = "files")] List<IFormFile> formFile)
+        {
+            return Json("这是Post返回数据");
+        }
+
         [HttpPost]
         [Authorize]
         public JsonResult ResultPostData()

@@ -86,17 +86,25 @@ namespace NetCoreFrame.Core
             Configuration.Notifications.Providers.Add<FrameNotificationProvider>();
 
             //注册EfDBContext,或者在Startup启动类注册
+            //Configuration.Modules.AbpEfCore().AddDbContext<NetCoreFrameDbContext>(options =>
+            //{
+            //    if (options.ExistingConnection != null)
+            //    {
+            //        NetCoreFrameDbContextConfigurer<NetCoreFrameDbContext>.Configure(options.DbContextOptions, options.ExistingConnection);
+            //    }
+            //    else
+            //    {
+            //        NetCoreFrameDbContextConfigurer<NetCoreFrameDbContext>.Configure(options.DbContextOptions, options.ConnectionString);
+            //    }
+            //});
+
+            //注册EfDBContext,或者在Startup启动类注册
             Configuration.Modules.AbpEfCore().AddDbContext<NetCoreFrameDbContext>(options =>
             {
-                if (options.ExistingConnection != null)
-                {
-                    NetCoreFrameDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
-                }
-                else
-                {
-                    NetCoreFrameDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                }
+                NetCoreFrameDbContextConfigurer<NetCoreFrameDbContext>.Configure(options);
             });
+
+
         }
 
         public override void Initialize()

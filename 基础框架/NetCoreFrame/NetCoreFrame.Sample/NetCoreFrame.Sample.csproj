@@ -4,6 +4,7 @@
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <UserSecretsId>46e9aa06-3d79-490a-90b8-aeb33b752fa0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,8 @@
     <None Remove="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
     <None Remove="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
     <None Remove="Views\Geetest\Index.js" />
+    <None Remove="Views\SysAccount\index.js" />
+    <None Remove="Views\SysAccount\UserSettings.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +32,15 @@
     <Content Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
     <Content Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
     <Content Include="Views\Geetest\Index.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\SysAccount\index.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\SysAccount\UserSettings.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

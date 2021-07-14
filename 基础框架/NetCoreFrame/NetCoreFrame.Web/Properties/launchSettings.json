@@ -12,8 +12,9 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "develop" //修改改配置用于确定读取的配置文件对象 develop,test
-      }
+        "ASPNETCORE_ENVIRONMENT": "develop"
+      },
+      "ancmHostingModel": "InProcess"
     },
     "NetCoreFrame.Web": {
       "commandName": "Project",

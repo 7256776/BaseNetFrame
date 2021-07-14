@@ -14,7 +14,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- bootstrap基础样式 -->
     <link href="~/Content/Lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    @* ◢◢◢◢◢基础组件及框架Js ◣◣◣◣◣ *@
+    @* ◢◢◢◢◢基础组件及框架Js ------ *@
     <!-- babel-polyfill  min 实现对ES6 API的支持 -->
     <script src="~/Content/Lib/vue/polyfill.js"></script>
     <!-- jquery主框架 2.2.3.min -->
@@ -22,14 +22,14 @@
     <script src="~/Content/Lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Content/Lib/cookieJs/js.cookie.min.js"></script>
 
-    @* ◢◢◢◢◢ Vue框架 + Vue路由 ◣◣◣◣◣ *@
+    @* ------Vue框架 + Vue路由 ------ *@
     <script src="~/Content/Lib/vue/vue.js"></script>
 
-    @* ◢◢◢◢◢ ElementUI ◣◣◣◣◣ *@
+    @* ------ElementUI ------ *@
     <link href="~/Content/Lib/ElementUI/theme-Chalk/index.css" rel="stylesheet" />
     <script src="~/Content/Lib/ElementUI/index.js"></script>
 
-    @* ◢◢◢◢◢ AbpJs API ◣◣◣◣◣ *@
+    @* ------AbpJs API ------ *@
     <script src="~/Abp/Framework/scripts/abp.js"></script>
     <script src="~/Abp/Framework/scripts/libs/abp.jquery.js"></script>
 
@@ -107,7 +107,6 @@
             },
             doParamStr: function () {
                 var _this = this;
-                debugger
                 abp.ajax({
                     url: '/SampleMvc/ParamStr',
                     data: JSON.stringify(_this.strData),
@@ -119,7 +118,6 @@
             },
             doParamIntAndStr: function () {
                 var _this = this;
-                debugger
                 abp.ajax({
                     url: '/SampleMvc/ParamIntAndStr/url参数',
                     data: JSON.stringify(_this.strData),
@@ -131,7 +129,6 @@
             },
             doParamStrAndModel: function () {
                 var _this = this;
-                debugger
                 abp.ajax({
                     url: '/SampleMvc/ParamStrAndStr/id参数',
                     data: JSON.stringify(_this.sampleModel),
@@ -143,7 +140,6 @@
             },
             doParamGuid: function () {
                 var _this = this;
-                debugger
                 abp.ajax({
                     url: '/SampleMvc/ParamGuid',
                     data: JSON.stringify(_this.guid),
@@ -155,7 +151,6 @@
             },
             doParamArr: function () {
                 var _this = this;
-                debugger
                 abp.ajax({
                     url: '/SampleMvc/ParamArr',
                     data: JSON.stringify(_this.arr),

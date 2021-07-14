@@ -63,7 +63,7 @@ namespace NetCoreFrame.Core
         /// 成功
         /// </summary>
         Success = 1,
-
+         
         /// <summary>
         /// 账号或邮箱地址无效
         /// </summary>
@@ -118,6 +118,11 @@ namespace NetCoreFrame.Core
         /// 未获取任何信息
         /// </summary>
         UnacquiredInformation = 12,
+
+        /// <summary>
+        /// 账号无效
+        /// </summary>
+        InvalidUserName = 13
     }
 
 

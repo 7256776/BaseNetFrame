@@ -160,6 +160,10 @@
                         </template>
                     </el-input>
                 </el-form-item>
+                <el-form-item label="参数" prop="requesData">
+                    <el-input type="textarea" v-model="webApiFormData.requesData" style="width:725px" :autosize="{ minRows: 5}" clearable>
+                    </el-input>
+                </el-form-item>
                 <el-form-item label="返回值" prop="returnData">
                     <el-input type="textarea" v-model="webApiFormData.returnData" style="width:725px" :autosize="{ minRows: 5}" clearable>
                     </el-input>

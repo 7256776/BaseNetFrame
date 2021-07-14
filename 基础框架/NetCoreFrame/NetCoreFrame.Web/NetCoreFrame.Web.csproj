@@ -8,29 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\SupplierAccount\**" />
-    <Compile Remove="wwwroot\Abp\Framework_bak\**" />
     <Compile Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <Compile Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <Compile Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <Compile Remove="wwwroot\Content\assets\layouts\layout7\**" />
     <Compile Remove="wwwroot\Content\Lib\uniform\**" />
-    <Content Remove="Views\SupplierAccount\**" />
-    <Content Remove="wwwroot\Abp\Framework_bak\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <Content Remove="wwwroot\Content\assets\layouts\layout7\**" />
     <Content Remove="wwwroot\Content\Lib\uniform\**" />
-    <EmbeddedResource Remove="Views\SupplierAccount\**" />
-    <EmbeddedResource Remove="wwwroot\Abp\Framework_bak\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout6\**" />
     <EmbeddedResource Remove="wwwroot\Content\assets\layouts\layout7\**" />
     <EmbeddedResource Remove="wwwroot\Content\Lib\uniform\**" />
-    <None Remove="Views\SupplierAccount\**" />
-    <None Remove="wwwroot\Abp\Framework_bak\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout2\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout5\**" />
     <None Remove="wwwroot\Content\assets\layouts\layout6\**" />
@@ -39,13 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\SupplierAccountController.cs" />
     <Compile Remove="Controllers\SwaggerController.cs" />
     <Compile Remove="Controllers\TestServiceController.cs" />
     <Compile Remove="Models\ErrorViewModel.cs" />
     <Compile Remove="Models\JObjectModelBinder.cs" />
     <Compile Remove="Models\MvcConfiguration.cs" />
-    <Compile Remove="Controllers\App_Start\Startup - 复制.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +49,7 @@
     <Content Remove="Views\SysAccount\Index.cshtml" />
     <Content Remove="Views\SysAccount\Login.cshtml" />
     <Content Remove="Views\SysAccount\UserSettings.cshtml" />
+    <Content Remove="Views\SysAuditLogs\Index.cshtml" />
     <Content Remove="Views\SysAuthorization\Index.cshtml" />
     <Content Remove="Views\SysBusinessComponentss\OrgTreeSelection.cshtml" />
     <Content Remove="Views\SysComponents\HeadToolButton.cshtml" />
@@ -69,9 +60,11 @@
     <Content Remove="Views\SysComponents\TopToolsMenu.cshtml" />
     <Content Remove="Views\SysComponents\UserInfoExtens.cshtml" />
     <Content Remove="Views\SysDict\Index.cshtml" />
+    <Content Remove="Views\SysFlowDesigner\FlowConfig.cshtml" />
+    <Content Remove="Views\SysFlowDesigner\FlowUserSelect.cshtml" />
+    <Content Remove="Views\SysFlowDesigner\Index.cshtml" />
     <Content Remove="Views\SysHome\DesktopPage.cshtml" />
     <Content Remove="Views\SysHome\Index.cshtml" />
-    <Content Remove="Views\SysLogin\Login - 复制.cshtml" />
     <Content Remove="Views\SysLogin\Login.cshtml" />
     <Content Remove="Views\SysMenus\Index.cshtml" />
     <Content Remove="Views\SysMenus\SideMenu.cshtml" />
@@ -97,6 +90,7 @@
     <None Remove="Views\SysComponents\HeadToolButton.js" />
     <None Remove="Views\SysComponents\InitPage.js" />
     <None Remove="Views\SysComponents\jsonFormat.js" />
+    <None Remove="Views\SysComponents\MenuTitle.js" />
     <None Remove="Views\SysComponents\QuickSidebar.js" />
     <None Remove="Views\SysComponents\SearchDropdown.js" />
     <None Remove="Views\SysComponents\SearchForm.js" />
@@ -143,6 +137,9 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysAuditLogs\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysAuthorization\Index.cshtml" />
     <EmbeddedResource Include="Views\SysBusinessComponentss\OrgTreeSelection.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -153,15 +150,15 @@
     <EmbeddedResource Include="Views\SysAuthorization\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Views\SysFlowDesigner\FlowUserSelect.js">
+    <EmbeddedResource Include="Views\SysFlowDesigner\FlowUserSelect.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysFlowDesigner\FlowConfig.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysFlowDesigner\FlowConfig.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\SysFlowDesigner\index.js">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysFlowDesigner\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="wwwroot\Content\assets\global\img\social\Thumbs.db" />
   </ItemGroup>
 
@@ -175,9 +172,9 @@
     <EmbeddedResource Include="Views\SysAccount\UserSettings.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Views\SysAuditLogs\index.js">
+    <EmbeddedResource Include="Views\SysAuditLogs\index.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SysBusinessComponentss\OrgTreeSelection.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -206,6 +203,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysComponents\UserInfoExtens.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysComponents\MenuTitle.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SysComponents\WebTitle.js">
@@ -238,6 +238,9 @@
     <EmbeddedResource Include="Views\SysDict\Index.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\SysFlowDesigner\FlowConfig.cshtml" />
+    <EmbeddedResource Include="Views\SysFlowDesigner\FlowUserSelect.cshtml" />
+    <EmbeddedResource Include="Views\SysFlowDesigner\Index.cshtml" />
     <EmbeddedResource Include="Views\SysHome\DesktopPage.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -364,12 +367,6 @@
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\abp.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.jquery.d.ts" />
     <TypeScriptCompile Include="wwwroot\Abp\Framework\scripts\libs\abp.signalr.d.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\SysAuditLogs\Index.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   

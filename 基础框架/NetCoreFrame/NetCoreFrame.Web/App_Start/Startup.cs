@@ -154,7 +154,7 @@ namespace NetCoreFrame.Web
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=SysHome}/{action=index}/{id?}");
+                    template: "{controller=" + startupOptionModel.MapRouteController + "}/{action=" + startupOptionModel.MapRouteAction + "}/{id?}");
             });
 
             #region Swagger

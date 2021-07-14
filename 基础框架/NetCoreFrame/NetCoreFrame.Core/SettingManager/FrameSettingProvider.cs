@@ -21,15 +21,15 @@ namespace NetCoreFrame.Core
             {
                 settingList.Add(
                     new SettingDefinition(
-                        name: item.Name,                                     //配置名称
+                        name: item.Name,                                      //配置名称
                         defaultValue: item.Value,                           //配置默认值
-                        customData: "",                                        //添加自定义数据
+                        customData: "",                                           //添加自定义数据
                         description: item.Name.ToLocalizable(),
                         displayName: item.Name.ToLocalizable(),
-                        group: null,                                                //配置分组(用于ui页面布局)
-                        isInherited: true,                                        //是否继承上级
-                        isVisibleToClients: true,                              //是否显示到客户端json
-                        scopes: SettingScopes.Application            //配置所属范围
+                        group: null,                                                 //配置分组(用于ui页面布局)
+                        isInherited: true,                                         //是否继承上级
+                        isVisibleToClients: true,                             //是否显示到客户端json
+                        scopes: SettingScopes.Application           //配置所属范围
                         )
                 );
             }
@@ -39,15 +39,15 @@ namespace NetCoreFrame.Core
             //return new[]
             //        {
             //        new SettingDefinition(
-            //            name :"FrameUserSetting",            //配置名称
-            //            defaultValue: "用户设置",                //配置默认值
-            //            customData:"",                              //添加自定义数据
+            //            name :"FrameUserSetting",                     //配置名称
+            //            defaultValue: "用户设置",                         //配置默认值
+            //            customData:"",                                        //添加自定义数据
             //            description:"配置描述信息".L(),
             //            displayName:"配置显示名称".L(),
-            //            group:null,                                     //配置分组(用于ui页面布局)
-            //            isInherited:true,                             //是否继承上级
-            //            isVisibleToClients: true,                  //是否显示到客户端json
-            //            scopes:SettingScopes.User            //配置所属范围
+            //            group:null,                                              //配置分组(用于ui页面布局)
+            //            isInherited:true,                                      //是否继承上级
+            //            isVisibleToClients: true,                         //是否显示到客户端json
+            //            scopes:SettingScopes.User                   //配置所属范围
             //            )
             //    };
         }

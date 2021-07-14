@@ -527,7 +527,8 @@ namespace NetCoreFrame.Infrastructure
                 new SysRoleToMenuAction() { Id = 25, RoleID = 1, IsMenu = false, MenuID = menuDictId, MenuActionID = 17 },
                 new SysRoleToMenuAction() { Id = 26, RoleID = 1, IsMenu = false, MenuID = menuDictId, MenuActionID = 18 },
                 new SysRoleToMenuAction() { Id = 27, RoleID = 1, IsMenu = false, MenuID = menuDictId, MenuActionID = 19 },
-                new SysRoleToMenuAction() { Id = 28, RoleID = 1, IsMenu = false, MenuID = menuDictId, MenuActionID = 20 }
+                new SysRoleToMenuAction() { Id = 28, RoleID = 1, IsMenu = false, MenuID = menuDictId, MenuActionID = 20 },
+                new SysRoleToMenuAction() { Id = 29, RoleID = 1, IsMenu = false, MenuID = menuDictId, MenuActionID = 21 }
             );
             #endregion
 

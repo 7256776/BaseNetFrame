@@ -39,7 +39,8 @@
                 password: '888888',
                 apiActionUrl: 'http://',
                 actionType: 'POST',
-                returnData: ''
+                returnData: '',
+                requesData: ''
             }
         };
     },
@@ -241,12 +242,12 @@
         //简单测试webapi(不包含验证)
         doWebApiAction: function () {
             var _this = this;
-
+            //'Content-type': 'Application/x-www-form-urlencoded'，'accept':'application/json'}
             $.ajax({
                 url: this.webApiFormData.apiActionUrl ,
                 type: this.webApiFormData.actionType,
-                //contentType: 'application/json',
-                //data: data,
+                contentType: 'application/json',
+                data: this.webApiFormData.requesData,
                 complete: function (e, state) {
                     if (e.status !== 200) {
                         _this.webApiFormData.returnData = e.statusText;

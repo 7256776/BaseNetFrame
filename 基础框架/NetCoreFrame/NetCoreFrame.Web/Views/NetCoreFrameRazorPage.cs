@@ -23,8 +23,12 @@ namespace NetCoreFrame.Web.Views
         /// 使用配置1
         /// </summary>
         /// <returns></returns>
-        public string GetMainLayout()
+        public string GetMainLayout(string layoutStyle= "")
         {
+            if (!string.IsNullOrEmpty(layoutStyle))
+            {
+                return "~/Views/Shared/_Layout" + layoutStyle + ".cshtml";
+            }
             string f = GetSettingValue(ConstantConfig.FrameLayout);
             if (string.IsNullOrWhiteSpace(f))
             {

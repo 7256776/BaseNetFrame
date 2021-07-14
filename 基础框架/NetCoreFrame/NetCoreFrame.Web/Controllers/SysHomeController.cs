@@ -2,6 +2,7 @@
 using Abp.Application.Navigation;
 using Abp.AspNetCore.Mvc.Authorization;
 using Abp.Auditing;
+using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Localization;
 using Abp.Threading;
@@ -13,40 +14,43 @@ using System.Threading.Tasks;
 
 namespace NetCoreFrame.Web.Controllers
 {
+    /// <summary>
+    /// 首页面
+    /// 添加授权验证,用于检验未登录自动跳转到登录页
+    /// </summary>
     [AbpMvcAuthorize]
     [DisableAuditing]
     public class SysHomeController : NetCoreFrameControllerBase
     {
-        private readonly INavigationManager _navigationManager;
         private readonly IUserNavigationManager _userNavigationManager;
-        private readonly ISettingManager _settingManager;
-        private readonly ILocalizationContext _localizationContext;
-        private readonly ILanguageManager _languageManager;
 
-        private readonly Abp.Authorization.IPermissionChecker _permissionChecker;
-
-        private readonly UserInfoManager _userInfoManager;
+        //private readonly INavigationManager _navigationManager;
+        //private readonly ISettingManager _settingManager;
+        //private readonly ILocalizationContext _localizationContext;
+        //private readonly ILanguageManager _languageManager;
+        //private readonly IPermissionChecker _permissionChecker;
+        //private readonly UserInfoManager _userInfoManager;
 
 
         public SysHomeController(
-            IUserNavigationManager userNavigationManager,
-            ISettingManager settingManager,
-            INavigationManager navigationManager,
-            ILocalizationContext localizationContext,
-            ILanguageManager languageManager,
-             Abp.Authorization.IPermissionChecker permissionChecker,
-        UserInfoManager userInfoManager
+            IUserNavigationManager userNavigationManager
+            //ISettingManager settingManager,
+            //INavigationManager navigationManager,
+            //ILocalizationContext localizationContext,
+            //ILanguageManager languageManager,
+            //IPermissionChecker permissionChecker,
+            //UserInfoManager userInfoManager
             )
         {
-            _permissionChecker = permissionChecker;
-
-            _localizationContext = localizationContext;
-            _languageManager = languageManager;
-
-            _navigationManager = navigationManager;
-            _userInfoManager = userInfoManager;
             _userNavigationManager = userNavigationManager;
-            _settingManager = settingManager;
+            
+            //_permissionChecker = permissionChecker;
+            //_localizationContext = localizationContext;
+            //_languageManager = languageManager;
+
+            //_navigationManager = navigationManager;
+            //_userInfoManager = userInfoManager;
+            //_settingManager = settingManager;
         }
 
         /// <summary>

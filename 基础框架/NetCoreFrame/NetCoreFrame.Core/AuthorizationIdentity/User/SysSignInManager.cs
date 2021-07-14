@@ -119,7 +119,7 @@ namespace NetCoreFrame.Core
             //验证用户信息 
             if (userModel == null)
             {
-                throw new UserFriendlyException(nameof(LoginResultType.UserIsNotActive), " 未获取到该" + model.UserCode + "的用户信息。");
+                throw new UserFriendlyException(nameof(LoginResultType.InvalidUserName), " 未获取到该" + model.UserCode + "的用户信息。");
                 //return new SysLoginResult<TUser>(LoginResultType.InvalidUserNameOrEmailAddress, userModel);
             }
             if (!userModel.IsActive)

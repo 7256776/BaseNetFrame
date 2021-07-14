@@ -18,8 +18,21 @@ namespace NetCoreFrame.Web
             LoginPath = loginPath;
         }
 
+        /// <summary>
+        /// 登录地址
+        /// </summary>
         public string LoginPath { get; set; } = "/SysLogin/Login";
 
-      
+        /// <summary>
+        /// 默认路由 请求控制器
+        /// </summary>
+        public string MapRouteController { get; set; } = "SysHome";
+
+        /// <summary>
+        /// 默认路由 请求地址
+        /// </summary>
+        public string MapRouteAction { get; set; } = "index";
+
+
     }
 }

@@ -19,24 +19,24 @@
     <meta content="" name="author" />
     <!-- 浏览器能够响应屏幕宽度 -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-    @* ◢◢◢◢◢登录样式css ◣◣◣◣◣ *@
+    @* ◢◢◢◢◢登录样式css ------ *@
     <link href="~/Content/assets/pages/css/login.css" rel="stylesheet" />
     <script src="~/Content/assets/pages/scripts/jquery-3.3.1.js"></script>
-    @* ◢◢◢◢◢视频播放css ◣◣◣◣◣ *@
+    @* ◢◢◢◢◢视频播放css ------ *@
     <script src="~/Content/assets/pages/scripts/jquery.vide.js"></script>
 
-    @* ◢◢◢◢◢基础组件及框架Js ◣◣◣◣◣ *@
+    @* ◢◢◢◢◢基础组件及框架Js ------ *@
     <!-- babel-polyfill  min 实现对ES6 API的支持 -->
     <script src="~/Content/Lib/vue/polyfill.js"></script>
-    @* ◢◢◢◢◢ Vue框架 + Vue路由 ◣◣◣◣◣ *@
+    @* ------Vue框架 + Vue路由 ------ *@
     <script src="~/Content/Lib/vue/vue.js"></script>
-    @* ◢◢◢◢◢ ElementUI ◣◣◣◣◣ *@
+    @* ------ElementUI ------ *@
     <link href="~/Content/Lib/ElementUI/theme-Chalk/index.css" rel="stylesheet" />
     <script src="~/Content/Lib/ElementUI/index.js"></script>
-    @* ◢◢◢◢◢ AbpJs API ◣◣◣◣◣ *@
+    @* ------AbpJs API ------ *@
     <script src="~/Abp/Framework/scripts/abp.js"></script>
     <script src="~/Abp/Framework/scripts/libs/abp.jquery.js"></script>
-    @* ◢◢◢◢◢ jurassuc框架 js&css ◣◣◣◣◣ *@
+    @* ------ 框架 js&css ------ *@
     <link href="~/Content/frameCore/css/frameCommon.css" rel="stylesheet" />
     <script src="~/Content/frameCore/scripts/frameCore.js"></script>
     <script src="~/Content/frameCore/scripts/frameGlobal.js"></script>
@@ -127,15 +127,15 @@
                     isMultilingual: false
                 },
                 formData: {
-                    userCode: 'admin',
-                    password: '888888',
+                    userCode: '',
+                    password: '',
                     isPersistent: false,
-                    returnUrl: ""
+                    returnUrl: '@Model.ReturnUrl'
                 },
             };
         },
         created: function () {
-          
+
             //是否启用语言
             this.languages.isMultilingual = abp.setting.getBoolean("IsMultilingual");
             //获取语言信息

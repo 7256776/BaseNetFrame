@@ -44,6 +44,7 @@
     "Success": "Success ",
     "Failure": "Failure",
 
+    "InvalidUserName": "Invalid User Name",
     "InvalidUserNameOrEmailAddress": "Invalid User Name Or Email Address",
     "InvalidPassword": "Invalid Password",
     "UserIsNotActive": "User Is Not Active",

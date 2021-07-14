@@ -1,138 +1,165 @@
 ﻿@{
     Layout = null;
 }
-<div class="row" >
-    <div class="frame-btn-tools">
-        <div class="row" style="margin-right:0px;">
-            <div class="col-md-7 col-sm-7" style="text-align:left;">
-                <el-button-group>
-                    <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAdd()" ref="btnAdd" v-IsAuthorized>新增</el-button>
-                    <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()" ref="btnEdit" v-IsAuthorized>编辑</el-button>
-                    <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelForm()" ref="btnDel" v-IsAuthorized>删除</el-button>
-                    <el-button size="mini" type="primary" icon="fa fa-key fa-lg" v-on:click="doResetPass()" ref="btnResetPass" v-IsAuthorized>重置密码</el-button>
-                </el-button-group>
+<div class="row">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-bubble font-green-sharp"></i>
+                <span class="caption-subject font-green-sharp sbold">
+                    <sysmenutitle></sysmenutitle>
+                </span>
             </div>
-            <div class="col-md-5 col-sm-5" style="text-align:right;">
-                <el-input placeholder="用户名称/用户账号 查询" v-model="pageOptions.searchTxt" size="mini"  style="width:300px;" clearable v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid"  >
-                    <el-button slot="append" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
+            <div class="actions">
+                @*<a href="javascript:void();" v-on:click="isShowSearch=!isShowSearch" class="btn btn-circle green-haze btn-sm">
+                        <i class="fa fa-plus"></i> 展开
+                    </a>*@
+                <el-input placeholder="用户名称/用户账号 查询" v-model="pageOptions.searchTxt" size="mini" style="width:300px;" clearable v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid">
+                    <div slot="append">
+                        <el-button icon="el-icon-search" v-on:click="refreshGrid"></el-button>
+                        <el-button icon="fa fa-filter" v-on:click="isShowSearch=!isShowSearch"></el-button>
+                    </div>
                 </el-input>
             </div>
+
+            <el-collapse-transition>
+                <div style="float:left; width: 100%; height: 300px;border:1px solid #ff0000;" v-if="isShowSearch">筛选框</div>
+            </el-collapse-transition>
+
         </div>
-    </div>
+        <div class="portlet-body">
+            <div class="frame-btn-tools">
+                <div class="row" style="margin-right:0px;">
+                    <div class="col-md-7 col-sm-7" style="text-align:left;">
+                        <el-button-group>
+                            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAdd()" ref="btnAdd" v-IsAuthorized>新增</el-button>
+                            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()" ref="btnEdit" v-IsAuthorized>编辑</el-button>
+                            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelForm()" ref="btnDel" v-IsAuthorized>删除</el-button>
+                            <el-button size="mini" type="primary" icon="fa fa-key fa-lg" v-on:click="doResetPass()" ref="btnResetPass" v-IsAuthorized>重置密码</el-button>
+                        </el-button-group>
+                    </div>
+                    <div class="col-md-5 col-sm-5" style="text-align:right;">
+                        <el-input placeholder="用户名称/用户账号 查询" v-model="pageOptions.searchTxt" size="mini" style="width:300px;" clearable v-on:keyup.enter.native="refreshGrid" v-on:clear="refreshGrid">
+                            <el-button slot="append" icon="el-icon-search" v-on:click="refreshGrid"></el-button>
+                        </el-input>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:5px;border:1px solid #DCDFE6;">
+                <el-table v-bind:data="tableOptions.tableData"
+                          ref="gridEl"
+                          stripe
+                          border
+                          highlight-current-row
+                          tooltip-effect="light"
+                          style="width: 100%;height:100%;"
+                          v-on:selection-change="doRowSelectChange"
+                          v-on:row-click="doRowclick">
+                    <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+                    <el-table-column prop="userCode" label="账号" width="100"></el-table-column>
+                    <el-table-column prop="userNameCn" label="姓名" width="120"></el-table-column>
+                    <el-table-column prop="sex" label="性别" width="100" v-bind:formatter="formatterSex"></el-table-column>
+                    <el-table-column prop="phoneNumber" label="电话号码" width="120"></el-table-column>
+                    <el-table-column prop="emailAddress" label="邮箱地址" width="150"></el-table-column>
+                    <el-table-column prop="description" label="描述"></el-table-column>
 
-    <div style="padding:5px;border:1px solid #DCDFE6;">
-        <el-table v-bind:data="tableOptions.tableData"
-                  ref="gridEl"
-                  stripe
-                  border
-                  highlight-current-row
-                  tooltip-effect="light"
-                  style="width: 100%;height:100%;"
-                  v-on:selection-change="doRowSelectChange"
-                  v-on:row-click="doRowclick">
-            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
-            <el-table-column prop="userCode" label="账号" width="100"></el-table-column>
-            <el-table-column prop="userNameCn" label="姓名" width="120"></el-table-column>
-            <el-table-column prop="sex" label="性别" width="100" v-bind:formatter="formatterSex"></el-table-column>
-            <el-table-column prop="phoneNumber" label="电话号码" width="120"></el-table-column>
-            <el-table-column prop="emailAddress" label="邮箱地址" width="150"></el-table-column>
-            <el-table-column prop="description" label="描述"></el-table-column>
+                    <el-table-column label="启用状态" width="100px" align="center">
+                        <template slot-scope="scope">
+                            <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
+                        </template>
+                    </el-table-column>
 
-            <el-table-column label="启用状态" width="100px" align="center">
-                <template slot-scope="scope">
-                    <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
-                </template>
-            </el-table-column>
+                </el-table>
+                <div style="text-align:right;padding-top:3px;">
+                    <el-pagination background
+                                   v-on:size-change="handleSizeChange"
+                                   v-on:current-change="handleCurrentChange"
+                                   v-bind:current-page="pageOptions.pageIndex"
+                                   v-bind:page-sizes="[20, 50, 100]"
+                                   v-bind:page-size="20"
+                                   v-bind:total="pageOptions.total"
+                                   layout="total, sizes, prev, pager, next, jumper">
+                    </el-pagination>
+                </div>
+            </div>
 
-        </el-table>
-        <div style="text-align:right;padding-top:3px;">
-            <el-pagination background
-                           v-on:size-change="handleSizeChange"
-                           v-on:current-change="handleCurrentChange"
-                           v-bind:current-page="pageOptions.pageIndex"
-                           v-bind:page-sizes="[20, 50, 100]"
-                           v-bind:page-size="20"
-                           v-bind:total="pageOptions.total"
-                           layout="total, sizes, prev, pager, next, jumper">
-            </el-pagination>
         </div>
     </div>
 
     <el-dialog title="用户基础信息"
                v-bind:visible.sync="pageOptions.formDialog"
-               
                v-bind:width="formWinCol2">
         <div>
             <el-tabs v-model="activeName">
                 <el-tab-pane label="用户基础信息" name="userInfo">
-                        <el-form v-bind:model="formData" 
-                                 v-bind:rules="formRules"
-                                 ref="formUseEl"
-                                 label-position="left"
-                                 v-bind:inline="true"
-                                 v-bind:status-icon="true"
-                                 size="medium"
-                                 label-suffix=":"
-                                 label-width="100px">
-                            <el-form-item label="用户账号" prop="userCode">
-                                <el-input v-model="formData.userCode" v-bind:style="formFormItem1" v-bind:disabled="pageOptions.isUserCode" v-bind:clearable="!pageOptions.isUserCode" suffix-icon="fa fa-id-badge" v-bind:maxlength="30">
-                                </el-input>
-                            </el-form-item>
-                            <el-form-item label="用户名称" prop="userNameCn">
-                                <el-input v-model="formData.userNameCn" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-id-card-o" v-bind:maxlength="30">
-                                </el-input>
-                            </el-form-item>
-                            <el-form-item label="电话号码" prop="phoneNumber">
-                                <el-input v-model="formData.phoneNumber" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-phone-square" v-bind:maxlength="50">
-                                </el-input>
-                            </el-form-item>
-                            <el-form-item label="邮箱地址" prop="emailAddress">
-                                <el-input v-model="formData.emailAddress" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-envelope-o " v-bind:maxlength="50">
-                                </el-input>
-                            </el-form-item>
-                            <el-form-item label="用户性别" prop="sex">
-                                <el-select v-model="formData.sex"
-                                           default-first-option
-                                           clearable
-                                           v-bind:style="formFormItem1"
-                                           placeholder="请选择">
-                                    <el-option label="男" value="1"></el-option>
-                                    <el-option label="女" value="0"></el-option>
-                                    <el-option label="其他" value="2"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="启用状态" prop="isActive">
-                                <el-select v-model="formData.isActive"
-                                           default-first-option
-                                           v-bind:style="formFormItem1"
-                                           placeholder="请选择">
-                                    <el-option label="启用" v-bind:value="true"></el-option>
-                                    <el-option label="禁用" v-bind:value="false"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="组织机构" prop="orgCode">
-                                <orgtreeselection v-model="formData.orgCode" v-bind:button-style="formFormItem2"></orgtreeselection>
-                            </el-form-item>
-                            <el-form-item label="描述" prop="description">
-                                <el-input type="textarea" v-model="formData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="200" show-word-limit>
-                                </el-input>
-                            </el-form-item>
-                            <el-form-item label="删除状态" prop="isDeleted" v-show="isShowDeleteInput">
-                                <el-select v-model="formData.isDeleted"
-                                           default-first-option
-                                           v-bind:style="formFormItem2"
-                                           placeholder="请选择">
-                                    <el-option label="已删除" v-bind:value="true"></el-option>
-                                    <el-option label="未删除" v-bind:value="false"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <!--重置表单时一并清空-->
-                            <el-form-item label="" prop="id" v-show="false">
-                            </el-form-item>
-                        </el-form>
+                    <el-form v-bind:model="formData"
+                             v-bind:rules="formRules"
+                             ref="formUseEl"
+                             label-position="left"
+                             v-bind:inline="true"
+                             v-bind:status-icon="true"
+                             size="medium"
+                             label-suffix=":"
+                             label-width="100px">
+                        <el-form-item label="用户账号" prop="userCode">
+                            <el-input v-model="formData.userCode" v-bind:style="formFormItem1" v-bind:disabled="pageOptions.isUserCode" v-bind:clearable="!pageOptions.isUserCode" suffix-icon="fa fa-id-badge" v-bind:maxlength="30">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="用户名称" prop="userNameCn">
+                            <el-input v-model="formData.userNameCn" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-id-card-o" v-bind:maxlength="30">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="电话号码" prop="phoneNumber">
+                            <el-input v-model="formData.phoneNumber" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-phone-square" v-bind:maxlength="50">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="邮箱地址" prop="emailAddress">
+                            <el-input v-model="formData.emailAddress" v-bind:style="formFormItem1" clearable suffix-icon="fa fa-envelope-o " v-bind:maxlength="50">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="用户性别" prop="sex">
+                            <el-select v-model="formData.sex"
+                                       default-first-option
+                                       clearable
+                                       v-bind:style="formFormItem1"
+                                       placeholder="请选择">
+                                <el-option label="男" value="1"></el-option>
+                                <el-option label="女" value="0"></el-option>
+                                <el-option label="其他" value="2"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="启用状态" prop="isActive">
+                            <el-select v-model="formData.isActive"
+                                       default-first-option
+                                       v-bind:style="formFormItem1"
+                                       placeholder="请选择">
+                                <el-option label="启用" v-bind:value="true"></el-option>
+                                <el-option label="禁用" v-bind:value="false"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="组织机构" prop="orgCode">
+                            <orgtreeselection v-model="formData.orgCode" v-bind:button-style="formFormItem2"></orgtreeselection>
+                        </el-form-item>
+                        <el-form-item label="描述" prop="description">
+                            <el-input type="textarea" v-model="formData.description" v-bind:style="formFormItem2" clearable v-bind:maxlength="200" show-word-limit>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="删除状态" prop="isDeleted" v-show="isShowDeleteInput">
+                            <el-select v-model="formData.isDeleted"
+                                       default-first-option
+                                       v-bind:style="formFormItem2"
+                                       placeholder="请选择">
+                                <el-option label="已删除" v-bind:value="true"></el-option>
+                                <el-option label="未删除" v-bind:value="false"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <!--重置表单时一并清空-->
+                        <el-form-item label="" prop="id" v-show="false">
+                        </el-form-item>
+                    </el-form>
                 </el-tab-pane>
-                <el-tab-pane v-bind:label="isCloseUserInfoEx ? '用户详细信息' : ''"  name="userEx"  v-bind:disabled="!isCloseUserInfoEx">
-                    <userinfoextens  ref="formUseElEx" v-model="formDataEx" ></userinfoextens>
+                <el-tab-pane v-bind:label="isCloseUserInfoEx ? '用户详细信息' : ''" name="userEx" v-bind:disabled="!isCloseUserInfoEx">
+                    <userinfoextens ref="formUseElEx" v-model="formDataEx"></userinfoextens>
                 </el-tab-pane>
 
             </el-tabs>

@@ -40,11 +40,11 @@ namespace NetCoreFrame.Sample
             base.BuildConfigureServices(services);
 
             //Redis缓存 实现 SqlServerCacheController
-            services.AddDistributedRedisCache(options =>
-            {
-                options.InstanceName = "TestDb";
-                options.Configuration = _appConfiguration.GetConnectionString("RedisConnectionString");       //localhost
-            });
+            //services.AddDistributedRedisCache(options =>
+            //{
+            //    options.InstanceName = "TestDb";
+            //    options.Configuration = _appConfiguration.GetConnectionString("RedisConnectionString");       //localhost
+            //});
 
             //数据库缓存 实现 SqlServerCacheController
             //services.AddDistributedSqlServerCache(options =>

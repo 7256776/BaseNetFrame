@@ -22,6 +22,10 @@ var componentAssemble = {
     SysUserInfoExtens: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-userinfoextens', 'Views/SysComponents/UserInfoExtens').then(resolve, reject);
     },
+    //模块名称
+    SysMenuTitle: function (resolve, reject) {
+        Vue.prototype.pageLoad('sys-menutitle', 'Views/SysComponents/MenuTitle').then(resolve, reject);
+    },
     //侧边菜单
     SysSideMenu: function (resolve, reject) {
         Vue.prototype.pageLoad('sys-sidemenu', 'Views/SysMenus/SideMenu').then(resolve, reject);

@@ -2,4 +2,11 @@
 
 1. GUID不要直接作为MVC服务的参数，使用string代替,然后进行判断后再作为业务使用
 
+2.项目发布关于视图的嵌入式或输出到发布目录
+	1) 如果采用嵌入式发布视图以及js文件需要设置视图或js文件为"嵌入式资源",并在Abp启动类注册
+            Configuration.EmbeddedResources.Sources.Add(new EmbeddedResourceSet("/Views/", Assembly.GetExecutingAssembly(), "NetCoreFrame.Web.Views"));
+	2)如果采用视图输出到发布目录需要设置程序集配置.并且设置Views目录下的js文件为"始终复制"
+			<MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+	注:嵌入式资源允许被后加载的同名嵌入资源覆盖,可以采用该方案进行对部分模块的重写.
+	总结: 项目应用发布推荐方案 2), 如果是模块化组件推荐 1)
 
