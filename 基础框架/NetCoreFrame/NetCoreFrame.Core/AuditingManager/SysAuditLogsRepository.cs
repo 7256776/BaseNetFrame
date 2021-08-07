@@ -62,7 +62,7 @@ namespace NetCoreFrame.Core
         {
             //string sql = " DELETE FROM SYS_AUDITLOGS  ";
             //该方式清空日志表速度快但是返回是 -1
-            string sql = " TRUNCATE TABLE SYS_AUDITLOGS  ";
+            string sql = " TRUNCATE TABLE SYS_AUDITLOG  ";
             int result= base.Context.Database.ExecuteSqlCommand(sql);
             return result;
         }

@@ -359,8 +359,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NetCoreFrame.Application\NetCoreFrame.Application.csproj" />
     <ProjectReference Include="..\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
-    <ProjectReference Include="..\NetCoreFrame.Infrastructure\NetCoreFrame.Infrastructure.csproj" />
-    <ProjectReference Include="..\NetCoreWorkFlow.Application\NetCoreWorkFlow.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

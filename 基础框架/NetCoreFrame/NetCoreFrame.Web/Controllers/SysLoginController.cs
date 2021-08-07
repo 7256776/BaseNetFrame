@@ -122,8 +122,8 @@ namespace NetCoreFrame.Web.Controllers
         private string GetAppHomeUrl()
         {
             //默认首页在js文件有设置因此此处可以不采用该方案,备选方案
-            return "/#/Views/SysHome/DesktopPage";
-            // return Url.Action("Index", "SysHome");
+            //  return "/#/Views/SysHome/DesktopPage";
+            return Url.Action("Index", "SysHome");
         }
 
         #endregion

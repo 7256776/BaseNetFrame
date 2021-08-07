@@ -45,7 +45,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
-    <ProjectReference Include="..\NetCoreWorkFlow.Core\NetCoreWorkFlow.Core.csproj" />
   </ItemGroup>
 
 </Project>
