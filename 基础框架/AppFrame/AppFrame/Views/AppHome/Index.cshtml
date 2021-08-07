@@ -1,0 +1,9 @@
+﻿@{
+    //Layout = "~/Views/Shared/_LayoutSide.cshtml";
+    //Layout = "~/Views/Shared/_LayoutTop.cshtml";
+    Layout = GetMainLayout("App");
+}
+
+<transition name="el-fade-in-linear">
+    <router-view></router-view>
+</transition>

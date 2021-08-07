@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+}
+<div class="row">
+    <div class="frame-btn-tools">
+        <el-button-group>
+            <el-button size="mini" type="primary" icon="fa fa-file-text-o fa-lg" v-on:click="doAdd()" ref="btnAdd">新增</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-edit fa-lg" v-on:click="doEdit()" ref="btnEdit">编辑</el-button>
+            <el-button size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelForm()" ref="btnDel">删除</el-button>
+        </el-button-group>
+
+    </div>
+
+    <div style="padding:5px;border:1px solid #DCDFE6;">
+       
+        <el-table v-bind:data="tableOptions.tableData"
+                  ref="gridEl"
+                  stripe
+                  border
+                  highlight-current-row
+                  tooltip-effect="light"
+                  style="width: 100%"
+                  v-on:selection-change="doRowSelectChange"
+                  v-on:row-click="doRowclick">
+            <el-table-column v-bind:fixed="true" type="selection"></el-table-column>
+            <el-table-column prop="docTitle" label="标题" width="180">
+            </el-table-column>
+            <el-table-column prop="docSubhead" label="正文">
+            </el-table-column>
+            <el-table-column label="启用状态" width="100px" align="center">
+                <template slot-scope="scope">
+                    <el-tag v-bind:type="scope.row.isActive ? 'success' : 'danger'">{{ scope.row.isActive ? '启动' : '禁用' }}</el-tag>
+                </template>
+            </el-table-column>
+        </el-table>
+
+    </div>
+
+
+    <el-dialog title="文章信息"
+               v-bind:visible.sync="pageOptions.formDialog"
+               v-bind:width="formWinCol3">
+        <div>
+            <el-form v-bind:model="formData"
+                     v-bind:rules="formRules"
+                     ref="formEl"
+                     label-position="left"
+                     v-bind:inline="true"
+                     v-bind:status-icon="true"
+                     size="medium"
+                     label-suffix=":"
+                     label-width="100px">
+
+                <el-form-item label="id" prop="id" v-show="false">
+                </el-form-item>
+
+                <el-form-item label="fileItem" prop="fileItem" v-show="false">
+                </el-form-item>
+
+                <el-form-item label="标题" prop="docTitle">
+                    <el-input v-model="formData.docTitle" v-bind:style="formFormItem3" clearable suffix-icon="fa fa-id-card-o" v-bind:maxlength="30">
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="封面图片" prop="fileName">
+
+                    <el-input placeholder="点击上传" v-model="formData.fileName" v-bind:style="formFormItem3" readonly>
+                        <div slot="append">
+                            <el-button v-show="formData.fileItem.length>0" size="mini" type="primary" icon="fa fa-trash-o fa-lg" v-on:click="doDelFileName()">删除</el-button>
+                            <el-upload ref="uploadEl"
+                                       v-show="formData.fileItem.length <= 0"
+                                       action="/PublishingContent/AppFileUpload"
+                                       :http-request="dohttpRequest"
+                                       :show-file-list="false"
+                                       :limit="1">
+                                <el-button size="small" type="primary">点击上传</el-button>
+                            </el-upload>
+                        </div>
+                    </el-input>
+
+                </el-form-item>
+                
+                <el-form-item label="副标题" prop="docSubhead">
+                    <el-input type="textarea" v-model="formData.docSubhead" v-bind:style="formFormItem3" clearable v-bind:maxlength="500" show-word-limit>
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="正文" prop="docContent">
+                    <!-- Create the editor container -->
+                    <quill-editor ref="myQuillEditor"
+                                  v-model="formData.docContent"
+                                  v-bind::options="editorOption">
+                    </quill-editor>
+
+                </el-form-item>
+
+                <el-form-item label="启用状态" prop="isActive">
+                    <el-select v-model="formData.isActive"
+                               default-first-option
+                               clearable
+                               v-bind:style="formFormItem1"
+                               placeholder="请选择">
+                        <el-option label="启用" v-bind:value="true"></el-option>
+                        <el-option label="禁用" v-bind:value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+
+            </el-form>
+        </div>
+        <div slot="footer" style="padding-right:20px;">
+            <el-button type="info" v-on:click="pageOptions.formDialog = false" icon="fa fa-share-square-o fa-lg">取 消</el-button>
+            <el-button type="primary" v-on:click="doSaveForm()" icon="fa fa-check-square-o fa-lg">确 定</el-button>
+        </div>
+    </el-dialog>
+
+</div>

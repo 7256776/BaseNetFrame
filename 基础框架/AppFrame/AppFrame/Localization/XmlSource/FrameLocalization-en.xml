@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="en">
+  <texts>
+    <!--text 的name区分大小写-->
+    <text name="Login" value="Login" />
+    <text name="IsPersistent" value="IsPersistent" />
+    <text name="IsRepeat" value="You enter the {0} of the repeat, please input again" />
+    <text name="AtLeastOneOfThesePermissionsMustBeGranted" value="nokey" />
+
+     
+  </texts>
+</localizationDictionary>

@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>de5ff47d-8423-4fcb-a10f-030dc5621926</UserSecretsId>
+
+
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <SignAssembly>false</SignAssembly>
+    <PackageId />
+    <Authors />
+    <Company />
+    <Product />
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Localization\XmlSource\FrameLocalization-en.xml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <None Remove="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+    <None Remove="Views\PublishingContent\index.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Localization\XmlSource\FrameLocalization-en.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-zh-CN.xml" />
+    <Content Include="Localization\XmlSource\FrameLocalization-zh-hans.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\PublishingContent\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreFrame\NetCoreFrame.Application\NetCoreFrame.Application.csproj" />
+    <ProjectReference Include="..\NetCoreFrame\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
+    <ProjectReference Include="..\NetCoreFrame\NetCoreFrame.WebApi\NetCoreFrame.WebApi.csproj" />
+    <ProjectReference Include="..\NetCoreFrame\NetCoreFrame.Web\NetCoreFrame.Web.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\PublishingContent\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\WebHome\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\" />
+    <Folder Include="Uploads\" />
+  </ItemGroup>
+
+</Project>

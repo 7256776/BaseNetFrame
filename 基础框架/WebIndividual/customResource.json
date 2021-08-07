@@ -1,0 +1,23 @@
+{
+  //自定义页面资源文件配置  分支11
+  "CustomWebResource": {
+    "style": [
+      "/Content/Lib/quilljs/quill.core.css",
+      "/Content/Lib/quilljs/quill.snow.css",
+      "/Content/Lib/quilljs/quill.bubble.css",
+      "/Content/frameCore/css/customStyle.css"
+    ],
+
+    "scriptBottom": [
+      "/Content/frameCore/scripts/customJavascript.js",
+    ],
+
+    "scriptTop": [
+      "/Content/Lib/quilljs/quill.core.js",
+      "/Content/Lib/quilljs/quill.js",
+      "/Content/Lib/quilljs/vue-quill-editor.js"
+
+    ]
+  }
+
+}

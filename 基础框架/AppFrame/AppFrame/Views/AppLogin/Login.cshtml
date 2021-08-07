@@ -1,0 +1,131 @@
+﻿@using Abp.Timing
+@model NetCoreFrame.Web.LoginFormViewModel
+@using Abp.Web.Security.AntiForgery
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@{
+    Layout = null;
+    //我们是ajax请求所以这货无处不在
+    AbpAntiForgeryManager.SetCookie(Context);
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    @* --基础组件及框架Js -- *@
+    <script src="~/Content/assets/pages/scripts/jquery-3.3.1.js"></script>
+    <!-- babel-polyfill  min 实现对ES6 API的支持 -->
+    <script src="~/Content/Lib/vue/polyfill.js"></script>
+    @* --Vue框架 + Vue路由 -- *@
+    <script src="~/Content/Lib/vue/vue.js"></script>
+    @* --vant UI -- *@
+    <link href="~/Content/Lib/vant/lib/index.css" rel="stylesheet" />
+    <script src="~/Content/Lib/vant/lib/vant.min.js"></script>
+    @* -- AbpJs API -- *@
+    <script src="~/Abp/Framework/scripts/abp.js"></script>
+    <script src="~/Abp/Framework/scripts/libs/abp.jquery.js"></script>
+    @* ------ 框架css ------ *@
+    <script src="~/Content/frameCore/scripts/frameCore.js"></script>
+        <script src="~/Content/frameCore/scripts/frameGlobal.js"></script>
+    <script src="~/Content/Lib/cookieJs/js.cookie.min.js"></script>
+    <!--Abp动态生成js(相关配置信息)-->
+    <script src="~/AbpScripts/GetScripts?v=@(Clock.Now.Ticks)" type="text/javascript"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="~/Content/Lib/html5shiv/3.7.3/html5shiv.js"></script>
+        <script src="~/Content/Lib/respond/1.4.2/respond.js"></script>
+        <script src="~/Content/Lib/excanvas/excanvas.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        //获取javascript应用程序的根路径
+        var abp = abp || {}; abp.appPath = '@ApplicationPath';
+    </script>
+
+    <link rel="shortcut icon" href="~/Content/frameCore/img/favicon.ico" />
+
+
+</head>
+
+<body>
+    <div id="loginApp">
+
+        <van-form v-on:submit="doSubmitLogin">
+            <van-field v-model="formData.userCode"
+                       name="userCode"
+                       label="用户名"
+                       placeholder="请填写用户名"
+                       :rules="[{ required: true}]" >
+                </van-field>
+            <van-field v-model="formData.password"
+                       type="password"
+                       name="password"
+                       label="密码"
+                       placeholder="请填写密码"
+                       :rules="[{ required: true}]" >
+                </van-field>
+            <div style="margin: 16px;">
+                <van-button round block type="info" native-type="submit">提交</van-button>
+            </div>
+        </van-form>
+
+
+
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    var returnUrl = "@Model.ReturnUrl";
+    new Vue({
+        el: '#loginApp',
+        data: function () {
+            return {
+                formData: {
+                    userCode: '',
+                    password: '',
+                    isPersistent: false,
+                    returnUrl: ""
+                },
+            };
+        },
+        created: function () {
+
+        },
+        methods: {
+            doSubmitLogin: function () {
+                //获取页面返回地址
+                //var url = document.location.toString();
+                //var arrUrl = url.split("//");
+                //var relUrl = arrUrl[1].split("ReturnUrl=")
+                //if (relUrl[1]) {
+                //    this.formData.returnUrl = decodeURIComponent(relUrl[1]);
+                //}
+                //
+                if (!this.formData.userCode) {
+                    abp.message.warn('UserCodeRequired')
+                    return;
+                }
+                if (!this.formData.password) {
+                    abp.message.warn('UserCodePass')
+                    return;
+                }
+                var _this = this;
+
+                abp.ajax({
+                    url: '/AppLogin/LoginRequest',
+                    data: JSON.stringify(_this.formData),
+                    type: 'POST',
+                    error: null
+                });
+            },
+
+        }
+    });
+</script>

@@ -1,0 +1,209 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <van-nav-bar title="方案指标明细"
+                 left-text="返回"
+                 v-bind:right-text="rightText"
+                 left-arrow
+                 v-bind:fixed="true"
+                 v-on:click-left="onClickLeft"
+                 v-on:click-right="onClickRight">
+    </van-nav-bar>
+
+    <div style="height:50px;border:0px solid #ff0000;">&nbsp;</div>
+
+    <van-row v-show="mainDiv">
+        <van-col span="5">
+            <van-sidebar style="width:95%;border: 1px solid #808080;" v-model="activeSidebar">
+                <van-sidebar-item :title="item.dictContent" v-for="(item,index) in pointerTypeData" :key="item.dictCode" v-on:click="doSidebar(index,item)" style="color:#868686;background-color:#FCFCE8;" v-bind:style="doStyle(index)" >
+
+                </van-sidebar-item>
+            </van-sidebar>
+        </van-col>
+        <van-col span="19">
+
+            <div v-for="(item,index) in buildProjectCategoryData" v-bind:key="index" style="width:98%; border: 1px solid #808080;border-radius:5px;margin-bottom:5px;">
+
+                <van-swipe-cell style="border-radius: 5px;" >
+                    <template v-slot:left>
+                        <van-button square text="编辑" type="primary" v-on:click="doEdit(item)" style="height: 100%;border-bottom: 1px solid #0094ff;" />
+                    </template>
+                    <van-row>
+                        <van-col span="24">
+                            <van-cell style="font-size:20px;color:#868686;background-color:#FCFCE8;">
+                                <template v-slot:title>
+                                    <span>
+                                        {{item.itemName}}
+                                    </span>
+                                    <template v-if="!item.isActive">
+                                        <van-tag type="warning">禁用</van-tag>
+                                    </template>
+                                </template>
+                                <template v-slot:default>
+                                    <span style="font-size:20px;color:#868686;">
+                                        {{item.classifyName}}
+                                    </span>
+                                </template>
+                            </van-cell>
+                        </van-col>
+                    </van-row>
+                    <van-row style="font-size:14px;color:#3a3a3a;padding:0px 10px 0px 15px;background-color:#FAE1E1;">
+                        <van-col span="12">
+                            单价:¥ {{toThousands(item.price)}}
+                        </van-col>
+                        <van-col span="12">
+                            数量:{{item.amount}} / {{item.unitName}}
+                        </van-col>
+                    </van-row>
+                    <van-row style="font-size:14px;color:#3a3a3a;padding:0px 10px 0px 15px;background-color:#FAE1E1;">
+                        <van-col span="12">
+                            预估:¥ {{toThousands(item.budgetPrice)}}
+                        </van-col>
+                        <van-col span="12">
+                            实际:¥ {{toThousands(item.actualPrice)}}
+                        </van-col>
+                    </van-row>
+                    <template v-slot:right>
+                        <van-button square text="删除" type="danger" v-on:click="doDel(item)" style="height: 100%" />
+                    </template>
+                </van-swipe-cell>
+               
+            </div>
+
+        </van-col>
+    </van-row>
+
+    <van-form ref="formEl" v-on:submit="doSubmit" v-show="formDiv">
+        <van-field readonly
+                   clickable
+                   name="categoryCode"
+                   v-model="formData.categoryName"
+                   label="品类"
+                   placeholder="点击选择品类"
+                   v-bind:rules="formRules.required"
+                   v-on:click="formItem.showPointerType = true">
+        </van-field>
+        <van-popup v-model="formItem.showPointerType" position="bottom">
+            <van-picker show-toolbar
+                        v-bind:default-index="pointerTypeIndex"
+                        v-bind:columns="pointerTypeData"
+                        value-key="dictContent"
+                        v-on:confirm="doConfirmPointer"
+                        v-on:cancel="formItem.showPointerType = false">
+            </van-picker>
+        </van-popup>
+
+        <van-field v-model="formData.itemName"
+                   name="itemName"
+                   clearable
+                   label="项目名称"
+                   maxlength="40"
+                   placeholder="项目名称"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field v-model="formData.classifyName"
+                   clearable
+                   name="classifyName"
+                   maxlength="40"
+                   label="空间/分类"
+                   placeholder="空间/分类"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field readonly
+                   clickable
+                   name="unitCode"
+                   v-model="formData.unitName"
+                   label="单位"
+                   placeholder="点击选择单位"
+                   v-bind:rules="formRules.required"
+                   v-on:click="formItem.showUnit = true">
+        </van-field>
+        <van-popup v-model="formItem.showUnit" position="bottom">
+            <van-picker show-toolbar
+                        v-bind:default-index="unitIndex"
+                        v-bind:columns="unitData"
+                        value-key="dictContent"
+                        v-on:confirm="doConfirmUnit"
+                        v-on:cancel="formItem.showUnit = false">
+            </van-picker>
+        </van-popup>
+
+        <van-field v-model="formData.amount"
+                   clearable
+                   name="amount"
+                   type="number"
+                   label="数量"
+                   placeholder="数量"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field v-model="formData.price"
+                   clearable
+                   name="price"
+                   type="number"
+                   label="单价"
+                   placeholder="单价"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field v-model="summation"
+                   name="budgetPrice"
+                   v-bind:readonly="true"
+                   type="number"
+                   label="预估金额"
+                   placeholder="预估金额"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field v-model="formData.actualPrice"
+                   name="actualPrice"
+                   type="number"
+                   label="实际金额"
+                   placeholder="实际金额"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field name="switch" label="是否启用">
+            <template v-slot:input>
+                <van-switch v-model="formData.isActive" size="20" />
+            </template>
+        </van-field>
+
+        <van-field v-model="formData.description"
+                   rows="2"
+                   autosize
+                   label="描述"
+                   type="textarea"
+                   clearable
+                   maxlength="2000"
+                   placeholder="描述"
+                   show-word-limit>
+        </van-field>
+
+        <van-field v-model="commodityName"
+                   is-link
+                   readonly
+                   clearable
+                   label="商品"
+                   placeholder="请选择商品"
+                   v-on:click="formItem.showCommodity = true" />
+        <van-popup v-model="formItem.showCommodity" round position="bottom">
+            <van-cascader v-model="cascaderValue"
+                          title="请选择商品"
+                          v-bind:options="pointerTypeData"
+                          v-bind:field-names="fieldNames"
+                          v-on:close="formItem.showCommodity = false"
+                          v-on:change="onChange"
+                          v-on:finish="onFinish" />
+        </van-popup>
+
+        <div style="margin: 16px;">
+            <van-button round block type="info" native-type="submit">提交</van-button>
+        </div>
+    </van-form>
+
+</div>

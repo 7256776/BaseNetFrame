@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <van-image-preview v-model="showPreview" v-bind:images="imagesPreview">
+    </van-image-preview>
+
+    <van-nav-bar title="商品列表"
+                 left-text="返回"
+                 v-bind:right-text="rightText"
+                 left-arrow
+                 v-bind:fixed="true"
+                 v-on:click-left="onClickLeft"
+                 v-on:click-right="onClickRight">
+    </van-nav-bar>
+
+    <div style="height:50px;border:0px solid #ff0000;">&nbsp;</div>
+
+    <van-row>
+        <van-col span="5">
+            <van-sidebar style="width:100%;" v-model="activeSidebar">
+                <van-sidebar-item :title="item.dictContent" v-for="(item,index) in pointerTypeData" :key="item.dictCode" v-on:click="doSidebar(index,item)"></van-sidebar-item>
+            </van-sidebar>
+        </van-col>
+        <van-col span="19">
+
+            <van-swipe-cell v-for="(item,index) in commodityData" v-bind:key="index">
+                <template v-slot:left>
+                    <van-button square text="编辑" type="primary" v-on:click="doEdit(item)" style="height: 100%;border-bottom: 1px solid #0094ff;" />
+                </template>
+                <van-card 
+                          v-bind:thumb="thumbUrl(item)"
+                          v-bind:title="item.commodity"
+                          v-on:click-thumb="doClickThumb(item)">
+
+                    <template v-slot:num>
+                        <b> 单价:{{item.price}}</b>
+                    </template>
+
+                    <template v-slot:desc>
+                        <b>
+                            描述:
+                            {{item.description}}
+                        </b>
+                    </template>
+
+                    <template v-slot:price>
+                        <b>
+                            品牌:
+                            {{item.brand}}
+                        </b>
+                    </template>
+
+                    <template v-slot:tag>
+                        <van-tag type="primary">标签</van-tag>
+                    </template>
+                </van-card>
+                <template v-slot:right>
+                    <van-button square text="删除" type="danger" v-on:click="doDel(item)" style="height: 100%" />
+                </template>
+            </van-swipe-cell>
+        </van-col>
+    </van-row>
+
+</div>

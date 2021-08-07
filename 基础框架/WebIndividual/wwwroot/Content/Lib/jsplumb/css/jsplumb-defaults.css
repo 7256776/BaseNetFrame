@@ -1,0 +1,253 @@
+/* 需要设置容器以及节点的样式都属于 position: absolute; */
+
+/***********************************设计器父容器***********************************/
+
+.designer-main {
+    position: relative;
+    width: 100%;
+    /*height: 100%;*/
+    height: calc(100vh - 200px);
+    /*border: 1px solid #339933;*/
+}
+
+/***********************************设计器工具栏***********************************/
+
+/* 设计器工具栏 */
+.designer-tools {
+    position: absolute;
+    width: 200px;
+    height: calc(100vh - 200px);
+    border: 0px solid rgb(156, 156, 156);
+}
+
+/* 设计器工具栏间隔 */
+.designer-tools-septal{
+    height: 7px;
+    width: 100%;
+}
+
+.designer-tools fieldset {
+    list-style: none;
+    padding: 3px;
+    /*margin: 0px 0px 0px 0px;*/
+    line-height: 35px;
+    border: 1px solid rgb(156, 156, 156);
+    text-align:center;
+}
+
+    .designer-tools fieldset legend {
+        width: 65px;
+        padding: 0px 0px 0px 5px;
+        font: bold 14px/2 Verdana, Geneva, sans-serif;
+        text-align: left;
+        border: 0px solid rgb(156, 156, 156);
+        margin: 0px 0px 0px 10px;
+    }
+
+/* 设计器工具栏 上部 */
+.designer-tools-top {
+   /* padding: 5px;*/
+    /*border: 1px solid rgb(156, 156, 156);*/
+    margin: -14px 0px 0px 0px;
+}
+
+/* 设计器工具栏 底部 */
+.designer-tools-bottom {
+    padding: 5px;
+    height: 200px;
+}
+
+/* 设计器工具栏 流程组件 */
+.item-endpoint-tool {
+    /* position:relative; */
+    /* position: absolute; */
+    z-index: 9999;
+    line-height: 50px;
+    font-size:13px;
+    color: #fff;
+    font-weight:bold;
+    text-align: center;
+    cursor:pointer;
+    
+    height: 50px;
+    width: 50px;
+    border:1px solid #339933;
+    background: #339933;
+    border-radius:0.5em; 
+  
+    /* 阴影效果 */
+    box-shadow: 2px 2px 19px #aaa;  
+    -o-box-shadow: 2px 2px 19px #aaa;
+    -webkit-box-shadow: 2px 2px 19px #aaa;
+    -moz-box-shadow: 2px 2px 19px #aaa;
+    -moz-border-radius:0.5em;
+    /* 过度效果 */
+    -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+    -moz-transition: -moz-box-shadow 0.25s ease-in;
+    -o-transition: -o-box-shadow 0.25s ease-in;
+    transition: box-shadow 0.25s ease-in;
+}
+
+/* 设计器工具组件(圆形) */
+.item-endpoint-tool-dot {
+    margin-right:5px;
+    border-radius:50px;     /* 圆形边缘弧度 */
+    width:50px;            
+    height:50px;           
+}
+
+/* 开始节点 */
+.item-endpoint-tool-start {
+    background-color: #3399CC;
+    border:1px solid #2182b3;
+}
+
+/* 结束节点 */
+.item-endpoint-tool-end {
+    background-color: #FF6666;
+    border:1px solid #da4949;
+}
+
+/* 设计器工具栏按钮 */
+.btn-tools {
+    margin: 5px;
+    height: 30px;
+}
+
+
+/***********************************设计器区域***********************************/
+
+.designer-body {
+    position: absolute;
+    left: 205px;
+    /*left: 465px;*/
+    width: calc(100vw - 495px);
+    height: calc(100vh - 200px);
+    overflow: scroll;
+}
+
+@media (max-width: 992px) {
+    .designer-body {
+        width: calc(100vw - 215px);
+    }
+}
+
+/* 设计器区域 容器 */
+.designer-container {
+    position: absolute;
+    width: 2000px;
+    height: 2000px;
+    border: 1px solid gray;
+    background-image: url(../img/bg.png);
+    background-repeat: repeat;
+    overflow: hidden;
+}
+
+/* 设计器区域 流程组件 */
+.item-endpoint {
+    position: absolute;
+    height: 50px;
+    width: 150px;
+    border:1px solid #339933;
+    background: #47a847;
+    border-radius:0.5em; 
+    text-align:center;
+    /* display:flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* 阴影效果 */
+    box-shadow: 2px 2px 19px #aaa;  
+    -o-box-shadow: 2px 2px 19px #aaa;
+    -webkit-box-shadow: 2px 2px 19px #aaa;
+    -moz-box-shadow: 2px 2px 19px #aaa;
+    -moz-border-radius:0.5em;
+    /* 过度效果 */
+    -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+    -moz-transition: -moz-box-shadow 0.25s ease-in;
+    -o-transition: -o-box-shadow 0.25s ease-in;
+    transition: box-shadow 0.25s ease-in;
+}
+ 
+/* 设计器区域 流程组件 鼠标悬停样式 */
+.item-endpoint:hover {
+    box-shadow: 2px 2px 19px #444;
+    -o-box-shadow: 2px 2px 19px #444;
+    -webkit-box-shadow: 2px 2px 19px #444;
+    -moz-box-shadow: 2px 2px 19px #fff;
+    opacity:0.8;
+}
+
+/* 设计器区域 开始节点 */
+.item-endpoint-start {
+    display:inline-block;
+    margin-right:5px;
+    border-radius:50px;     /* 圆形边缘弧度 */
+    width:50px;            
+    height:50px;           
+    background-color: #3399CC;
+    border:1px solid #2182b3;
+}
+ 
+/* 设计器区域 结束节点 */
+.item-endpoint-end {
+    display:inline-block;
+    margin-right:5px;
+    border-radius:50px;     /* 圆形边缘弧度 */
+    width:50px;            
+    height:50px;           
+    background-color: #FF6666;
+    border:1px solid #da4949;
+}
+
+/* 设计器区域 流程组件 内容区 */
+.item-endpoint-content {
+    position: absolute;
+    height: 100%;
+    width: 100%; 
+    text-align: center;
+    vertical-align: middle;
+    cursor:crosshair;
+    /* border: 1px red solid; */
+}
+
+/* 设计器区域 流程组件 文本标签 */
+.item-endpoint-label {
+    position: absolute;
+    cursor: pointer;
+    height: 15px;
+    width: 105px ;
+    text-align: center;
+    top:calc(50% - 8px);
+    left:calc(50% - 52px);
+    font-size:13px;
+    padding: 0px;
+    color: #fff;
+    display:block;
+    white-space: nowrap;
+    display: inline-block;  /*将span当做块级元素对待*/
+    overflow: hidden;       /*超出宽度部分隐藏*/
+    /* border: 1px red solid; */
+    /* z-index: 1000; */
+}
+
+/* 设计器区域 圆形节点文本标签 */
+.item-endpoint-dot-label {
+    height: 15px;
+    width: 30px ;
+    top:calc(50% - 8px);
+    left:calc(50% - 15px);
+}
+
+/***********************************多选矩形窗体***********************************/
+
+/* 选择框矩形样式 */
+.selected-rectangle{ 
+    position: absolute;
+    background-color: #775a61;
+    opacity: 0.2;
+    border: 2px dashed #000;
+}
+
+.selected-endpoint{ 
+    border: 1px solid #1b2cc0;
+}

@@ -1,0 +1,59 @@
+﻿{
+  "FrameItemList": [
+    //公司名称
+    {
+      "name": "CompanyName",
+      "value": "CC技术支持"
+    },
+    //公司网站
+    {
+      "name": "CompanyWWW",
+      "value": "https://www.xxx.com/"
+    },
+    //项目名称(主要体现在页面的title)
+    {
+      "name": "ProjectName",
+      "value": "首页"
+    },
+    //是否启用多语言(默认启用)
+    {
+      "name": "IsMultilingual",
+      "value": true
+    },
+    //是否启用站内聊天(默认启用)
+    {
+      "name": "IsChat",
+      "value": true
+    },
+    //布局类型  side = 侧边菜单 ;  top  = 顶部菜单 ;  none = 空白页面(不包含菜单以及导航仅包含模块页面,需要手动指定url)
+    {
+      "name": "FrameLayout",
+      "value": "side"
+    },
+    //菜单布局采用top方式时候使用,设置子菜单的列数,仅限数值=(1, 2, 3, 4, 6)
+    {
+      "name": "FrameTopLayoutMenusCol",
+      "value": 4
+    },
+    //设置子菜单展开的方式  tile = 平铺     folding = 折叠
+    {
+      "name": "FrameTopLayoutMenusType",
+      "value": "tile"
+    },
+    //设置子菜单是否自动撑满页面宽度 (注:仅限子菜单展开的方式  tile = 平铺 )
+    {
+      "name": "FrameTopLayoutMenusColFull",
+      "value": false
+    },
+    //设置搜索组件 (有三种模式  never = 不使用,  base=使用基础功能仅包含搜索按钮,   full=使用搜索按钮以及扩展搜索按钮 )
+    {
+      "name": "FrameSearchComponent",
+      "value": "never"
+    },
+    //是否显示头部扩展工具栏按钮
+    {
+      "name": "HeadToolButton",
+      "value": "false"
+    }
+  ]
+}

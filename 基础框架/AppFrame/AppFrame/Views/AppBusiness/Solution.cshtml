@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+
+    <van-image-preview v-model="show" v-bind:images="images" >
+    </van-image-preview>
+
+    <van-nav-bar title="方案设计列表"
+                 left-text="返回"
+                 right-text="新增方案"
+                 left-arrow
+                 v-bind:fixed="true"
+                 v-on:click-left="onClickLeft"
+                 v-on:click-right="onClickRight">
+    </van-nav-bar>
+    <div style="height:50px;border:0px solid #ff0000;">&nbsp;</div>
+    <van-swipe-cell v-for="(item,index) in  solutionList" v-bind:key="index">
+        <template v-slot:left>
+            <van-button square text="编辑" type="primary" v-on:click="doEdit(item)" style="height: 100%;border-bottom: 1px solid #0094ff;" />
+        </template>
+
+        <van-card 
+                  v-on:click="doEdit(item)"
+                  v-bind:thumb="thumbUrl(item,'filePathThumbnail')"
+                  v-on:click-thumb="doImagePreview(item,'filePathPreview')"
+                  v-bind:title="item.appSolutionData.solutionName">
+
+            <template v-slot:num>
+                项目数量:{{item.amount}}
+            </template>
+
+            <template v-slot:desc>
+                <b>描述:</b>
+                {{item.appSolutionData.description}}
+            </template>
+
+            <template v-slot:footer>
+                <van-row>
+                    <van-col span="8" style="text-align:left;">
+                        <b>创建人:</b>
+                        {{item.userNameCn}}
+                    </van-col>
+                    <van-col span="16">
+                        <b>创建日期:</b>
+                        {{item.appSolutionData.creationTime}}
+                    </van-col>
+                </van-row>
+            </template>
+
+            <template v-slot:price>
+                实际金额:¥ {{toThousands(item.actualPrice)}}
+            </template>
+
+            <template v-slot:origin-price>
+                预估金额:¥ {{toThousands(item.budgetPrice)}}
+            </template>
+
+            <template v-slot:tag>
+                <van-tag type="primary">标签</van-tag>
+            </template>
+        </van-card>
+
+        <template v-slot:right>
+            <van-button square text="删除" type="danger" v-on:click="doDel(item)" style="height: 100%" />
+        </template>
+    </van-swipe-cell>
+
+
+
+</div>

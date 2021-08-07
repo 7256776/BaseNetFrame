@@ -1,0 +1,63 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "系统设置": "SystemSettings",
+    "菜单管理": "MenuManagement",
+    "用户管理": "UserAccount",
+    "角色管理": "RoleAuth",
+    "消息通知": "Notifications",
+    "日志管理": "SystemLog",
+    "组织机构": "Organization",
+    "字典管理": "DictManager",
+    "Login": "Login",
+    "IsPersistent": "IsPersistent",
+    "IsRepeat": "You enter the {0} of the repeat, please input again",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "nokey",
+    "ValidationError": "Your request is not valid!",
+    "InternalServerError": "Your request has an error. Please refresh the page and try again!",
+    "ValidationNarrativeTitle": "The following errors were detected during validation!..",
+
+    "DefaultError": "An error has occurred!",
+    "DefaultErrorDetail": "Error detail not sent by server.",
+    "DefaultError401": "You are not authenticated!",
+    "DefaultErrorDetail401": "You should be authenticated (sign in) in order to perform this operation.",
+    "DefaultError403": "You are not authorized!",
+    "DefaultErrorDetail403": "You are not allowed to perform this operation.",
+    "DefaultError404": "Resource not found!",
+    "DefaultErrorDetail404": "The resource requested could not found on the server.",
+
+    "IsSelect": "Please select a data item.",
+    "verifyData": "Please check the wrong information you entered.",
+
+    "Tips": "Tips ",
+    "Info": "Info ",
+    "Warning": "Warning ",
+    "Error": "Error ",
+    "Details": "Details",
+    "OperationComplete": "Operation complete",
+    "SendSuccess": "Send success",
+
+    "Save": "Save ",
+    "Editor": "Modify ",
+    "Add": "Added ",
+    "Del": "Delete ",
+    "Success": "Success ",
+    "Failure": "Failure",
+
+    "InvalidUserNameOrEmailAddress": "Invalid User Name Or Email Address",
+    "InvalidPassword": "Invalid Password",
+    "UserIsNotActive": "User Is Not Active",
+    "InvalidTenancyName": "Invalid Tenancy Name",
+    "TenantIsNotActive": "TenantIs Not Active",
+    "UserEmailIsNotConfirmed": "User EmailIs Not Confirmed",
+    "UnknownExternalLogin": "Unknown External Login",
+    "LockedOut": "Locked Out",
+    "UserPhoneNumberIsNotConfirmed": "User Phone NumberIs Not Confirmed",
+    "AuthenticationRegistrationFailure": "Authentication Registration Failure",
+    "UnacquiredInformation": "UnacquiredInformation",
+
+    "UserCodeRequired": "Please Enter A User Name",
+    "UserCodePass": "Please Enter Your Password."
+
+  }
+}

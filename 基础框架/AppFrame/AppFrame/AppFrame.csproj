@@ -1,0 +1,882 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>e25d92e1-87f7-4f65-b249-ab7059762190</UserSecretsId>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyName>VBVB版本</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="obj\**" />
+    <Compile Remove="wwwroot\Content\Lib\vant\es\**" />
+    <Compile Remove="wwwroot\Content\Lib\vant\types\**" />
+    <Content Remove="obj\**" />
+    <Content Remove="wwwroot\Content\Lib\vant\es\**" />
+    <Content Remove="wwwroot\Content\Lib\vant\types\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="wwwroot\Content\Lib\vant\es\**" />
+    <EmbeddedResource Remove="wwwroot\Content\Lib\vant\types\**" />
+    <None Remove="obj\**" />
+    <None Remove="wwwroot\Content\Lib\vant\es\**" />
+    <None Remove="wwwroot\Content\Lib\vant\types\**" />
+    <TypeScriptCompile Remove="obj\**" />
+    <TypeScriptCompile Remove="wwwroot\Content\Lib\vant\es\**" />
+    <TypeScriptCompile Remove="wwwroot\Content\Lib\vant\types\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_LayoutApp.cshtml" />
+    <Content Remove="Views\_ViewImports.cshtml" />
+    <Content Remove="wwwroot\Content\appCore\css\enter\enter.css" />
+    <Content Remove="wwwroot\Content\appCore\css\enter\message.css" />
+    <Content Remove="wwwroot\Content\appCore\css\enter\register.css" />
+    <Content Remove="wwwroot\Content\appCore\css\enter\shenHe_ing.css" />
+    <Content Remove="wwwroot\Content\appCore\css\enter\shenHe_over.css" />
+    <Content Remove="wwwroot\Content\appCore\css\enter\wanShan_xinXi.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\add_shangPin_message.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\dqh_order_detail.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\keRen_area.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\keRen_area_1.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\order.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\order_detail.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\order_msg_import.css" />
+    <Content Remove="wwwroot\Content\appCore\css\order\qiShou_area.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\abuto_us.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\bangDing_pingTai.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\bangDing_pingTai_1.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\bangDing_pingTai_2.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\bangDing_succes.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\edit_order.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\finished_order_select.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\lianXi_fangShi.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\order_select.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\pingTai_set.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\renZheng_ziLiao.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\set_jiaoYi_miMa.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\shangJia_apply.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\shangJia_cancel_1.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\updata_enter_miMa.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\user.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\yiJian_faDan.css" />
+    <Content Remove="wwwroot\Content\appCore\css\user\yuE_chongZhi.css" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\bei_jing.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\denglu_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\denglu_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\denglu_3.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\jingdu_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\jingdu_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\logo.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\renwu_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\renwu_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\sfz_04.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\sfz_07.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\sfz_10.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\xiaoxi_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\xiaoxi_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\enter\xiaoxi_3.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\back.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\baidu.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\bianji.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\bm.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\chongxin.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\dianhua.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\dingwei.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\eleme.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\fujin.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\fujin1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\home_icon_dw.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\hulue.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\iphone.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\jiaoyi.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\lishijialu.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\meituan.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\qishou.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\quanbu.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\shoucang.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\shoucang1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\shoucang2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\shoucang3.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\shoucang4.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\tianjia.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\tianjia_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\tianjia_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\weizhi.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xiala.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xiaoxi.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xiao_bai.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xiao_e.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xiao_jiesu.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xiao_mei.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xuankuang.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\xuanzhong.png" />
+    <Content Remove="wwwroot\Content\appCore\img\order\zhuye.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\background.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\baidu.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\beijing.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\bianji.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\chengg_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\close.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\dianji.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\dianji_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\eleme.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\geren_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\geren_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\geren_3.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\geren_4.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\geren_5.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\geren_6.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\jinbi.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\meituan.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\open.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\quxiao.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shezhi_1.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shezhi_2.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shezhi_3.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shezhi_4.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shezhi_5.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shezhi_6.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\shousuo.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\tishi.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\touxiang.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\weixin.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\xuanfen.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\zengjia.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\zhifubao.png" />
+    <Content Remove="wwwroot\Content\appCore\img\user\zhuye.png" />
+    <Content Remove="wwwroot\Content\Lib\vant\vue\index.js" />
+    <Content Remove="wwwroot\Content\Lib\vant\vue\vue.js" />
+    <Content Remove="wwwroot\Content\Lib\vant\vue\vue.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\AppBaseConfig\CommodityInput.js" />
+    <None Remove="Views\AppBaseConfig\PointerTypeConfig.js" />
+    <None Remove="Views\AppBaseConfig\PointerTypeInput.js" />
+    <None Remove="Views\AppBusiness\PointerTypeInput - 复制.js" />
+    <None Remove="Views\AppBusiness\PointerTypeInput.js" />
+    <None Remove="Views\AppBusiness\Solution.js" />
+    <None Remove="Views\AppBusiness\SolutionInput.js" />
+    <None Remove="Views\AppHome\Home.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\AppBaseConfig\CommodityInput.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppBaseConfig\PointerTypeInput.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppBaseConfig\PointerTypeConfig.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppBaseConfig\Commodity.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppBusiness\Solution.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppBusiness\SolutionInput.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppBusiness\PointerTypeInput.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AppHome\Home.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\_LayoutApp.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.2.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NetCoreFrame\NetCoreFrame.Application\NetCoreFrame.Application.csproj" />
+    <ProjectReference Include="..\..\NetCoreFrame\NetCoreFrame.Core\NetCoreFrame.Core.csproj" />
+    <ProjectReference Include="..\..\NetCoreFrame\NetCoreFrame.Web\NetCoreFrame.Web.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Localization\JsonSource\FrameLocalization-en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Localization\JsonSource\FrameLocalization-zh-CN.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Localization\JsonSource\FrameLocalization-zh-hans.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\AppBaseConfig\PointerTypeConfig.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppBaseConfig\PointerTypeInput.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppBusiness\PointerTypeInput.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppBusiness\Solution.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppBusiness\SolutionInput.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppHome\Home.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppHome\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\AppLogin\Login.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\appCore\css\enter\enter.css" />
+    <None Include="wwwroot\Content\appCore\css\enter\message.css" />
+    <None Include="wwwroot\Content\appCore\css\enter\register.css" />
+    <None Include="wwwroot\Content\appCore\css\enter\shenHe_ing.css" />
+    <None Include="wwwroot\Content\appCore\css\enter\shenHe_over.css" />
+    <None Include="wwwroot\Content\appCore\css\enter\wanShan_xinXi.css" />
+    <None Include="wwwroot\Content\appCore\css\order\add_shangPin_message.css" />
+    <None Include="wwwroot\Content\appCore\css\order\dqh_order_detail.css" />
+    <None Include="wwwroot\Content\appCore\css\order\keRen_area.css" />
+    <None Include="wwwroot\Content\appCore\css\order\keRen_area_1.css" />
+    <None Include="wwwroot\Content\appCore\css\order\order.css" />
+    <None Include="wwwroot\Content\appCore\css\order\order_detail.css" />
+    <None Include="wwwroot\Content\appCore\css\order\order_msg_import.css" />
+    <None Include="wwwroot\Content\appCore\css\order\qiShou_area.css" />
+    <None Include="wwwroot\Content\appCore\css\user\abuto_us.css" />
+    <None Include="wwwroot\Content\appCore\css\user\bangDing_pingTai.css" />
+    <None Include="wwwroot\Content\appCore\css\user\bangDing_pingTai_1.css" />
+    <None Include="wwwroot\Content\appCore\css\user\bangDing_pingTai_2.css" />
+    <None Include="wwwroot\Content\appCore\css\user\bangDing_succes.css" />
+    <None Include="wwwroot\Content\appCore\css\user\edit_order.css" />
+    <None Include="wwwroot\Content\appCore\css\user\finished_order_select.css" />
+    <None Include="wwwroot\Content\appCore\css\user\lianXi_fangShi.css" />
+    <None Include="wwwroot\Content\appCore\css\user\order_select.css" />
+    <None Include="wwwroot\Content\appCore\css\user\pingTai_set.css" />
+    <None Include="wwwroot\Content\appCore\css\user\renZheng_ziLiao.css" />
+    <None Include="wwwroot\Content\appCore\css\user\set_jiaoYi_miMa.css" />
+    <None Include="wwwroot\Content\appCore\css\user\shangJia_apply.css" />
+    <None Include="wwwroot\Content\appCore\css\user\shangJia_cancel_1.css" />
+    <None Include="wwwroot\Content\appCore\css\user\updata_enter_miMa.css" />
+    <None Include="wwwroot\Content\appCore\css\user\user.css" />
+    <None Include="wwwroot\Content\appCore\css\user\yiJian_faDan.css" />
+    <None Include="wwwroot\Content\appCore\css\user\yuE_chongZhi.css" />
+    <None Include="wwwroot\Content\appCore\img\enter\bei_jing.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\denglu_1.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\denglu_2.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\denglu_3.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\jingdu_1.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\jingdu_2.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\logo.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\renwu_1.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\renwu_2.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\sfz_04.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\sfz_07.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\sfz_10.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\xiaoxi_1.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\xiaoxi_2.png" />
+    <None Include="wwwroot\Content\appCore\img\enter\xiaoxi_3.png" />
+    <None Include="wwwroot\Content\appCore\img\order\back.png" />
+    <None Include="wwwroot\Content\appCore\img\order\baidu.png" />
+    <None Include="wwwroot\Content\appCore\img\order\bianji.png" />
+    <None Include="wwwroot\Content\appCore\img\order\bm.png" />
+    <None Include="wwwroot\Content\appCore\img\order\chongxin.png" />
+    <None Include="wwwroot\Content\appCore\img\order\dianhua.png" />
+    <None Include="wwwroot\Content\appCore\img\order\dingwei.png" />
+    <None Include="wwwroot\Content\appCore\img\order\eleme.png" />
+    <None Include="wwwroot\Content\appCore\img\order\fujin.png" />
+    <None Include="wwwroot\Content\appCore\img\order\fujin1.png" />
+    <None Include="wwwroot\Content\appCore\img\order\home_icon_dw.png" />
+    <None Include="wwwroot\Content\appCore\img\order\hulue.png" />
+    <None Include="wwwroot\Content\appCore\img\order\iphone.png" />
+    <None Include="wwwroot\Content\appCore\img\order\jiaoyi.png" />
+    <None Include="wwwroot\Content\appCore\img\order\lishijialu.png" />
+    <None Include="wwwroot\Content\appCore\img\order\meituan.png" />
+    <None Include="wwwroot\Content\appCore\img\order\qishou.png" />
+    <None Include="wwwroot\Content\appCore\img\order\quanbu.png" />
+    <None Include="wwwroot\Content\appCore\img\order\shoucang.png" />
+    <None Include="wwwroot\Content\appCore\img\order\shoucang1.png" />
+    <None Include="wwwroot\Content\appCore\img\order\shoucang2.png" />
+    <None Include="wwwroot\Content\appCore\img\order\shoucang3.png" />
+    <None Include="wwwroot\Content\appCore\img\order\shoucang4.png" />
+    <None Include="wwwroot\Content\appCore\img\order\tianjia.png" />
+    <None Include="wwwroot\Content\appCore\img\order\tianjia_1.png" />
+    <None Include="wwwroot\Content\appCore\img\order\tianjia_2.png" />
+    <None Include="wwwroot\Content\appCore\img\order\weizhi.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xiala.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xiaoxi.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xiao_bai.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xiao_e.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xiao_jiesu.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xiao_mei.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xuankuang.png" />
+    <None Include="wwwroot\Content\appCore\img\order\xuanzhong.png" />
+    <None Include="wwwroot\Content\appCore\img\order\zhuye.png" />
+    <None Include="wwwroot\Content\appCore\img\user\background.png" />
+    <None Include="wwwroot\Content\appCore\img\user\baidu.png" />
+    <None Include="wwwroot\Content\appCore\img\user\beijing.png" />
+    <None Include="wwwroot\Content\appCore\img\user\bianji.png" />
+    <None Include="wwwroot\Content\appCore\img\user\chengg_1.png" />
+    <None Include="wwwroot\Content\appCore\img\user\close.png" />
+    <None Include="wwwroot\Content\appCore\img\user\dianji.png" />
+    <None Include="wwwroot\Content\appCore\img\user\dianji_2.png" />
+    <None Include="wwwroot\Content\appCore\img\user\eleme.png" />
+    <None Include="wwwroot\Content\appCore\img\user\geren_1.png" />
+    <None Include="wwwroot\Content\appCore\img\user\geren_2.png" />
+    <None Include="wwwroot\Content\appCore\img\user\geren_3.png" />
+    <None Include="wwwroot\Content\appCore\img\user\geren_4.png" />
+    <None Include="wwwroot\Content\appCore\img\user\geren_5.png" />
+    <None Include="wwwroot\Content\appCore\img\user\geren_6.png" />
+    <None Include="wwwroot\Content\appCore\img\user\jinbi.png" />
+    <None Include="wwwroot\Content\appCore\img\user\meituan.png" />
+    <None Include="wwwroot\Content\appCore\img\user\open.png" />
+    <None Include="wwwroot\Content\appCore\img\user\quxiao.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shezhi_1.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shezhi_2.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shezhi_3.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shezhi_4.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shezhi_5.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shezhi_6.png" />
+    <None Include="wwwroot\Content\appCore\img\user\shousuo.png" />
+    <None Include="wwwroot\Content\appCore\img\user\tishi.png" />
+    <None Include="wwwroot\Content\appCore\img\user\touxiang.png" />
+    <None Include="wwwroot\Content\appCore\img\user\weixin.png" />
+    <None Include="wwwroot\Content\appCore\img\user\xuanfen.png" />
+    <None Include="wwwroot\Content\appCore\img\user\zengjia.png" />
+    <None Include="wwwroot\Content\appCore\img\user\zhifubao.png" />
+    <None Include="wwwroot\Content\appCore\img\user\zhuye.png" />
+    <None Include="wwwroot\Content\Lib\vant\changelog.generated.md" />
+    <None Include="wwwroot\Content\Lib\vant\lib\action-sheet\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\action-sheet\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\action-sheet\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\action-sheet\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-edit\Detail.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-edit\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-edit\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-edit\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-edit\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-list\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-list\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-list\Item.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-list\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\address-list\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\area\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\area\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\area\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\badge\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\badge\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\badge\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\badge\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\button\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\button\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\button\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\button\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\components\Header.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\components\Month.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\calendar\utils.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\card\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\card\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\card\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\card\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cascader\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cascader\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cascader\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cascader\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell-group\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell-group\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell-group\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell-group\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell\shared.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\cell\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox-group\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox-group\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox-group\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox-group\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\checkbox\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\circle\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\circle\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\circle\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\circle\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse-item\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse-item\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse-item\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse-item\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\collapse\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\col\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\col\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\col\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\col\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-card\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-card\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-card\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-card\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-edit\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-edit\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-edit\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-edit\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-list\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-list\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-list\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\contact-list\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\count-down\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\count-down\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\count-down\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\count-down\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\count-down\utils.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-cell\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-cell\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-cell\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-cell\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-list\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-list\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-list\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon-list\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon\shared.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\coupon\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\DatePicker.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\shared.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\TimePicker.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\datetime-picker\utils.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dialog\Dialog.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dialog\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dialog\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dialog\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dialog\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\divider\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\divider\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\divider\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\divider\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-item\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-item\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-item\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-item\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-menu\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-menu\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-menu\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\dropdown-menu\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\empty\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\empty\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\empty\Network.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\empty\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\empty\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\field\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\field\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\field\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\field\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\form\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\form\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\form\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-button\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-button\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-button\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-button\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-icon\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-icon\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-icon\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action-icon\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\goods-action\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid-item\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid-item\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid-item\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid-item\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\grid\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\icon\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\icon\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\icon\local.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\icon\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\icon\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\ImagePreview.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\ImagePreviewItem.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\shared.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image-preview\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\image\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-anchor\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-anchor\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-anchor\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-anchor\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-bar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-bar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-bar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index-bar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\info\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\info\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\info\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\info\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\lazyload\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\lazyload\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\lazyload\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\list\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\list\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\list\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\list\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\loading\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\loading\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\loading\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\loading\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\de-DE-formal.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\de-DE.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\en-US.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\es-ES.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\ja-JP.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\nb-NO.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\ro-RO.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\th-TH.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\tr-TR.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\zh-CN.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\zh-HK.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\lang\zh-TW.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\locale\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\bind-event.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\checkbox.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\click-outside.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\close-on-popstate.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\field.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\popup\context.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\popup\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\popup\overlay.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\popup\type.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\portal.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\relation.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\slots.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\mixins\touch.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\nav-bar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\nav-bar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\nav-bar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\nav-bar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notice-bar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notice-bar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notice-bar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notice-bar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notify\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notify\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notify\Notify.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notify\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\notify\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\CollapseIcon.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\DeleteIcon.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\Key.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\number-keyboard\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\overlay\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\overlay\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\overlay\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\overlay\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pagination\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pagination\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pagination\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pagination\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\panel\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\panel\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\panel\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\panel\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\password-input\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\password-input\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\password-input\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\password-input\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\picker\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\picker\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\picker\PickerColumn.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\picker\shared.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\picker\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\picker\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popover\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popover\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popover\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popover\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popup\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popup\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popup\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\popup\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\progress\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\progress\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\progress\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\progress\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pull-refresh\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pull-refresh\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pull-refresh\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\pull-refresh\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio-group\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio-group\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio-group\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio-group\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\radio\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\rate\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\rate\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\rate\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\rate\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\row\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\row\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\row\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\row\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\search\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\search\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\search\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\search\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\share-sheet\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\share-sheet\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\share-sheet\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\share-sheet\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar-item\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar-item\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar-item\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar-item\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sidebar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\skeleton\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\skeleton\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\skeleton\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\skeleton\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuActions.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuDateTimeField.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuHeader.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuHeaderItem.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuImgUploader.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuMessages.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuRow.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuRowItem.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuRowPropItem.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\components\SkuStepper.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\constants.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\lang.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\Sku.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\utils\sku-helper.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sku\utils\time-helper.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\slider\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\slider\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\slider\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\slider\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\stepper\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\stepper\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\stepper\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\stepper\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\steps\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\steps\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\steps\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\steps\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\step\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\step\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\step\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\step\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sticky\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sticky\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sticky\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\sticky\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\animation.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\base.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\clearfix.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\ellipsis.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\hairline.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\mixins\clearfix.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\mixins\ellipsis.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\mixins\hairline.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\normalize.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\reset.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\style\var.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\submit-bar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\submit-bar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\submit-bar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\submit-bar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-cell\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-cell\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-cell\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-cell\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-item\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-item\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-item\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe-item\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\swipe\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch-cell\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch-cell\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch-cell\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch-cell\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch\shared.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\switch\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar-item\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar-item\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar-item\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar-item\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabbar\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\Content.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\Title.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tabs\utils.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tab\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tab\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tab\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tab\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tag\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tag\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tag\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tag\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\toast\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\toast\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\toast\lock-click.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\toast\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\toast\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\toast\Toast.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tree-select\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tree-select\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tree-select\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\tree-select\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\uploader\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\uploader\index.less" />
+    <None Include="wwwroot\Content\Lib\vant\lib\uploader\style\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\uploader\style\less.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\uploader\utils.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\constant.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\create\bem.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\create\component.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\create\i18n.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\create\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\deep-assign.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\deep-clone.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\dom\event.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\dom\node.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\dom\raf.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\dom\reset-scroll.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\dom\scroll.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\dom\style.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\format\number.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\format\string.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\format\unit.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\functional.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\interceptor.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\router.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\types.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\validate\date.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\validate\email.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\validate\mobile.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\validate\number.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\validate\system.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\utils\vnodes.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\vant.js" />
+    <None Include="wwwroot\Content\Lib\vant\lib\vant.min.js" />
+    <None Include="wwwroot\Content\Lib\vant\LICENSE" />
+    <None Include="wwwroot\Content\Lib\vant\README.md" />
+    <None Include="wwwroot\Content\Lib\vant\README.zh-CN.md" />
+    <None Include="wwwroot\Content\Lib\vant\vue\index.js" />
+    <None Include="wwwroot\Content\Lib\vant\vue\vue.js" />
+    <None Include="wwwroot\Content\Lib\vant\vue\vue.min.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Logs\2021_04_08\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="Uploads\reme.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <van-nav-bar title="方案设计"
+                 left-text="返回"
+                 right-text="保存"
+                 left-arrow
+                 v-bind:fixed="true"
+                 v-on:click-left="onClickLeft"
+                 v-on:click-right="onClickRight">
+    </van-nav-bar>
+
+    <div style="height:50px;border:0px solid #ff0000;">&nbsp;</div>
+
+    <van-form ref="formEl" v-on:submit="doSubmit">
+        <van-field v-model="formData.solutionName"
+                   name="solutionName"
+                   label="方案名称"
+                   maxlength="40"
+                   placeholder="方案名称"
+                   v-bind:rules="formRules.required">
+        </van-field>
+
+        <van-field v-model="formData.description"
+                   rows="2"
+                   autosize
+                   label="描述"
+                   type="textarea"
+                   maxlength="2000"
+                   placeholder="描述"
+                   show-word-limit>
+        </van-field>
+
+        <van-cell title="方案封面">
+            <van-uploader v-model="fileList"
+                          max-count="1"
+                          v-bind:after-read="doAfterRead"
+                          v-bind:before-delete="doFileDelete">
+            </van-uploader>
+        </van-cell>
+
+        <van-cell title="设置详细指标" v-show="isShowNext" is-link v-on:click="doPointerType"></van-cell>
+    </van-form>
+
+</div>

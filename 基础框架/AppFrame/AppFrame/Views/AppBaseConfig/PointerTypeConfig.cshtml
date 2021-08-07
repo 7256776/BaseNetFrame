@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <van-nav-bar title="标题"
+                 left-text="返回"
+                 right-text="新增"
+                 left-arrow
+                 v-bind:fixed="true"
+                 v-on:click-left="onClickLeft"
+                 v-on:click-right="onClickRight">
+    </van-nav-bar>
+
+    <div style="height:50px;border:0px solid #ff0000;">&nbsp;</div>
+    <van-row>
+        <van-col span="5">
+            <van-sidebar style="width:95%;border: 1px solid #808080;" v-model="activeSidebar">
+                <van-sidebar-item :title="item.dictContent" v-for="(item,index) in pointerTypeData" :key="item.dictCode" v-on:click="doSidebar(index,item)" style="color:#868686;background-color:#FCFCE8;" v-bind:style="doStyle(index)" ></van-sidebar-item>
+            </van-sidebar>
+        </van-col>
+        <van-col span="19">
+            <div v-for="(item,index) in pointerTypeConfig" v-bind:key="index" style="width:98%; border: 1px solid #808080;border-radius:5px;margin-bottom:5px;">
+
+                <van-swipe-cell style="border-radius: 5px;" >
+                    <template v-slot:left>
+                        <van-button square text="编辑" type="primary" v-on:click="doEdit(item)" style="height: 100%;" />
+                    </template>
+                    <van-row style="font-size:20px;color:#868686;background-color:#FAE1E1;">
+                        <van-col span="14" >
+                            <van-cell v-bind:title="item.itemName" style="color:#868686;background-color:#FAE1E1;">
+                                <template v-slot:right-icon v-if="!item.isActive">
+                                    <van-tag type="warning">禁用</van-tag>
+                                </template>
+                            </van-cell>
+                        </van-col>
+                        <van-col span="10" >
+                            <van-cell center v-bind:title="item.classifyName" v-bind:label="'单位:'+item.unitName" style="border-left: 1px solid #808080;color:#868686;background-color:#FAE1E1;">
+                            </van-cell>
+                        </van-col>
+                    </van-row>
+                    <template v-slot:right>
+                        <van-button square text="删除" type="danger" v-on:click="doDel(item)" style="height: 100%" />
+                    </template>
+                </van-swipe-cell>
+            
+            </div>
+        </van-col>
+    </van-row>
+
+</div>

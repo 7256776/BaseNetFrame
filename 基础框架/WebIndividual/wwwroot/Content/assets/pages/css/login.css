@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    font-family: sans-serif;
+    /*background: #fff url(/Content/assets/pages/background.png) 50% 50% no-repeat;*/
+}
+.login-form{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 300px;
+  padding: 20px 20px;
+  background-color: rgba(255, 255, 255, 0.541);
+  box-shadow: 0 15px 20px rgba(0,0,0,.2);
+  border-radius: 20px;
+}
+.login-form h2{
+  margin: 0 0 40px;
+  padding: 0;
+  text-align: center;
+  color:#1b4949;
+}
+.login-form .form-input{
+  position: relative;
+  margin: 20px 0;
+}
+.login-form .form-input input{
+  outline: none;
+  height: 32px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  border:1px solid rgba(0,0,0,.5);
+  background: transparent;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.login-form .form-input input[type='submit']{
+  background-color: #e91e63;
+  color: #fff;
+  border: none;
+  height: 40px;
+  cursor: pointer;
+  vertical-align:middle;
+  text-align:center;
+}
+.login-form .form-input input[type='submit']:hover{
+  background-color: #0090ff;
+}
+.login-form a{
+  margin-top: 30px;
+  color:#5a6268;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration-line: none;
+}
+.login-form .forget {
+  color: rgb(170,133,177);
+}
+
+.login-form .register {
+  color: orangered;
+  padding-left:130px;
+}
+
+.login-form .languages li {
+    padding-left: 100px;
+    list-style: none; /* 将默认的列表符号去掉 */
+    padding: 0; /* 将默认的内边距去掉 */
+    margin: 0; /* 将默认的外边距去掉 */
+    float: right; /* 往左浮动 */
+    display: block;
+}
+
+.social-icon-color {
+    opacity: 0.1;
+    background-position: 0 -38px !important;
+}
+
+    .social-icon-color:hover {
+        opacity: 1;
+        height: 16px;
+        width: 22px;
+    }
+ 
+ 

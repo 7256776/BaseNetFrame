@@ -1,0 +1,280 @@
+﻿@using Abp.Web.Security.AntiForgery
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@{
+    Layout = null;
+    //我们是ajax请求所以这货无处不在
+    AbpAntiForgeryManager.SetCookie(Context);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Foodie Erica</title>
+    <!-- load stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="~/html/font-awesome-4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/html/css/bootstrap.min.css">                                      <!-- Bootstrap style -->
+    <link rel="stylesheet" href="~/html/css/templatemo-style.css">                                   <!-- Templatemo style -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="~/html/js/html5shiv.min.js"></script>
+      <script src="~/html/js/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body class="tm-bg-img-content">
+
+    <div class="tm-bg-img-header">
+        <div class="container-fluid">
+
+            <div id="top" class="tm-header-container">
+
+                <!-- 1. Site Header -->
+                <div class="row tm-site-header">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
+
+                        <h1 class="tm-site-title">Foodie Erica</h1>
+                        <p class="tm-site-description">灿灿吃货</p>
+
+                    </div>
+                </div>
+
+                <!-- 2. Navigation -->
+                <div class="row tm-navbar-row tm-navbar-row-absolute">
+                    <div class="tm-navbar-container">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <nav class="navbar navbar-full">
+                                <div class="text-xs-center tm-navbar-rounded" id="tmNavbar">
+                                    <ul class="nav navbar-nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#top">首页</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tm-section-1">关于</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tm-section-3">分享</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link external" href="#tm-section-3">随笔</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tm-section-4">联系我</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div> <!-- col-xs-12 -->
+                    </div> <!-- tm-navbar-container -->
+                </div> <!-- row -->
+
+            </div> <!-- .tm-header-container -->
+            <!-- 3. About -->
+            <div class="row" id="tm-section-1">
+
+                <div class="container">
+                    <section class="tm-2-col-img-text">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 tm-2-col-img">
+                            <i class="fa fa-5x fa-map-o"></i>
+                            <i class="fa fa-5x fa-rocket"></i>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 tm-2-col-text">
+                            <h2 class="tm-2-col-text-title">Lorem ipsum dolor</h2>
+                            <p class="tm-2-col-text-description">
+                                这是我的介绍以及网站的一切
+                            </p>
+                        </div>
+
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <!-- Plan -->
+        <div class="row tm-section" id="tm-section-3">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
+                <h2 class="tm-section-title">我的美食作品</h2>
+                <p class="tm-section-subtitle">
+                    <!--标题党-->
+                </p>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                <div class="tm-plan-boxes-container">
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-table-col">
+
+                        <table class="tm-table-full-width" >
+                            <tbody>
+                                @{
+                                    int i = 0;
+                                    foreach (var item in Model)
+                                    {
+                                        @if (i % 2 == 0)
+                                        {
+                                            <tr class="@( i % 2 == 0 ? "tm-bg-gold-2" :"tm-bg-gold-3")">
+                                                <td class="tm-plan-table-cell" style="width:350px;">
+                                                    <img src="@item.FilePathThumbnail" style="width:300px;height:200px;" />
+                                                </td>
+                                                <td colspan="2" class="tm-plan-table-cell">
+                                                    <div style="width:100%;">
+                                                        @item.DocTitle
+                                                    </div>
+                                                    <div style="width:100%;height:200px;overflow:hidden;">
+                                                        @item.DocSubhead
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">&nbsp;</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="@( i % 2 == 0 ? "tm-bg-gold-2" :"tm-bg-gold-3")">
+                                                <td colspan="2" class="tm-plan-table-cell">
+                                                    <div style="width:100%;">
+                                                        @item.DocTitle
+                                                    </div>
+                                                    <div style="width:100%;height:200px;overflow:hidden;">
+                                                        @item.DocSubhead
+                                                    </div>
+                                                </td>
+                                                <td class="tm-plan-table-cell" style="width:350px;">
+                                                    <img src="@item.FilePathThumbnail" style="width:300px;height:200px;" />
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">&nbsp;</td>
+                                            </tr>
+                                        }
+                                        i++;
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="tm-bg-img-content">
+        <div class="container-fluid">
+            <div class="row" id="tm-section-4">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
+
+                    <h2 class="tm-section-title">联系我</h2>
+                    <p class="tm-section-subtitle tm-section-subtitle-contact">
+                        联系我哟
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div> <!-- contact section header -->
+
+    <div class="tm-bg-img-header tm-section-contact-form">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <form action="index.html" method="post" class="tm-contact-form">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 tm-form-group-left">
+                            <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="您的名字" required />
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 tm-form-group-right">
+                            <input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="您的邮箱" required />
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contact_message" name="contact_message" class="form-control" rows="6" placeholder="说点什么吧" required></textarea>
+                        </div>
+
+                        <button  class="btn tm-btn-brown-square pull-xs-right" onclick="alert('感谢您的来信'); return false">提交</button>
+                    </form>
+                </div> <!-- col -->
+
+            </div>
+
+            <div class="row tm-footer">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
+                    <!--
+                    <div class="tm-social-icons-container">
+                        <a href="#" class="tm-social-icon-link-brown"><i class="fa fa-facebook tm-social-icon"></i></a>
+                        <a href="#" class="tm-social-icon-link-brown"><i class="fa fa-google-plus tm-social-icon"></i></a>
+                        <a href="#" class="tm-social-icon-link-brown"><i class="fa fa-twitter tm-social-icon"></i></a>
+                        <a href="#" class="tm-social-icon-link-brown"><i class="fa fa-behance tm-social-icon"></i></a>
+                        <a href="#" class="tm-social-icon-link-brown"><i class="fa fa-linkedin tm-social-icon"></i></a>
+                    </div>
+                    -->
+                </div>
+
+                <footer class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
+                    <p class="tm-copyright-text">Copyright &copy; 2021 小火山工作室</p>
+                    <p class="tm-copyright-text"> 鄂ICP备2021012046号-1</p>
+                </footer>
+
+            </div>
+        </div>
+    </div> <!-- tm-section-contact-form -->
+
+    <script src="~/html/js/jquery-1.11.3.min.js"></script>
+    <script src="~/html/js/jquery.singlePageNav.min.js"></script>
+
+    <script>
+        function prepareMenuForDesktop() {
+            var navbarHeight = 0;
+            // For screens greater than 767
+            if ($(window).width() > 767) {
+                // target at which the menu bar changes to sticky
+                var target = $("#tm-section-1").offset().top - 100;
+                // window scroll
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > target) {
+                        $(".tm-navbar-row").addClass("sticky");
+                    }
+                    else {
+                        $(".tm-navbar-row").removeClass("sticky");
+                    }
+                });
+                navbarHeight = 56;
+            }
+
+            // Single Page Nav
+            $('#tmNavbar').singlePageNav({
+                'currentClass': "active",
+                offset: navbarHeight,
+                'filter': ':not(.external)'
+            });
+        }
+
+        $(document).ready(function () {
+            prepareMenuForDesktop();
+            // On window resize, prepare menu
+            $(window).resize(function () {
+                prepareMenuForDesktop();
+            });
+        });
+
+    </script>
+
+</body>
+</html>
